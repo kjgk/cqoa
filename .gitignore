@@ -1,1 +1,6 @@
-
+out
+oa.iws
+oa.core/target/
+oa.api/target/
+oa.web/target/
+withub.common/target/
