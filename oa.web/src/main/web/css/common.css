@@ -1,0 +1,43 @@
+.text-block {
+    font-size: 13px;
+    padding: 4px 0px;
+    text-align: center;
+    color: #C1DDF1;
+    cursor: move;
+}
+
+.block {
+    border: 2px solid #C1DDF1;
+}
+
+.block-select {
+    border: 2px solid #EE0022;
+}
+
+.search-combo-item {
+    padding: 5px 10px;
+    white-space: normal;
+    color: #777777;
+    text-decoration: none;
+    display: block;
+    overflow: hidden;
+}
+
+.search-combo-item h3 {
+    display: block;
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    font-weight: bold;
+    font-size: 14px;
+    color: #222;
+}
+
+.search-combo-item h3 span {
+    float: right;
+    font-weight: normal;
+    font-size: 12px;
+    margin: 0 0 5px 5px;
+    width: 80px;
+    clear: none;
+}

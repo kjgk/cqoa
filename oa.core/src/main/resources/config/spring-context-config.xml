@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <aop:aspectj-autoproxy/>
+    <context:annotation-config/>
+    <context:component-scan base-package="com.withub.service"/>
+
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:config/jdbc-config.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="defaultDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass">
+            <value>${default.driverClass}</value>
+        </property>
+        <property name="jdbcUrl">
+            <value>${default.jdbcUrl}</value>
+        </property>
+        <property name="user">
+            <value>${default.username}</value>
+        </property>
+        <property name="password">
+            <value>${default.password}</value>
+        </property>
+
+        <property name="initialPoolSize" value="10"/>
+        <property name="maxPoolSize" value="15"/>
+        <property name="minPoolSize" value="10"/>
+        <property name="maxIdleTime" value="1800"/>
+        <property name="idleConnectionTestPeriod" value="60"/>
+
+    </bean>
+
+    <!-- 配置SessionFactory  -->
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource">
+            <ref bean="defaultDataSource"/>
+        </property>
+
+        <property name="hibernateProperties">
+            <props>
+                <!--<prop key="hibernate.connection.provider_class">org.hibernate.connection.DatasourceConnectionProvider
+                </prop>-->
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL81Dialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.c3p0.acquire_increment">2</prop>
+                <prop key="hibernate.c3p0.timeout">120</prop>
+                <prop key="hibernate.c3p0.max_statements">100</prop>
+            </props>
+        </property>
+        <property name="packagesToScan" value="com.withub.model"/>
+    </bean>
+
+
+    <!-- 设置事务管理器  -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+</beans>

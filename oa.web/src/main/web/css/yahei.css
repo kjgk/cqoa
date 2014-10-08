@@ -1,0 +1,318 @@
+
+.x-body {
+    color: black;
+    font-size: 13px;
+    font-family: "微软雅黑" ;
+    background: #f5f5f5;
+}
+
+.x-btn-default-small .x-btn-inner {
+    font-size: 12px;
+    font-weight: bold;
+    font-family: "微软雅黑" ;
+    color: white;
+    padding: 0 5px;
+}
+
+.x-btn-default-medium .x-btn-inner {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "微软雅黑" ;
+    color: white;
+    padding: 0 8px;
+}
+
+.x-btn-default-large .x-btn-inner {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: "微软雅黑" ;
+    color: white;
+    padding: 0 10px;
+}
+
+.x-btn-default-toolbar-small .x-btn-inner {
+    font-size: 12px;
+    font-weight: bold;
+    font-family: "微软雅黑" ;
+    color: #666666;
+    padding: 0 20 0 5px;
+}
+
+.x-btn-default-toolbar-medium .x-btn-inner {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "微软雅黑" ;
+    color: #666666;
+    padding: 0 8px;
+}
+
+.x-btn-default-toolbar-large .x-btn-inner {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: "微软雅黑" ;
+    color: #666666;
+    padding: 0 10px;
+}
+
+.x-toolbar .x-toolbar-text {
+    margin: 0 6px 0 4px;
+    color: #333f49;
+    line-height: 16px;
+    font-family: "微软雅黑" ;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+
+.x-panel-header-text-container-default {
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: "微软雅黑" ;
+    line-height: 15px;
+    padding: 1px 0 0;
+    text-transform: none;
+}
+
+.x-window-header-text-container-default {
+    color: white;
+    font-weight: bold;
+    line-height: 15px;
+    font-family: "微软雅黑" ;
+    font-size: 13px;
+    padding: 1px 0 0;
+    text-transform: none;
+}
+
+.x-html-editor-tb .x-font-select {
+    font-size: 13px;
+    font-family: inherit;
+}
+
+.x-accordion-hd .x-panel-header-text-container {
+    color: #666666;
+    font-weight: bold;
+    font-family: "微软雅黑" ;
+    text-transform: none;
+}
+
+.x-tab-default .x-tab-inner {
+    font-size: 13px;
+    font-weight: bold;
+    font-family: "微软雅黑" ;
+    color: white;
+    line-height: 16px;
+}
+
+.x-btn-plain-toolbar-small .x-btn-inner {
+    font-size: 12px;
+    font-weight: bold;
+    font-family: "微软雅黑" ;
+    color: #666666;
+    padding: 0 5px;
+}
+
+.x-btn-plain-toolbar-medium .x-btn-inner {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "微软雅黑" ;
+    color: #666666;
+    padding: 0 8px;
+}
+
+.x-btn-plain-toolbar-large .x-btn-inner {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: "微软雅黑" ;
+    color: #666666;
+    padding: 0 10px;
+}
+
+.x-panel-header-text-container-light {
+    color: #666666;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: "微软雅黑" ;
+    line-height: 15px;
+    padding: 1px 0 0;
+    text-transform: none;
+}
+
+.x-panel-header-text-container-light-framed {
+    color: #666666;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: "微软雅黑" ;
+    line-height: 15px;
+    padding: 1px 0 0;
+    text-transform: none;
+}
+
+
+.x-dd-drag-ghost {
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=85);
+    opacity: 0.85;
+    padding: 5px;
+    padding-left: 20px;
+    white-space: nowrap;
+    color: #000;
+    font: normal 12px "微软雅黑";
+    border: 1px solid;
+    border-color: #ddd #bbb #bbb #ddd;
+    background-color: #fff;
+}
+
+
+.x-mask-msg-inner {
+    padding: 0;
+    background-color: transparent;
+    color: #666666;
+    font: normal 13px "微软雅黑";
+}
+
+
+
+.x-btn-group-header-text-container-default {
+    font: normal 13px "微软雅黑";
+    line-height: 16px;
+    color: #666666;
+}
+
+.x-btn-group-header-text-container-default-framed {
+    font: normal 13px "微软雅黑";
+    line-height: 16px;
+    color: #666666;
+}
+
+.x-form-invalid-under {
+    padding: 2px 2px 2px 20px;
+    color: #d94e37;
+    font: normal 13px "微软雅黑";
+    line-height: 16px;
+    background: no-repeat 0 2px;
+    background-image: url(images/form/exclamation.png);
+}
+
+.x-form-item-label {
+    color: black;
+    font: normal 13px/22px "微软雅黑";
+}
+
+.x-form-item,
+.x-form-field {
+    font: normal 13px "微软雅黑";
+}
+
+.x-form-display-field {
+    font: normal 13px "微软雅黑";
+    color: black;
+    line-height: 24px;
+}
+
+.x-fieldset-header-text {
+    font: 12px/16px bold "微软雅黑";
+    color: black;
+    padding: 1px 0;
+}
+
+.x-datepicker-column-header {
+    width: 30px;
+    color: black;
+    font: bold 13px "微软雅黑";
+    text-align: right;
+    background-image: none;
+    background-color: white;
+}
+
+.x-datepicker-date {
+    padding: 0 7px 0 0;
+    font: normal 13px "微软雅黑";
+    color: black;
+    cursor: pointer;
+    line-height: 23px;
+}
+
+.x-monthpicker-item {
+    margin: 5px 0 5px;
+    font: normal 13px "微软雅黑";
+    text-align: center;
+}
+
+.x-html-editor-wrap textarea {
+    font: normal 13px "微软雅黑";
+    background-color: white;
+    resize: none;
+}
+
+.x-grid-empty {
+    padding: 10px;
+    color: gray;
+    font: normal 11px tahoma, arial, helvetica, sans-serif;
+}
+
+
+.x-grid-row .x-grid-cell {
+    color: null;
+    font: normal 13px/17px "微软雅黑";
+    background-color: white;
+    border-color: white;
+    border-style: solid;
+    border-width: 1px 0;
+}
+
+.x-column-header {
+    padding: 0;
+    position: absolute;
+    overflow: hidden;
+    border: 0 none;
+    border-right: 1px solid silver;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+    color: #666666;
+    font: bold 13px "微软雅黑";
+    background-color: #f5f5f5;
+}
+
+.x-grid-group-title {
+    color: #666666;
+    font: bold 13px "微软雅黑";
+}
+
+.x-grid-rowbody {
+    font: normal 11px/13px "微软雅黑";
+    padding: 0;
+}
+
+.x-grid-row-summary .x-grid-cell,
+.x-grid-row-summary .x-grid-rowwrap,
+.x-grid-row-summary .x-grid-cell-rowbody {
+    border-color: #ededed;
+    background-color: transparent !important;
+    border-top-width: 0;
+    font: normal 13px/17px "微软雅黑";
+}
+
+.x-grid-editor .x-form-text {
+    font: normal 13px/19px "微软雅黑";
+}
+
+.x-grid-row-editor .x-form-display-field {
+    font: normal 13px/19px "微软雅黑";
+}
+
+
+.search-item {
+    font: normal 11px "微软雅黑";
+    padding: 2px 4px;
+    border: 1px solid #fff;
+    border-bottom: 1px solid #eeeeee;
+    white-space: normal;
+    color: #555;
+}
+
+.user-search-item h3 {
+    display: block;
+    font: "微软雅黑";
+    font-weight: bold;
+    font-size: 14px;
+    color: #222;
+}

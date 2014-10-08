@@ -1,0 +1,298 @@
+<script type="text/javascript" src="/dye/scripts/jquery/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/dye/scripts/angularjs/angular.min.js"></script>
+<style>
+    .enter-voucher-detail {
+        color: #5b5b5b;
+    }
+
+    .enter-voucher-detail table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    .enter-voucher-detail table th.header {
+        border-top: 1px solid #C0C0C0;
+        border-bottom: 1px solid #C0C0C0;
+        border-right: 1px solid #C0C0C0;
+        background-color: #F5F5F5;
+        line-height: 20px;
+    }
+
+    .enter-voucher-detail table th.label {
+        width: 38px;
+        border-right: 1px solid #C0C0C0;
+    }
+
+    .enter-voucher-detail table td.total {
+        text-align: right;
+        font-weight: bold;
+    }
+
+    .enter-voucher-detail table td.label {
+        width: 34px;
+        font-weight: bold;
+        color: #333333;
+        text-align: right;
+        padding-right: 6px !important;
+    }
+
+    .enter-voucher-detail th.expander {
+        padding: 4px 0px 2px 0px;
+        background: none !important;
+    }
+
+    .enter-voucher-detail th.expander span {
+        display: inline-block;
+        text-align: left;
+        float: left;
+    }
+
+    .enter-voucher-detail th.expander span a {
+        cursor: pointer;
+        color: #1144aa;
+    }
+
+    .enter-voucher-detail th.expander div {
+        float: left;
+        margin-left: 8px;
+    }
+
+    .enter-voucher-detail > div.total {
+        font-weight: bold;
+        line-height: 24px;
+    }
+
+    .enter-voucher-detail input {
+        padding: 4px 4px;
+        border: 1px solid #D9D9D9;
+        text-align: right;
+    }
+
+    .enter-voucher-detail input:focus {
+        border: 1px solid #3366cc;
+        box-shadow: 0px 0px 3px #3366cc;
+    }
+
+    .enter-voucher-detail input.readonly {
+        background-color: #BFA52F;
+        border: 1px solid #BFA52F;
+    }
+
+</style>
+
+<div class="enter-voucher-detail" ng-controller="EnterVoucherDetailCtrl">
+    <div class="total">
+        合计总匹数：<a ng-bind="getTotalPiece()|number"></a>&nbsp;
+        合计总米数：<a ng-bind="getTotalMetre()|number"></a>
+    </div>
+    <table cellspacing="0" ng-repeat="group in groups">
+        <thead>
+        <tr ng-if="$index==0">
+            <th class="label">&nbsp;</th>
+            <th class="header" ng-repeat="column in columnList">
+                <div ng-bind="column"></div>
+            </th>
+        </tr>
+        <tr>
+            <th style="width: 38px;">&nbsp;</th>
+            <th class="expander" colspan="10">
+                <span ng-show="!group.show"><a title="展开" ng-click="toggleExpand(group)">展开</a></span>
+                <span ng-show="group.show"><a title="折叠" ng-click="toggleExpand(group)">折叠</a></span>
+
+                <div>
+                    总匹数：<a ng-bind="getGroupTotalPiece(group.key)|number"></a>&nbsp;
+                    总米数：<a ng-bind="getGroupTotalMetre(group.key)|number"></a>
+                </div>
+            </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-show="group.show" ng-repeat="row in details[group.key]">
+            <td class="label" ng-bind="$parent.$index*columnList.length+$index+1"></td>
+            <td ng-repeat="item in row" onkeyup="changeInput(this)">
+                <input type="text" onkeypress="return (/[\d.]/.test(String.fromCharCode(event.keyCode)));"
+                       ng-change="checkInput(item)"
+                       ng-readonly="item.status==1"
+                       ng-model="item.metreCount"
+                       ng-class="{readonly:item.status==1}"
+                       style="width: 100%"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="label">合计</td>
+            <td class="total" ng-repeat="column in columnList" ng-bind="getColumnTotalMetre($index, group.key)|number">
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+
+    window.elel = '';
+    var changeInput = function (el) {
+
+        var me = $(el);
+        var table = me.parents('table').eq(0);
+
+        if (event.keyCode == 37) {
+            var row = me.parent();
+            row.find('td').eq(me.index() - 1).children('input').focus()
+        }
+        if (event.keyCode == 38) {
+            if (me.parent().index() > 0) {
+                var row = table.find('tbody>tr.ng-scope').eq(me.parent().index() - 1);
+                row.find('td').eq(me.index()).children('input').focus()
+            } else {
+                table.find('tbody>tr.ng-scope').last().find('td').eq(me.index() - 1).children('input').focus();
+            }
+        }
+        if (event.keyCode == 39) {
+            var row = me.parent();
+            row.find('td').eq(me.index() + 1).children('input').focus()
+        }
+        if (event.keyCode == 40) {
+            var row = table.find('tbody>tr.ng-scope').eq(me.parent().index() + 1);
+            if (row.length > 0) {
+                row.find('td').eq(me.index()).children('input').focus()
+            } else {
+                table.find('tbody>tr.ng-scope').eq(0).find('td').eq(me.index() + 1).children('input').focus()
+            }
+        }
+    }
+
+    var EnterVoucherDetailCtrl = function ($scope) {
+
+        var maxCount = 600, columnLength = 10, groupLength = 10;
+
+        $scope.initData = function () {
+            $scope.details = {};
+            $scope.groups = [];
+            $scope.detailList = [];
+            $scope.columnList = [];
+            for (var i = 0; i < maxCount / columnLength; i++) {
+                var key = 'group_' + Math.ceil((i + 1) / groupLength);
+                var row = [];
+                for (var j = 0; j < columnLength; j++) {
+                    row.push({positionX: j, positionY: i})
+                }
+                if ($scope.details[key] === undefined) {
+                    $scope.details[key] = [];
+                    $scope.groups.push({
+                        key: key,
+                        show: true
+                    });
+                }
+                $scope.details[key].push(row);
+
+                if ($scope.details[key].length == groupLength) {
+                    for (var k = 0; k < columnLength; k++) {
+                        for (var l = 0; l < groupLength; l++) {
+                            $scope.detailList.push($scope.details[key][l][k]);
+                        }
+                    }
+                }
+            }
+            for (var i = 0; i < columnLength; i++) {
+                $scope.columnList.push(i + 1);
+            }
+        }
+
+        $scope.getColumnTotalMetre = function (index, group) {
+            var total = 0;
+            angular.forEach($scope.details[group], function (row) {
+                angular.forEach(row, function (item, i) {
+                    if (index == i) {
+                        total += parseInt(item.metreCount, 10) || 0;
+                    }
+                });
+            });
+
+            return total;
+        }
+
+        $scope.getGroupTotalMetre = function (group) {
+            var total = 0;
+            angular.forEach($scope.details[group], function (row) {
+                angular.forEach(row, function (item, i) {
+                    total += parseInt(item.metreCount, 10) || 0;
+                });
+            });
+
+            return total;
+        }
+
+        $scope.getGroupTotalPiece = function (group) {
+            var count = 0;
+            angular.forEach($scope.details[group], function (row) {
+                angular.forEach(row, function (item, i) {
+                    if (item.metreCount > 0) {
+                        count++;
+                    }
+                });
+            });
+
+            return count;
+        }
+
+        $scope.getTotalMetre = function () {
+            var total = 0;
+            angular.forEach($scope.detailList, function (item, i) {
+                total += parseInt(item.metreCount, 10) || 0;
+            });
+            return total;
+        }
+
+        $scope.getTotalPiece = function () {
+            var count = 0;
+            angular.forEach($scope.detailList, function (item, i) {
+                if (item.metreCount > 0) {
+                    count++;
+                }
+            });
+            return count;
+        }
+
+        $scope.clearAll = function () {
+            angular.forEach($scope.detailList, function (item) {
+                delete item.metreCount;
+            });
+        }
+
+        $scope.clearMetreCount = function (metreCount) {
+            angular.forEach($scope.detailList, function (item) {
+                if (item.metreCount == metreCount) {
+                    delete item.metreCount;
+                }
+            });
+        }
+
+        $scope.addMetreCount = function (metreCount, count) {
+            angular.forEach($scope.detailList, function (item) {
+                if (count > 0 && (item.metreCount == undefined || item.metreCount == '')) {
+                    item.metreCount = metreCount;
+                    count--;
+                }
+            });
+        }
+
+        $scope.toggleExpand = function (group) {
+            group.show = !group.show;
+        }
+
+        $scope.checkInput = function (item) {
+            if (item.metreCount > 999) {
+                item.metreCount = 999;
+            }
+        }
+
+        $scope.initData();
+
+        window.$EnterVoucherDetailScope = $scope;
+    }
+    angular.bootstrap('.enter-voucher-detail')
+</script>

@@ -1,0 +1,25 @@
+.user-search-item {
+    padding: 5px 10px;
+    white-space: normal;
+    color: #777777;
+    text-decoration: none;
+    display: block;
+    overflow: hidden;
+}
+
+.user-search-item h3 {
+    display: block;
+    font: inherit;
+    font-weight: bold;
+    font-size: 14px;
+    color: #222;
+}
+
+.user-search-item h3 span {
+    float: right;
+    font-weight: normal;
+    font-size: 12px;
+    margin: 0 0 5px 5px;
+    width: 80px;
+    clear: none;
+}

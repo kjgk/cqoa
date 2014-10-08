@@ -1,0 +1,120 @@
+body {
+    font-family: 'Microsoft YaHei';
+}
+
+#top {
+    color: white;
+    float: right;
+    font-size: 16px;
+    line-height: 48px;
+    width: 470px;
+    margin: 24px 20px 0px 0px;
+    cursor: default;
+}
+
+#header {
+    display: none;
+}
+
+#header a {
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#header a:hover {
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+#username {
+    float: left;
+    width: 92px;
+}
+
+#username a {
+    color: #FFFFFF;
+    font-size: 110%;
+    text-decoration: none;
+}
+
+.tip-link {
+    color: #FFFFFF;
+    font-size: 14px;
+    text-decoration: none;
+    display: block;
+    line-height: 24px;
+}
+
+.tip-link:hover {
+    /*color: #157FCC;*/
+}
+
+.tip-link-icon-1 {
+    padding-left: 26px;
+    background: url(../images/5.png) no-repeat;
+}
+
+.tip-link-icon-2 {
+    padding-left: 26px;
+    background: url(../images/6.png) no-repeat;
+}
+
+.tip-twitter {
+    /*opacity: 0.8;*/
+    z-index: 1000;
+    text-align: left;
+    /*border-radius: 4px;*/
+    /*-moz-border-radius: 4px;*/
+    /*-webkit-border-radius: 4px;*/
+    padding: 4px 8px;
+    max-width: 200px;
+    color: #fff;
+    background-color: #0E6BAE;
+}
+
+.tip-twitter .tip-inner {
+    font: bold 11px/14px 'Lucida Grande', sans-serif;
+}
+
+/* Configure an arrow image - the script will automatically position it on the correct side of the tip */
+.tip-twitter .tip-arrow-top {
+    margin-top: -5px;
+    margin-left: -5px; /* approx. half the width to center it */
+    top: 0;
+    left: 50%;
+    width: 9px;
+    height: 5px;
+    /*background:url(tip-twitter_arrows.gif) no-repeat;*/
+}
+
+.tip-twitter .tip-arrow-right {
+    margin-top: -4px; /* approx. half the height to center it */
+    margin-left: 0;
+    top: 50%;
+    left: 100%;
+    width: 5px;
+    height: 9px;
+    /*background:url(tip-twitter_arrows.gif) no-repeat -9px 0;*/
+}
+
+.tip-twitter .tip-arrow-bottom {
+    margin-top: 0;
+    margin-left: -5px; /* approx. half the width to center it */
+    top: 100%;
+    left: 50%;
+    width: 9px;
+    height: 5px;
+    /*background:url(tip-twitter_arrows.gif) no-repeat -18px 0;*/
+}
+
+.tip-twitter .tip-arrow-left {
+    margin-top: -4px; /* approx. half the height to center it */
+    margin-left: -5px;
+    top: 50%;
+    left: 0;
+    width: 5px;
+    height: 9px;
+    /*background:url(tip-twitter_arrows.gif) no-repeat -27px 0;*/
+}

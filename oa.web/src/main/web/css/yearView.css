@@ -1,0 +1,17 @@
+.ext-cal-day-we-yearView {
+    background: green;
+}
+
+.ext-cal-day-prev-yearView,
+.ext-cal-day-next-yearView {
+    visibility: hidden;
+}
+
+.ext-cal-dtitle-prev div,
+.ext-cal-dtitle-next div {
+    /*display: none;*/
+    visibility: hidden;
+}
+
+
+

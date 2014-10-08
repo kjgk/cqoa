@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <!-- DAO -->
+    <bean id="entityDao" class="com.withub.dao.EntityDaoImpl" autowire="byName"/>
+
+    <!-- 全局 Spring 上下文对象 -->
+    <bean id="springContextUtil" class="com.withub.spring.SpringContextUtil"/>
+
+    <!-- 事件通知服务 -->
+    <bean id="eventNotifyServiceTypeConfig" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="Email" value="emailSender"/>
+                <entry key="SMS" value="smsSender"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="emailSender" class="com.withub.notifyservice.EmailSender" autowire="byName"/>
+    <bean id="smsSender" class="com.withub.notifyservice.SmsSender" autowire="byName"/>
+
+</beans>
