@@ -4,4 +4,4 @@ oa.core/target/
 oa.api/target/
 oa.web/target/
 withub.common/target/
-
+oa.web/src/main/webapp/src/bower_components

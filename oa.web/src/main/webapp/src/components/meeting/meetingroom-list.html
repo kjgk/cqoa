@@ -1,0 +1,14 @@
+<table simple-table="grid" class="table">
+    <tr>
+        <th>申请时间</th>
+        <th>申请会场</th>
+        <th>使用时间</th>
+        <th>状态</th>
+    </tr>
+
+    <tr ng-repeat="x in grid.items">
+        <td>{{x.a}}</td>
+    </tr>
+</table>
+
+<div pagination ng-model="grid.currentPage" total-items="grid.total"></div>
