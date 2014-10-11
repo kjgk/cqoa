@@ -17,7 +17,11 @@ angular.module('app', ['app.sms'])
         RestangularProvider.setBaseUrl(PageContext.path);
 
         RestangularProvider.addResponseInterceptor(function (data, operation, what, url, response, deferred) {
-            return data.data;
+            if (data.success) {
+                return data.data;
+            } else {
+                deferred.reject(data.message);
+            }
         });
 
         $httpProvider.interceptors.push(function ($q, $location, $filter, cfpLoadingBar, toaster) {
@@ -30,6 +34,9 @@ angular.module('app', ['app.sms'])
                 },
                 'response': function (response) {
                     cfpLoadingBar.complete();
+                    if (response.data && response.data.success === false) {
+                        toaster.pop('error', "错误", response.data.message);
+                    }
                     return response || $q.when(response);
                 },
 
