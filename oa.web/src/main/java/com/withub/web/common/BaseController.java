@@ -247,4 +247,15 @@ public class BaseController {
         fileUploadInfo.setFileStatus("Remote");
         map.put(key, fileUploadInfo);
     }
+
+    public void putRecordsetInfo(Map map, RecordsetInfo recordsetInfo) {
+
+        map.put("items", recordsetInfo.getEntityList());
+        map.put("total", recordsetInfo.getTotalRecordCount());
+    }
+
+    public void putData(Map map, Object data) {
+
+        map.put("data", data);
+    }
 }

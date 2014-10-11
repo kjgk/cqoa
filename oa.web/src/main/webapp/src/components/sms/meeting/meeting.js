@@ -1,18 +1,20 @@
 'use strict';
 
-angular.module('meeting', ['base'])
+angular.module('app.sms')
     .config(function ($stateProvider, RestangularProvider) {
         $stateProvider
-            .state('meeting', {
+            .state('sms.meeting', {
                 url: '/meeting',
                 template: '<div ui-view></div>',
                 abstract: true
             })
-            .state('meeting.meetingroom', {
+            .state('sms.meeting.meetingroom', {
                 url: '/meetingroom',
-                templateUrl: 'components/meeting/meetingroom-list.html',
-                controller: 'MeetingroomCtrl'
-            });
+                templateUrl: 'components/sms/meeting/meeting-room-list.html',
+                controller: 'MeetingRoomCtrl'
+            })
+        ;
 
     })
+
 ;

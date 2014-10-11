@@ -11,25 +11,59 @@
     <link rel="stylesheet" href="app/main/vendor.css">
 
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css"/>
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css"/>
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:css({.tmp,src}) styles/main.css -->
     <link rel="stylesheet" href="app/main/main.css">
+    <link rel="stylesheet" href="app/app.css">
     <!-- endbuild -->
 
     <script>
-        PageContext = {};
+        PageContext = {
+            path: '/oa'
+        };
     </script>
 
 </head>
 <body>
 
-<div class="container">
-    <div ui-view></div>
+<div class="top">
+    <div class="logo"><img src="assets/images/logo.png"/>
+
+        <p>12368综合服务管理平台</p>
+
+        <div class="clear"></div>
+    </div>
+    <div class="t_r">
+        <ul>
+            <li><p>欢迎您：<span>admin</span></p></li>
+            <li><a href="#"><img src="assets/images/34.png"/></a></li>
+            <li><a href="#"><img src="assets/images/36.png"/></a></li>
+            <div class="clear"></div>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
 </div>
+<div class="nav_bg">
+    <ul>
+        <li><a href="#">短信服务平台</a></li>
+        <li><a href="#">短信服务平台</a></li>
+        <li><a href="#">短信服务平台</a></li>
+        <li><a href="#">短信服务平台</a></li>
+        <div class="clear"></div>
+    </ul>
+</div>
+
+<div ui-view></div>
+
+<div class="foot"><p>技术支持：上海交大慧谷通用技术</p></div>
+
+<toaster-container></toaster-container>
 
 
 <!-- build:js scripts/vendor.js -->
@@ -39,19 +73,21 @@
 <script src="bower_components/lodash/dist/lodash.compat.js"></script>
 <script src="bower_components/restangular/dist/restangular.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script src="bower_components/underscore/underscore.js"></script>
 <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
 <script src="bower_components/angular-i18n/angular-locale_zh-cn.js"></script>
 <script src="bower_components/angular-validation/dist/angular-validation.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/AngularJS-Toaster/toaster.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
 <!-- build:js({src,.tmp}) scripts/main.js -->
 <script src="app/base.js"></script>
 <script src="app/main/main.js"></script>
-<script src="components/meeting/meeting.js"></script>
-<script src="components/meeting/meeting-room.js"></script>
+<script src="components/sms/sms.js"></script>
+<script src="components/sms/meeting/meeting.js"></script>
+<script src="components/sms/meeting/meeting-room.js"></script>
 
 <!-- inject:partials -->
 <!-- angular templates will be automaticaly converted in js and inserted here -->

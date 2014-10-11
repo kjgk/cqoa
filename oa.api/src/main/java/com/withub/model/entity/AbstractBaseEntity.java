@@ -1,6 +1,7 @@
 package com.withub.model.entity;
 
 import com.withub.model.system.po.User;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
@@ -15,12 +16,14 @@ public abstract class AbstractBaseEntity extends AbstractEntity {
 
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "Creator")
+    @JsonIgnore
     private User creator;
 
     private Date createTime;
 
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "LastEditor")
+    @JsonIgnore
     private User lastEditor;
 
     private Date lastUpdateTime;
@@ -30,6 +33,7 @@ public abstract class AbstractBaseEntity extends AbstractEntity {
     private Integer objectStatus;
 
     @Transient
+    @JsonIgnore
     private User currentUser;
 
     //============================== 属性方法 ============================================================

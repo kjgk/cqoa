@@ -1,7 +1,6 @@
 package com.withub.web.interceptor;
 
 
-import com.withub.model.entity.AbstractEntity;
 import com.withub.model.exception.BaseBusinessException;
 import net.sf.json.JSONSerializer;
 import org.springframework.ui.ModelMap;
@@ -47,14 +46,14 @@ public class DefaultInterceptor extends HandlerInterceptorAdapter {
             modelAndView.getModelMap().addAttribute("success", true);
             ModelMap modelMap = modelAndView.getModelMap();
             Iterator<String> iterator = modelMap.keySet().iterator();
-            while (iterator.hasNext()) {
-                String key = iterator.next();
-                Object modelItem = modelMap.get(key);
-                if (modelItem instanceof AbstractEntity) {
-                    iterator.remove();
-                    modelMap.remove(key);
-                }
-            }
+//            while (iterator.hasNext()) {
+//                String key = iterator.next();
+//                Object modelItem = modelMap.get(key);
+//                if (modelItem instanceof AbstractEntity) {
+//                    iterator.remove();
+//                    modelMap.remove(key);
+//                }
+//            }
         }
 
         super.postHandle(request, response, handler, modelAndView);

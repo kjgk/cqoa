@@ -1,0 +1,26 @@
+<form class="form-horizontal" role="form" name="meetingRoomForm">
+    <div class="modal-header">
+        <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">名称</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="name" ng-model="meetingRoom.name" validator="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">备注</label>
+
+            <div class="col-sm-10">
+                <textarea rows="5" class="form-control" name="description" ng-model="meetingRoom.description"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" validation-submit="meetingRoomForm" ng-click="submit()">保存</button>
+        <button class="btn btn-warning" ng-click="cancel()">取消</button>
+    </div>
+</form>
