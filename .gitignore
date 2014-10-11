@@ -5,3 +5,4 @@ oa.api/target/
 oa.web/target/
 withub.common/target/
 oa.web/src/main/webapp/src/bower_components
+oa.web/src/main/webapp/dist
