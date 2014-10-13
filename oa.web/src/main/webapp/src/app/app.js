@@ -1,16 +1,10 @@
 'use strict';
 
-angular.module('app', ['app.sms'])
+angular.module('app', ['app.oa', 'app.mobile'])
 
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, RestangularProvider) {
-        $stateProvider
-            .state('home', {
-                url: '/',
-                templateUrl: 'app/main/main.html',
-                controller: 'MainCtrl'
-            });
 
-        $urlRouterProvider.otherwise('/sms');
+        $urlRouterProvider.otherwise('/oa/meetingroom');
 
         cfpLoadingBarProvider.includeSpinner = false;
 
