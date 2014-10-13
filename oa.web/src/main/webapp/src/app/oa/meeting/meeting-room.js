@@ -43,7 +43,7 @@ angular.module('app.oa')
 
         $scope.createMeetingRoom = function () {
             var modalInstance = $modal.open({
-                templateUrl: 'app/os/meeting/meeting-room-form.html',
+                templateUrl: 'app/oa/meeting/meeting-room-form.html',
                 controller: 'MeetingRoomCreateCtrl'
             });
             modalInstance.result.then(function (result) {
@@ -53,7 +53,7 @@ angular.module('app.oa')
         };
         $scope.updateMeetingRoom = function (meetringRoom) {
             var modalInstance = $modal.open({
-                templateUrl: 'app/os/meeting/meeting-room-form.html',
+                templateUrl: 'app/oa/meeting/meeting-room-form.html',
                 controller: 'MeetingRoomUpdateCtrl',
                 resolve: {
                     objectId: function () {
