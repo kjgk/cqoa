@@ -2,6 +2,8 @@
 
 angular.module('app', ['app.oa', 'app.mobile'])
 
+    .value('PageContext', PageContext)
+
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, RestangularProvider) {
 
         $urlRouterProvider.otherwise('/oa/meetingroom');
