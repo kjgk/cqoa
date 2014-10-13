@@ -9,9 +9,10 @@ angular.module('app.sms', ['base'])
                 controller: 'SmsCtrl'
             });
 
-//        $urlRouterProvider.where('/sms', '/sms');
+        $urlRouterProvider.when('/sms/meeting', '/sms/meeting/meetingroom');
     })
 
     .controller('SmsCtrl', function () {
+
     })
 ;

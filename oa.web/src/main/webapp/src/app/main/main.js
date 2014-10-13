@@ -10,7 +10,7 @@ angular.module('app', ['app.sms'])
                 controller: 'MainCtrl'
             });
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/sms');
 
         cfpLoadingBarProvider.includeSpinner = false;
 

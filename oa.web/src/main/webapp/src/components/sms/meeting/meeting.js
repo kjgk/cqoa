@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app.sms')
-    .config(function ($stateProvider, RestangularProvider) {
+    .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('sms.meeting', {
                 url: '/meeting',
