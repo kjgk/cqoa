@@ -65,7 +65,8 @@ Ext.define('withub.ext.workflow.flowType.FlowTypeList', {
                     iconCls: 'icon-edit',
                     handler: function () {
                         //centerWindow(PageContext.contextPath + "/workflow/flowType/flowChartEdit.page" + "?flowTypeId=" + record.get('objectId'), 1400, 600);
-                        window.open(PageContext.contextPath + "/workflow/flowType/flowChartEdit.page" + "?flowTypeId=" + record.get('objectId'));
+                        //window.open(PageContext.contextPath + "/workflow/flowType/flowChartEdit.page" + "?flowTypeId=" + record.get('objectId'));
+                        window.open("/diagram.html#/" + record.get('objectId'));
                     },
                     scope: this
                 },

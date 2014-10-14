@@ -1,5 +1,6 @@
 package com.withub.web.controller.workflow;
 
+import com.alibaba.fastjson.JSON;
 import com.withub.common.util.CollectionUtil;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
@@ -11,10 +12,7 @@ import com.withub.web.common.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -124,4 +122,19 @@ public class FlowTypeController extends BaseController {
         modelMap.put("items", items);
     }
 
+    @RequestMapping(value = "/flowType/{objectId}/loadWorkflowConfig", method = RequestMethod.GET)
+    public void loadWorkflowConfig(@PathVariable String objectId, ModelMap modelMap) throws Exception {
+
+        FlowType flowType = flowTypeService.get(FlowType.class, objectId);
+        if (flowType.getFlowChart() != null) {
+            putData(modelMap, flowType.getFlowChart().getConfigInfo());
+        }
+    }
+
+    @RequestMapping(value = "/flowType/{objectId}/saveWorkflowConfig", method = RequestMethod.POST)
+    public void saveWorkflowConfig(@PathVariable String objectId, @RequestBody Map data) throws Exception {
+
+        String content = JSON.toJSON(data.get("content")).toString();
+        flowTypeService.saveWorkflowConfig(objectId, content);
+    }
 }

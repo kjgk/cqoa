@@ -1,17 +1,13 @@
 'use strict';
 
-angular.module('app.workflow', [])
+angular.module('workflow', ['ui.router'])
 
-    .config(function ($stateProvider) {
+    .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('oa.workflow', {
-                url: '/workflow',
-                template: '<div ui-view></div>'
-            })
-            .state('oa.workflow.diagram', {
-                url: '/diagram',
-                templateUrl: 'app/workflow/diagram.html',
-                controller: 'WorkflowDiagramCtrl'
+            .state('main', {
+                url: '/{id}',
+                templateUrl: 'diagram.html',
+                controller: 'WorkflowCtrl'
             })
         ;
     })
@@ -104,13 +100,13 @@ angular.module('app.workflow', [])
         }
     ]})
 
-    .controller('WorkflowDiagramCtrl', function ($scope, emptyDiagram) {
+    .controller('WorkflowCtrl', function ($scope, $http, $state, emptyDiagram) {
 
         var graph = new joint.dia.Graph;
 
         var paper = new joint.dia.Paper({
-            el: '#paper-holder-loading',
-            width: 600,
+            el: '#paper-container',
+            width: 640,
             height: 436,
             gridSize: 5,
             model: graph
@@ -119,10 +115,10 @@ angular.module('app.workflow', [])
         var stencil = new joint.ui.Stencil({
             graph: graph,
             paper: paper,
-            width: 200,
+            width: 180,
             height: 476
         });
-        $('#stencil-holder-loading').append(stencil.render().el);
+        $('#stencil-container').append(stencil.render().el);
 
         var startNode = new joint.shapes.basic.Circle({
             nodeType: 'start',
@@ -164,43 +160,35 @@ angular.module('app.workflow', [])
                     inspector.remove();
                 }
 
+                var inputs = {
+                    attrs: {
+                        text: {
+                            text: { type: 'text', group: 'base', label: '名称', index: 1 }
+                        }
+                    }
+                };
                 if (type == 'link') {
-                    inspector = new joint.ui.Inspector({
-                        inputs: {
-                            attrs: {
-                                text: {
-                                    text: { type: 'text', group: 'base', label: '名称', index: 1 }
-                                }
-                            },
-                            branchTag: { type: 'text', group: 'base', label: '分支标识', index: 2 },
-                            statusTag: { type: 'text', group: 'base', label: '条件标识', index: 3 },
-                            condition: { type: 'textarea', group: 'base', label: '条件', index: 4 },
-                            event: { type: 'text', group: 'base', label: '事件', index: 5 },
-                            description: { type: 'textarea', group: 'base', label: '说明', index: 6 }
-                        },
-                        groups: {
-                            base: { label: '属性', index: 1 }
-                        },
-                        cellView: cellView
+                    _.extend(inputs, {
+                        branchTag: { type: 'text', group: 'base', label: '分支标识', index: 2 },
+                        statusTag: { type: 'text', group: 'base', label: '状态标识', index: 3 },
+                        condition: { type: 'textarea', group: 'base', label: '条件', index: 4 },
+                        event: { type: 'text', group: 'base', label: '事件', index: 5 },
+                        description: { type: 'textarea', group: 'base', label: '说明', index: 6 }
                     });
-                } else if (type == 'start' || type == 'end') {
-                    inspector = new joint.ui.Inspector({
-                        inputs: {
-                            attrs: {
-                                text: {
-                                    text: { type: 'text', group: 'base', label: '名称', index: 1 }
-                                }
-                            }
-                        },
-                        groups: {
-                            base: { label: '属性', index: 1 }
-                        },
-                        cellView: cellView
+                } else if (type == 'first' || type == 'normal') {
+                    _.extend(inputs, {
+                        nodeTag: { type: 'text', group: 'base', label: '标识', index: 2 }
                     });
                 }
 
-
-                $('#inspector-holder-create').html(inspector.render().el);
+                inspector = new joint.ui.Inspector({
+                    inputs: inputs,
+                    groups: {
+                        base: { label: '属性', index: 1 }
+                    },
+                    cellView: cellView
+                });
+                $('#inspector-container').html(inspector.render().el);
             }
         }
 
@@ -221,11 +209,28 @@ angular.module('app.workflow', [])
 
         stencil.load([startNode, firstNode, normalNode, endNode]);
 
-//        graph.fromJSON(emptyDiagram);
-
-        $scope.fn = function () {
-            $scope.graph = graph;
+        $scope.save = function () {
+            $http({
+                url: '/oa/workflow/flowType/' + $state.params.id + '/saveWorkflowConfig',
+                method: 'POST',
+                data: {
+                    content: graph.toJSON()
+                }
+            }).then(function () {
+                alert('保存成功!');
+            });
         }
+
+        $http({
+            url: '/oa/workflow/flowType/' + $state.params.id + '/loadWorkflowConfig',
+            method: 'GET'
+        }).then(function (response) {
+            if (response.data.data) {
+                graph.fromJSON(angular.fromJson(response.data.data));
+            } else {
+                graph.fromJSON(emptyDiagram);
+            }
+        })
 
     })
 ;

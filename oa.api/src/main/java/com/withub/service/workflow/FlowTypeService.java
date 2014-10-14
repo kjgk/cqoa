@@ -7,7 +7,7 @@ import com.withub.service.EntityService;
 
 public interface FlowTypeService extends EntityService {
 
-    public void saveWorkflowConfig(String flowTypeId, String xml) throws Exception;
+    public void saveWorkflowConfig(String flowTypeId, String data) throws Exception;
 
     public FlowType getFlowTypeByEntity(AbstractBaseEntity entity) throws Exception;
 

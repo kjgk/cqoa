@@ -1,0 +1,55 @@
+<!doctype html>
+<html ng-app="workflow">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <!-- build: styles/diagram.css -->
+
+    <link rel="stylesheet" href="app/vendor.css">
+    <link rel="stylesheet" href="bower_components/joint/dist/joint.all.min.css"/>
+    <link rel="stylesheet" href="components/workflow/diagram.css">
+    <!-- endbuild -->
+
+    <!-- build: scripts/diagram.js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/joint/dist/joint.all.min.js"></script>
+    <script src="components/workflow/diagram.js"></script>
+    <!-- endbuild -->
+
+</head>
+<body>
+
+<div class="diagram" ui-view></div>
+
+<script id="diagram.html" type="text/ng-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default" style="width: 182px; float: left">
+                <div class="panel-heading">
+                    <h3 class="panel-title">流程节点</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="stencil-container"></div>
+                </div>
+            </div>
+            <div class="panel panel-default" style="margin-left: 190px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">流程图</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="paper-container"></div>
+                    <div id="inspector-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12" style="margin-top: 12px;">
+            <button class="btn btn-lg btn-primary pull-right" ng-click="save()">保存</button>
+        </div>
+    </div>
+</script>
+</body>
+</html>

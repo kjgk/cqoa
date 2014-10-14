@@ -1,5 +1,6 @@
 package com.withub.service.impl.workflow;
 
+import com.alibaba.fastjson.JSON;
 import com.withub.common.enumeration.TimeUnit;
 import com.withub.common.util.CollectionUtil;
 import com.withub.common.util.Dom4jUtil;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("flowTypeService")
 @Transactional(rollbackForClassName = {"Exception", "BaseBusinessException"})
@@ -41,6 +43,8 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
     //=============================== 接口实现 ============================================================
 
     public void saveWorkflowConfig(String flowTypeId, String xml) throws Exception {
+
+        Map data = JSON.parseObject(xml);
 
         // 删除流程相关配置信息
         String sql = "delete from WF_FlowChart where flowTypeId=?";
@@ -59,6 +63,12 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
         flowChart.setFlowType(flowType);
         flowChart.setConfigInfo(xml);
         save(flowChart);
+
+        // todo
+
+        if (true) {
+            return;
+        }
 
         // 解析 XML 配置信息
         Document xmlDoc = DocumentHelper.parseText(xml);
@@ -182,6 +192,7 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
             }
         }
     }
+
 
     public FlowType getFlowTypeByEntity(AbstractBaseEntity entity) throws Exception {
 

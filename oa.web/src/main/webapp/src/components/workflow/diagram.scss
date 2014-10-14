@@ -1,19 +1,27 @@
+
 .inspector .group > .group-label:before {
   content: '';
 }
 
 .diagram {
+  width: 1200px;
+  margin: 12px auto;
   .panel {
     margin-bottom: 0;
   }
   .panel-body {
     padding: 0;
   }
-
 }
 
 .halo {
   .handle.clone {
+    display: none;
+  }
+  .handle.rotate {
+    display: none;
+  }
+  .handle.fork {
     display: none;
   }
   .box {
@@ -43,31 +51,31 @@
   }
 }
 
-#stencil-holder-loading {
+#stencil-container {
   display: inline-block;
-  width: 200px;
+  width: 180px;
   height: 480px;
   float: left;
   position: relative;
 }
 
-#paper-holder-loading {
+#paper-container {
   display: inline-block;
-  width: 600px;
+  width: 640px;
   height: 480px;
   float: left;
   position: relative;
 }
 
-#inspector-holder-create {
+#inspector-container {
+  margin-top: 8px;
   display: inline-block;
   width: 360px;
-  height: 480px;
+  height: 460px;
   position: relative;
   font-size: 12px;
   background-color: #333;
   color: #bcbcbc;
-
   .inspector .group.closed {
     height: 36px;
   }
