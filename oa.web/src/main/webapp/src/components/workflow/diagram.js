@@ -177,7 +177,25 @@ angular.module('workflow', ['ui.router'])
                     });
                 } else if (type == 'first' || type == 'normal') {
                     _.extend(inputs, {
-                        nodeTag: { type: 'text', group: 'base', label: '标识', index: 2 }
+                        nodeTag: { type: 'text', group: 'base', label: '标识', index: 2 },
+                        ProcType: { type: 'text', group: 'base', label: '节点类型', index: 3 },
+                        SuspendDescription: { type: 'text', group: 'base', label: '流程挂起描述', index: 4 },
+                        Executer: { type: 'text', group: 'base', label: '取人方法', index: 5 },
+                        HandlerOnFlowNode: { type: 'text', group: 'base', label: '前面流程节点上的执行人', index: 6 },
+                        UserPropertyOnEntity: { type: 'text', group: 'base', label: '实体上的用户属性', index: 7 },
+                        OrganizationId: { type: 'text', group: 'base', label: '组织机构ID', index: 8 },
+                        RoleId: { type: 'text', group: 'base', label: '角色ID', index: 9 },
+                        UseRootNode: { type: 'text', group: 'base', label: '使用根节点', index: 10 },
+                        OrganizationProperty: { type: 'text', group: 'base', label: '组织机构属性', index:11 },
+                        RoleProperty: { type: 'text', group: 'base', label: '角色属性', index: 12 },
+                        HandlerFetchCount: { type: 'text', group: 'base', label: '取人数', index: 13 },
+                        HandlerFetchType: { type: 'text', group: 'base', label: '取人方式', index: 14 },
+                        TimeLimit: { type: 'text', group: 'base', label: '处理时限', index: 15 },
+                        FlowNodeAction: { type: 'text', group: 'base', label: '行为动作', index: 16 },
+                        WarnType: { type: 'text', group: 'base', label: '提醒方式', index: 17 },
+                        EntityStatusTag: { type: 'text', group: 'base', label: '表单状态', index: 18 },
+                        Activity: { type: 'text', group: 'base', label: '处理界面', index: 19 },
+                        NotifyContent: { type: 'text', group: 'base', label: '通知内容模板', index: 20 }
                     });
                 }
 
