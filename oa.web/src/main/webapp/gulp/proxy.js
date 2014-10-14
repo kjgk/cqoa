@@ -50,10 +50,10 @@ function proxyMiddleware(req, res, next) {
      */
 
     if (req.url.indexOf("/oa") === 0) {
-        console.log('proxy --- ' + req.url)
+//        console.log('proxy --- ' + req.url)
         proxy.web(req, res);
     } else {
-        console.log('next --- ' + req.url)
+//        console.log('next --- ' + req.url)
         next();
     }
 }

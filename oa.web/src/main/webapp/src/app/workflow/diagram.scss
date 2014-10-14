@@ -1,0 +1,75 @@
+.inspector .group > .group-label:before {
+  content: '';
+}
+
+.diagram {
+  .panel {
+    margin-bottom: 0;
+  }
+  .panel-body {
+    padding: 0;
+  }
+
+}
+
+.halo {
+  .handle.clone {
+    display: none;
+  }
+  .box {
+    display: none;
+  }
+}
+
+.inspector {
+  .field {
+    display: block;
+    margin: 8px 4px;
+  }
+  label {
+    display: block;
+    float: left;
+    width: 90px;
+    margin: 0;
+  }
+  input {
+    width: 240px;
+    padding: 4px;
+  }
+  textarea {
+    height: 64px;
+    width: 240px;
+    padding: 4px;
+  }
+}
+
+#stencil-holder-loading {
+  display: inline-block;
+  width: 200px;
+  height: 480px;
+  float: left;
+  position: relative;
+}
+
+#paper-holder-loading {
+  display: inline-block;
+  width: 600px;
+  height: 480px;
+  float: left;
+  position: relative;
+}
+
+#inspector-holder-create {
+  display: inline-block;
+  width: 360px;
+  height: 480px;
+  position: relative;
+  font-size: 12px;
+  background-color: #333;
+  color: #bcbcbc;
+
+  .inspector .group.closed {
+    height: 36px;
+  }
+
+}

@@ -11,23 +11,25 @@
     <link rel="stylesheet" href="app/vendor.css">
 
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
-    <link rel="stylesheet" href="bower_components/ngQuickDate/dist/ng-quick-date.css" />
-    <link rel="stylesheet" href="bower_components/ngQuickDate/dist/ng-quick-date-default-theme.css" />
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css"/>
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css"/>
+    <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css"/>
+    <link rel="stylesheet" href="bower_components/joint/dist/joint.all.min.css"/>
+    <link rel="stylesheet" href="bower_components/ngQuickDate/dist/ng-quick-date.css"/>
+    <link rel="stylesheet" href="bower_components/ngQuickDate/dist/ng-quick-date-default-theme.css"/>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:css({.tmp,src}) styles/main.css -->
     <link rel="stylesheet" href="assets/app.css">
     <link rel="stylesheet" href="app/app.css">
+    <link rel="stylesheet" href="app/workflow/diagram.css">
     <!-- endbuild -->
 
     <script>
         PageContext = {
             path: '/oa',
-            currentUser:{
+            currentUser: {
                 objectId: '12',
                 name: 'admin',
                 organization: {
@@ -87,6 +89,7 @@
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
+<script src="bower_components/joint/dist/joint.all.min.js"></script>
 <script src="bower_components/ngQuickDate/dist/ng-quick-date.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
@@ -97,6 +100,7 @@
 <script src="components/validation/validation.rule.js"></script>
 <script src="components/base.js"></script>
 <script src="app/app.js"></script>
+<script src="app/workflow/diagram.js"></script>
 <script src="app/oa/oa.js"></script>
 <script src="app/mobile/mobile.js"></script>
 <script src="app/oa/meeting/meeting-room.js"></script>
@@ -107,6 +111,8 @@
 <script src="app/oa/leave/leave.js"></script>
 <script src="app/oa/training/training.js"></script>
 <script src="app/oa/carUse/carUse.js"></script>
+<script src="app/oa/train/train.js"></script>
+
 <!-- inject:partials -->
 <!-- angular templates will be automaticaly converted in js and inserted here -->
 <!-- endinject -->

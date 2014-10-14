@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app', ['app.oa', 'app.mobile'])
+angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
 
     .value('PageContext', PageContext)
 
@@ -38,7 +38,7 @@ angular.module('app', ['app.oa', 'app.mobile'])
 
                 'responseError': function (rejection) {
                     cfpLoadingBar.complete();
-                    toaster.pop('error', "错误", rejection);
+                    toaster.pop('error', rejection.config.method + ':' + rejection.config.url, rejection.status + ':' + rejection.statusText);
                     return $q.reject(rejection);
                 }
             };
