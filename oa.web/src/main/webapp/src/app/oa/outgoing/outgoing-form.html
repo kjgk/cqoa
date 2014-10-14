@@ -1,0 +1,101 @@
+<form class="form-horizontal" role="form" name="outgoingForm">
+    <div class="modal-header">
+        <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">出差人</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control" readonly="" value="{{PageContext.currentUser.name}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">开始日期</label>
+
+            <div class="col-sm-10">
+                <quick-datepicker ng-model='outgoing.beginDate'
+                                  date-format="yyyy-MM-dd"
+                                  placeholder="选择日期"
+                                  disable-timepicker="true"
+                                  disable-clear-button="true"
+                                  required="true"
+                        >
+                </quick-datepicker>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">结束日期</label>
+
+            <div class="col-sm-10">
+                <quick-datepicker ng-model='outgoing.endDate'
+                                  date-format="yyyy-MM-dd"
+                                  placeholder="选择日期"
+                                  disable-timepicker="true"
+                                  disable-clear-button="true"
+                                  required="true"
+                        >
+                </quick-datepicker>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">本市出差</label>
+
+            <div class="col-sm-4">
+                <input type="radio" name="localCity" ng-model="outgoing.localCity" ng-value="1"/> 是
+            </div>
+            <div class="col-sm-4">
+                <input type="radio" name="localCity" ng-model="outgoing.localCity" ng-value="0"/> 否
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">出差事由</label>
+
+            <div class="col-sm-10">
+                <textarea class="form-control" name="description"
+                       ng-model="outgoing.description"
+                       validator="required"
+                       rows="5"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">目的地</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="destination"
+                       ng-model="outgoing.destination"
+                       validator="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">路线</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control"
+                       name="driveRoute" ng-model="outgoing.driveRoute" validator="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">交通工具</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control"
+                       name="transportation" ng-model="outgoing.transportation" validator="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">是否派车</label>
+
+            <div class="col-sm-4">
+                <input type="radio" name="requiredCar" ng-model="outgoing.requiredCar" ng-value="1"/> 是
+            </div>
+            <div class="col-sm-4">
+                <input type="radio" name="requiredCar" ng-model="outgoing.requiredCar" ng-value="0"/> 否
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" validation-submit="outgoingForm" ng-click="submit()">保存</button>
+        <button class="btn btn-warning" ng-click="cancel()">取消</button>
+    </div>
+</form>

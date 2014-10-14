@@ -46,6 +46,10 @@ angular.module('app', ['app.oa', 'app.mobile'])
 
     })
 
-    .controller('MainCtrl', function () {
+    .controller('MainCtrl', function ($rootScope) {
+
+        console.log(PageContext)
+
+        $rootScope.PageContext = PageContext;
     })
 ;

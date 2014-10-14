@@ -1,0 +1,47 @@
+<div class="right">
+    <div>
+        <div class="rn_c">
+            <div class="ywtj"><p>司机管理</p>
+                <button class="btn btn-primary btn-sm pull-right" ng-click="createDriver()"><i
+                        class="fa fa-plus fa-fw"></i> 添加
+                </button>
+                <div class="clear"></div>
+            </div>
+            <table simple-table="grid" class="rbga" border="1">
+                <tr class="rlm_bga">
+                    <td>姓名</td>
+                    <td>性别</td>
+                    <td>身份证</td>
+                    <td>状态</td>
+                    <td>驾照编号</td>
+                    <td>驾照获得日期</td>
+                    <td>出生日期</td>
+                    <td>联系电话</td>
+                    <td>备注</td>
+                    <td style="width: 120px;">操作</td>
+                </tr>
+                <tr class="nr1" ng-repeat="x in grid.items">
+                    <td>{{x.name}}</td>
+                    <td>{{x.gender===1?"男":"女"}}</td>
+                    <td>{{x.identityCard}}</td>
+                    <td>{{x.status===1?"在职":"离职"}}</td>
+                    <td>{{x.licenseCode}}</td>
+                    <td>{{x.licenseDate | date:'yyyy年MM月dd日'}}</td>
+                    <td>{{x.birthday | date:'yyyy年MM月dd日'}}</td>
+                    <td>{{x.telephone}}</td>
+                    <td>{{x.description}}</td>
+                    <td>
+                        <button class="btn btn-xs btn-primary" ng-click="updateDriver(x)">编辑</button>
+                        &nbsp;
+                        <button class="btn btn-xs btn-danger" ng-click="deleteDriver(x)">删除</button>
+                    </td>
+                </tr>
+
+            </table>
+
+            <div pagination ng-model="grid.currentPage" total-items="grid.total"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+

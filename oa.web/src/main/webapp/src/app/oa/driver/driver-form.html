@@ -1,0 +1,100 @@
+<form class="form-horizontal" role="form" name="driverForm">
+    <div class="modal-header">
+        <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">姓名</label>
+
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="name" ng-model="driver.name" validator="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">状态</label>
+
+            <div class="col-sm-4">
+                <input type="radio" name="status" ng-model="driver.status" ng-value="1"/> 在职
+            </div>
+            <div class="col-sm-4">
+                <input type="radio" name="status" ng-model="driver.status" ng-value="0"/> 离职
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">性别</label>
+
+            <div class="col-sm-4">
+                <input type="radio" name="gender" ng-model="driver.gender" ng-value="1"/> 男
+            </div>
+            <div class="col-sm-4">
+                <input type="radio" name="gender" ng-model="driver.gender" ng-value="0"/> 女
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">身份证</label>
+
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="identityCard" ng-model="driver.identityCard"
+                       validator="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">驾照编号</label>
+
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="licenseCode" ng-model="driver.licenseCode"
+                       validator="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">获得驾照日期</label>
+
+            <div class="col-sm-9">
+                <quick-datepicker ng-model='driver.licenseDate'
+                                  date-format="yyyy-MM-dd"
+                                  placeholder="选择日期"
+                                  disable-timepicker="true"
+                                  disable-clear-button="true"
+                                  required="true"
+                        >
+                </quick-datepicker>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">出生日期</label>
+
+            <div class="col-sm-9">
+                <quick-datepicker ng-model='driver.birthday'
+                                  date-format="yyyy-MM-dd"
+                                  placeholder="选择日期"
+                                  disable-timepicker="true"
+                                  disable-clear-button="true"
+                                  required="true"
+                        >
+                </quick-datepicker>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">联系电话</label>
+
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="telephone" ng-model="driver.telephone"
+                       validator="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备注</label>
+
+            <div class="col-sm-9">
+                <textarea rows="5" class="form-control" name="description"
+                          ng-model="driver.description"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" validation-submit="driverForm" ng-click="submit()">保存</button>
+        <button class="btn btn-warning" ng-click="cancel()">取消</button>
+    </div>
+</form>

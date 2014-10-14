@@ -1,0 +1,35 @@
+<div class="right">
+    <div>
+        <div class="rn_c">
+            <div class="ywtj"><p>综合事项管理</p>
+                <button class="btn btn-primary btn-sm pull-right" ng-click="createMiscellaneous()"><i
+                        class="fa fa-plus fa-fw"></i> 添加
+                </button>
+                <div class="clear"></div>
+            </div>
+            <table simple-table="grid" class="rbga" border="1">
+                <tr class="rlm_bga">
+                    <td>申请事项</td>
+                    <td>状态</td>
+                    <td>申请人</td>
+                    <td style="width: 120px;">操作</td>
+                </tr>
+                <tr class="nr1" ng-repeat="x in grid.items">
+                    <td>{{x.description}}</td>
+                    <td>{{x.status===1?"启用":"报废"}}</td>
+                    <td>{{PageContext.currentUser.name}}</td>
+                    <td>
+                        <button class="btn btn-xs btn-primary" ng-click="updateMiscellaneous(x)">编辑</button>
+                        &nbsp;
+                        <button class="btn btn-xs btn-danger" ng-click="deleteMiscellaneous(x)">删除</button>
+                    </td>
+                </tr>
+
+            </table>
+
+            <div pagination ng-model="grid.currentPage" total-items="grid.total"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
