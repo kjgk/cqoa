@@ -2,9 +2,15 @@
     <div>
         <div class="rn_c">
             <div class="ywtj"><p>车辆管理</p>
-                <button class="btn btn-primary btn-sm pull-right" ng-click="createCar()"><i
-                        class="fa fa-plus fa-fw"></i> 添加
-                </button>
+                <div class="tool-bar">
+                    <button class="btn btn-primary btn-sm" ng-click="createCar()"><i
+                            class="fa fa-plus fa-fw"></i> 添加
+                    </button>
+                    <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i
+                            class="fa fa-search fa-fw"></i> 查询
+                    </button>
+                    <input type="text" class="search" placeholder="请输入姓名" ng-model="grid.queryInfo.name">
+                </div>
                 <div class="clear"></div>
             </div>
             <table simple-table="grid" class="rbga" border="1">

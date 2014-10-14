@@ -4,7 +4,7 @@ angular.module('app', ['app.oa', 'app.mobile'])
 
     .value('PageContext', PageContext)
 
-    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, RestangularProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, RestangularProvider, $datepickerProvider, $timepickerProvider) {
 
         $urlRouterProvider.otherwise('/oa/meetingroom');
 
@@ -42,6 +42,15 @@ angular.module('app', ['app.oa', 'app.mobile'])
                     return $q.reject(rejection);
                 }
             };
+        });
+
+        angular.extend($datepickerProvider.defaults, {
+            dateFormat: 'yyyy-M-d'
+        });
+
+        angular.extend($timepickerProvider.defaults, {
+            timeFormat: 'HH:mm',
+            length: 7
         });
 
     })

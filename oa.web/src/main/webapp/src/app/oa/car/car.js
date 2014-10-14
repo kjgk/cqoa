@@ -96,10 +96,7 @@ angular.module('app.oa')
     .controller('CarUpdateCtrl', function ($scope, $modalInstance, CarService, objectId) {
 
 
-        $scope.car = CarService.get(objectId).then(function(data){
-            $scope.car = data;
-            $scope.car.purchaseDate = new Date(data.purchaseDate);
-        });
+        $scope.car = CarService.get(objectId).$object;
         $scope.title = '修改车辆';
 
         $scope.cancel = function () {
