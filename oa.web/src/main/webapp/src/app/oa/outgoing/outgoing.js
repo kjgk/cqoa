@@ -78,7 +78,9 @@ angular.module('app.oa')
 
         $scope.outgoing = {
             localCity: 0,
-            requiredCar: 0
+            requiredCar: 0,
+            beginDate:new Date,
+            endDate:new Date
         };
         $scope.title = '新增出差';
 

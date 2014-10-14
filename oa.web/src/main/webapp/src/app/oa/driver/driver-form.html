@@ -30,7 +30,6 @@
             <div class="col-sm-4">
                 <input type="radio" name="gender" ng-model="driver.gender" ng-value="0"/> 女
             </div>
-
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">身份证</label>
@@ -48,32 +47,23 @@
                        validator="required">
             </div>
         </div>
+
         <div class="form-group">
             <label class="col-sm-3 control-label">获得驾照日期</label>
 
             <div class="col-sm-9">
-                <quick-datepicker ng-model='driver.licenseDate'
-                                  date-format="yyyy-MM-dd"
-                                  placeholder="选择日期"
-                                  disable-timepicker="true"
-                                  disable-clear-button="true"
-                                  required="true"
-                        >
-                </quick-datepicker>
+                <input type="text" class="form-control"
+                       ng-model='driver.licenseDate' name="licenseDate"
+                       bs-datepicker="">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">出生日期</label>
 
             <div class="col-sm-9">
-                <quick-datepicker ng-model='driver.birthday'
-                                  date-format="yyyy-MM-dd"
-                                  placeholder="选择日期"
-                                  disable-timepicker="true"
-                                  disable-clear-button="true"
-                                  required="true"
-                        >
-                </quick-datepicker>
+                <input type="text" class="form-control"
+                       ng-model='driver.birthday' name="birthday"
+                       bs-datepicker="">
             </div>
         </div>
         <div class="form-group">

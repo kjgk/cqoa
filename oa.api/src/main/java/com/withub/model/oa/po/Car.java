@@ -13,7 +13,7 @@ public class Car extends AbstractBaseEntity {
 
     private String name;
 
-    //   CARTYPE
+    // todo CarType
 
     private String license;
 

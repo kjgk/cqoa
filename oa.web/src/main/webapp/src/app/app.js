@@ -45,12 +45,12 @@ angular.module('app', ['app.oa', 'app.mobile'])
         });
 
         angular.extend($datepickerProvider.defaults, {
-            dateFormat: 'yyyy-M-d'
+            dateFormat: 'yyyy年M月d日',
+            autoclose:true
         });
 
         angular.extend($timepickerProvider.defaults, {
-            timeFormat: 'HH:mm',
-            length: 7
+            timeFormat: 'HH:mm'
         });
 
     })

@@ -18,8 +18,10 @@ public class Miscellaneous extends AbstractBaseEntity {
     @JoinColumn(name = "organizationId")
     private Organization organization;
 
+    // todo status => String
     private Integer status;
 
+    // 申请事由
     private String description;
 
     //================================ 属性方法 ==========================================================

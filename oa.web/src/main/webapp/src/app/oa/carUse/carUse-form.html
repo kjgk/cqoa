@@ -19,18 +19,34 @@
 
             <div class="col-sm-5">
                 <input type="text" class="form-control"
-                       ng-model='carUse.startTime' name="startTime"
+                       ng-model='carUse.beginTime'
+                       data-max-date="{{carUse.endTime}}"
                        bs-datepicker="">
-                {{carUse.startTime  | date:"yyyy-M-d" }}
             </div>
 
             <div class="col-sm-5">
                 <input type="text" class="form-control"
-                       ng-model='carUse.startTime' name="startTime"
+                       ng-model='carUse.beginTime'
                        bs-timepicker="">
-                {{carUse.startTime | date:"yyyy-M-d HH:mm" }}
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">结束时间</label>
+
+            <div class="col-sm-5">
+                <input type="text" class="form-control"
+                       ng-model='carUse.endTime'
+                       data-min-date="{{carUse.beginTime}}"
+                       bs-datepicker="">
+            </div>
+
+            <div class="col-sm-5">
+                <input type="text" class="form-control"
+                       ng-model='carUse.endTime'
+                       bs-timepicker="">
+            </div>
+        </div>
+
         <div class="form-group">
             <label class="col-sm-2 control-label">前往地点</label>
 
