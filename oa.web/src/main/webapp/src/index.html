@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
+    <link rel="stylesheet" href="bower_components/ngQuickDate/dist/ng-quick-date.css" />
+    <link rel="stylesheet" href="bower_components/ngQuickDate/dist/ng-quick-date-default-theme.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -24,12 +26,20 @@
 
     <script>
         PageContext = {
-            path: '/oa'
+            path: '/oa',
+            currentUser:{
+                objectId: '12',
+                name: 'admin',
+                organization: {
+                    objectId: '',
+                    name: '默认组织结构'
+                }
+            }
         };
     </script>
 
 </head>
-<body>
+<body ng-controller="MainCtrl">
 
 <div class="top">
     <div class="logo"><img src="assets/images/logo.png"/>
@@ -77,6 +87,7 @@
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
+<script src="bower_components/ngQuickDate/dist/ng-quick-date.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -89,7 +100,13 @@
 <script src="app/oa/oa.js"></script>
 <script src="app/mobile/mobile.js"></script>
 <script src="app/oa/meeting/meeting-room.js"></script>
-
+<script src="app/oa/driver/driver.js"></script>
+<script src="app/oa/car/car.js"></script>
+<script src="app/oa/miscellaneous/miscellaneous.js"></script>
+<script src="app/oa/outgoing/outgoing.js"></script>
+<script src="app/oa/leave/leave.js"></script>
+<script src="app/oa/training/training.js"></script>
+<script src="app/oa/carUse/carUse.js"></script>
 <!-- inject:partials -->
 <!-- angular templates will be automaticaly converted in js and inserted here -->
 <!-- endinject -->

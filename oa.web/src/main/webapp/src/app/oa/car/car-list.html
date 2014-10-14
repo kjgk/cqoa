@@ -1,0 +1,41 @@
+<div class="right">
+    <div>
+        <div class="rn_c">
+            <div class="ywtj"><p>车辆管理</p>
+                <button class="btn btn-primary btn-sm pull-right" ng-click="createCar()"><i
+                        class="fa fa-plus fa-fw"></i> 添加
+                </button>
+                <div class="clear"></div>
+            </div>
+            <table simple-table="grid" class="rbga" border="1">
+                <tr class="rlm_bga">
+                    <td>姓名</td>
+                    <td>认证</td>
+                    <td>容量</td>
+                    <td>购买日期</td>
+                    <td>状态</td>
+                    <td>备注</td>
+                    <td style="width: 120px;">操作</td>
+                </tr>
+                <tr class="nr1" ng-repeat="x in grid.items">
+                    <td>{{x.name}}</td>
+                    <td>{{x.license}}</td>
+                    <td>{{x.capacity}}</td>
+                    <td>{{x.purchaseDate | date:'yyyy年MM月dd日'}}</td>
+                    <td>{{x.status===1?"启用":"报废"}}</td>
+                    <td>{{x.description}}</td>
+                    <td>
+                        <button class="btn btn-xs btn-primary" ng-click="updateCar(x)">编辑</button>
+                        &nbsp;
+                        <button class="btn btn-xs btn-danger" ng-click="deleteCar(x)">删除</button>
+                    </td>
+                </tr>
+
+            </table>
+
+            <div pagination ng-model="grid.currentPage" total-items="grid.total"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+

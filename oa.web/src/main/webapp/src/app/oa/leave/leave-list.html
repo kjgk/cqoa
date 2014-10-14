@@ -1,0 +1,38 @@
+<div class="right">
+    <div>
+        <div class="rn_c">
+            <div class="ywtj"><p>出差管理</p>
+                <button class="btn btn-primary btn-sm pull-right" ng-click="createLeave()"><i
+                        class="fa fa-plus fa-fw"></i> 添加
+                </button>
+                <div class="clear"></div>
+            </div>
+            <table simple-table="grid" class="rbga" border="1">
+                <tr class="rlm_bga">
+                    <td>请假人</td>
+                    <td>开始日期</td>
+                    <td>结束日期</td>
+                    <td>本市出差</td>
+                    <td>请假事由</td>
+                    <td style="width: 120px;">操作</td>
+                </tr>
+                <tr class="nr1" ng-repeat="x in grid.items">
+                    <td>{{PageContext.currentUser.name}}</td>
+                    <td>{{x.beginDate | date:'yyyy年MM月dd日'}}</td>
+                    <td>{{x.endDate | date:'yyyy年MM月dd日'}}</td>
+                    <td>{{x.localCity===1?"是":"否"}}</td>
+                    <td>{{x.description}}</td>
+                    <td>
+                        <button class="btn btn-xs btn-primary" ng-click="updateLeave(x)">编辑</button>
+                        &nbsp;
+                        <button class="btn btn-xs btn-danger" ng-click="deleteLeave(x)">删除</button>
+                    </td>
+                </tr>
+
+            </table>
+
+            <div pagination ng-model="grid.currentPage" total-items="grid.total"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
