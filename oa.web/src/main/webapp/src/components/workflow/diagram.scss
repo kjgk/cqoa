@@ -32,22 +32,27 @@
 .inspector {
   .field {
     display: block;
-    margin: 8px 4px;
+    margin: 10px 4px;
   }
   label {
     display: block;
     float: left;
     width: 90px;
     margin: 0;
+    clear: both;
   }
-  input {
-    width: 240px;
+
+  input, select, textarea {
+    width: 200px;
     padding: 4px;
+    height: 22px;
+  }
+  select {
+    padding: 2px;
+    color: #333;
   }
   textarea {
     height: 64px;
-    width: 240px;
-    padding: 4px;
   }
 }
 

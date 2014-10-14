@@ -13,91 +13,10 @@ angular.module('workflow', ['ui.router'])
     })
 
     .value('emptyDiagram', {"cells": [
-        {
-            "type": "basic.Circle",
-            "size": {
-                "width": 80,
-                "height": 50
-            },
-            "position": {
-                "x": 45,
-                "y": 35
-            },
-            "angle": 0,
-            "id": "69446d13-0194-4ae7-92ae-77b17fd161a6",
-            "embeds": "",
-            "z": 1,
-            "base": 5,
-            "attrs": {
-                "circle": {
-                    "fill": "#5cb85c"
-                },
-                "text": {
-                    "text": "开始"
-                }
-            }
-        },
-        {
-            "type": "basic.Rect",
-            "position": {
-                "x": 220,
-                "y": 35
-            },
-            "size": {
-                "width": 80,
-                "height": 50
-            },
-            "angle": 0,
-            "id": "f8df118a-9905-402b-be2e-84aba553f738",
-            "embeds": "",
-            "z": 2,
-            "base": 5,
-            "attrs": {
-                "rect": {
-                    "fill": "#2798EC"
-                },
-                "text": {
-                    "text": "第一个节点"
-                }
-            }
-        },
-        {
-            "type": "basic.Circle",
-            "size": {
-                "width": 80,
-                "height": 50
-            },
-            "position": {
-                "x": 45,
-                "y": 330
-            },
-            "angle": 0,
-            "id": "22a95b01-71eb-4068-81db-7136f543bc78",
-            "embeds": "",
-            "z": 3,
-            "base": 5,
-            "attrs": {
-                "circle": {
-                    "fill": "#d9534f"
-                },
-                "text": {
-                    "text": "结束"
-                }
-            }
-        },
-        {
-            "type": "link",
-            "id": "0c7fba7f-888c-4824-8795-fbb1b9c9ce99",
-            "embeds": "",
-            "source": {
-                "id": "69446d13-0194-4ae7-92ae-77b17fd161a6"
-            },
-            "target": {
-                "id": "f8df118a-9905-402b-be2e-84aba553f738"
-            },
-            "z": 4,
-            "attrs": {}
-        }
+        {"angle": 0, "attrs": {"circle": {"fill": "#5cb85c"}, "text": {"text": "开始"}}, "embeds": "", "id": "b5f3e9d2-2076-4bdb-9b7b-6d843e83c39d", "nodeType": "start", "position": {"x": 35, "y": 40}, "size": {"height": 50, "width": 80}, "type": "basic.Circle", "z": 1},
+        {"Executer": "#{starter}", "FlowNodeTag": "", "HandlerOnFlowNode": "", "ProcType": "first", "SuspendDescription": "", "UserPropertyOnEntity": "", "angle": 0, "attrs": {"rect": {"fill": "#2798EC"}, "text": {"text": "第一个节点"}}, "embeds": "", "id": "68da8b30-4c3e-4bbd-8746-334b488a3eb0", "nodeType": "first", "position": {"x": 205, "y": 40}, "size": {"height": 50, "width": 80}, "type": "basic.Rect", "z": 2},
+        {"angle": 0, "attrs": {"circle": {"fill": "#d9534f"}, "text": {"text": "结束"}}, "embeds": "", "id": "be0634ec-5fd8-4d07-8c22-97befd256888", "nodeType": "end", "position": {"x": 35, "y": 240}, "size": {"height": 50, "width": 80}, "type": "basic.Circle", "z": 3},
+        {"attrs": {}, "embeds": "", "id": "b6121b94-05f4-4353-bb95-bf95a9aadd47", "source": {"id": "b5f3e9d2-2076-4bdb-9b7b-6d843e83c39d"}, "target": {"id": "68da8b30-4c3e-4bbd-8746-334b488a3eb0"}, "type": "link", "z": 4}
     ]})
 
     .controller('WorkflowCtrl', function ($scope, $http, $state, emptyDiagram) {
@@ -122,22 +41,22 @@ angular.module('workflow', ['ui.router'])
 
         var startNode = new joint.shapes.basic.Circle({
             nodeType: 'start',
-            position: { x: 60, y: 10 }, size: { width: 80, height: 50 },
+            position: { x: 50, y: 10 }, size: { width: 80, height: 50 },
             attrs: { circle: { fill: '#5cb85c' }, text: { text: '开始', fill: 'black' } }
         });
         var endNode = new joint.shapes.basic.Circle({
             nodeType: 'end',
-            position: { x: 60, y: 150 }, size: { width: 80, height: 50 },
+            position: { x: 50, y: 150 }, size: { width: 80, height: 50 },
             attrs: { circle: { fill: '#d9534f' }, text: { text: '结束', fill: 'black' } }
         });
         var firstNode = new joint.shapes.basic.Rect({
             nodeType: 'first',
-            position: { x: 60, y: 80 }, size: { width: 80, height: 50 },
+            position: { x: 50, y: 80 }, size: { width: 80, height: 50 },
             attrs: { rect: { fill: '#2798EC' }, text: { text: '第一个节点', fill: 'black' } }
         });
         var normalNode = new joint.shapes.basic.Rect({
             nodeType: 'normal',
-            position: { x: 60, y: 280 }, size: { width: 80, height: 50 },
+            position: { x: 50, y: 20 }, size: { width: 80, height: 50 },
             attrs: { rect: { fill: '#2798EC' }, text: { text: '节点', fill: 'black' } }
         });
 
@@ -169,34 +88,69 @@ angular.module('workflow', ['ui.router'])
                 };
                 if (type == 'link') {
                     _.extend(inputs, {
-                        branchTag: { type: 'text', group: 'base', label: '分支标识', index: 2 },
-                        statusTag: { type: 'text', group: 'base', label: '状态标识', index: 3 },
-                        condition: { type: 'textarea', group: 'base', label: '条件', index: 4 },
-                        event: { type: 'text', group: 'base', label: '事件', index: 5 },
-                        description: { type: 'textarea', group: 'base', label: '说明', index: 6 }
+                        RamusTag: { type: 'text', group: 'base', label: '分支标识', index: 2 },
+                        StatusTag: { type: 'text', group: 'base', label: '状态标识', index: 3 },
+                        Cond: { type: 'textarea', group: 'base', label: '条件', index: 4 },
+                        Event: { type: 'text', group: 'base', label: '事件', index: 5 },
+                        Desc: { type: 'textarea', group: 'base', label: '说明', index: 6 }
                     });
                 } else if (type == 'first' || type == 'normal') {
                     _.extend(inputs, {
-                        nodeTag: { type: 'text', group: 'base', label: '标识', index: 2 },
-                        ProcType: { type: 'text', group: 'base', label: '节点类型', index: 3 },
+                        FlowNodeTag: { type: 'text', group: 'base', label: '标识', index: 2 },
                         SuspendDescription: { type: 'text', group: 'base', label: '流程挂起描述', index: 4 },
                         Executer: { type: 'text', group: 'base', label: '取人方法', index: 5 },
                         HandlerOnFlowNode: { type: 'text', group: 'base', label: '前面流程节点上的执行人', index: 6 },
-                        UserPropertyOnEntity: { type: 'text', group: 'base', label: '实体上的用户属性', index: 7 },
-                        OrganizationId: { type: 'text', group: 'base', label: '组织机构ID', index: 8 },
-                        RoleId: { type: 'text', group: 'base', label: '角色ID', index: 9 },
-                        UseRootNode: { type: 'text', group: 'base', label: '使用根节点', index: 10 },
-                        OrganizationProperty: { type: 'text', group: 'base', label: '组织机构属性', index:11 },
-                        RoleProperty: { type: 'text', group: 'base', label: '角色属性', index: 12 },
-                        HandlerFetchCount: { type: 'text', group: 'base', label: '取人数', index: 13 },
-                        HandlerFetchType: { type: 'text', group: 'base', label: '取人方式', index: 14 },
-                        TimeLimit: { type: 'text', group: 'base', label: '处理时限', index: 15 },
-                        FlowNodeAction: { type: 'text', group: 'base', label: '行为动作', index: 16 },
-                        WarnType: { type: 'text', group: 'base', label: '提醒方式', index: 17 },
-                        EntityStatusTag: { type: 'text', group: 'base', label: '表单状态', index: 18 },
-                        Activity: { type: 'text', group: 'base', label: '处理界面', index: 19 },
-                        NotifyContent: { type: 'text', group: 'base', label: '通知内容模板', index: 20 }
+                        UserPropertyOnEntity: { type: 'text', group: 'base', label: '实体上的用户属性', index: 7 }
                     });
+
+                    if (type == 'first') {
+                        _.extend(inputs, {
+                            ProcType: { type: 'select', group: 'base', label: '节点类型', index: 3, options: [
+                                {value: 'first', content: '第一个节点' }
+                            ] }
+                        });
+                    }
+
+                    if (type == 'normal') {
+                        _.extend(inputs, {
+                            ProcType: { type: 'select', group: 'base', label: '节点类型', index: 3, options: [
+                                {value: 'andsign', content: '会签' },
+                                {value: 'modify', content: '修改' },
+                                {value: 'submit', content: '提交' },
+                                {value: 'finish', content: '完成' }
+                            ] },
+                            OrganizationId: { type: 'text', group: 'base', label: '组织机构ID', index: 8 },
+                            RoleId: { type: 'text', group: 'base', label: '角色ID', index: 9 },
+                            UseRootNode: { type: 'text', group: 'base', label: '使用根节点', index: 10 },
+                            OrganizationProperty: { type: 'text', group: 'base', label: '组织机构属性', index: 11 },
+                            RoleProperty: { type: 'text', group: 'base', label: '角色属性', index: 12 },
+                            HandlerFetchCount: { type: 'text', group: 'base', label: '取人数', index: 13 },
+                            HandlerFetchType: { type: 'object', group: 'base', label: '取人方式', index: 14,
+                                properties: {
+                                    Random: { type: 'toggle', label: '随机' },
+                                    IdleMost: { type: 'toggle', label: '最空闲' },
+                                    TaskLeast: { type: 'toggle', label: '同类任务最少' }
+                                } },
+                            TimeLimit: { type: 'text', group: 'base', label: '处理时限（工作小时）', index: 15 },
+                            FlowNodeAction: { type: 'object', group: 'base', label: '行为动作', index: 16,
+                                properties: {
+                                    passAction: { type: 'toggle', label: '通过' },
+                                    returnAction: { type: 'toggle', label: '退回' },
+                                    rejectAction: { type: 'toggle', label: '否决' },
+                                    completeAction: { type: 'toggle', label: '完成' },
+                                    discardAction: { type: 'toggle', label: '弃权' }
+                                }},
+                            WarnType: { type: 'object', group: 'base', label: '提醒方式', index: 17,
+                                properties: {
+                                    note: { type: 'toggle', label: '内部消息' },
+                                    sms: { type: 'toggle', label: '手机短信' },
+                                    email: { type: 'toggle', label: '邮件' }
+                                }},
+                            EntityStatusTag: { type: 'text', group: 'base', label: '表单状态', index: 18 },
+                            Activity: { type: 'text', group: 'base', label: '处理界面', index: 19 },
+                            NotifyContent: { type: 'textarea', group: 'base', label: '通知内容模板', index: 20 }
+                        });
+                    }
                 }
 
                 inspector = new joint.ui.Inspector({
@@ -225,7 +179,8 @@ angular.module('workflow', ['ui.router'])
             createInspector(cellView);
         });
 
-        stencil.load([startNode, firstNode, normalNode, endNode]);
+//        stencil.load([startNode, firstNode, normalNode, endNode]);
+        stencil.load([normalNode]);
 
         $scope.save = function () {
             $http({
