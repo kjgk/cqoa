@@ -1,5 +1,7 @@
 package com.withub.web.controller.oa;
 
+import com.withub.common.util.StringUtil;
+import com.withub.model.entity.query.ExpressionOperation;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.oa.po.Driver;
 import com.withub.service.oa.DriverService;
@@ -28,6 +30,11 @@ public class DriverController extends BaseController {
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setTargetEntity(Driver.class);
         setPageInfoQueryCondition(request, queryInfo);
+
+        String name = request.getParameter("name");
+        if (StringUtil.isNotEmpty(name)) {
+            setQueryInfoCondition(queryInfo, "name", name, ExpressionOperation.MatchMiddle);
+        }
 
         putRecordsetInfo(modelMap, driverService.queryDriver(queryInfo));
     }

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
+angular.module('app', ['app.oa', 'app.mobile'])
 
     .value('PageContext', PageContext)
 
@@ -47,8 +47,6 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
     })
 
     .controller('MainCtrl', function ($rootScope) {
-
-        console.log(PageContext)
 
         $rootScope.PageContext = PageContext;
     })

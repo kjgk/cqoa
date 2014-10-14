@@ -1,4 +1,22 @@
 
+.ywtj {
+  .tool-bar {
+    float: right;
+    .btn {
+      float: right;
+      margin-left: 10px;
+    }
+    .search {
+      float: right;
+      width: 240px;
+      height: 30px;
+      border: 1px solid #66AFE9;
+      padding: 4px 8px;
+      font-size: 14px;
+    }
+  }
+}
+
 section {
   margin-top: 12px;
 }

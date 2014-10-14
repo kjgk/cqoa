@@ -30,32 +30,33 @@ angular.module('withub.ui.table', [])
                     return new SimpleGrid(fetchFn, options);
                 }
 
+                var me = this;
                 options = options || {};
 
                 var self = {
                     items: [],
+                    queryInfo: {},
                     params: options.params || {},
                     currentPage: 1,
                     pageSize: options.pageSize || paginationConfig.itemsPerPage,
 
                     fetchData: function (page) {
-                        var grid = this;
-                        page = page || grid.currentPage;
-                        var params = _.extend(grid.params || {}, {
+                        page = page || me.currentPage;
+                        var params = _.extend(me.params || {}, {
                             pageNo: page,
-                            pageSize: grid.pageSize
+                            pageSize: me.pageSize
                         });
                         fetchFn(params).then(function (response) {
                             var result = response.data;
-                            grid.items = result.items;
-                            grid.total = result.total;
+                            me.items = result.items;
+                            me.total = result.total;
                         });
                     },
                     refresh: function () {
                         this.fetchData();
                     },
                     query: function (params) {
-                        _.extend(this.params, params);
+                        _.extend(this.params, _.extend(me.queryInfo, params || {}));
                         this.fetchData(1);
                     }
                 };
