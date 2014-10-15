@@ -3,6 +3,21 @@
         <h4 class="modal-title">{{title}}</h4>
     </div>
     <div class="modal-body">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">申请人</label>
+
+            <div class="col-sm-10">
+                <p>{{PageContext.currentUser.name}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">区域</label>
+
+            <div class="col-sm-10">
+                <p>{{x.localCity===1?"市内":"市外"}}</p>
+            </div>
+        </div>
+
 
         <div class="form-group">
             <label class="col-sm-2 control-label">用车事由</label>
@@ -33,21 +48,6 @@
                 <p>{{carUse.address}}</p>
             </div>
         </div>
-
-
-        <div class="form-group">
-            <label class="col-sm-2 control-label">车辆</label>
-
-            <div class="col-sm-10">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">驾驶员</label>
-
-            <div class="col-sm-10">
-            </div>
-        </div>
-
     </div>
     <div class="modal-footer">
         <button class="btn btn-warning" ng-click="cancel()">关闭</button>
