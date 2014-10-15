@@ -25,13 +25,15 @@
                     <td style="width: 120px;">操作</td>
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
-                    <td>{{PageContext.currentUser.name}}</td>
+                    <td>{{PageContext.currentUser.name}}</td>x
                     <td>{{x.beginDate|$date}}</td>
                     <td>{{x.endDate|$date}}</td>
                     <td>{{x.localCity===1?"是":"否"}}</td>
                     <td>{{x.description}}</td>
                     <td>
                         <button class="btn btn-xs btn-primary" ng-click="updateLeave(x)">编辑</button>
+                        &nbsp;
+                        <button class="btn btn-xs btn-primary" ng-click="viewLeave(x)">查看</button>
                         &nbsp;
                         <button class="btn btn-xs btn-danger" ng-click="deleteLeave(x)">删除</button>
                     </td>

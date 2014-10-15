@@ -1,0 +1,40 @@
+<form class="form-horizontal" role="form" name="leaveForm">
+    <div class="modal-header">
+        <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">请假人</label>
+
+            <div class="col-sm-10">
+                <p>{{PageContext.currentUser.name}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">请假时间</label>
+
+            <div class="col-sm-5">
+                <p>{{leave.beginDate|$date}}</p>
+            </div>
+            <div class="col-sm-5">
+                <p>{{leave.endDate|$date}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">本市出差</label>
+            <div class="col-sm-10">
+                <p>{{leave.localCity===1?"是":"否"}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">请假事由</label>
+
+            <div class="col-sm-10">
+                <p>{{leave.description}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">关闭</button>
+    </div>
+</form>
