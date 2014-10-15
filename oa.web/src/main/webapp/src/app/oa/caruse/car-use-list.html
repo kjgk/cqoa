@@ -24,7 +24,7 @@
                     <td>前往地点</td>
                     <td>车号</td>
                     <td>驾驶员</td>
-                    <td style="width: 120px;">操作</td>
+                    <td style="width: 160px;">操作</td>
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{x.description}}</td>
@@ -35,6 +35,8 @@
                     <td>{{ }}</td>
                     <td>
                         <button class="btn btn-xs btn-primary" ng-click="updateCarUse(x)">编辑</button>
+                        &nbsp;
+                        <button class="btn btn-xs btn-primary" ng-click="viewCarUse(x)">查看</button>
                         &nbsp;
                         <button class="btn btn-xs btn-danger" ng-click="deleteCarUse(x)">删除</button>
                     </td>

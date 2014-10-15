@@ -44,14 +44,6 @@ section {
   font-size: 80%
 }
 
-//.ng-invalid.ng-dirty {
-//  .has-error .form-control
-//}
-//
-//label.has-error.control-label {
-//  .has-error .control-label
-//}
-
 .modal-content {
 
   border-radius: 0;
@@ -60,6 +52,13 @@ section {
     background-color: #2798EC;
     color: #FFFFFF;
     cursor: default;
+  }
+}
+
+.form-group {
+  p {
+    margin: 0;
+    padding: 7px 0 0 0;
   }
 }
 
