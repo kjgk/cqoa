@@ -33,7 +33,21 @@
   .field {
     display: block;
     margin: 10px 4px;
+
+    .object {
+      margin: 0 0 0 90px;
+    }
+
+    .object-property {
+      label {
+        clear: none;
+      }
+      .toggle {
+        margin-left: 90px;
+      }
+    }
   }
+
   label {
     display: block;
     float: left;

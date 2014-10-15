@@ -89,10 +89,14 @@ angular.module('workflow', ['ui.router'])
                 if (type == 'link') {
                     _.extend(inputs, {
                         RamusTag: { type: 'text', group: 'base', label: '分支标识', index: 2 },
-                        StatusTag: { type: 'text', group: 'base', label: '状态标识', index: 3 },
-                        Cond: { type: 'textarea', group: 'base', label: '条件', index: 4 },
-                        Event: { type: 'text', group: 'base', label: '事件', index: 5 },
-                        Desc: { type: 'textarea', group: 'base', label: '说明', index: 6 }
+                        ProcType: { type: 'select', group: 'base', label: '分支类型', index: 3, options: [
+                            {value: '1', content: '条件' },
+                            {value: '2', content: '审批' }
+                        ]},
+                        StatusTag: { type: 'text', group: 'base', label: '状态标识', index: 4 },
+                        Cond: { type: 'textarea', group: 'base', label: '条件', index: 5 },
+                        Event: { type: 'text', group: 'base', label: '事件', index: 6 },
+                        Desc: { type: 'textarea', group: 'base', label: '说明', index: 7 }
                     });
                 } else if (type == 'first' || type == 'normal') {
                     _.extend(inputs, {
@@ -118,7 +122,7 @@ angular.module('workflow', ['ui.router'])
                                 {value: 'modify', content: '修改' },
                                 {value: 'submit', content: '提交' },
                                 {value: 'finish', content: '完成' }
-                            ] },
+                            ]},
                             OrganizationId: { type: 'text', group: 'base', label: '组织机构ID', index: 8 },
                             RoleId: { type: 'text', group: 'base', label: '角色ID', index: 9 },
                             UseRootNode: { type: 'text', group: 'base', label: '使用根节点', index: 10 },
