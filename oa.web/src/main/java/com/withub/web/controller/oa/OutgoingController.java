@@ -1,5 +1,6 @@
 package com.withub.web.controller.oa;
 
+import com.withub.model.entity.query.ExpressionOperation;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.oa.po.Outgoing;
 import com.withub.service.oa.OutgoingService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 
 @Controller
@@ -23,10 +25,15 @@ public class OutgoingController extends BaseController {
     private OutgoingService outgoingService;
 
     @RequestMapping(value = "/outgoing", method = RequestMethod.GET)
-    public void queryOutgoing(HttpServletRequest request, ModelMap modelMap) throws Exception {
+    public void queryOutgoing(HttpServletRequest request, Date date, ModelMap modelMap) throws Exception {
 
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setTargetEntity(Outgoing.class);
+
+        if (date != null) {
+            setQueryInfoCondition(queryInfo, "beginDate", date, ExpressionOperation.LessThanOrEquals);
+            setQueryInfoCondition(queryInfo, "endDate", date, ExpressionOperation.GreaterThanOrEquals);
+        }
         setPageInfoQueryCondition(request, queryInfo);
 
         putRecordsetInfo(modelMap, outgoingService.queryOutgoing(queryInfo));
