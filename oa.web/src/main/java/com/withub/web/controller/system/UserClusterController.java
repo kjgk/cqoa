@@ -221,6 +221,37 @@ public class UserClusterController {
 
     /* ======================= UserClusterRegulation ======================= */
 
+
+    @RequestMapping(value = "/userClusterRegulation/loadManagerTree", method = RequestMethod.GET)
+    public void loadUserClusterRegulationManagerTreeTree(@RequestParam(value = "node") String nodeId, @ModelAttribute(value = "nodes") ArrayList<TreeNode> nodes) throws Exception {
+
+        if (StringUtil.compareValue(nodeId, TreeNode.ROOT)) {
+            UserClusterRegulation root = userClusterService.getRootUserClusterRegulation();
+            TreeNode node = new TreeNode();
+            node.setObjectId(root.getObjectId());
+            node.setText(root.getName());
+            node.setLeaf(false);
+            node.setType(UserClusterRegulation.class.getSimpleName());
+            node.setExpanded(true);
+            nodes.add(node);
+        } else {
+
+            String id = nodeId.split("_")[1];
+            UserClusterRegulation userClusterRegulation = userClusterService.get(UserClusterRegulation.class, id);
+            if (CollectionUtil.isEmpty(userClusterRegulation.getChildList())) {
+                return;
+            }
+            for (UserClusterRegulation child : (userClusterRegulation.getChildList())) {
+                TreeNode node = new TreeNode();
+                node.setObjectId(child.getObjectId());
+                node.setText(child.getName());
+                node.setLeaf(CollectionUtil.isEmpty(child.getChildList()));
+                node.setType(UserClusterRegulation.class.getSimpleName());
+                nodes.add(node);
+            }
+        }
+    }
+
     @RequestMapping(value = "/userClusterRegulation/loadTree", method = RequestMethod.GET)
     public void loadUserClusterRegulationTree(@RequestParam(value = "node") String nodeId
             , @RequestParam(value = "userClusterId", required = false) String userClusterId

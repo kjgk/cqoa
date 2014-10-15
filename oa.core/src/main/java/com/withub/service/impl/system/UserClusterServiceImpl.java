@@ -130,6 +130,9 @@ public class UserClusterServiceImpl extends com.withub.service.EntityServiceImpl
         } else if (ConfigUtil.getSystemConfigInfo().getDatabaseType().equals("PostgreSQL")) {
             selectSql = selectSql.replace(userObjectIdColumn, "uuid_generate_v4(),'"
                     + abstractUserCluster.getObjectId() + "'," + tableAlias + ".objectId");
+        } else if (ConfigUtil.getSystemConfigInfo().getDatabaseType().equals("MySQL")) {
+            selectSql = selectSql.replace(userObjectIdColumn, "uuid(),'"
+                    + abstractUserCluster.getObjectId() + "'," + tableAlias + ".objectId");
         } else {
             selectSql = selectSql.replace(userObjectIdColumn, "newid(),'"
                     + abstractUserCluster.getObjectId() + "'," + tableAlias + ".objectId");
@@ -219,6 +222,11 @@ public class UserClusterServiceImpl extends com.withub.service.EntityServiceImpl
             }
         }
         sb.append("))");
+    }
+
+    public UserClusterRegulation getRootUserClusterRegulation() throws Exception {
+
+        return getRootEntity(UserClusterRegulation.class);
     }
 
     //==================== 属性方法 ====================================================
