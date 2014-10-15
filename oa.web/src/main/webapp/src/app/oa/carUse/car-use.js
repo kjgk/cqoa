@@ -5,8 +5,8 @@ angular.module('app.oa')
     .config(function ($stateProvider) {
         $stateProvider
             .state('oa.carUse', {
-                url: '/carUse',
-                templateUrl: 'app/oa/carUse/carUse-list.html',
+                url: '/caruse',
+                templateUrl: 'app/oa/caruse/car-use-list.html',
                 controller: 'CarUseCtrl'
             })
         ;
@@ -43,7 +43,7 @@ angular.module('app.oa')
 
         $scope.createCarUse = function () {
             var modalInstance = $modal.open({
-                templateUrl: 'app/oa/carUse/carUse-form.html',
+                templateUrl: 'app/oa/caruse/car-use-form.html',
                 controller: 'CarUseCreateCtrl'
             });
             modalInstance.result.then(function (result) {
@@ -53,7 +53,7 @@ angular.module('app.oa')
         };
         $scope.updateCarUse = function (carUse) {
             var modalInstance = $modal.open({
-                templateUrl: 'app/oa/carUse/carUse-form.html',
+                templateUrl: 'app/oa/caruse/car-use-form.html',
                 controller: 'CarUseUpdateCtrl',
                 resolve: {
                     objectId: function () {
@@ -77,8 +77,8 @@ angular.module('app.oa')
     .controller('CarUseCreateCtrl', function ($scope, $modalInstance, CarUseService) {
 
         $scope.carUse = {
-            beginTime:new Date(),
-            endTime:new Date()
+            beginTime: new Date(),
+            endTime: new Date()
         };
         $scope.title = '新增用车';
 
