@@ -16,7 +16,7 @@ angular.module('workflow', ['ui.router'])
         {"angle": 0, "attrs": {"circle": {"fill": "#5cb85c"}, "text": {"text": "开始"}}, "embeds": "", "id": "b5f3e9d2-2076-4bdb-9b7b-6d843e83c39d", "nodeType": "start", "position": {"x": 35, "y": 40}, "size": {"height": 50, "width": 80}, "type": "basic.Circle", "z": 1},
         {"Executer": "#{starter}", "FlowNodeTag": "", "HandlerOnFlowNode": "", "ProcType": "first", "SuspendDescription": "", "UserPropertyOnEntity": "", "angle": 0, "attrs": {"rect": {"fill": "#2798EC"}, "text": {"text": "第一个节点"}}, "embeds": "", "id": "68da8b30-4c3e-4bbd-8746-334b488a3eb0", "nodeType": "first", "position": {"x": 205, "y": 40}, "size": {"height": 50, "width": 80}, "type": "basic.Rect", "z": 2},
         {"angle": 0, "attrs": {"circle": {"fill": "#d9534f"}, "text": {"text": "结束"}}, "embeds": "", "id": "be0634ec-5fd8-4d07-8c22-97befd256888", "nodeType": "end", "position": {"x": 35, "y": 240}, "size": {"height": 50, "width": 80}, "type": "basic.Circle", "z": 3},
-        {"attrs": {}, "embeds": "", "id": "b6121b94-05f4-4353-bb95-bf95a9aadd47", "source": {"id": "b5f3e9d2-2076-4bdb-9b7b-6d843e83c39d"}, "target": {"id": "68da8b30-4c3e-4bbd-8746-334b488a3eb0"}, "type": "link", "z": 4}
+        {"RamusType": "1", "attrs": {}, "embeds": "", "id": "b6121b94-05f4-4353-bb95-bf95a9aadd47", "source": {"id": "b5f3e9d2-2076-4bdb-9b7b-6d843e83c39d"}, "target": {"id": "68da8b30-4c3e-4bbd-8746-334b488a3eb0"}, "type": "link", "z": 4}
     ]})
 
     .controller('WorkflowCtrl', function ($scope, $http, $state, emptyDiagram) {
