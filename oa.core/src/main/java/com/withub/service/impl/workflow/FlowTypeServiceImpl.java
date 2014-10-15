@@ -9,6 +9,7 @@ import com.withub.common.util.StringUtil;
 import com.withub.model.entity.AbstractBaseEntity;
 import com.withub.model.exception.BaseBusinessException;
 import com.withub.model.system.po.Code;
+import com.withub.model.system.po.User;
 import com.withub.model.workflow.enumeration.FlowNodeTaskMode;
 import com.withub.model.workflow.enumeration.FlowNodeType;
 import com.withub.model.workflow.enumeration.HandlerFetchType;
@@ -25,6 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,8 +47,6 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
 
     public void saveWorkflowConfig(String flowTypeId, String xml) throws Exception {
 
-        Map data = JSON.parseObject(xml);
-
         // 删除流程相关配置信息
         String sql = "delete from WF_FlowChart where flowTypeId=?";
         executeSql(sql, flowTypeId);
@@ -59,16 +60,14 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
         // 保存流程图
         FlowChart flowChart = new FlowChart();
         flowChart.setObjectId(StringUtil.getUuid());
-        FlowType flowType = (FlowType) get(FlowType.class, flowTypeId);
+        FlowType flowType = get(FlowType.class, flowTypeId);
         flowChart.setFlowType(flowType);
         flowChart.setConfigInfo(xml);
         save(flowChart);
 
-        // todo
+        // 解析 JSON 配置信息
+        Map dataMap = JSON.parseObject(xml);
 
-        if (true) {
-            return;
-        }
 
         // 解析 XML 配置信息
         Document xmlDoc = DocumentHelper.parseText(xml);
@@ -193,6 +192,166 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
         }
     }
 
+    public void saveWorkflowConfig(final String flowTypeId, Map data, User user) throws Exception {
+
+        // 删除流程相关配置信息
+        String sql = "delete from WF_FlowChart where flowTypeId=?";
+        executeSql(sql, flowTypeId);
+        sql = "delete from WF_FlowNodeRoute where flowTypeId=?";
+        executeSql(sql, flowTypeId);
+        sql = "delete from WF_RamusRegulation where RamusId in (select ObjectId from WF_Ramus where flowTypeId=?)";
+        executeSql(sql, flowTypeId);
+        sql = "delete from WF_Ramus where flowTypeId=?";
+        executeSql(sql, flowTypeId);
+
+        // 保存流程图
+        FlowChart flowChart = new FlowChart();
+        flowChart.setObjectId(StringUtil.getUuid());
+        FlowType flowType = get(FlowType.class, flowTypeId);
+        flowChart.setFlowType(flowType);
+        String jsonChart = JSON.toJSON(data.get("content")).toString();
+        flowChart.setConfigInfo(jsonChart);
+        save(flowChart);
+
+        ArrayList<LinkedHashMap> linkedHashMapList = (ArrayList<LinkedHashMap>) ((LinkedHashMap) data.get("content")).get("cells");
+
+        Code hourTimeUnit = codeService.getCodeByEnum(TimeUnit.Hour);
+
+        for (LinkedHashMap linkedHashMap : linkedHashMapList) {
+
+            if (StringUtil.compareValue(linkedHashMap.get("type").toString(), "basic.Circle")) {
+                FlowNode flowNode = new FlowNode();
+
+                flowNode.setObjectId(linkedHashMap.get("id").toString());
+                flowNode.setCurrentUser(user);
+                flowNode.setFlowType(flowType);
+                String flowNodeName = ((LinkedHashMap) ((LinkedHashMap) linkedHashMap.get("attrs")).get("text")).get("text").toString();
+                flowNode.setName(flowNodeName);
+
+                FlowNodeType flowNodeType;
+                if (StringUtil.compareValue(linkedHashMap.get("nodeType").toString(), "normal")) {
+                    flowNodeType = (FlowNodeType) EnumUtil.getEnumByFieldName(FlowNodeType.class, linkedHashMap.get("FlowNodeType").toString());
+                } else {
+                    flowNodeType = (FlowNodeType) EnumUtil.getEnumByFieldName(FlowNodeType.class, linkedHashMap.get("nodeType").toString());
+                }
+                flowNode.setFlowNodeType(flowNodeType);
+                flowNode.setFlowNodeTag(linkedHashMap.get("FlowNodeTag") == null ? "" : linkedHashMap.get("FlowNodeTag").toString());
+                if (flowNodeType == FlowNodeType.Begin || flowNodeType == FlowNodeType.End) {
+                    flowNode.setTaskExecuteMode(TaskExecuteMode.Auto);
+                } else {
+                    flowNode.setTaskExecuteMode(TaskExecuteMode.Manual);
+                }
+                flowNode.setInstanceReturnMode(linkedHashMap.get("InstanceReturnMode") == null ? 0 : (Integer) linkedHashMap.get("InstanceReturnMode"));
+                flowNode.setExpiration(linkedHashMap.get("TimeLimit") == null ? 0 : (Integer) linkedHashMap.get("TimeLimit"));
+                flowNode.setExpirationTimeUnit(hourTimeUnit);
+
+                flowNode.setFlowNodeTaskMode(FlowNodeTaskMode.Parallelism);
+                flowNode.setActivity(linkedHashMap.get("Activity") == null ? "" : linkedHashMap.get("Activity").toString());
+                flowNode.setAllowAgent(0);
+                flowNode.setAllowTransmit(0);
+
+                LinkedHashMap flowNodeActionMap = (LinkedHashMap) linkedHashMap.get("FlowNodeAction");
+                if (flowNodeActionMap != null) {
+                    flowNode.setPassAction((Boolean) flowNodeActionMap.get("passAction") ? 1 : 0);
+                    flowNode.setReturnAction((Boolean) flowNodeActionMap.get("returnAction") ? 1 : 0);
+                    flowNode.setRejectAction((Boolean) flowNodeActionMap.get("setRejectAction") ? 1 : 0);
+                    flowNode.setDiscardAction((Boolean) flowNodeActionMap.get("discardAction") ? 1 : 0);
+                    flowNode.setCompleteAction((Boolean) flowNodeActionMap.get("completeAction") ? 1 : 0);
+                }
+
+                // TODO 完善流程节点上实现取人规则
+                flowNode.setHandlerServiceMethod(linkedHashMap.get("Executer") == null ? "" : linkedHashMap.get("Executer").toString());
+                flowNode.setHandlerOnFlowNode(linkedHashMap.get("HandlerOnFlowNode") == null ? "" : linkedHashMap.get("HandlerOnFlowNode").toString());
+
+                flowNode.setUserPropertyOnEntity(linkedHashMap.get("UserPropertyOnEntity") == null ? "" : linkedHashMap.get("UserPropertyOnEntity").toString());
+
+                flowNode.setOrganizationId(linkedHashMap.get("OrganizationId") == null ? "" : linkedHashMap.get("OrganizationId").toString());
+
+                flowNode.setRoleId(linkedHashMap.get("RoleId") == null ? "" : linkedHashMap.get("RoleId").toString());
+
+                flowNode.setUseRootNode(linkedHashMap.get("UseRootNode") == null ? 0 : (Integer) linkedHashMap.get("UseRootNode"));
+
+                flowNode.setOrganizationProperty(linkedHashMap.get("OrganizationProperty") == null ? "" : linkedHashMap.get("OrganizationProperty").toString());
+
+                flowNode.setRoleProperty(linkedHashMap.get("RoleProperty") == null ? "" : linkedHashMap.get("RoleProperty").toString());
+
+                flowNode.setHandlerFetchCount(linkedHashMap.get("HandlerFetchCount") == null ? 0 : (Integer) linkedHashMap.get("HandlerFetchCount"));
+
+                // 当有多个任务处理人时的取人方式
+                LinkedHashMap handlerFetchTypeMap = (LinkedHashMap) linkedHashMap.get("HandlerFetchType");
+                if (handlerFetchTypeMap != null) {
+                    if ((Boolean) handlerFetchTypeMap.get("Random")) {
+                        flowNode.setHandlerFetchType(HandlerFetchType.Random);
+                    } else if ((Boolean) handlerFetchTypeMap.get("IdleMost")) {
+                        flowNode.setHandlerFetchType(HandlerFetchType.IdleMost);
+                    } else if ((Boolean) handlerFetchTypeMap.get("TaskLeast")) {
+                        flowNode.setHandlerFetchType(HandlerFetchType.TaskLeast);
+                    } else {
+                        flowNode.setHandlerFetchType(null);
+                    }
+                }
+                flowNode.setManualSelectHandler(linkedHashMap.get("ManualSelectHandler") == null ? 0 : (Integer) linkedHashMap.get("ManualSelectHandler"));
+                flowNode.setSkipHandler(linkedHashMap.get("SkipHandler") == null ? 0 : (Integer) linkedHashMap.get("SkipHandler"));
+
+                int allowAgent = linkedHashMap.get("AllowAgent") == null ? 0 : (Integer) linkedHashMap.get("AllowAgent");
+                flowNode.setAllowAgent(allowAgent);
+                flowNode.setAllowTransmit(allowAgent);
+                flowNode.setSuspendInstance(linkedHashMap.get("SuspendInstance") == null ? 0 : (Integer) linkedHashMap.get("SuspendInstance"));
+
+                flowNode.setSuspendDescription(linkedHashMap.get("SuspendDescription") == null ? "" : linkedHashMap.get("SuspendDescription").toString());
+                flowNode.setEntityStatusTag(linkedHashMap.get("EntityStatusTag") == null ? "" : linkedHashMap.get("EntityStatusTag").toString());
+
+                // TODO 提醒方式
+                /*String notify = Dom4jUtil.getAttributeStringValue(elementObject, "WarnType");
+                flowNode.setEmail(notify.contains("email") ? 1 : 0);
+                flowNode.setSms(notify.contains("sms") ? 1 : 0);
+                flowNode.setNotifyInstanceCreator(Dom4jUtil.getAttributeIntegerValue(elementObject, "NotifyInstanceCreator", 0));
+                flowNode.setNotifyContent("");*/
+
+                save(flowNode);
+            }
+
+            if (StringUtil.compareValue(linkedHashMap.get("type").toString(), "link")) {
+
+                Ramus ramus = new Ramus();
+                String ramusId = linkedHashMap.get("id").toString();
+                ramus.setObjectId(ramusId);
+                ramus.setCurrentUser(user);
+                ramus.setFlowTypeId(flowTypeId);
+                ramus.setRamusTag(linkedHashMap.get("RamusTag") == null ? "" : linkedHashMap.get("RamusTag").toString());
+                String ramusName = "";
+                try {
+                    ramusName = ((LinkedHashMap) ((LinkedHashMap) linkedHashMap.get("attrs")).get("text")).get("text").toString();
+                } catch (Exception e) {
+                    // do nothing
+                }
+                ramus.setName(ramusName);
+
+                ramus.setEvent(linkedHashMap.get("Event") == null ? "" : linkedHashMap.get("Event").toString());
+                ramus.setStatusTag(linkedHashMap.get("StatusTag") == null ? "" : linkedHashMap.get("StatusTag").toString());
+                save(ramus);
+
+                String expression = linkedHashMap.get("Cond") == null ? "" : linkedHashMap.get("Cond").toString();
+                if (StringUtil.isNotEmpty(expression)) {
+                    RamusRegulation ramusRegulation = new RamusRegulation();
+                    ramusRegulation.setRamus(ramus);
+                    ramusRegulation.setExpression(expression);
+                    save(ramusRegulation);
+                }
+
+                FlowNodeRoute flowNodeRoute = new FlowNodeRoute();
+                flowNodeRoute.setObjectId(StringUtil.getUuid());
+                flowNodeRoute.setFlowType(flowType);
+
+                flowNodeRoute.setFromFlowNodeId(((LinkedHashMap) linkedHashMap.get("source")).get("id").toString());
+                flowNodeRoute.setToFlowNodeId(((LinkedHashMap) linkedHashMap.get("target")).get("id").toString());
+                flowNodeRoute.setRamusId(ramusId);
+                save(flowNodeRoute);
+
+            }
+        }
+
+    }
 
     public FlowType getFlowTypeByEntity(AbstractBaseEntity entity) throws Exception {
 

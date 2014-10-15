@@ -1,6 +1,5 @@
 package com.withub.web.controller.workflow;
 
-import com.alibaba.fastjson.JSON;
 import com.withub.common.util.CollectionUtil;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
@@ -134,7 +133,8 @@ public class FlowTypeController extends BaseController {
     @RequestMapping(value = "/flowType/{objectId}/saveWorkflowConfig", method = RequestMethod.POST)
     public void saveWorkflowConfig(@PathVariable String objectId, @RequestBody Map data) throws Exception {
 
-        String content = JSON.toJSON(data.get("content")).toString();
-        flowTypeService.saveWorkflowConfig(objectId, content);
+        /*String content = JSON.toJSON(data.get("content")).toString();
+        flowTypeService.saveWorkflowConfig(objectId, content);*/
+        flowTypeService.saveWorkflowConfig(objectId, data, SpringSecurityUtil.getCurrentUser());
     }
 }
