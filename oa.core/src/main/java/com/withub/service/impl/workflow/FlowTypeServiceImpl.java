@@ -247,8 +247,6 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
 
                 flowNode.setFlowNodeTaskMode(FlowNodeTaskMode.Parallelism);
                 flowNode.setActivity(linkedHashMap.get("Activity") == null ? "" : linkedHashMap.get("Activity").toString());
-                flowNode.setAllowAgent(0);
-                flowNode.setAllowTransmit(0);
 
                 LinkedHashMap flowNodeActionMap = (LinkedHashMap) linkedHashMap.get("FlowNodeAction");
                 if (flowNodeActionMap != null) {
