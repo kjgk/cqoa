@@ -66,6 +66,17 @@ angular.module('app.oa')
                 toaster.pop('success', "信息", "保存成功！");
             });
         };
+        $scope.viewLeave = function (leave) {
+            $modal.open({
+                templateUrl: 'app/oa/leave/leave-view.html',
+                controller: 'LeaveViewCtrl',
+                resolve: {
+                    objectId: function () {
+                        return leave.objectId;
+                    }
+                }
+            });
+        };
         $scope.deleteLeave = function (leave) {
             LeaveService.remove(leave.objectId).then(function () {
                 $scope.grid.refresh();
@@ -111,4 +122,17 @@ angular.module('app.oa')
                 $modalInstance.close();
             });
         };
-    });
+    })
+
+    .controller('LeaveViewCtrl', function ($scope, $modalInstance, LeaveService, objectId) {
+
+        $scope.leave = LeaveService.get(objectId).then(function (data) {
+            $scope.leave = data;
+        });
+        $scope.title = '查看请假申请';
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss();
+        };
+    })
+;

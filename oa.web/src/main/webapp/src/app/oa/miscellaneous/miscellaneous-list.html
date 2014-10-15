@@ -11,11 +11,13 @@
                 <tr class="rlm_bga">
                     <td>申请人</td>
                     <td>申请事由</td>
+                    <td>申请时间</td>
                     <td style="width: 120px;">操作</td>
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{PageContext.currentUser.name}}</td>
                     <td>{{x.description}}</td>
+                    <td>{{x.createTime|$date:DateFormat.MINUTE}}</td>
                     <td>
                         <button class="btn btn-xs btn-primary" ng-click="updateMiscellaneous(x)">编辑</button>
                         &nbsp;
