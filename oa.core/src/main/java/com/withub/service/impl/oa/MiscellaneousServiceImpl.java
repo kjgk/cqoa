@@ -1,5 +1,6 @@
 package com.withub.service.impl.oa;
 
+import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.Miscellaneous;
@@ -29,16 +30,32 @@ public class MiscellaneousServiceImpl extends EntityServiceImpl implements Misce
         return query(queryInfo);
     }
 
-    public void saveMiscellaneous(Miscellaneous miscellaneous) throws Exception {
+    public void deleteMiscellaneous(String objectId) throws Exception {
+
+        logicDelete(Miscellaneous.class, objectId);
+    }
+
+    public void submitMiscellaneous(Miscellaneous miscellaneous) throws Exception {
+
+        if (StringUtil.isEmpty(miscellaneous.getObjectId())) {
+            addMiscellaneous(miscellaneous);
+        } else {
+            updateMiscellaneous(miscellaneous);
+        }
+    }
+
+    @Override
+    public void addMiscellaneous(Miscellaneous miscellaneous) throws Exception {
 
         Code status = codeService.getCodeByTag("MiscellaneousStatus", "Create");
         miscellaneous.setStatus(status);
         save(miscellaneous);
     }
 
-    public void deleteMiscellaneous(String objectId) throws Exception {
+    @Override
+    public void updateMiscellaneous(Miscellaneous miscellaneous) throws Exception {
 
-        logicDelete(Miscellaneous.class, objectId);
+        save(miscellaneous);
     }
 
 }

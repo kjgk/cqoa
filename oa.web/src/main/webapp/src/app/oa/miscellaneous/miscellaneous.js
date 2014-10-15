@@ -77,7 +77,6 @@ angular.module('app.oa')
     .controller('miscellaneousCreateCtrl', function ($scope, $modalInstance, miscellaneousService) {
 
         $scope.miscellaneous = {
-            status:1
         };
         $scope.title = '新增综合事项申请';
 

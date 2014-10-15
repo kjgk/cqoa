@@ -42,13 +42,13 @@ public class MiscellaneousController extends BaseController {
     @RequestMapping(value = "/miscellaneous", method = RequestMethod.POST)
     public void createMiscellaneous(@RequestBody Miscellaneous miscellaneous) throws Exception {
 
-        miscellaneousService.saveMiscellaneous(miscellaneous);
+        miscellaneousService.submitMiscellaneous(miscellaneous);
     }
 
     @RequestMapping(value = "/miscellaneous", method = RequestMethod.PUT)
     public void updateMiscellaneous(@RequestBody Miscellaneous miscellaneous) throws Exception {
 
-        miscellaneousService.saveMiscellaneous(miscellaneous);
+        miscellaneousService.submitMiscellaneous(miscellaneous);
     }
 
 

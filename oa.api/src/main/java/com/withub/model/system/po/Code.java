@@ -2,6 +2,7 @@ package com.withub.model.system.po;
 
 
 import com.withub.model.entity.AbstractBaseEntity;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -26,6 +27,7 @@ public class Code extends AbstractBaseEntity {
 
     @ManyToOne(targetEntity = CodeColumn.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "CodeColumnId")
+    @JsonIgnore
     private CodeColumn codeColumn;
 
     //===================== 属性方法 ================================

@@ -1,6 +1,7 @@
 package com.withub.model.oa.po;
 
 import com.withub.model.entity.AbstractBaseEntity;
+import com.withub.model.system.po.Code;
 import com.withub.model.system.po.Organization;
 
 import javax.persistence.JoinColumn;
@@ -18,8 +19,9 @@ public class Miscellaneous extends AbstractBaseEntity {
     @JoinColumn(name = "organizationId")
     private Organization organization;
 
-    // todo status => String
-    private Integer status;
+    @OneToOne(targetEntity = Code.class)
+    @JoinColumn(name = "status")
+    private Code status;
 
     // 申请事由
     private String description;
@@ -34,11 +36,11 @@ public class Miscellaneous extends AbstractBaseEntity {
         this.organization = organization;
     }
 
-    public Integer getStatus() {
+    public Code getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Code status) {
         this.status = status;
     }
 
