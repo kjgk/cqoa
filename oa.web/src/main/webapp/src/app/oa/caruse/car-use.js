@@ -91,7 +91,7 @@ angular.module('app.oa')
             beginTime: new Date(),
             endTime: new Date()
         };
-        $scope.title = '新增用车';
+        $scope.title = '新增用车申请';
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
@@ -109,7 +109,7 @@ angular.module('app.oa')
         $scope.carUse = CarUseService.get(objectId).then(function (data) {
             $scope.carUse = data;
         });
-        $scope.title = '修改用车';
+        $scope.title = '修改用车申请';
 
         $scope.cancel = function () {
             $modalInstance.dismiss();

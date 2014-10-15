@@ -79,7 +79,7 @@ angular.module('app.oa')
         $scope.miscellaneous = {
             status:1
         };
-        $scope.title = '新增综合事项';
+        $scope.title = '新增综合事项申请';
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
@@ -96,7 +96,7 @@ angular.module('app.oa')
 
 
         $scope.miscellaneous = miscellaneousService.get(objectId).$object;
-        $scope.title = '修改综合事项';
+        $scope.title = '修改综合事项申请';
 
         $scope.cancel = function () {
             $modalInstance.dismiss();

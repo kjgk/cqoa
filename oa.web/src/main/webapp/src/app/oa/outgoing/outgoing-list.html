@@ -1,15 +1,23 @@
 <div class="right">
     <div>
         <div class="rn_c">
-            <div class="ywtj"><p>请假管理</p>
-                <button class="btn btn-primary btn-sm pull-right" ng-click="createOutgoing()"><i
-                        class="fa fa-plus fa-fw"></i> 添加
-                </button>
+            <div class="ywtj"><p>出差申请</p>
+                <div class="tool-bar">
+                    <button class="btn btn-primary btn-sm" ng-click="createOutgoing()"><i
+                            class="fa fa-plus fa-fw"></i> 添加
+                    </button>
+                    <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i
+                            class="fa fa-search fa-fw"></i> 查询
+                    </button>
+                    <input type="text" class="search" placeholder="请选择出差时间"
+                           ng-model='grid.queryInfo.date'
+                           bs-datepicker>
+                </div>
                 <div class="clear"></div>
             </div>
             <table simple-table="grid" class="rbga" border="1">
                 <tr class="rlm_bga">
-                    <td>请假人</td>
+                    <td>出差人</td>
                     <td>开始日期</td>
                     <td>结束日期</td>
                     <td>本市出差</td>

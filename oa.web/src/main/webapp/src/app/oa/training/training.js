@@ -78,7 +78,7 @@ angular.module('app.oa')
 
         $scope.training = {
         };
-        $scope.title = '新增培训';
+        $scope.title = '新增培训申请';
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
@@ -99,7 +99,7 @@ angular.module('app.oa')
             $scope.training.beginDate = new Date(data.beginDate);
             $scope.training.endDate = new Date(data.endDate);
         });
-        $scope.title = '修改培训';
+        $scope.title = '修改培训申请';
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
