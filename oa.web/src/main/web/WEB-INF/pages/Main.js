@@ -131,19 +131,19 @@ Ext.define('withub.ext.Main', {
             tabPanel
         ];
 
-        tabPanel.add(Ext.create('Ext.ux.IFrame', {
-            closable: false,
-            title: '任务卡监控',
-            src: PageContext.contextPath + '/loadPage/withub.ext.dye.processCard.ProcessCardMonitor',
-            listeners: {
-                load: function () {
-                    tabPanel.el.unmask();
-                },
-                scope: this
-            }
-        }));
-        tabPanel.setActiveTab(0);
-        tabPanel.doLayout();
+//        tabPanel.add(Ext.create('Ext.ux.IFrame', {
+//            closable: false,
+//            title: '任务卡监控',
+//            src: PageContext.contextPath + '/loadPage/withub.ext.dye.processCard.ProcessCardMonitor',
+//            listeners: {
+//                load: function () {
+//                    tabPanel.el.unmask();
+//                },
+//                scope: this
+//            }
+//        }));
+//        tabPanel.setActiveTab(0);
+//        tabPanel.doLayout();
 
         this.callParent();
     }

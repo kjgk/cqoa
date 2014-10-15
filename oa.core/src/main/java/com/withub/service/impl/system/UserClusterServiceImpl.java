@@ -221,6 +221,11 @@ public class UserClusterServiceImpl extends com.withub.service.EntityServiceImpl
         sb.append("))");
     }
 
+    public UserClusterRegulation getRootUserClusterRegulation() throws Exception {
+
+        return getRootEntity(UserClusterRegulation.class);
+    }
+
     //==================== 属性方法 ====================================================
 
     public PermissionService getPermissionService() {

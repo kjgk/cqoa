@@ -22,4 +22,5 @@ public interface UserClusterService extends com.withub.service.EntityService {
 
     public int updateUserClusterCache(AbstractUserCluster abstractUserCluster, User user) throws Exception;
 
+    public UserClusterRegulation getRootUserClusterRegulation() throws Exception;
 }
