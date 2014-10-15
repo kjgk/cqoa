@@ -15,14 +15,14 @@
             <label class="col-sm-2 control-label">开始时间</label>
 
             <div class="col-sm-10">
-                <p>{{carUse.beginTime|date}}</p>
+                <p>{{carUse.beginTime|$date:DateFormat.MINUTE}}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">结束时间</label>
 
             <div class="col-sm-10">
-                <p>{{carUse.endTime|date}}</p>
+                <p>{{carUse.endTime|$date:DateFormat.MINUTE}}</p>
             </div>
         </div>
 

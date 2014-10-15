@@ -2,6 +2,7 @@
     <div>
         <div class="rn_c">
             <div class="ywtj"><p>车辆管理</p>
+
                 <div class="tool-bar">
                     <button class="btn btn-primary btn-sm" ng-click="createCar()"><i
                             class="fa fa-plus fa-fw"></i> 添加
@@ -27,7 +28,7 @@
                     <td>{{x.name}}</td>
                     <td>{{x.license}}</td>
                     <td>{{x.capacity}}</td>
-                    <td>{{x.purchaseDate | date:'yyyy年MM月dd日'}}</td>
+                    <td>{{x.purchaseDate|$date}}</td>
                     <td>{{x.status===1?"启用":"报废"}}</td>
                     <td>{{x.description}}</td>
                     <td>

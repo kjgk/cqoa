@@ -1,15 +1,12 @@
 'use strict';
 
-angular.module('withub.filter', [])
-    .filter('$date', function ($filter) {
+angular.module('withub.filter', ['withub.common'])
+    .filter('$date', function (DateFormat) {
         return function (input, format) {
+
             if (input) {
-                format = format || 'yyyy-MM-dd HH:mm';
-                if (_.isNumber(input)) {
-                    return $filter('date')(input, format);
-                } else {
-                    return $filter('date')(input.time, format);
-                }
+                format = format || DateFormat.DAY;
+                return moment(input).format(format);
             }
         };
     })

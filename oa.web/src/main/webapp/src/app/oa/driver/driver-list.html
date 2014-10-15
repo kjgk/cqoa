@@ -33,8 +33,8 @@
                     <td>{{x.identityCard}}</td>
                     <td>{{x.status===1?"在职":"离职"}}</td>
                     <td>{{x.licenseCode}}</td>
-                    <td>{{x.licenseDate | date:'yyyy年MM月dd日'}}</td>
-                    <td>{{x.birthday | date:'yyyy年MM月dd日'}}</td>
+                    <td>{{x.licenseDate|$date}}</td>
+                    <td>{{x.birthday|$date}}</td>
                     <td>{{x.telephone}}</td>
                     <td>{{x.description}}</td>
                     <td>

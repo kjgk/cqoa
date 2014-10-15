@@ -46,7 +46,7 @@ angular.module('app', ['app.oa', 'app.mobile'])
 
         angular.extend($datepickerProvider.defaults, {
             dateFormat: 'yyyy年M月d日',
-            autoclose:true
+            autoclose: true
         });
 
         angular.extend($timepickerProvider.defaults, {
@@ -55,8 +55,9 @@ angular.module('app', ['app.oa', 'app.mobile'])
 
     })
 
-    .controller('MainCtrl', function ($rootScope) {
+    .controller('MainCtrl', function ($rootScope, PageContext, DateFormat) {
 
         $rootScope.PageContext = PageContext;
+        $rootScope.DateFormat = DateFormat;
     })
 ;
