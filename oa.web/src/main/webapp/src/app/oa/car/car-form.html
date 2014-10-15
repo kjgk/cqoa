@@ -22,23 +22,20 @@
             <label class="col-sm-2 control-label">容量</label>
 
             <div class="col-sm-10">
-                <input type="number" class="form-control" name="capacity" ng-model="car.capacity" validator="required">
+                <input type="text" class="form-control" name="capacity" ng-model="car.capacity"
+                       validator="required,number">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">购买日期</label>
 
             <div class="col-sm-10">
-                <quick-datepicker ng-model='car.purchaseDate'
-                                  date-format="yyyy-MM-dd"
-                                  placeholder="选择日期"
-                                  disable-timepicker="true"
-                                  disable-clear-button="true"
-                                  required="true"
-                        >
-                </quick-datepicker>
+                <input type="text" class="form-control"
+                       ng-model='car.purchaseDate' name="purchaseDate"
+                       bs-datepicker="">
             </div>
         </div>
+
         <div class="form-group">
             <label class="col-sm-2 control-label">状态</label>
 
@@ -55,7 +52,7 @@
 
             <div class="col-sm-10">
                 <textarea rows="5" class="form-control" name="description"
-                          ng-model="car.description"></textarea>
+                          ng-model="car.description"/>
             </div>
         </div>
     </div>

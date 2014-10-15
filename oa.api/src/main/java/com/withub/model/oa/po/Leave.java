@@ -26,6 +26,7 @@ public class Leave extends AbstractBaseEntity {
 
     private String status;
 
+    // 请假事由
     private String description;
 
     //================================ 属性方法 ==========================================================

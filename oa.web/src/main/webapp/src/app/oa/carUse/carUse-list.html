@@ -2,9 +2,20 @@
     <div>
         <div class="rn_c">
             <div class="ywtj"><p>用车管理</p>
-                <button class="btn btn-primary btn-sm pull-right" ng-click="createCarUse()"><i
-                        class="fa fa-plus fa-fw"></i> 添加
-                </button>
+                <div class="tool-bar">
+                    <button class="btn btn-primary btn-sm" ng-click="createCarUse()"><i
+                            class="fa fa-plus fa-fw"></i> 添加
+                    </button>
+                    <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i
+                            class="fa fa-search fa-fw"></i> 查询
+                    </button>
+                    <input type="text" class="search" placeholder="开始时间"
+                           ng-model='grid.queryInfo.startTime'
+                           bs-datepicker="">
+                    <input type="text" class="search" placeholder="结束时间"
+                           ng-model='grid.queryInfo.startTime'
+                           bs-datepicker="">
+                </div>
                 <div class="clear"></div>
             </div>
             <table simple-table="grid" class="rbga" border="1">
@@ -19,8 +30,8 @@
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{x.description}}</td>
-                    <td>{{x.beginTime | date:'yyyy年MM月dd日'}}</td>
-                    <td>{{x.endTime | date:'yyyy年MM月dd日'}}</td>
+                    <td>{{x.beginTime | date:'yyyy年MM月dd日 HH:mm'}}</td>
+                    <td>{{x.endTime | date:'yyyy年MM月dd日 HH:mm'}}</td>
                     <td>{{x.address }}</td>
                     <td>{{ }}</td>
                     <td>{{ }}</td>

@@ -77,8 +77,8 @@ angular.module('app.oa')
     .controller('CarUseCreateCtrl', function ($scope, $modalInstance, CarUseService) {
 
         $scope.carUse = {
-            startTime: new Date(),
-            endTime: new Date()
+            beginTime:new Date(),
+            endTime:new Date()
         };
         $scope.title = '新增用车';
 
@@ -98,8 +98,6 @@ angular.module('app.oa')
 
         $scope.carUse = CarUseService.get(objectId).then(function (data) {
             $scope.carUse = data;
-            $scope.carUse.startTime = new Date(data.startTime);
-            $scope.carUse.endTime = new Date(data.endTime);
         });
         $scope.title = '修改用车';
 

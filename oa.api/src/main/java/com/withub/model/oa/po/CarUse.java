@@ -25,6 +25,7 @@ public class CarUse extends AbstractBaseEntity {
     @OneToMany(targetEntity = CarUseInfo.class, mappedBy = "carUse", fetch = FetchType.LAZY)
     private List<CarUseInfo> carUseInfoList;
 
+    // 用车部门
     @OneToOne(targetEntity = Organization.class)
     @JoinColumn(name = "organizationId")
     private Organization organization;

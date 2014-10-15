@@ -17,39 +17,46 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">开始时间</label>
 
-            <div class="col-sm-10">
-                <quick-datepicker ng-model='carUse.startTime'
-                                  date-format="yyyy-MM-dd"
-                                  placeholder="选择时间"
-                                  disable-clear-button="true"
-                                  required="true"
-                        >
-                </quick-datepicker>
+            <div class="col-sm-5">
+                <input type="text" class="form-control"
+                       ng-model='carUse.beginTime'
+                       data-max-date="{{carUse.endTime}}"
+                       bs-datepicker="">
+            </div>
+
+            <div class="col-sm-5">
+                <input type="text" class="form-control"
+                       ng-model='carUse.beginTime'
+                       bs-timepicker="">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">结束时间</label>
 
-            <div class="col-sm-10">
-                <quick-datepicker ng-model='carUse.endTime'
-                                  date-format="yyyy-MM-dd"
-                                  placeholder="选择时间"
-                                  disable-clear-button="true"
-                                  required="true"
-                        >
-                </quick-datepicker>
+            <div class="col-sm-5">
+                <input type="text" class="form-control"
+                       ng-model='carUse.endTime'
+                       data-min-date="{{carUse.beginTime}}"
+                       bs-datepicker="">
+            </div>
+
+            <div class="col-sm-5">
+                <input type="text" class="form-control"
+                       ng-model='carUse.endTime'
+                       bs-timepicker="">
             </div>
         </div>
+
         <div class="form-group">
             <label class="col-sm-2 control-label">前往地点</label>
 
             <div class="col-sm-10">
-                <input type="text" class="form-control" 
+                <input type="text" class="form-control"
                        name="address" ng-model="carUse.address" validator="required">
             </div>
         </div>
-        
-        
+
+
         <div class="form-group">
             <label class="col-sm-2 control-label">车辆</label>
 

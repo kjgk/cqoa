@@ -18,7 +18,7 @@ public class Outgoing extends AbstractBaseEntity {
 
     private Date endDate;
 
-    // 是否为本市出差
+    // 本市出差
     private Integer localCity;
 
     @OneToOne(targetEntity = Organization.class)
@@ -34,6 +34,7 @@ public class Outgoing extends AbstractBaseEntity {
 
     private String transportation;
 
+    // 是否派车
     private Integer requiredCar;
 
     private String status;
