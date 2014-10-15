@@ -14,7 +14,7 @@ angular.module('workflow', ['ui.router'])
 
     .value('emptyDiagram', {"cells": [
         {"angle": 0, "attrs": {"circle": {"fill": "#5cb85c"}, "text": {"text": "开始"}}, "embeds": "", "id": "b5f3e9d2-2076-4bdb-9b7b-6d843e83c39d", "nodeType": "start", "position": {"x": 35, "y": 40}, "size": {"height": 50, "width": 80}, "type": "basic.Circle", "z": 1},
-        {"Executer": "#{starter}", "FlowNodeTag": "", "HandlerOnFlowNode": "", "ProcType": "first", "SuspendDescription": "", "UserPropertyOnEntity": "", "angle": 0, "attrs": {"rect": {"fill": "#2798EC"}, "text": {"text": "第一个节点"}}, "embeds": "", "id": "68da8b30-4c3e-4bbd-8746-334b488a3eb0", "nodeType": "first", "position": {"x": 205, "y": 40}, "size": {"height": 50, "width": 80}, "type": "basic.Rect", "z": 2},
+        {"Executer": "#{starter}", "FlowNodeTag": "", "HandlerOnFlowNode": "", "FlowNodeType": "first", "SuspendDescription": "", "UserPropertyOnEntity": "", "angle": 0, "attrs": {"rect": {"fill": "#2798EC"}, "text": {"text": "第一个节点"}}, "embeds": "", "id": "68da8b30-4c3e-4bbd-8746-334b488a3eb0", "nodeType": "first", "position": {"x": 205, "y": 40}, "size": {"height": 50, "width": 80}, "type": "basic.Rect", "z": 2},
         {"angle": 0, "attrs": {"circle": {"fill": "#d9534f"}, "text": {"text": "结束"}}, "embeds": "", "id": "be0634ec-5fd8-4d07-8c22-97befd256888", "nodeType": "end", "position": {"x": 35, "y": 240}, "size": {"height": 50, "width": 80}, "type": "basic.Circle", "z": 3},
         {"RamusType": "1", "attrs": {}, "embeds": "", "id": "b6121b94-05f4-4353-bb95-bf95a9aadd47", "source": {"id": "b5f3e9d2-2076-4bdb-9b7b-6d843e83c39d"}, "target": {"id": "68da8b30-4c3e-4bbd-8746-334b488a3eb0"}, "type": "link", "z": 4}
     ]})
@@ -109,7 +109,7 @@ angular.module('workflow', ['ui.router'])
 
                     if (type == 'first') {
                         _.extend(inputs, {
-                            ProcType: { type: 'select', group: 'base', label: '节点类型', index: 3, options: [
+                            FlowNodeType: { type: 'select', group: 'base', label: '节点类型', index: 3, options: [
                                 {value: 'first', content: '第一个节点' }
                             ] }
                         });
@@ -117,7 +117,7 @@ angular.module('workflow', ['ui.router'])
 
                     if (type == 'normal') {
                         _.extend(inputs, {
-                            ProcType: { type: 'select', group: 'base', label: '节点类型', index: 3, options: [
+                            FlowNodeType: { type: 'select', group: 'base', label: '节点类型', index: 3, options: [
                                 {value: 'andsign', content: '会签' },
                                 {value: 'modify', content: '修改' },
                                 {value: 'submit', content: '提交' },
@@ -128,14 +128,14 @@ angular.module('workflow', ['ui.router'])
                             UseRootNode: { type: 'text', group: 'base', label: '使用根节点', index: 10 },
                             OrganizationProperty: { type: 'text', group: 'base', label: '组织机构属性', index: 11 },
                             RoleProperty: { type: 'text', group: 'base', label: '角色属性', index: 12 },
-                            HandlerFetchCount: { type: 'text', group: 'base', label: '取人数', index: 13 },
+                            HandlerFetchCount: { type: 'text', group: 'base', label: '取人数', defaultValue: 1, index: 13 },
                             HandlerFetchType: { type: 'object', group: 'base', label: '取人方式', index: 14,
                                 properties: {
                                     Random: { type: 'toggle', label: '随机' },
                                     IdleMost: { type: 'toggle', label: '最空闲' },
                                     TaskLeast: { type: 'toggle', label: '同类任务最少' }
                                 } },
-                            TimeLimit: { type: 'text', group: 'base', label: '处理时限（工作小时）', index: 15 },
+                            TimeLimit: { type: 'text', group: 'base', label: '处理时限（工作小时）', defaultValue: 0, index: 15 },
                             FlowNodeAction: { type: 'object', group: 'base', label: '行为动作', index: 16,
                                 properties: {
                                     passAction: { type: 'toggle', label: '通过' },
