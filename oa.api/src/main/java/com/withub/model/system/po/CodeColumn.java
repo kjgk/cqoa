@@ -1,6 +1,7 @@
 package com.withub.model.system.po;
 
 import com.withub.model.entity.AbstractBaseEntity;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -25,11 +26,13 @@ public class CodeColumn extends AbstractBaseEntity {
 
     @ManyToOne(targetEntity = CodeColumnCategory.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "CodeColumnCategoryId")
+    @JsonIgnore
     private CodeColumnCategory codeColumnCategory;
 
     @OneToMany(targetEntity = Code.class, mappedBy = "codeColumn", fetch = FetchType.LAZY)
     @OrderBy(value = "orderNo asc")
     @Where(clause = "objectStatus = 1")
+    @JsonIgnore
     private List<Code> codeList = new ArrayList<Code>();
 
     private Integer orderNo;

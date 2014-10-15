@@ -1,6 +1,7 @@
 package com.withub.model.system.po;
 
 import com.withub.model.entity.AbstractRecursionEntity;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -32,10 +33,12 @@ public class Organization extends AbstractRecursionEntity {
     @OneToMany(targetEntity = Organization.class, mappedBy = "parent", fetch = FetchType.LAZY)
     @OrderBy(value = "orderNo asc")
     @Where(clause = "objectStatus = 1")
+    @JsonIgnore
     private List<Organization> childList = new ArrayList<Organization>();
 
     @OneToMany(targetEntity = UserOrganizationRole.class, mappedBy = "organization", fetch = FetchType.LAZY)
     @OrderBy(value = "orderNo asc")
+    @JsonIgnore
     private List<UserOrganizationRole> roleUserList = new ArrayList<UserOrganizationRole>();
 
     //================================= 属性方法 =========================================================
