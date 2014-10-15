@@ -79,7 +79,7 @@ angular.module('app.oa')
         $scope.leave = {
             localCity: 0
         };
-        $scope.title = '新增请假';
+        $scope.title = '新增请假申请';
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
@@ -100,7 +100,7 @@ angular.module('app.oa')
             $scope.leave.beginDate = new Date(data.beginDate);
             $scope.leave.endDate = new Date(data.endDate);
         });
-        $scope.title = '修改请假';
+        $scope.title = '修改请假申请';
 
         $scope.cancel = function () {
             $modalInstance.dismiss();

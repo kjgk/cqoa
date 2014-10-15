@@ -82,7 +82,7 @@ angular.module('app.oa')
             beginDate:new Date,
             endDate:new Date
         };
-        $scope.title = '新增出差';
+        $scope.title = '新增出差申请';
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
@@ -102,7 +102,7 @@ angular.module('app.oa')
             $scope.outgoing.beginDate = new Date(data.beginDate);
             $scope.outgoing.endDate = new Date(data.endDate);
         });
-        $scope.title = '修改出差';
+        $scope.title = '修改出差申请';
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
