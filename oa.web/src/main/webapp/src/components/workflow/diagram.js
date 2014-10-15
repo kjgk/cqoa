@@ -93,7 +93,7 @@ angular.module('workflow', ['ui.router'])
                             {value: '1', content: '条件' },
                             {value: '2', content: '审批' }
                         ]},
-                        StatusTag: { type: 'text', group: 'base', label: '状态标识', index: 4 },
+                        EntityStatusTag: { type: 'text', group: 'base', label: '状态标识', index: 4 },
                         Cond: { type: 'textarea', group: 'base', label: '条件', index: 5 },
                         Event: { type: 'text', group: 'base', label: '事件', index: 6 },
                         Desc: { type: 'textarea', group: 'base', label: '说明', index: 7 }
