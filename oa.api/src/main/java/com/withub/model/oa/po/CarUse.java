@@ -22,6 +22,8 @@ public class CarUse extends AbstractBaseEntity {
 
     private String address;
 
+    private Integer localCity;
+
     @OneToMany(targetEntity = CarUseInfo.class, mappedBy = "carUse", fetch = FetchType.LAZY)
     private List<CarUseInfo> carUseInfoList;
 
@@ -37,6 +39,15 @@ public class CarUse extends AbstractBaseEntity {
     private String status;
 
     //================================ 属性方法 ==========================================================
+
+
+    public Integer getLocalCity() {
+        return localCity;
+    }
+
+    public void setLocalCity(Integer localCity) {
+        this.localCity = localCity;
+    }
 
     public String getDescription() {
         return description;

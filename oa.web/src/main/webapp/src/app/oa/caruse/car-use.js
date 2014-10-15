@@ -89,7 +89,8 @@ angular.module('app.oa')
 
         $scope.carUse = {
             beginTime: new Date(),
-            endTime: new Date()
+            endTime: new Date(),
+            localCity:0
         };
         $scope.title = '新增用车申请';
 
