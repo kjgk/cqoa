@@ -27,7 +27,7 @@
         $('#loginForm').ajaxSubmit({
             beforeSubmit: function () {
                 if ($.trim(username.val()) == "" || $.trim(password.val()) == "") {
-                    $('#error-box').html('用户名或密码不能为空，请正确填写！').show();
+                    alert('用户名或密码不能为空，请正确填写！')
                     return false;
                 }
                 username.attr('disabled', true);
@@ -42,12 +42,12 @@
                     window.location.href = '${path}/index.jsp';
                 } else {
                     if (response['resultCode'] == '<%= Constants.ACCOUNT_LOCKED%>') {
-                        $('#error-box').html('账号被锁！').show();
+                        alert('账号被锁！')
                         if (passwordInvalidCount >= maxPasswordInvalidCount) {
                         }
 
                     } else if (response['resultCode'] == '<%= Constants.PASSWORD_INVALID%>') {
-                        $('#error-box').html('用户名密码不匹配，请重新输入！').show();
+                        alert('用户名密码不匹配，请重新输入！');
                         password.focus().get(0).select();
                         passwordInvalidCount++;
                         if (passwordInvalidCount >= maxPasswordInvalidCount) {
@@ -59,67 +59,35 @@
         });
     }
 
-
     $(function () {
         $('#username').focus();
     });
 </script>
 </head>
-<body>
+<body style=" background:url(${path}/images/login/login_1.png) repeat-x #2488d2;">
 
-<div id="top">
-</div>
+<form id="loginForm" action="${path}/securityLogin" method="post" onsubmit="return false;">
 
-<div id="main">
-    <div class="login-box">
-        <div style="top: 20px; position: absolute; display: block; right: 0px;">
-            <div class="ui-login-aside">
 
-                <div class="ui-form-title">
-                    <h1>登录</h1>
-                </div>
+    <div class="dlk">
+        <div class="user">
 
-                <div class="error-box fn-hide" id="error-box"></div>
-
-                <div class="login-form-cnt">
-                    <form id="loginForm" action="${path}/securityLogin" method="post" onsubmit="return false;">
-                        <fieldset>
-                            <div class="fm-item ui-form-item sl-account sl-chacha-parent">
-                                <label class="fm-label ui-form-label" for="username">用户名：</label>
-                                <input id="username" name="username" value="" placeholder="请输入用户名" class="i-text ui-input" tabindex="1" type="text"
-                                       autocomplete="off"
-                                       maxlength="20" onKeyPress="if(event.keyCode==13){submitForm();}"/>
-                                <%--<span class="sl-chacha"></span>--%>
-
-                                <div class="ui-form-explain"></div>
-                            </div>
-
-                            <div class="fm-item ui-form-item sl-aliedit">
-                                <label class="fm-label pwd-label ui-form-label" desc="登录密码">登录密码：</label>
-                        <span class="fm-link">
-                            <a id="forgetPsw" style="cursor: pointer;"><%--忘记登录密码？--%></a>
-                        </span>
-                                <input id="password" name="password" value="" placeholder="请输入登录密码" class="i-text ui-input" tabindex="1" type="password"
-                                       autocomplete="off"
-                                       maxlength="20" onKeyPress="if(event.keyCode==13){submitForm();}"/>
-                                <%--<span class="sl-chacha"></span>--%>
-
-                                <div class="ui-form-explain"></div>
-                            </div>
-
-                            <div class="fm-item ui-form-item ui-btn-cnt">
-                                <input id="btn-submit" type="submit" class="btn-login" tabindex="4" value="登  录" onclick="submitForm();"/>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
+            用户名：<input id="username" name="username" value="" placeholder="请输入用户名" tabindex="1" type="text"
+                       autocomplete="off"
+                       maxlength="20" onKeyPress="if(event.keyCode==13){submitForm();}"/><br/>
+            密　码：<input id="password" name="password" value=""
+                       placeholder="请输入登录密码" tabindex="1" type="password"
+                       autocomplete="off"
+                       maxlength="20"
+                       onKeyPress="if(event.keyCode==13){submitForm();}"/>
+            <div class="btn">
+                <img src="${path}/images/login/login_2.png" onclick="submitForm();"/><img src="${path}/images/login/login_3.png"/>
             </div>
         </div>
+
     </div>
+</form>
 
-</div>
 
-<div id="bottom">
-</div>
 </body>
 </html>
