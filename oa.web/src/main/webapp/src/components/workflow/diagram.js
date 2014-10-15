@@ -89,7 +89,7 @@ angular.module('workflow', ['ui.router'])
                 if (type == 'link') {
                     _.extend(inputs, {
                         RamusTag: { type: 'text', group: 'base', label: '分支标识', index: 2 },
-                        ProcType: { type: 'select', group: 'base', label: '分支类型', index: 3, options: [
+                        RamusType: { type: 'select', group: 'base', label: '分支类型', index: 3, options: [
                             {value: '1', content: '条件' },
                             {value: '2', content: '审批' }
                         ]},
