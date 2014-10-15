@@ -56,7 +56,17 @@ angular.module('withub.ui.table', [])
                         this.fetchData();
                     },
                     query: function (params) {
-                        _.extend(this.params, _.extend(me.queryInfo, params || {}));
+                        var queryInfo = {};
+                        for (var key in me.queryInfo) {
+                            var value = me.queryInfo[key], _value;
+                            if (_.isDate(value)) {
+                                _value = moment(value).format('YYYY-MM-DD');
+                            } else {
+                                _value = value;
+                            }
+                            queryInfo[key] = _value;
+                        }
+                        _.extend(this.params, _.extend(queryInfo, params || {}));
                         this.fetchData(1);
                     }
                 };

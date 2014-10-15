@@ -1,5 +1,6 @@
 package com.withub.web.controller.oa;
 
+import com.withub.model.entity.query.ExpressionOperation;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.oa.po.CarUse;
 import com.withub.service.oa.CarUseService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 
 @Controller
@@ -23,10 +25,15 @@ public class CarUseController extends BaseController {
     private CarUseService carUseService;
 
     @RequestMapping(value = "/carUse", method = RequestMethod.GET)
-    public void queryCarUse(HttpServletRequest request, ModelMap modelMap) throws Exception {
+    public void queryCarUse(HttpServletRequest request, Date date, ModelMap modelMap) throws Exception {
 
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setTargetEntity(CarUse.class);
+        if (date != null) {
+            setQueryInfoCondition(queryInfo, "beginTime", date, ExpressionOperation.LessThanOrEquals);
+            setQueryInfoCondition(queryInfo, "endTime", date, ExpressionOperation.GreaterThanOrEquals);
+        }
+
         setPageInfoQueryCondition(request, queryInfo);
 
         putRecordsetInfo(modelMap, carUseService.queryCarUse(queryInfo));
