@@ -26,7 +26,7 @@ angular.module('workflow', ['ui.router'])
         var paper = new joint.dia.Paper({
             el: '#paper-container',
             width: 640,
-            height: 436,
+            height: 476,
             gridSize: 5,
             model: graph
         });
@@ -34,29 +34,29 @@ angular.module('workflow', ['ui.router'])
         var stencil = new joint.ui.Stencil({
             graph: graph,
             paper: paper,
-            width: 180,
+            width: 120,
             height: 476
         });
         $('#stencil-container').append(stencil.render().el);
 
         var beginNode = new joint.shapes.basic.Circle({
             nodeType: 'begin',
-            position: { x: 50, y: 10 }, size: { width: 80, height: 50 },
+            position: { x: 20, y: 10 }, size: { width: 80, height: 50 },
             attrs: { circle: { fill: '#5cb85c' }, text: { text: '开始', fill: 'black' } }
         });
         var endNode = new joint.shapes.basic.Circle({
             nodeType: 'end',
-            position: { x: 50, y: 150 }, size: { width: 80, height: 50 },
+            position: { x: 20, y: 150 }, size: { width: 80, height: 50 },
             attrs: { circle: { fill: '#d9534f' }, text: { text: '结束', fill: 'black' } }
         });
         var firstNode = new joint.shapes.basic.Rect({
             nodeType: 'first',
-            position: { x: 50, y: 80 }, size: { width: 80, height: 50 },
+            position: { x: 20, y: 80 }, size: { width: 80, height: 50 },
             attrs: { rect: { fill: '#2798EC' }, text: { text: '第一个节点', fill: 'black' } }
         });
         var normalNode = new joint.shapes.basic.Rect({
             nodeType: 'normal',
-            position: { x: 50, y: 20 }, size: { width: 80, height: 50 },
+            position: { x: 20, y: 20 }, size: { width: 80, height: 50 },
             attrs: { rect: { fill: '#2798EC' }, text: { text: '节点', fill: 'black' } }
         });
 
@@ -101,6 +101,15 @@ angular.module('workflow', ['ui.router'])
                 } else if (type == 'first' || type == 'normal') {
                     _.extend(inputs, {
                         FlowNodeTag: { type: 'text', group: 'base', label: '标识', index: 2 },
+                        Config: { type: 'object', group: 'base', label: ' ', index: 3,
+                            properties: {
+                                SelectExit: { type: 'toggle', label: '手动选择下一个节点处理人' },
+                                SkipHandler: { type: 'toggle', label: '跳过上次执行通过的处理人' },
+                                AllowAgent: { type: 'toggle', label: '允许代理' },
+                                NotifyInstanceCreator: { type: 'toggle', label: '通知流程的发起人' },
+                                InstanceReturnMode: { type: 'toggle', label: '并行任务处理完后再退回' },
+                                SuspendInstance: { type: 'toggle', label: '挂起流程' }
+                            } },
                         SuspendDescription: { type: 'text', group: 'base', label: '流程挂起描述', index: 4 },
                         Executer: { type: 'text', group: 'base', label: '取人方法', index: 5 },
                         HandlerOnFlowNode: { type: 'text', group: 'base', label: '前面流程节点上的执行人', index: 6 },
