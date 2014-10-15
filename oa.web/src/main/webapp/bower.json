@@ -24,6 +24,9 @@
         "angular-i18n": {
             "main": "angular-locale_zh-cn.js"
         },
+        "angular-strap": {
+            "dependencies": {}
+        },
         "joint": {
             "main": [
                 "dist/joint.all.min.css",
