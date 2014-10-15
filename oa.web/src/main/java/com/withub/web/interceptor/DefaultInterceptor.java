@@ -1,6 +1,7 @@
 package com.withub.web.interceptor;
 
 
+import com.withub.model.entity.AbstractEntity;
 import com.withub.model.exception.BaseBusinessException;
 import net.sf.json.JSONSerializer;
 import org.springframework.ui.ModelMap;
@@ -46,14 +47,16 @@ public class DefaultInterceptor extends HandlerInterceptorAdapter {
             modelAndView.getModelMap().addAttribute("success", true);
             ModelMap modelMap = modelAndView.getModelMap();
             Iterator<String> iterator = modelMap.keySet().iterator();
-//            while (iterator.hasNext()) {
-//                String key = iterator.next();
-//                Object modelItem = modelMap.get(key);
-//                if (modelItem instanceof AbstractEntity) {
-//                    iterator.remove();
-//                    modelMap.remove(key);
-//                }
-//            }
+            if(!request.getServletPath().startsWith("/oa")) {   // system模块中的实体类未设置jsonignore，导致json循环序列化，oa模块中没有这些问题。
+                while (iterator.hasNext()) {
+                    String key = iterator.next();
+                    Object modelItem = modelMap.get(key);
+                    if (modelItem instanceof AbstractEntity) {
+                        iterator.remove();
+                        modelMap.remove(key);
+                    }
+                }
+            }
         }
 
         super.postHandle(request, response, handler, modelAndView);
