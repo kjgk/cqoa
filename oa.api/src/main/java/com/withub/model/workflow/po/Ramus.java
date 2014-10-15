@@ -11,9 +11,11 @@ import java.util.List;
 @Table(name = "WF_RAMUS")
 public class Ramus extends AbstractBaseEntity {
 
-    //=================== 属性声明 ============================================
+    //======================== 属性声明 ===================== ============================================
 
     private String flowTypeId;
+
+    private Integer ramusType;
 
     private String name;
 
@@ -30,7 +32,7 @@ public class Ramus extends AbstractBaseEntity {
     @Where(clause = "objectStatus = 1 and parentId is null")
     private List<RamusRegulation> regulationList = new ArrayList<RamusRegulation>();
 
-    //=================== 属性方法 ============================================
+    //======================== 属性方法 ==================================================================
 
     public String getFlowTypeId() {
 
@@ -40,6 +42,14 @@ public class Ramus extends AbstractBaseEntity {
     public void setFlowTypeId(String flowTypeId) {
 
         this.flowTypeId = flowTypeId;
+    }
+
+    public Integer getRamusType() {
+        return ramusType;
+    }
+
+    public void setRamusType(Integer ramusType) {
+        this.ramusType = ramusType;
     }
 
     public String getName() {

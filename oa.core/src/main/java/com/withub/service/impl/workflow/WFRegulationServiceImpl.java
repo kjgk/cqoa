@@ -190,40 +190,46 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
             if (CollectionUtil.isEmpty(ramus.getRegulationList())) {
                 throw new BaseBusinessException("", "分支[" + ramus.getName() + "]没有定义业务规则表达式!");
             }
-            Document xmlDocument = Dom4jUtil.parseXmlDocument(ramus.getRegulationList().get(0).getExpression());
-            if (xmlDocument == null) {
-                throw new BaseBusinessException("", "无法解析分支[" + ramus.getName() + "]上的业务规则表达式!");
-            }
 
-            Element rootElement = xmlDocument.getRootElement();
-            Element ramusElement = (Element) rootElement.selectSingleNode("ramus");
-            String expression = Dom4jUtil.getAttributeStringValue(ramusElement, "expression");
+            boolean expressionValue;
+            if (ramus.getRamusType() == 2) {
+                expressionValue = StringUtil.compareValue(taskHandleResult.toString(), ramus.getRegulationList().get(0).getExpression());
+            } else {
 
-            if (expression.contains("${TaskHandleResult}")) {
-                expression = expression.replace("${TaskHandleResult}", taskHandleResult.toString());
-            }
-            String[] phraseArray = StringUtils.substringsBetween(expression, "{#", "#}");
-            if (CollectionUtil.isNotEmpty(phraseArray)) {
-                for (String pharse : phraseArray) {
-                    String className = instance.getFlowType().getEntity().getClassName();
-                    AbstractBaseEntity entity = (AbstractBaseEntity) getEntityByClassName(className, instance.getRelatedObjectId());
-                    Object objectValue = getPropertyValue(entity, pharse);
-                    String value = "";
-                    if (objectValue != null) {
-                        value = objectValue.toString();
+
+                Document xmlDocument = Dom4jUtil.parseXmlDocument(ramus.getRegulationList().get(0).getExpression());
+                if (xmlDocument == null) {
+                    throw new BaseBusinessException("", "无法解析分支[" + ramus.getName() + "]上的业务规则表达式!");
+                }
+
+                Element rootElement = xmlDocument.getRootElement();
+                Element ramusElement = (Element) rootElement.selectSingleNode("ramus");
+                String expression = Dom4jUtil.getAttributeStringValue(ramusElement, "expression");
+
+                String[] phraseArray = StringUtils.substringsBetween(expression, "{#", "#}");
+                if (CollectionUtil.isNotEmpty(phraseArray)) {
+                    for (String pharse : phraseArray) {
+                        String className = instance.getFlowType().getEntity().getClassName();
+                        AbstractBaseEntity entity = (AbstractBaseEntity) getEntityByClassName(className, instance.getRelatedObjectId());
+                        Object objectValue = getPropertyValue(entity, pharse);
+                        String value = "";
+                        if (objectValue != null) {
+                            value = objectValue.toString();
+                        }
+                        expression = expression.replace("{#" + pharse + "#}", value);
                     }
-                    expression = expression.replace("{#" + pharse + "#}", value);
+                }
+                expression = expression.replace("#", "\"");
+
+                try {
+                    expressionValue = parser.parseExpression(expression).getValue(Boolean.class);
+                } catch (Exception e) {
+                    System.out.println(expression);
+                    e.printStackTrace();
+                    throw new BaseBusinessException("", "无法解析流程节点分支[" + ramus.getName() + "]上定义的业务规则!");
                 }
             }
-            expression = expression.replace("#", "\"");
-            boolean expressionValue;
-            try {
-                expressionValue = parser.parseExpression(expression).getValue(Boolean.class);
-            } catch (Exception e) {
-                System.out.println(expression);
-                e.printStackTrace();
-                throw new BaseBusinessException("", "无法解析流程节点分支[" + ramus.getName() + "]上定义的业务规则!");
-            }
+
             if (expressionValue) {
                 return flowNodeRoute;
             }
