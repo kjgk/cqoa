@@ -6,7 +6,7 @@ angular.module('app', ['app.oa', 'app.mobile'])
 
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, RestangularProvider, $datepickerProvider, $timepickerProvider) {
 
-        $urlRouterProvider.otherwise('/oa/meetingroom');
+        $urlRouterProvider.otherwise('/oa/task/pending');
 
         cfpLoadingBarProvider.includeSpinner = false;
 
