@@ -197,7 +197,7 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
                 ramus.setName(ramusName);
 
                 ramus.setEvent(linkedHashMap.get("Event") == null ? "" : linkedHashMap.get("Event").toString());
-                ramus.setStatusTag(linkedHashMap.get("StatusTag") == null ? "" : linkedHashMap.get("StatusTag").toString());
+                ramus.setStatusTag(linkedHashMap.get("EntityStatusTag") == null ? "" : linkedHashMap.get("EntityStatusTag").toString());
                 save(ramus);
 
                 String expression = linkedHashMap.get("Cond") == null ? "" : linkedHashMap.get("Cond").toString();
