@@ -11,6 +11,8 @@
             <list>
                 <value>securityListener</value>
                 <value>authorizationClusterListener</value>
+                <value>workflowListener</value>
+                <value>taskListener</value>
             </list>
         </property>
     </bean>

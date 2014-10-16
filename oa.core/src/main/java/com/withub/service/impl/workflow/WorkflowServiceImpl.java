@@ -205,7 +205,7 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
 
         List<Task> taskList = instanceService.listRunningTasks(instance);
         for (Task t : taskList) {
-            userList.add(t.getActor());
+            userList.add(t.getHandler());
         }
 
         return userList;
@@ -332,7 +332,7 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
 
         Task task = get(Task.class, taskId);
         User user = get(User.class, handler);
-        task.setActor(user);
+        task.setHandler(user);
         task.setSourceType(TaskSourceType.TRANSMIT);
         task.setArriveTime(DateUtil.getCurrentTime());
         task.setDeliver(SpringSecurityUtil.getCurrentUser());
