@@ -1,6 +1,9 @@
 package com.withub.service.impl.workflow;
 
-import com.withub.common.util.*;
+import com.withub.common.util.CollectionUtil;
+import com.withub.common.util.RandomUtil;
+import com.withub.common.util.ReflectionUtil;
+import com.withub.common.util.StringUtil;
 import com.withub.model.entity.AbstractBaseEntity;
 import com.withub.model.exception.BaseBusinessException;
 import com.withub.model.system.po.Organization;
@@ -16,8 +19,6 @@ import com.withub.service.workflow.InstanceService;
 import com.withub.service.workflow.WFRegulationService;
 import com.withub.spring.SpringContextUtil;
 import org.apache.commons.lang.StringUtils;
-import org.dom4j.Document;
-import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -195,16 +196,15 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
             if (ramus.getRamusType() == 2) {
                 expressionValue = StringUtil.compareValue(taskHandleResult.toString(), ramus.getRegulationList().get(0).getExpression());
             } else {
-
-
-                Document xmlDocument = Dom4jUtil.parseXmlDocument(ramus.getRegulationList().get(0).getExpression());
+                /*Document xmlDocument = Dom4jUtil.parseXmlDocument(ramus.getRegulationList().get(0).getExpression());
                 if (xmlDocument == null) {
                     throw new BaseBusinessException("", "无法解析分支[" + ramus.getName() + "]上的业务规则表达式!");
                 }
 
                 Element rootElement = xmlDocument.getRootElement();
                 Element ramusElement = (Element) rootElement.selectSingleNode("ramus");
-                String expression = Dom4jUtil.getAttributeStringValue(ramusElement, "expression");
+                String expression = Dom4jUtil.getAttributeStringValue(ramusElement, "expression");*/
+                String expression = ramus.getRegulationList().get(0).getExpression();
 
                 String[] phraseArray = StringUtils.substringsBetween(expression, "{#", "#}");
                 if (CollectionUtil.isNotEmpty(phraseArray)) {
