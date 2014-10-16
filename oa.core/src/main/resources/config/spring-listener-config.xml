@@ -36,4 +36,35 @@
         </property>
     </bean>
 
+    <!-- 工作流事件监听器 -->
+    <bean id="workflowListener" class="com.withub.spring.listener.EventHandlerConfigInfo">
+        <property name="eventHandlerMap">
+            <map>
+                <entry key="com.boke.model.workflow.event.DecisionCreateEvent"
+                       value="workflowService.onDecisionCreateEvent"/>
+                <entry key="com.boke.model.workflow.event.instanceevent.InstanceDeleteEvent"
+                       value="workflowService.onInstanceDeleteEvent"/>
+                <entry key="com.boke.model.entity.event.EntityLogicDeleteEvent"
+                       value="workflowService.onEntityLogicDeleteEvent"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="taskListener" class="com.withub.spring.listener.EventHandlerConfigInfo">
+        <property name="eventHandlerMap">
+            <map>
+                <entry key="com.boke.model.workflow.event.instanceevent.InstanceCreateEvent"
+                       value="taskService.onInstanceCreateEvent"/>
+                <entry key="com.boke.model.workflow.event.instanceevent.InstanceDeleteEvent"
+                       value="taskService.onInstanceDeleteEvent"/>
+                <entry key="com.boke.model.workflow.event.instanceevent.InstanceAbortEvent"
+                       value="taskService.onInstanceAbortEvent"/>
+                <entry key="com.boke.model.std.event.agencyevent.AgencyCreatedEvent"
+                       value="taskService.onAgencyCreatedEvent"/>
+                <entry key="com.boke.model.std.event.agencyevent.AgencyFinishedEvent"
+                       value="taskService.onAgencyFinishedEvent"/>
+            </map>
+        </property>
+    </bean>
+
 </beans>
