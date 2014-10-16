@@ -51,7 +51,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
             for (MasterTask masterTask : previousSubInstance.getMasterTaskList()) {
                 if (masterTask.getFlowNode().getObjectId().equals(flowNode.getObjectId())) {
                     for (Task task : masterTask.getTaskList()) {
-                        handlerList.add(task.getActor());
+                        handlerList.add(task.getHandler());
                     }
                     break;
                 }
@@ -78,7 +78,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
             List list = listByHql(hql, instance.getObjectId(), flowNode.getHandlerOnFlowNode());
             if (CollectionUtil.isNotEmpty(list)) {
                 for (Task task : (List<Task>) list) {
-                    handlerList.add(task.getActor());
+                    handlerList.add(task.getHandler());
                 }
             }
         } else if (StringUtil.isNotEmpty(flowNode.getUserPropertyOnEntity())) {

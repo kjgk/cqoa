@@ -10,8 +10,6 @@ import java.util.Map;
 
 public interface FlowTypeService extends EntityService {
 
-    public void saveWorkflowConfig(String flowTypeId, String data) throws Exception;
-
     public void saveWorkflowConfig(final String flowTypeId, Map data, User user) throws Exception;
 
     public FlowType getFlowTypeByEntity(AbstractBaseEntity entity) throws Exception;

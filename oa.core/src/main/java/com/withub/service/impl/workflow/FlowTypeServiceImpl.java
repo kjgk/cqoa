@@ -3,7 +3,6 @@ package com.withub.service.impl.workflow;
 import com.alibaba.fastjson.JSON;
 import com.withub.common.enumeration.TimeUnit;
 import com.withub.common.util.CollectionUtil;
-import com.withub.common.util.Dom4jUtil;
 import com.withub.common.util.EnumUtil;
 import com.withub.common.util.StringUtil;
 import com.withub.model.entity.AbstractBaseEntity;
@@ -19,9 +18,6 @@ import com.withub.service.EntityServiceImpl;
 import com.withub.service.system.CodeService;
 import com.withub.service.workflow.FlowTypeService;
 import com.withub.service.workflow.WFRegulationService;
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,153 +40,6 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
     private CodeService codeService;
 
     //=============================== 接口实现 ============================================================
-
-    public void saveWorkflowConfig(String flowTypeId, String xml) throws Exception {
-
-        // 删除流程相关配置信息
-        String sql = "delete from WF_FlowChart where flowTypeId=?";
-        executeSql(sql, flowTypeId);
-        sql = "delete from WF_FlowNodeRoute where flowTypeId=?";
-        executeSql(sql, flowTypeId);
-        sql = "delete from WF_RamusRegulation where RamusId in (select ObjectId from WF_Ramus where flowTypeId=?)";
-        executeSql(sql, flowTypeId);
-        sql = "delete from WF_Ramus where flowTypeId=?";
-        executeSql(sql, flowTypeId);
-
-        // 保存流程图
-        FlowChart flowChart = new FlowChart();
-        flowChart.setObjectId(StringUtil.getUuid());
-        FlowType flowType = get(FlowType.class, flowTypeId);
-        flowChart.setFlowType(flowType);
-        flowChart.setConfigInfo(xml);
-        save(flowChart);
-
-        // 解析 JSON 配置信息
-        Map dataMap = JSON.parseObject(xml);
-
-
-        // 解析 XML 配置信息
-        Document xmlDoc = DocumentHelper.parseText(xml);
-        Element rootElement = xmlDoc.getRootElement();
-
-        /*
-        * 保存流程节点
-        * 为了正常显示历史任务,流程图上删除的流节点必须保存下来.
-         */
-
-        Code hourTimeUnit = codeService.getCodeByEnum(TimeUnit.Hour);
-
-        List<Element> procList = rootElement.selectNodes("//Flow/Procs//Proc");
-        for (Element element : procList) {
-            List<Element> nodeList = element.selectNodes("BaseProperties");
-            for (Element elementObject : nodeList) {
-                FlowNode flowNode = new FlowNode();
-                String flowNodeId = Dom4jUtil.getAttributeStringValue(elementObject, "id");
-                flowNode.setObjectId(flowNodeId);
-                flowNode.setFlowType(flowType);
-                flowNode.setCode(Dom4jUtil.getAttributeStringValue(elementObject, "code"));
-                flowNode.setName(Dom4jUtil.getAttributeStringValue(elementObject, "text"));
-                FlowNodeType flowNodeType = (FlowNodeType) EnumUtil.getEnumByFieldName(FlowNodeType.class, Dom4jUtil.getAttributeStringValue(elementObject, "ProcType"));
-                flowNode.setFlowNodeType(flowNodeType);
-                flowNode.setFlowNodeTag(Dom4jUtil.getAttributeStringValue(elementObject, "FlowNodeTag"));
-                if (flowNodeType == FlowNodeType.Begin || flowNodeType == FlowNodeType.End) {
-                    flowNode.setTaskExecuteMode(TaskExecuteMode.Auto);
-                } else {
-                    flowNode.setTaskExecuteMode(TaskExecuteMode.Manual);
-                }
-                flowNode.setInstanceReturnMode(Dom4jUtil.getAttributeIntegerValue(elementObject, "InstanceReturnMode", 0));
-
-                flowNode.setExpiration(Dom4jUtil.getAttributeIntegerValue(elementObject, "TimeLimit", 0));
-                flowNode.setExpirationTimeUnit(hourTimeUnit);
-
-                flowNode.setFlowNodeTaskMode(FlowNodeTaskMode.Parallelism);
-                flowNode.setActivity(Dom4jUtil.getAttributeStringValue(elementObject, "Activity"));
-
-                String flowNodeAction = Dom4jUtil.getAttributeStringValue(elementObject, "FlowNodeAction");
-                flowNode.setPassAction(flowNodeAction.contains(",passAction,") ? 1 : 0);
-                flowNode.setReturnAction(flowNodeAction.contains(",returnAction,") ? 1 : 0);
-                flowNode.setRejectAction(flowNodeAction.contains(",rejectAction,") ? 1 : 0);
-                flowNode.setDiscardAction(flowNodeAction.contains(",discardAction,") ? 1 : 0);
-                flowNode.setCompleteAction(flowNodeAction.contains(",completeAction,") ? 1 : 0);
-
-                // TODO 完善流程节点上实现取人规则
-                flowNode.setHandlerServiceMethod(Dom4jUtil.getAttributeStringValue(elementObject, "Executer"));
-                flowNode.setHandlerOnFlowNode(Dom4jUtil.getAttributeStringValue(elementObject, "HandlerOnFlowNode"));
-                flowNode.setUserPropertyOnEntity(Dom4jUtil.getAttributeStringValue(elementObject, "UserPropertyOnEntity"));
-                flowNode.setOrganizationId(Dom4jUtil.getAttributeStringValue(elementObject, "OrganizationId"));
-                flowNode.setRoleId(Dom4jUtil.getAttributeStringValue(elementObject, "RoleId"));
-                flowNode.setUseRootNode(Dom4jUtil.getAttributeIntegerValue(elementObject, "UseRootNode", 0));
-                flowNode.setOrganizationProperty(Dom4jUtil.getAttributeStringValue(elementObject, "OrganizationProperty"));
-                flowNode.setRoleProperty(Dom4jUtil.getAttributeStringValue(elementObject, "RoleProperty"));
-                flowNode.setHandlerFetchCount(Dom4jUtil.getAttributeIntegerValue(elementObject, "HandlerFetchCount", 0));
-
-                // 当有多个任务处理人时的取人方式
-                String handlerFetchType = Dom4jUtil.getAttributeStringValue(elementObject, "HandlerFetchType");
-                if (handlerFetchType.contains("Random")) {
-                    flowNode.setHandlerFetchType(HandlerFetchType.Random);
-                } else if (handlerFetchType.contains("IdleMost")) {
-                    flowNode.setHandlerFetchType(HandlerFetchType.IdleMost);
-                } else if (handlerFetchType.contains("TaskLeast")) {
-                    flowNode.setHandlerFetchType(HandlerFetchType.TaskLeast);
-                } else {
-                    flowNode.setHandlerFetchType(null);
-                }
-
-
-                flowNode.setManualSelectHandler(Dom4jUtil.getAttributeIntegerValue(elementObject, "SelectExit", 0));
-                flowNode.setSkipHandler(Dom4jUtil.getAttributeIntegerValue(elementObject, "SkipHandler", 0));
-                int allowAgent = Dom4jUtil.getAttributeIntegerValue(elementObject, "AllowAgent", 0);
-                flowNode.setAllowAgent(allowAgent);
-                flowNode.setAllowTransmit(allowAgent);
-                flowNode.setSuspendInstance(Dom4jUtil.getAttributeIntegerValue(elementObject, "SuspendInstance", 0));
-                flowNode.setSuspendDescription(Dom4jUtil.getAttributeStringValue(elementObject, "SuspendDescription"));
-                flowNode.setEntityStatusTag(Dom4jUtil.getAttributeStringValue(elementObject, "EntityStatusTag"));
-
-                // 提醒方式
-                String notify = Dom4jUtil.getAttributeStringValue(elementObject, "WarnType");
-                flowNode.setEmail(notify.contains("email") ? 1 : 0);
-                flowNode.setSms(notify.contains("sms") ? 1 : 0);
-                flowNode.setNotifyInstanceCreator(Dom4jUtil.getAttributeIntegerValue(elementObject, "NotifyInstanceCreator", 0));
-                flowNode.setNotifyContent(Dom4jUtil.getAttributeStringValue(elementObject, "NotifyContent"));
-
-                save(flowNode);
-            }
-        }
-
-        // 保存分支及路径图
-        List<Element> stepList = rootElement.selectNodes("//Flow/Steps//Step");
-        for (Element element : stepList) {
-            List<Element> ramusList = element.selectNodes("BaseProperties");
-            for (Element elementObject : ramusList) {
-                Ramus ramus = new Ramus();
-                String ramusId = Dom4jUtil.getAttributeStringValue(elementObject, "id");
-                ramus.setObjectId(ramusId);
-                ramus.setFlowTypeId(flowTypeId);
-                ramus.setRamusTag(Dom4jUtil.getAttributeStringValue(elementObject, "RamusTag"));
-                ramus.setName(Dom4jUtil.getAttributeStringValue(elementObject, "text"));
-                ramus.setEvent(Dom4jUtil.getAttributeStringValue(elementObject, "Event"));
-                ramus.setStatusTag(Dom4jUtil.getAttributeStringValue(elementObject, "StatusTag"));
-                save(ramus);
-
-                // TODO: 由于界面的原因,现在只实行表达式
-                String expression = Dom4jUtil.getAttributeStringValue(elementObject, "Cond");
-                if (StringUtil.isNotEmpty(expression)) {
-                    RamusRegulation ramusRegulation = new RamusRegulation();
-                    ramusRegulation.setRamus(ramus);
-                    ramusRegulation.setExpression(expression);
-                    save(ramusRegulation);
-                }
-
-                FlowNodeRoute flowNodeRoute = new FlowNodeRoute();
-                flowNodeRoute.setObjectId(StringUtil.getUuid());
-                flowNodeRoute.setFlowType(flowType);
-                flowNodeRoute.setFromFlowNodeId(Dom4jUtil.getAttributeStringValue(elementObject, "from"));
-                flowNodeRoute.setToFlowNodeId(Dom4jUtil.getAttributeStringValue(elementObject, "to"));
-                flowNodeRoute.setRamusId(ramusId);
-                save(flowNodeRoute);
-            }
-        }
-    }
 
     public void saveWorkflowConfig(final String flowTypeId, Map data, User user) throws Exception {
 
@@ -219,7 +68,7 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
 
         for (LinkedHashMap linkedHashMap : linkedHashMapList) {
 
-            if (StringUtil.compareValue(linkedHashMap.get("type").toString(), "basic.Circle")) {
+            if (StringUtil.compareValue(linkedHashMap.get("type").toString(), "basic.Circle") || StringUtil.compareValue(linkedHashMap.get("type").toString(), "basic.Rect")) {
                 FlowNode flowNode = new FlowNode();
 
                 flowNode.setObjectId(linkedHashMap.get("id").toString());
@@ -241,8 +90,7 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
                 } else {
                     flowNode.setTaskExecuteMode(TaskExecuteMode.Manual);
                 }
-                flowNode.setInstanceReturnMode(linkedHashMap.get("InstanceReturnMode") == null ? 0 : (Integer) linkedHashMap.get("InstanceReturnMode"));
-                flowNode.setExpiration(linkedHashMap.get("TimeLimit") == null ? 0 : (Integer) linkedHashMap.get("TimeLimit"));
+                flowNode.setExpiration(linkedHashMap.get("TimeLimit") == null ? 0 : Integer.parseInt(linkedHashMap.get("TimeLimit").toString()));
                 flowNode.setExpirationTimeUnit(hourTimeUnit);
 
                 flowNode.setFlowNodeTaskMode(FlowNodeTaskMode.Parallelism);
@@ -252,7 +100,7 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
                 if (flowNodeActionMap != null) {
                     flowNode.setPassAction((Boolean) flowNodeActionMap.get("passAction") ? 1 : 0);
                     flowNode.setReturnAction((Boolean) flowNodeActionMap.get("returnAction") ? 1 : 0);
-                    flowNode.setRejectAction((Boolean) flowNodeActionMap.get("setRejectAction") ? 1 : 0);
+                    flowNode.setRejectAction((Boolean) flowNodeActionMap.get("rejectAction") ? 1 : 0);
                     flowNode.setDiscardAction((Boolean) flowNodeActionMap.get("discardAction") ? 1 : 0);
                     flowNode.setCompleteAction((Boolean) flowNodeActionMap.get("completeAction") ? 1 : 0);
                 }
@@ -267,13 +115,14 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
 
                 flowNode.setRoleId(linkedHashMap.get("RoleId") == null ? "" : linkedHashMap.get("RoleId").toString());
 
-                flowNode.setUseRootNode(linkedHashMap.get("UseRootNode") == null ? 0 : (Integer) linkedHashMap.get("UseRootNode"));
+                flowNode.setUseRootNode(0);
 
                 flowNode.setOrganizationProperty(linkedHashMap.get("OrganizationProperty") == null ? "" : linkedHashMap.get("OrganizationProperty").toString());
 
                 flowNode.setRoleProperty(linkedHashMap.get("RoleProperty") == null ? "" : linkedHashMap.get("RoleProperty").toString());
 
-                flowNode.setHandlerFetchCount(linkedHashMap.get("HandlerFetchCount") == null ? 0 : (Integer) linkedHashMap.get("HandlerFetchCount"));
+                flowNode.setHandlerFetchCount(linkedHashMap.get("HandlerFetchCount") == null ? 1 : Integer.parseInt(linkedHashMap.get("HandlerFetchCount").toString()));
+
 
                 // 当有多个任务处理人时的取人方式
                 LinkedHashMap handlerFetchTypeMap = (LinkedHashMap) linkedHashMap.get("HandlerFetchType");
@@ -288,15 +137,32 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
                         flowNode.setHandlerFetchType(null);
                     }
                 }
-                flowNode.setManualSelectHandler(linkedHashMap.get("ManualSelectHandler") == null ? 0 : (Integer) linkedHashMap.get("ManualSelectHandler"));
-                flowNode.setSkipHandler(linkedHashMap.get("SkipHandler") == null ? 0 : (Integer) linkedHashMap.get("SkipHandler"));
 
-                int allowAgent = linkedHashMap.get("AllowAgent") == null ? 0 : (Integer) linkedHashMap.get("AllowAgent");
-                flowNode.setAllowAgent(allowAgent);
-                flowNode.setAllowTransmit(allowAgent);
-                flowNode.setSuspendInstance(linkedHashMap.get("SuspendInstance") == null ? 0 : (Integer) linkedHashMap.get("SuspendInstance"));
+                flowNode.setManualSelectHandler(0);
+                flowNode.setAllowAgent(0);
+                flowNode.setAllowTransmit(0);
+                flowNode.setSkipHandler(0);
+                flowNode.setNotifyInstanceCreator(0);
+                flowNode.setInstanceReturnMode(0);
+                flowNode.setSuspendInstance(0);
+                LinkedHashMap configMap = (LinkedHashMap) linkedHashMap.get("Config");
+                if (configMap != null) {
+                    if ((Boolean) configMap.get("ManualSelectHandler")) {
+                        flowNode.setManualSelectHandler(1);
+                    } else if ((Boolean) configMap.get("AllowAgent")) {
+                        flowNode.setAllowAgent(1);
+                        flowNode.setAllowTransmit(1);
+                    } else if ((Boolean) configMap.get("SkipHandler")) {
+                        flowNode.setSkipHandler(1);
+                    } else if ((Boolean) configMap.get("NotifyInstanceCreator")) {
+                        flowNode.setNotifyInstanceCreator(1);
+                    } else if ((Boolean) configMap.get("InstanceReturnMode")) {
+                        flowNode.setInstanceReturnMode(1);
+                    } else if ((Boolean) configMap.get("SuspendInstance")) {
+                        flowNode.setSuspendInstance(1);
+                    }
+                }
 
-                flowNode.setSuspendDescription(linkedHashMap.get("SuspendDescription") == null ? "" : linkedHashMap.get("SuspendDescription").toString());
                 flowNode.setEntityStatusTag(linkedHashMap.get("EntityStatusTag") == null ? "" : linkedHashMap.get("EntityStatusTag").toString());
 
                 // TODO 提醒方式
