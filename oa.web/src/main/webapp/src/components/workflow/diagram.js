@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('workflow', ['ui.router'])
+angular.module('workflow', ['ui.router', 'uuid4'])
 
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -12,14 +12,8 @@ angular.module('workflow', ['ui.router'])
         ;
     })
 
-    .value('emptyDiagram', {"cells": [
-        {"angle": 0, "attrs": {"circle": {"fill": "#5cb85c"}, "text": {"text": "开始"}}, "embeds": "", "id": "40f79ad9-5bd8-4f1c-a17c-c13fdfb1c30c", "nodeType": "begin", "position": {"x": 40, "y": 40}, "size": {"height": 50, "width": 80}, "type": "basic.Circle", "z": 1},
-        {"angle": 0, "attrs": {"circle": {"fill": "#d9534f"}, "text": {"text": "结束"}}, "embeds": "", "id": "b44ba63f-9cc1-469a-89c4-34493793895b", "nodeType": "end", "position": {"x": 40, "y": 255}, "size": {"height": 50, "width": 80}, "type": "basic.Circle", "z": 2},
-        {"Config": {"AllowAgent": false, "InstanceReturnMode": false, "ManualSelectHandler": false, "NotifyInstanceCreator": false, "SkipHandler": false, "SuspendInstance": false}, "Executer": "", "FlowNodeTag": "", "FlowNodeType": "first", "HandlerOnFlowNode": "", "SuspendDescription": "", "UserPropertyOnEntity": "", "angle": 0, "attrs": {"rect": {"fill": "#2798EC"}, "text": {"text": "第一个节点"}}, "embeds": "", "id": "b5f2ed15-51b8-4040-b426-f434092d1eb8", "nodeType": "first", "position": {"x": 240, "y": 40}, "size": {"height": 50, "width": 80}, "type": "basic.Rect", "z": 3},
-        {"attrs": {}, "embeds": "", "id": "cb3cd016-ee4c-4b80-a0fc-d2e3f659821f", "source": {"id": "40f79ad9-5bd8-4f1c-a17c-c13fdfb1c30c"}, "target": {"id": "b5f2ed15-51b8-4040-b426-f434092d1eb8"}, "type": "link", "z": 4}
-    ]})
 
-    .controller('WorkflowCtrl', function ($scope, $http, $state, emptyDiagram) {
+    .controller('WorkflowCtrl', function ($scope, $http, $state, uuid4) {
 
         var graph = new joint.dia.Graph;
 
@@ -214,9 +208,16 @@ angular.module('workflow', ['ui.router'])
             if (response.data.data) {
                 graph.fromJSON(angular.fromJson(response.data.data));
             } else {
-                graph.fromJSON(emptyDiagram);
+                var beginNodeId = uuid4.generate(), endNodeId = uuid4.generate(), firstNodeId = uuid4.generate(), linkId = uuid4.generate();
+                var defaultDiagram = {"cells": [
+                    {"id": beginNodeId, "angle": 0, "attrs": {"circle": {"fill": "#5cb85c"}, "text": {"text": "开始"}}, "embeds": "", "nodeType": "begin", "position": {"x": 40, "y": 40}, "size": {"height": 50, "width": 80}, "type": "basic.Circle", "z": 1},
+                    {"id": endNodeId, "angle": 0, "attrs": {"circle": {"fill": "#d9534f"}, "text": {"text": "结束"}}, "embeds": "", "nodeType": "end", "position": {"x": 40, "y": 255}, "size": {"height": 50, "width": 80}, "type": "basic.Circle", "z": 2},
+                    {"id": firstNodeId, "Config": {"AllowAgent": false, "InstanceReturnMode": false, "ManualSelectHandler": false, "NotifyInstanceCreator": false, "SkipHandler": false, "SuspendInstance": false}, "Executer": "", "FlowNodeTag": "", "FlowNodeType": "first", "HandlerOnFlowNode": "", "SuspendDescription": "", "UserPropertyOnEntity": "", "angle": 0, "attrs": {"rect": {"fill": "#2798EC"}, "text": {"text": "第一个节点"}}, "embeds": "", "nodeType": "first", "position": {"x": 240, "y": 40}, "size": {"height": 50, "width": 80}, "type": "basic.Rect", "z": 3},
+                    {"id": linkId, "attrs": {}, "embeds": "", "source": {"id": beginNodeId}, "target": {"id": firstNodeId}, "type": "link", "z": 4}
+                ]};
+                graph.fromJSON(defaultDiagram);
             }
-        })
+        });
 
     })
 ;
