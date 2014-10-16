@@ -456,7 +456,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
                 task.setMasterTask(masterTask);
                 task.setStatus(taskRunningStatus);
                 task.setOwner(handler);
-                task.setActor(handler);
+                task.setHandler(handler);
                 // 代理实现
                 if (flowNode.getAllowAgent() == 1) {
                     if (handler.getObjectId().equals(user.getObjectId()) || handler.getObjectId().equals(SystemConstant.USER_SYSTEM)) {
@@ -464,7 +464,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
                     } else {
                         User agent = agencyService.getAgent(handler);
                         if (agent != null) {
-                            task.setActor(agent);
+                            task.setHandler(agent);
                             task.setSourceType(TaskSourceType.AGENCY);
                         }
                     }
@@ -519,7 +519,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
                 task.setMasterTask(masterTask);
                 task.setStatus(taskRunningStatus);
                 task.setOwner(handler);
-                task.setActor(handler);
+                task.setHandler(handler);
                 // 代理实现
                 if (flowNode.getAllowAgent() == 1) {
                     if (handler.getObjectId().equals(user.getObjectId()) || handler.getObjectId().equals(SystemConstant.USER_SYSTEM)) {
@@ -527,7 +527,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
                     } else {
                         User agent = agencyService.getAgent(handler);
                         if (agent != null) {
-                            task.setActor(agent);
+                            task.setHandler(agent);
                             task.setSourceType(TaskSourceType.AGENCY);
                         }
                     }
@@ -692,7 +692,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
             if (task.getMasterTask().getFlowNode().getAllowAgent() == 0) {
                 continue;
             }
-            task.setActor(agency.getAgent());
+            task.setHandler(agency.getAgent());
             update(task);
             TaskEventArgs args = new TaskEventArgs();
             args.setTask(task);
@@ -711,7 +711,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
         }
 
         for (Task task : (List<Task>) list) {
-            task.setActor(agency.getAgent());
+            task.setHandler(agency.getAgent());
             save(task);
             TaskEventArgs args = new TaskEventArgs();
             args.setTask(task);

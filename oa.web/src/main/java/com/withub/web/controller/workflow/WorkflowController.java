@@ -160,7 +160,7 @@ public class WorkflowController extends BaseController {
                 String handler = "";
                 for (InstanceOrganization instanceOrganization : instance.getOrganizationList()) {
                     if (instanceOrganization.getTask().getStatus().getCodeTag().equalsIgnoreCase(TaskStatus.Running.name())) {
-                        handler += instanceOrganization.getTask().getActor().getName() + ",";
+                        handler += instanceOrganization.getTask().getHandler().getName() + ",";
                         if (flowNode == "") {
                             flowNode = instanceOrganization.getTask().getMasterTask().getFlowNode().getName();
                         }
@@ -235,7 +235,7 @@ public class WorkflowController extends BaseController {
                     } else {
                         for (InstanceOrganization instanceOrganization : instance.getOrganizationList()) {
                             if (instanceOrganization.getTask().getStatus().getCodeTag().equalsIgnoreCase(TaskStatus.Running.name())) {
-                                handler += instanceOrganization.getTask().getActor().getName() + ",";
+                                handler += instanceOrganization.getTask().getHandler().getName() + ",";
                             }
                         }
                     }
@@ -409,7 +409,7 @@ public class WorkflowController extends BaseController {
         if (StringUtil.isEmpty(approvers)) {
             workflowService.passTask(taskId, opinion);
         } else {
-            List approverList = new ArrayList();
+            List<User> approverList = new ArrayList();
             for (String approverId : approvers.split(",")) {
                 User approver = workflowService.get(User.class, approverId);
                 approverList.add(approver);

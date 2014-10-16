@@ -23,8 +23,8 @@ public class Task extends AbstractEntity {
     private User owner;
 
     @OneToOne(targetEntity = User.class)
-    @JoinColumn(name = "actor")
-    private User actor;
+    @JoinColumn(name = "handler")
+    private User handler;
 
     @OneToOne(targetEntity = Code.class)
     @JoinColumn(name = "status")
@@ -82,14 +82,14 @@ public class Task extends AbstractEntity {
         this.owner = owner;
     }
 
-    public User getActor() {
+    public User getHandler() {
 
-        return actor;
+        return handler;
     }
 
-    public void setActor(User actor) {
+    public void setHandler(User handler) {
 
-        this.actor = actor;
+        this.handler = handler;
     }
 
     public Code getStatus() {
