@@ -103,7 +103,7 @@ angular.module('workflow', ['ui.router'])
                         FlowNodeTag: { type: 'text', group: 'base', label: '标识', index: 2 },
                         Config: { type: 'object', group: 'base', label: ' ', index: 3,
                             properties: {
-                                SelectExit: { type: 'toggle', label: '手动选择下一个节点处理人' },
+                                SelectExit: { type: 'toggle', label: '手动选择下一个节点处理人'},
                                 SkipHandler: { type: 'toggle', label: '跳过上次执行通过的处理人' },
                                 AllowAgent: { type: 'toggle', label: '允许代理' },
                                 NotifyInstanceCreator: { type: 'toggle', label: '通知流程的发起人' },
@@ -118,7 +118,7 @@ angular.module('workflow', ['ui.router'])
 
                     if (type == 'first') {
                         _.extend(inputs, {
-                            FlowNodeType: { type: 'select', group: 'base', label: '节点类型', index: 3, options: [
+                            FlowNodeType: { type: 'select', group: 'base', defaultValue: 'first', label: '节点类型', index: 3, options: [
                                 {value: 'first', content: '第一个节点' }
                             ] }
                         });
@@ -126,7 +126,7 @@ angular.module('workflow', ['ui.router'])
 
                     if (type == 'normal') {
                         _.extend(inputs, {
-                            FlowNodeType: { type: 'select', group: 'base', label: '节点类型', index: 3, options: [
+                            FlowNodeType: { type: 'select', defaultValue: 'andsign', group: 'base', label: '节点类型', index: 3, options: [
                                 {value: 'andsign', content: '会签' },
                                 {value: 'modify', content: '修改' },
                                 {value: 'submit', content: '提交' },
