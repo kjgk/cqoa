@@ -61,6 +61,7 @@ public class InstanceServiceImpl extends EntityServiceImpl implements InstanceSe
         FlowNode beginFlowNode = flowTypeService.getBeginFlowNode(flowType);
         instance.setCurrentFlowNode(beginFlowNode);
         instance.setOrganization(entity.getCurrentUser().getOrganization());
+        instance.setCurrentUser(entity.getCurrentUser());
         save(instance);
 
         // 子流程

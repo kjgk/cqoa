@@ -370,7 +370,6 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
         // 判断是否启动新流程
         if (instance == null) {
             instance = instanceService.start(entity, nextHandlerList);
-            return;
         }
 
         // 重新解析流程名

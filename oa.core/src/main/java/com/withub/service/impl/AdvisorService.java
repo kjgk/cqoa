@@ -2,15 +2,20 @@ package com.withub.service.impl;
 
 import com.withub.common.util.CollectionUtil;
 import com.withub.common.util.ReflectionUtil;
+import com.withub.model.entity.AbstractBaseEntity;
 import com.withub.model.entity.event.EntityAddEvent;
 import com.withub.model.entity.event.EntityDeleteEvent;
 import com.withub.model.entity.event.EntityLogicDeleteEvent;
 import com.withub.model.entity.event.EntityUpdateEvent;
 import com.withub.model.entity.query.QueryInfo;
+import com.withub.model.exception.BaseBusinessException;
+import com.withub.model.system.po.User;
+import com.withub.model.workflow.po.FlowType;
 import com.withub.service.EntityService;
 import com.withub.service.std.SystemEventService;
 import com.withub.service.system.PermissionService;
 import com.withub.service.system.UserService;
+import com.withub.service.workflow.WorkflowService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -20,6 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Aspect
 @Service
@@ -39,6 +47,9 @@ public class AdvisorService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private WorkflowService workflowService;
 
     //======================== 方法实现 ==================================================================
 
@@ -144,6 +155,42 @@ public class AdvisorService {
             throw new BaseBusinessException("", "没有权限!");
         }
     }*/
+
+
+    @AfterReturning(pointcut = "execution(* com.withub.service.impl..*.submit*(..))")
+    public void startWorkflow(JoinPoint joinPoint) throws Exception {
+
+        FlowType flowType = (FlowType) workflowService.getByPropertyValue(FlowType.class, "entranceMethod", joinPoint.getSignature().getName());
+
+        if (flowType == null || flowType.getEnable() == 0) {
+            return;
+        }
+
+        AbstractBaseEntity entity = null;
+        List<User> nextHandlerList = new ArrayList<User>();
+        if (joinPoint.getArgs().length > 0) {
+            entity = (AbstractBaseEntity) joinPoint.getArgs()[0];
+            if (joinPoint.getArgs().length > 1) {
+                if (joinPoint.getArgs()[1] instanceof User) {
+                    User user = userService.getUserById(((User) joinPoint.getArgs()[1]).getObjectId());
+                    nextHandlerList.add(user);
+                } else {
+                    for (User user : (List<User>) joinPoint.getArgs()[1]) {
+                        nextHandlerList.add(userService.getUserById(user.getObjectId()));
+                    }
+                }
+            }
+        }
+
+        if (entity == null) {
+            throw new BaseBusinessException("", "启动工作流的业务对象为空!");
+        }
+        if (CollectionUtil.isEmpty(nextHandlerList)) {
+            workflowService.startWorkflow(entity);
+        } else {
+            workflowService.startWorkflow(entity, nextHandlerList);
+        }
+    }
 
 
     //======================== 属性方法 ==================================================================

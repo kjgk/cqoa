@@ -314,7 +314,11 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
                 Ramus ramus = new Ramus();
                 String ramusId = linkedHashMap.get("id").toString();
                 ramus.setObjectId(ramusId);
-                ramus.setRamusType((Integer) linkedHashMap.get("RamusType"));
+                int ramusType = 1;
+                if (linkedHashMap.get("RamusType") != null) {
+                    ramusType = Integer.parseInt(linkedHashMap.get("RamusType").toString());
+                }
+                ramus.setRamusType(ramusType);
                 ramus.setCurrentUser(user);
                 ramus.setFlowTypeId(flowTypeId);
                 ramus.setRamusTag(linkedHashMap.get("RamusTag") == null ? "" : linkedHashMap.get("RamusTag").toString());
