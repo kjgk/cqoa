@@ -103,7 +103,7 @@ angular.module('workflow', ['ui.router'])
                         FlowNodeTag: { type: 'text', group: 'base', label: '标识', index: 2 },
                         Config: { type: 'object', group: 'base', label: ' ', index: 3,
                             properties: {
-                                SelectExit: { type: 'toggle', label: '手动选择下一个节点处理人'},
+                                ManualSelectHandler: { type: 'toggle', label: '手动选择下一个节点处理人'},
                                 SkipHandler: { type: 'toggle', label: '跳过上次执行通过的处理人' },
                                 AllowAgent: { type: 'toggle', label: '允许代理' },
                                 NotifyInstanceCreator: { type: 'toggle', label: '通知流程的发起人' },
