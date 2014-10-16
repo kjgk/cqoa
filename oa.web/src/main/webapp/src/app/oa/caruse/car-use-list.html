@@ -20,6 +20,7 @@
                 <tr class="rlm_bga">
                     <td>申请人</td>
                     <td>用车事由</td>
+                    <td>状态</td>
                     <td>区域</td>
                     <td>开始时间</td>
                     <td>结束时间</td>
@@ -29,6 +30,7 @@
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{PageContext.currentUser.name}}</td>
                     <td>{{x.description}}</td>
+                    <td>{{x.status.name}}</td>
                     <td>{{x.localCity===1?"市内":"市外"}}</td>
                     <td>{{x.beginTime|$date:DateFormat.MINUTE}}</td>
                     <td>{{x.endTime|$date:DateFormat.MINUTE}}</td>

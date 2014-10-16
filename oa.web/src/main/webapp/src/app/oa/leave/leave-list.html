@@ -2,6 +2,7 @@
     <div>
         <div class="rn_c">
             <div class="ywtj"><p>请假申请</p>
+
                 <div class="tool-bar">
                     <button class="btn btn-primary btn-sm" ng-click="createLeave()"><i
                             class="fa fa-plus fa-fw"></i> 添加
@@ -18,6 +19,7 @@
             <table simple-table="grid" class="rbga" border="1">
                 <tr class="rlm_bga">
                     <td>请假人</td>
+                    <td>状态</td>
                     <td>开始日期</td>
                     <td>结束日期</td>
                     <td>本市出差</td>
@@ -26,6 +28,7 @@
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{PageContext.currentUser.name}}</td>
+                    <td>{{x.status.name}}</td>
                     <td>{{x.beginDate|$date}}</td>
                     <td>{{x.endDate|$date}}</td>
                     <td>{{x.localCity===1?"是":"否"}}</td>

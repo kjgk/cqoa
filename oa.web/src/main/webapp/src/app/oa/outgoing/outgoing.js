@@ -66,6 +66,17 @@ angular.module('app.oa')
                 toaster.pop('success', "信息", "保存成功！");
             });
         };
+        $scope.viewOutgoing = function (outgoing) {
+            $modal.open({
+                templateUrl: 'app/oa/outgoing/outgoing-view.html',
+                controller: 'OutgoingViewCtrl',
+                resolve: {
+                    objectId: function () {
+                        return outgoing.objectId;
+                    }
+                }
+            });
+        };
         $scope.deleteOutgoing = function (outgoing) {
             OutgoingService.remove(outgoing.objectId).then(function () {
                 $scope.grid.refresh();
@@ -113,4 +124,16 @@ angular.module('app.oa')
                 $modalInstance.close();
             });
         };
-    });
+    })
+
+    .controller('OutgoingViewCtrl', function ($scope, $modalInstance, OutgoingService, objectId) {
+
+        $scope.outgoing = OutgoingService.get(objectId).$object;
+        $scope.title = '查看出差申请';
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss();
+        };
+
+    })
+;

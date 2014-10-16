@@ -17,6 +17,7 @@
             </div>
             <table simple-table="grid" class="rbga" border="1">
                 <tr class="rlm_bga">
+                    <td>状态</td>
                     <td>开始日期</td>
                     <td>结束日期</td>
                     <td>培训地点</td>
@@ -27,6 +28,7 @@
                     <td style="width: 120px;">操作</td>
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
+                    <td>{{x.status.name}}</td>
                     <td>{{x.beginDate|$date}}</td>
                     <td>{{x.endDate|$date}}</td>
                     <td>{{x.address}}</td>
@@ -36,6 +38,8 @@
                     <td>{{x.publicity}}</td>
                     <td>
                         <button class="btn btn-xs btn-primary" ng-click="updateTraining(x)">编辑</button>
+                        &nbsp;
+                        <button class="btn btn-xs btn-primary" ng-click="viewTraining(x)">查看</button>
                         &nbsp;
                         <button class="btn btn-xs btn-danger" ng-click="deleteTraining(x)">删除</button>
                     </td>

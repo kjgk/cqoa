@@ -49,13 +49,13 @@ public class CarUseController extends BaseController {
     @RequestMapping(value = "/carUse", method = RequestMethod.POST)
     public void createCarUse(@RequestBody CarUse carUse) throws Exception {
 
-        carUseService.saveCarUse(carUse);
+        carUseService.submitCarUse(carUse);
     }
 
     @RequestMapping(value = "/carUse", method = RequestMethod.PUT)
     public void updateCarUse(@RequestBody CarUse carUse) throws Exception {
 
-        carUseService.saveCarUse(carUse);
+        carUseService.submitCarUse(carUse);
     }
 
 

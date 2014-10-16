@@ -49,13 +49,13 @@ public class LeaveController extends BaseController {
     @RequestMapping(value = "/leave", method = RequestMethod.POST)
     public void createLeave(@RequestBody Leave leave) throws Exception {
 
-        leaveService.saveLeave(leave);
+        leaveService.submitLeave(leave);
     }
 
     @RequestMapping(value = "/leave", method = RequestMethod.PUT)
     public void updateLeave(@RequestBody Leave leave) throws Exception {
 
-        leaveService.saveLeave(leave);
+        leaveService.submitLeave(leave);
     }
 
 

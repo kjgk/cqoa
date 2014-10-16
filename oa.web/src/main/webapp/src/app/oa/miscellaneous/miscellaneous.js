@@ -66,6 +66,17 @@ angular.module('app.oa')
                 toaster.pop('success', "信息", "保存成功！");
             });
         };
+        $scope.viewMiscellaneous = function (miscellaneous) {
+            $modal.open({
+                templateUrl: 'app/oa/miscellaneous/miscellaneous-view.html',
+                controller: 'MiscellaneousViewCtrl',
+                resolve: {
+                    objectId: function () {
+                        return miscellaneous.objectId;
+                    }
+                }
+            });
+        };
         $scope.deleteMiscellaneous = function (miscellaneous) {
             miscellaneousService.remove(miscellaneous.objectId).then(function () {
                 $scope.grid.refresh();
@@ -121,6 +132,17 @@ angular.module('app.oa')
         $scope.cancel = function () {
             $modalInstance.dismiss();
         };
+    })
+
+    .controller('MiscellaneousViewCtrl', function ($scope, $modalInstance, miscellaneousService, objectId) {
+
+        $scope.miscellaneous = miscellaneousService.get(objectId).$object;
+        $scope.title = '查看综合事项申请';
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss();
+        };
+
     })
 
 ;

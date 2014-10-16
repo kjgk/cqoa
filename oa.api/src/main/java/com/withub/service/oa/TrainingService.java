@@ -10,8 +10,12 @@ public interface TrainingService {
 
     public RecordsetInfo<Training> queryTraining(QueryInfo queryInfo) throws Exception;
 
-    public void saveTraining(Training training) throws Exception;
-
     public void deleteTraining(String objectId) throws Exception;
 
+    public void submitTraining(Training training) throws Exception;
+
+    public void addTraining(Training training) throws Exception;
+
+    public void updateTraining(Training training) throws Exception;
+    
 }

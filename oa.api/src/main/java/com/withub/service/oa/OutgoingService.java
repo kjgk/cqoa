@@ -10,8 +10,13 @@ public interface OutgoingService {
 
     public RecordsetInfo<Outgoing> queryOutgoing(QueryInfo queryInfo) throws Exception;
 
-    public void saveOutgoing(Outgoing outgoing) throws Exception;
-
     public void deleteOutgoing(String objectId) throws Exception;
 
+    public void submitOutgoing(Outgoing outgoing) throws Exception;
+
+    public void addOutgoing(Outgoing outgoing) throws Exception;
+
+    public void updateOutgoing(Outgoing outgoing) throws Exception;    
+
+    
 }

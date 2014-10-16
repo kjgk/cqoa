@@ -1,0 +1,66 @@
+<form class="form-horizontal" role="form" name="outgoingForm">
+    <div class="modal-header">
+        <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">出差人</label>
+
+            <div class="col-sm-10">
+                <p>{{PageContext.currentUser.name}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">出差时间</label>
+
+            <div class="col-sm-10">
+                <p>{{outgoing.endDate|$date}}  至  {{outgoing.endDate|$date}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">本市出差</label>
+
+            <div class="col-sm-10">
+                <p>{{x.localCity===1?"是":"否"}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">出差事由</label>
+
+            <div class="col-sm-10">
+                <p>{{outgoing.description}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">目的地</label>
+
+            <div class="col-sm-10">
+                <p>{{outgoing.destination}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">路线</label>
+
+            <div class="col-sm-10">
+                <p>{{outgoing.driveRoute}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">交通工具</label>
+
+            <div class="col-sm-10">
+                <p>{{outgoing.transportation}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">是否派车</label>
+
+            <div class="col-sm-10">
+                <p>{{x.requiredCar===1?"是":"否"}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">关闭</button>
+    </div>
+</form>

@@ -1,6 +1,7 @@
 package com.withub.model.oa.po;
 
 import com.withub.model.entity.AbstractBaseEntity;
+import com.withub.model.system.po.Code;
 import com.withub.model.system.po.Organization;
 
 import javax.persistence.*;
@@ -36,7 +37,9 @@ public class CarUse extends AbstractBaseEntity {
     @JoinColumn(name = "outgoingId")
     private Outgoing outgoing;
 
-    private String status;
+    @OneToOne(targetEntity = Code.class)
+    @JoinColumn(name = "status")
+    private Code status;
 
     //================================ 属性方法 ==========================================================
 
@@ -89,11 +92,11 @@ public class CarUse extends AbstractBaseEntity {
         this.organization = organization;
     }
 
-    public String getStatus() {
+    public Code getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Code status) {
         this.status = status;
     }
 }

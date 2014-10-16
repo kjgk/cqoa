@@ -66,6 +66,17 @@ angular.module('app.oa')
                 toaster.pop('success', "信息", "保存成功！");
             });
         };
+        $scope.viewTraining = function (training) {
+            $modal.open({
+                templateUrl: 'app/oa/training/training-view.html',
+                controller: 'TrainingViewCtrl',
+                resolve: {
+                    objectId: function () {
+                        return training.objectId;
+                    }
+                }
+            });
+        };
         $scope.deleteTraining = function (training) {
             TrainingService.remove(training.objectId).then(function () {
                 $scope.grid.refresh();
@@ -110,4 +121,16 @@ angular.module('app.oa')
                 $modalInstance.close();
             });
         };
-    });
+    })
+
+    .controller('TrainingViewCtrl', function ($scope, $modalInstance, TrainingService, objectId) {
+
+        $scope.training = TrainingService.get(objectId).$object;
+        $scope.title = '查看培训申请';
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss();
+        };
+    })
+
+;

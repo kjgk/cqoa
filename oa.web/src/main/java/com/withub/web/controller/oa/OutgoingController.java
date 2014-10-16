@@ -49,13 +49,13 @@ public class OutgoingController extends BaseController {
     @RequestMapping(value = "/outgoing", method = RequestMethod.POST)
     public void createOutgoing(@RequestBody Outgoing outgoing) throws Exception {
 
-        outgoingService.saveOutgoing(outgoing);
+        outgoingService.submitOutgoing(outgoing);
     }
 
     @RequestMapping(value = "/outgoing", method = RequestMethod.PUT)
     public void updateOutgoing(@RequestBody Outgoing outgoing) throws Exception {
 
-        outgoingService.saveOutgoing(outgoing);
+        outgoingService.submitOutgoing(outgoing);
     }
 
 

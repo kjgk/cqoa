@@ -49,13 +49,13 @@ public class TrainingController extends BaseController {
     @RequestMapping(value = "/training", method = RequestMethod.POST)
     public void createTraining(@RequestBody Training training) throws Exception {
 
-        trainingService.saveTraining(training);
+        trainingService.submitTraining(training);
     }
 
     @RequestMapping(value = "/training", method = RequestMethod.PUT)
     public void updateTraining(@RequestBody Training training) throws Exception {
 
-        trainingService.saveTraining(training);
+        trainingService.submitTraining(training);
     }
 
 

@@ -1,6 +1,7 @@
 package com.withub.model.oa.po;
 
 import com.withub.model.entity.AbstractBaseEntity;
+import com.withub.model.system.po.Code;
 import com.withub.model.system.po.Organization;
 
 import javax.persistence.JoinColumn;
@@ -37,7 +38,9 @@ public class Outgoing extends AbstractBaseEntity {
     // 是否派车
     private Integer requiredCar;
 
-    private String status;
+    @OneToOne(targetEntity = Code.class)
+    @JoinColumn(name = "status")
+    private Code status;
 
     //================================ 属性方法 ==========================================================
 
@@ -113,11 +116,11 @@ public class Outgoing extends AbstractBaseEntity {
         this.requiredCar = requiredCar;
     }
 
-    public String getStatus() {
+    public Code getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Code status) {
         this.status = status;
     }
 }

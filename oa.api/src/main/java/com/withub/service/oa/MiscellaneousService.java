@@ -10,9 +10,9 @@ public interface MiscellaneousService {
 
     public RecordsetInfo<Miscellaneous> queryMiscellaneous(QueryInfo queryInfo) throws Exception;
 
-    public void submitMiscellaneous(Miscellaneous miscellaneous) throws Exception;
-
     public void deleteMiscellaneous(String objectId) throws Exception;
+
+    public void submitMiscellaneous(Miscellaneous miscellaneous) throws Exception;
 
     public void addMiscellaneous(Miscellaneous miscellaneous) throws Exception;
 

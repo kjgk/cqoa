@@ -10,8 +10,12 @@ public interface CarUseService {
 
     public RecordsetInfo<CarUse> queryCarUse(QueryInfo queryInfo) throws Exception;
 
-    public void saveCarUse(CarUse carUse) throws Exception;
-
     public void deleteCarUse(String objectId) throws Exception;
+
+    public void submitCarUse(CarUse carUse) throws Exception;
+
+    public void addCarUse(CarUse carUse) throws Exception;
+
+    public void updateCarUse(CarUse carUse) throws Exception;
 
 }
