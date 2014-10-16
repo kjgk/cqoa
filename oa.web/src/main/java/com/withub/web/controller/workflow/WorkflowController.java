@@ -13,6 +13,7 @@ import com.withub.model.workflow.po.FlowNode;
 import com.withub.model.workflow.po.Instance;
 import com.withub.model.workflow.po.InstanceOrganization;
 import com.withub.model.workflow.po.Task;
+import com.withub.model.workflow.vo.ApproveInfo;
 import com.withub.model.workflow.vo.InstanceTaskLog;
 import com.withub.model.workflow.vo.TaskInfo;
 import com.withub.service.workflow.WorkflowService;
@@ -20,10 +21,7 @@ import com.withub.web.common.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -383,63 +381,58 @@ public class WorkflowController extends BaseController {
 
         FlowNode flowNode = workflowService.getFlowNodeByTaskId(taskId);
 
-        modelMap.put("passAction", flowNode.getPassAction());
-        modelMap.put("returnAction", flowNode.getReturnAction());
-        modelMap.put("rejectAction", flowNode.getRejectAction());
-        modelMap.put("completeAction", flowNode.getCompleteAction());
-        modelMap.put("discardAction", flowNode.getDiscardAction());
+        Map data = new HashMap();
+        data.put("passAction", flowNode.getPassAction());
+        data.put("returnAction", flowNode.getReturnAction());
+        data.put("rejectAction", flowNode.getRejectAction());
+        data.put("completeAction", flowNode.getCompleteAction());
+        data.put("discardAction", flowNode.getDiscardAction());
         if (flowNode.getManualSelectHandler() != null && flowNode.getManualSelectHandler() == 1) {
             NextFlowNodeInfo nextFlowNodeInfo = workflowService.getNextFlowNodeInfo(taskId);
             if (nextFlowNodeInfo != null) {
-                modelMap.put("manualSelectHandler", nextFlowNodeInfo.getCurrentFlowNode().getManualSelectHandler());
+                data.put("manualSelectHandler", nextFlowNodeInfo.getCurrentFlowNode().getManualSelectHandler());
                 if (nextFlowNodeInfo.getNextFlowNode() != null) {
-                    modelMap.put("handlerFetchCount", nextFlowNodeInfo.getNextFlowNode().getHandlerFetchCount());
-                    modelMap.put("nextFlowNodeName", nextFlowNodeInfo.getNextFlowNode().getName());
+                    data.put("handlerFetchCount", nextFlowNodeInfo.getNextFlowNode().getHandlerFetchCount());
+                    data.put("nextFlowNodeName", nextFlowNodeInfo.getNextFlowNode().getName());
                 }
             }
         }
-        modelMap.put("success", true);
+        putData(modelMap, data);
     }
 
     @RequestMapping(value = "/task/pass", method = RequestMethod.POST)
-    public void passTask(ModelMap modelMap, @RequestParam(value = "taskId") String taskId
-            , @RequestParam(value = "approvers", required = false) String approvers
-            , @RequestParam(value = "opinion", required = false) String opinion) throws Exception {
+    public void passTask(ModelMap modelMap, @RequestBody ApproveInfo approveInfo) throws Exception {
 
-        if (StringUtil.isEmpty(approvers)) {
-            workflowService.passTask(taskId, opinion);
+        if (StringUtil.isEmpty(approveInfo.getApprovers())) {
+            workflowService.passTask(approveInfo.getTaskId(), approveInfo.getOpinion());
         } else {
             List<User> approverList = new ArrayList();
-            for (String approverId : approvers.split(",")) {
+            for (String approverId : approveInfo.getApprovers().split(",")) {
                 User approver = workflowService.get(User.class, approverId);
                 approverList.add(approver);
             }
-            workflowService.passTask(taskId, opinion, approverList);
+            workflowService.passTask(approveInfo.getTaskId(), approveInfo.getOpinion(), approverList);
         }
-
-        modelMap.put("success", true);
     }
 
     @RequestMapping(value = "/task/reject", method = RequestMethod.POST)
-    public void rejectTask(ModelMap modelMap, @RequestParam(value = "taskId") String taskId, @RequestParam(value = "opinion", required = false) String opinion) throws Exception {
+    public void rejectTask(ModelMap modelMap, @RequestBody ApproveInfo approveInfo) throws Exception {
 
-        workflowService.rejectTask(taskId, opinion);
-        modelMap.put("success", true);
+        workflowService.rejectTask(approveInfo.getTaskId(), approveInfo.getOpinion());
     }
 
     @RequestMapping(value = "/task/return", method = RequestMethod.POST)
-    public void returnTask(ModelMap modelMap, @RequestParam(value = "taskId") String taskId, @RequestParam(value = "opinion", required = false) String opinion) throws Exception {
+    public void returnTask(ModelMap modelMap, @RequestBody ApproveInfo approveInfo) throws Exception {
 
-        workflowService.returnTask(taskId, opinion);
-        modelMap.put("success", true);
+        workflowService.returnTask(approveInfo.getTaskId(), approveInfo.getOpinion());
     }
 
     @RequestMapping(value = "/task/complete", method = RequestMethod.POST)
-    public void completeTask(ModelMap modelMap, @RequestParam(value = "taskId") String taskId, @RequestParam(value = "opinion", required = false) String opinion) throws Exception {
+    public void completeTask(ModelMap modelMap, @RequestBody ApproveInfo approveInfo) throws Exception {
 
-        workflowService.completeTask(taskId, opinion);
-        modelMap.put("success", true);
+        workflowService.completeTask(approveInfo.getTaskId(), approveInfo.getOpinion());
     }
+    //
 
     @RequestMapping(value = "/task/transmit/{objectId}", method = RequestMethod.POST)
     public void transmitTask(ModelMap modelMap, @PathVariable(value = "objectId") String objectId, HttpServletRequest request) throws Exception {

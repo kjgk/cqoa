@@ -34,6 +34,7 @@
                     <td>处理结果</td>
                     <td>开始时间</td>
                     <td>完成时间</td>
+                    <td style="width: 120px;">操作</td>
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{x.instanceName}}</td>
@@ -44,8 +45,8 @@
                     <td>{{x.organizationName}}</td>
                     <td>{{x.creatorName}}</td>
                     <td>{{x.result}}</td>
-                    <td>{{x.taskArriveTime}}</td>
-                    <td>{{x.taskFinishTime}}</td>
+                    <td>{{x.taskArriveTime|$date:DateFormat.MINUTE}}</td>
+                    <td>{{x.taskFinishTime|$date:DateFormat.MINUTE}}</td>
                     <td>
                         <button class="btn btn-xs btn-primary" ng-click="process(x)">处理</button>
                     </td>

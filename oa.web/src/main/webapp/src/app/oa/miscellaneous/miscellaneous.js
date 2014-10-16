@@ -7,12 +7,12 @@ angular.module('app.oa')
             .state('oa.miscellaneous', {
                 url: '/miscellaneous',
                 templateUrl: 'app/oa/miscellaneous/miscellaneous-list.html',
-                controller: 'miscellaneousCtrl'
+                controller: 'MiscellaneousCtrl'
             })
         ;
     })
 
-    .factory('miscellaneousService', function ($http, Restangular) {
+    .factory('MiscellaneousService', function ($http, Restangular) {
         var api = Restangular.all('oa/miscellaneous');
         return {
             query: function (params) {
@@ -37,14 +37,14 @@ angular.module('app.oa')
         }
     })
 
-    .controller('miscellaneousCtrl', function ($scope, $q, $modal, toaster, SimpleTable, miscellaneousService) {
+    .controller('MiscellaneousCtrl', function ($scope, $q, $modal, toaster, SimpleTable, MiscellaneousService) {
 
-        $scope.grid = SimpleTable(miscellaneousService.query);
+        $scope.grid = SimpleTable(MiscellaneousService.query);
 
         $scope.createMiscellaneous = function () {
             var modalInstance = $modal.open({
                 templateUrl: 'app/oa/miscellaneous/miscellaneous-form.html',
-                controller: 'miscellaneousCreateCtrl'
+                controller: 'MiscellaneousCreateCtrl'
             });
             modalInstance.result.then(function (result) {
                 $scope.grid.refresh();
@@ -54,7 +54,7 @@ angular.module('app.oa')
         $scope.updateMiscellaneous = function (miscellaneous) {
             var modalInstance = $modal.open({
                 templateUrl: 'app/oa/miscellaneous/miscellaneous-form.html',
-                controller: 'miscellaneousUpdateCtrl',
+                controller: 'MiscellaneousUpdateCtrl',
                 resolve: {
                     objectId: function () {
                         return miscellaneous.objectId;
@@ -78,7 +78,7 @@ angular.module('app.oa')
             });
         };
         $scope.deleteMiscellaneous = function (miscellaneous) {
-            miscellaneousService.remove(miscellaneous.objectId).then(function () {
+            MiscellaneousService.remove(miscellaneous.objectId).then(function () {
                 $scope.grid.refresh();
                 toaster.pop('success', "信息", "删除成功！");
             });
@@ -91,7 +91,7 @@ angular.module('app.oa')
         };
     })
 
-    .controller('miscellaneousCreateCtrl', function ($scope, $modalInstance, miscellaneousService) {
+    .controller('MiscellaneousCreateCtrl', function ($scope, $modalInstance, MiscellaneousService) {
 
         $scope.miscellaneous = {
         };
@@ -102,16 +102,16 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            miscellaneousService.create($scope.miscellaneous).then(function () {
+            MiscellaneousService.create($scope.miscellaneous).then(function () {
                 $modalInstance.close();
             });
         };
     })
 
-    .controller('miscellaneousUpdateCtrl', function ($scope, $modalInstance, miscellaneousService, objectId) {
+    .controller('MiscellaneousUpdateCtrl', function ($scope, $modalInstance, MiscellaneousService, objectId) {
 
 
-        $scope.miscellaneous = miscellaneousService.get(objectId).$object;
+        $scope.miscellaneous = MiscellaneousService.get(objectId).$object;
         $scope.title = '修改综合事项申请';
 
         $scope.cancel = function () {
@@ -119,7 +119,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            miscellaneousService.update($scope.miscellaneous).then(function () {
+            MiscellaneousService.update($scope.miscellaneous).then(function () {
                 $modalInstance.close();
             });
         };
@@ -134,15 +134,9 @@ angular.module('app.oa')
         };
     })
 
-    .controller('MiscellaneousViewCtrl', function ($scope, $modalInstance, miscellaneousService, objectId) {
+    .controller('MiscellaneousViewCtrl', function ($scope, MiscellaneousService) {
 
-        $scope.miscellaneous = miscellaneousService.get(objectId).$object;
-        $scope.title = '查看综合事项申请';
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss();
-        };
-
+        $scope.miscellaneous = MiscellaneousService.get($scope.objectId).$object;
     })
 
 ;
