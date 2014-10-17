@@ -1,73 +1,65 @@
-<form class="form-horizontal" role="form" name="trainingForm">
-    <div class="modal-header">
-        <h4 class="modal-title">{{title}}</h4>
-    </div>
-    <div class="modal-body">
+<fieldset ng-controller="TrainingViewCtrl">
         <div class="form-group">
             <label class="col-sm-2 control-label">申请人</label>
 
             <div class="col-sm-10">
-                <p>{{training.proposer.name}}</p>
+                <p class="form-control-static">{{training.proposer.name}}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">申请部门</label>
 
             <div class="col-sm-10">
-                <p>{{training.proposer.organization.name}}</p>
+                <p class="form-control-static">{{training.proposer.organization.name}}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">申请时间</label>
 
             <div class="col-sm-10">
-                <p>{{training.createTime|$date:DateFormat.MINUTE}}</p>
+                <p class="form-control-static">{{training.createTime|$date:DateFormat.MINUTE}}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">培训时间</label>
 
             <div class="col-sm-10">
-                <p>{{training.beginDate|$date}} 至 {{training.endDate|$date}}</p>
+                <p class="form-control-static">{{training.beginDate|$date}} 至 {{training.endDate|$date}}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">培训地点</label>
 
             <div class="col-sm-10">
-                <p>{{training.address}}</p>
+                <p class="form-control-static">{{training.address}}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">培训内容</label>
 
             <div class="col-sm-10">
-                <p>{{training.content}}</p>
+                <p class="form-control-static">{{training.content}}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">培训对象</label>
 
             <div class="col-sm-10">
-                <p>{{training.target}}</p>
+                <p class="form-control-static">{{training.target}}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">参训人数</label>
 
             <div class="col-sm-10">
-                <p>{{training.peopleCount}}</p>
+                <p class="form-control-static">{{training.peopleCount}}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">公示情况</label>
 
             <div class="col-sm-10">
-                <p>{{training.publicity}}</p>
+                <p class="form-control-static">{{training.publicity}}</p>
             </div>
         </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-warning" ng-click="cancel()">关闭</button>
-    </div>
-</form>
+</fieldset>
