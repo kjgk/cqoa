@@ -2,13 +2,15 @@ package com.withub.model.workflow.vo;
 
 import com.withub.model.entity.AbstractEntity;
 
+import java.util.List;
+
 public class ApproveInfo extends AbstractEntity {
 
     private String taskId;
 
     private String opinion;
 
-    private String approvers;
+    private List<String> approvers;
 
 
     //=================== 属性方法 ============================================
@@ -30,11 +32,11 @@ public class ApproveInfo extends AbstractEntity {
         this.opinion = opinion;
     }
 
-    public String getApprovers() {
+    public List<String> getApprovers() {
         return approvers;
     }
 
-    public void setApprovers(String approvers) {
+    public void setApprovers(List<String> approvers) {
         this.approvers = approvers;
     }
 }

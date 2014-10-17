@@ -4,7 +4,9 @@ angular.module('app', ['app.oa', 'app.mobile'])
 
     .value('PageContext', PageContext)
 
-    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, RestangularProvider, $datepickerProvider, $timepickerProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $modalProvider, cfpLoadingBarProvider, RestangularProvider, $datepickerProvider, $timepickerProvider) {
+
+        $modalProvider.options.backdrop = 'static';
 
         $urlRouterProvider.otherwise('/oa/task/pending');
 

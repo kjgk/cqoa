@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('withub.ui.table', [])
+angular.module('withub.ui', [])
 
     .constant('paginationConfig', {
         itemsPerPage: 10,

@@ -4,20 +4,15 @@
             <div class="ywtj"><p>待办事项</p>
 
                 <div class="tool-bar">
-                    <!--<button class="btn btn-primary btn-sm" ng-click="createTraining()"><i-->
-                    <!--class="fa fa-plus fa-fw"></i> 添加-->
-                    <!--</button>-->
                     <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i
                             class="fa fa-search fa-fw"></i> 查询
                     </button>
-                    <input type="text" class="search" placeholder="请选择流程类型"
-                           ng-model='grid.queryInfo.date'
-                           bs-datepicker>
-                    <input type="text" class="search" placeholder="请选择日期"
-                           ng-model='grid.queryInfo.date'
-                           bs-datepicker>
-
-                    <button class="btn btn-xs btn-primary" ng-click="process(x)">处理</button>
+                    <!--<input type="text" class="search" placeholder="请选择流程类型"-->
+                           <!--ng-model='grid.queryInfo.date'-->
+                           <!--bs-datepicker>-->
+                    <!--<input type="text" class="search" placeholder="请选择日期"-->
+                           <!--ng-model='grid.queryInfo.date'-->
+                           <!--bs-datepicker>-->
                 </div>
                 <div class="clear"></div>
             </div>
@@ -48,12 +43,15 @@
                     <td>{{x.taskArriveTime|$date:DateFormat.MINUTE}}</td>
                     <td>{{x.taskFinishTime|$date:DateFormat.MINUTE}}</td>
                     <td>
-                        <button class="btn btn-xs btn-primary" ng-click="process(x)">处理</button>
+                        <button ng-if="x.taskStatus == 'Running'" class="btn btn-xs btn-primary" ng-click="process(x)">处理</button>
+                        <button ng-if="x.taskStatus == 'Finish'" class="btn btn-xs btn-primary" ng-click="">查看</button>
+                        <button class="btn btn-xs btn-primary" ng-click="">查看审批流程</button>
+                        <button ng-if="x.flowNodeType == 'AndSign' && x.taskStatus == 'Finish' && x.taskLocked == 0" class="btn btn-xs btn-warning" ng-click="">回滚</button>
+                        <button ng-if="x.taskStatus == 'Running'" class="btn btn-xs btn-primary" ng-click="">转发</button>
                     </td>
                 </tr>
 
             </table>
-
             <div pagination ng-model="grid.currentPage" total-items="grid.total"></div>
         </div>
     </div>

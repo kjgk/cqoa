@@ -403,11 +403,11 @@ public class WorkflowController extends BaseController {
     @RequestMapping(value = "/task/pass", method = RequestMethod.POST)
     public void passTask(ModelMap modelMap, @RequestBody ApproveInfo approveInfo) throws Exception {
 
-        if (StringUtil.isEmpty(approveInfo.getApprovers())) {
+        if (CollectionUtil.isEmpty(approveInfo.getApprovers())) {
             workflowService.passTask(approveInfo.getTaskId(), approveInfo.getOpinion());
         } else {
             List<User> approverList = new ArrayList();
-            for (String approverId : approveInfo.getApprovers().split(",")) {
+            for (String approverId : approveInfo.getApprovers()) {
                 User approver = workflowService.get(User.class, approverId);
                 approverList.add(approver);
             }

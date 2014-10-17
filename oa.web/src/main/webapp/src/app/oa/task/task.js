@@ -47,7 +47,6 @@ angular.module('app.oa')
         $scope.grid = SimpleTable(TaskService.query);
 
         $scope.process = function (task) {
-
             var modalInstance, activity = task.activity.split('@');
             if (activity[1] == 'TaskProcessCtrl') {
                 modalInstance = $modal.open({
@@ -82,7 +81,7 @@ angular.module('app.oa')
         };
     })
 
-    .controller('TaskProcessCtrl', function ($scope, $modalInstance, TaskService, task, viewTemplate, toaster) {
+    .controller('TaskProcessCtrl', function ($scope, $timeout, $http, $modalInstance, TaskService, task, viewTemplate, toaster) {
 
         $scope.title = '处理';
 
@@ -92,7 +91,8 @@ angular.module('app.oa')
 
         $scope.approveInfo = {
             taskId: task.objectId,
-            opinion: ''
+            opinion: '',
+            approvers: []
         };
 
         TaskService.getFlowNodeByTaskId(task.objectId).then(function (response) {
@@ -104,7 +104,11 @@ angular.module('app.oa')
         };
 
         $scope.process = function (result) {
-            TaskService.processTask(result, $scope.approveInfo).then(function () {
+            TaskService.processTask(result, {
+                taskId: $scope.approveInfo.taskId,
+                opinion: $scope.approveInfo.opinion,
+                approvers: _.pluck($scope.approveInfo.approvers, 'objectId')
+            }).then(function () {
                 $modalInstance.close();
                 toaster.pop('info', "信息", "审批成功！");
             });
