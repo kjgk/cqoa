@@ -7,9 +7,24 @@
             <label class="col-sm-2 control-label">出差人</label>
 
             <div class="col-sm-10">
-                <p>{{PageContext.currentUser.name}}</p>
+                <p>{{outgoing.proposer.name}}</p>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">申请部门</label>
+
+            <div class="col-sm-10">
+                <p>{{outgoing.proposer.organization.name}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">申请时间</label>
+
+            <div class="col-sm-10">
+                <p>{{outgoing.createTime|$date:DateFormat.MINUTE}}</p>
+            </div>
+        </div>
+
         <div class="form-group">
             <label class="col-sm-2 control-label">出差时间</label>
 
