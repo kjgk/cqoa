@@ -50,6 +50,7 @@ public class CarUseServiceImpl extends EntityServiceImpl implements CarUseServic
 
         Code status = codeService.getCodeByTag("CarUseStatus", "Create");
         carUse.setStatus(status);
+        carUse.setProposer(carUse.getCurrentUser());
         save(carUse);
     }
 

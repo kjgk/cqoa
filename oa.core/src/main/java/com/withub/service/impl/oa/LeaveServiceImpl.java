@@ -55,6 +55,7 @@ public class LeaveServiceImpl extends EntityServiceImpl implements LeaveService 
 
         Code status = codeService.getCodeByTag("LeaveStatus", "Create");
         leave.setStatus(status);
+        leave.setProposer(leave.getCurrentUser());
         save(leave);
     }
 

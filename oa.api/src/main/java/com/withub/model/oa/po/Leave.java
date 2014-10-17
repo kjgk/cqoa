@@ -3,6 +3,7 @@ package com.withub.model.oa.po;
 import com.withub.model.entity.AbstractBaseEntity;
 import com.withub.model.system.po.Code;
 import com.withub.model.system.po.Organization;
+import com.withub.model.system.po.User;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -31,6 +32,10 @@ public class Leave extends AbstractBaseEntity {
 
     // 请假事由
     private String description;
+
+    @OneToOne(targetEntity = User.class)
+    @JoinColumn(name = "proposer")
+    private User proposer;
 
     //================================ 属性方法 ==========================================================
 
@@ -80,5 +85,13 @@ public class Leave extends AbstractBaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getProposer() {
+        return proposer;
+    }
+
+    public void setProposer(User proposer) {
+        this.proposer = proposer;
     }
 }

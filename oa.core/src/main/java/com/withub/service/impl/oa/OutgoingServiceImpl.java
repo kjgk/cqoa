@@ -50,6 +50,7 @@ public class OutgoingServiceImpl extends EntityServiceImpl implements OutgoingSe
 
         Code status = codeService.getCodeByTag("OutgoingStatus", "Create");
         outgoing.setStatus(status);
+        outgoing.setProposer(outgoing.getCurrentUser());
         save(outgoing);
     }
 
