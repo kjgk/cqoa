@@ -2,6 +2,7 @@ package com.withub.model.system.po;
 
 
 import com.withub.model.entity.AbstractBaseEntity;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -19,6 +20,7 @@ public class Role extends AbstractBaseEntity {
     private String roleTag;
 
     @OneToMany(targetEntity = UserOrganizationRole.class, mappedBy = "role", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<UserOrganizationRole> roleUserList;
 
     private String description;

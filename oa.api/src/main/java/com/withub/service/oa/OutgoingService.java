@@ -3,8 +3,9 @@ package com.withub.service.oa;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.Outgoing;
+import com.withub.service.EntityService;
 
-public interface OutgoingService {
+public interface OutgoingService extends EntityService {
 
     public Outgoing getOutgoing(String objectId) throws Exception;
 

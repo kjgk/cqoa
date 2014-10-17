@@ -1,43 +1,52 @@
-<form class="form-horizontal" role="form" name="carUseForm">
-    <div class="modal-header">
-        <h4 class="modal-title">{{title}}</h4>
-    </div>
-    <div class="modal-body">
+<fieldset ng-controller="CarUseViewCtrl">
         <div class="form-group">
             <label class="col-sm-2 control-label">申请人</label>
 
             <div class="col-sm-10">
-                <p>{{PageContext.currentUser.name}}</p>
+                <p class="form-control-static">{{carUse.proposer.name}}</p>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">申请部门</label>
+
+            <div class="col-sm-10">
+                <p class="form-control-static">{{carUse.proposer.organization.name}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">申请时间</label>
+
+            <div class="col-sm-10">
+                <p class="form-control-static">{{carUse.createTime|$date:DateFormat.MINUTE}}</p>
+            </div>
+        </div>
+
         <div class="form-group">
             <label class="col-sm-2 control-label">区域</label>
 
             <div class="col-sm-10">
-                <p>{{x.localCity===1?"市内":"市外"}}</p>
+                <p class="form-control-static">{{carUse.localCity===1?"市内":"市外"}}</p>
             </div>
         </div>
-
-
         <div class="form-group">
             <label class="col-sm-2 control-label">用车事由</label>
 
             <div class="col-sm-10">
-                <p>{{carUse.description}}</p>
+                <p class="form-control-static">{{carUse.description}}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">开始时间</label>
 
             <div class="col-sm-10">
-                <p>{{carUse.beginTime|$date:DateFormat.MINUTE}}</p>
+                <p class="form-control-static">{{carUse.beginTime|$date:DateFormat.MINUTE}}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">结束时间</label>
 
             <div class="col-sm-10">
-                <p>{{carUse.endTime|$date:DateFormat.MINUTE}}</p>
+                <p class="form-control-static">{{carUse.endTime|$date:DateFormat.MINUTE}}</p>
             </div>
         </div>
 
@@ -45,11 +54,7 @@
             <label class="col-sm-2 control-label">前往地点</label>
 
             <div class="col-sm-10">
-                <p>{{carUse.address}}</p>
+                <p class="form-control-static">{{carUse.address}}</p>
             </div>
         </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-warning" ng-click="cancel()">关闭</button>
-    </div>
-</form>
+</fieldset>

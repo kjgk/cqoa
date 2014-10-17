@@ -2,6 +2,7 @@ package com.withub.model.system.po;
 
 
 import com.withub.model.entity.AbstractBaseEntity;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,6 +15,7 @@ public class User extends AbstractBaseEntity {
     //=============================== 属性声明 ============================================================
 
     @OneToOne(targetEntity = Account.class, mappedBy = "user")
+    @JsonIgnore
     private Account account;
 
     private String code;
@@ -56,6 +58,7 @@ public class User extends AbstractBaseEntity {
 
     @OneToMany(targetEntity = UserOrganizationRole.class, mappedBy = "user", fetch = FetchType.LAZY)
     @OrderBy(value = "orderNo")
+    @JsonIgnore
     private List<UserOrganizationRole> organizationRoleList;
 
     //=============================== 属性方法 ============================================================

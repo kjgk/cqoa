@@ -50,6 +50,7 @@ public class TrainingServiceImpl extends EntityServiceImpl implements TrainingSe
 
         Code status = codeService.getCodeByTag("TrainingStatus", "Create");
         training.setStatus(status);
+        training.setProposer(training.getCurrentUser());
         save(training);
     }
 

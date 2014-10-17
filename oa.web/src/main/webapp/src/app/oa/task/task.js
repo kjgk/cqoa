@@ -25,6 +25,19 @@ angular.module('app.oa')
                     method: 'GET',
                     params: params
                 });
+            },
+            getFlowNodeByTaskId: function (taskId) {
+                return $http({
+                    url: PageContext.path + '/workflow/task/getFlowNodeByTaskId/' + taskId,
+                    method: 'GET'
+                });
+            },
+            processTask: function (result, approveInfo) {
+                return $http({
+                    url: PageContext.path + '/workflow/task/' + result,
+                    method: 'POST',
+                    data: approveInfo
+                });
             }
         }
     })
@@ -33,33 +46,77 @@ angular.module('app.oa')
 
         $scope.grid = SimpleTable(TaskService.query);
 
-        $scope.process = function () {
-            var modalInstance = $modal.open({
-                templateUrl: 'app/oa/task/task-process.html',
-                controller: 'TaskProcessCtrl'
-            });
+        $scope.process = function (task) {
+            var modalInstance, activity = task.activity.split('@');
+            if (activity[1] == 'TaskProcessCtrl') {
+                modalInstance = $modal.open({
+                    templateUrl: 'app/oa/task/task-process.html',
+                    controller: activity[1],
+                    resolve: {
+                        task: function () {
+                            return task;
+                        },
+                        viewTemplate: function () {
+                            return activity[0];
+                        }
+                    }
+                })
+            } else {
+                modalInstance = $modal.open({
+                    templateUrl: activity[0],
+                    controller: activity[1],
+                    resolve: {
+                        task: function () {
+                            return task;
+                        },
+                        objectId: function () {
+                            return task.relatedObjectId;
+                        }
+                    }
+                })
+            }
             modalInstance.result.then(function (result) {
                 $scope.grid.refresh();
             });
         };
     })
 
-    .controller('TaskProcessCtrl', function ($scope, $modalInstance, TaskService, toaster) {
+    .controller('TaskProcessCtrl', function ($scope, $timeout, $http, $modalInstance, TaskService, task, viewTemplate, toaster) {
 
         $scope.title = '处理';
+
+        $scope.task = task;
+
+        $scope.viewTemplate = viewTemplate;
+
+        $scope.approveInfo = {
+            taskId: task.objectId,
+            opinion: '',
+            approvers: []
+        };
+
+        TaskService.getFlowNodeByTaskId(task.objectId).then(function (response) {
+            $scope.flowNode = response.data.data;
+        });
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
         };
 
-        $scope.submit = function () {
-//            TaskService.create($scope.training).then(function () {
+        $scope.process = function (result) {
+            if (result == 'pass' && $scope.flowNode.manualSelectHandler == 1 && _.isEmpty($scope.approveInfo.approvers)) {
+                toaster.pop('warning', "警告", "请选择审批人！");
+                return;
+            }
+            TaskService.processTask(result, {
+                taskId: $scope.approveInfo.taskId,
+                opinion: $scope.approveInfo.opinion,
+                approvers: _.pluck($scope.approveInfo.approvers, 'objectId')
+            }).then(function () {
                 $modalInstance.close();
-//            });
-
-            toaster.pop('info', "信息", "xxxxxxxxx！");
+                toaster.pop('info', "信息", "审批成功！");
+            });
         };
     })
-
 
 ;

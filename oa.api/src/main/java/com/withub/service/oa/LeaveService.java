@@ -3,8 +3,9 @@ package com.withub.service.oa;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.Leave;
+import com.withub.service.EntityService;
 
-public interface LeaveService {
+public interface LeaveService extends EntityService {
 
     public Leave getLeave(String objectId) throws Exception;
 

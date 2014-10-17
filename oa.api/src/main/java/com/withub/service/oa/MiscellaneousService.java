@@ -3,8 +3,9 @@ package com.withub.service.oa;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.Miscellaneous;
+import com.withub.service.EntityService;
 
-public interface MiscellaneousService {
+public interface MiscellaneousService extends EntityService {
 
     public Miscellaneous getMiscellaneous(String objectId) throws Exception;
 

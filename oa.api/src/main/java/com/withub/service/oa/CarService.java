@@ -3,8 +3,9 @@ package com.withub.service.oa;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.Car;
+import com.withub.service.EntityService;
 
-public interface CarService {
+public interface CarService extends EntityService {
 
     public Car getCar(String objectId) throws Exception;
 

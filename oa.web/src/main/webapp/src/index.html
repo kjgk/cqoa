@@ -11,11 +11,12 @@
     <link rel="stylesheet" href="app/vendor.css">
 
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
-    <link rel="stylesheet" href="bower_components/joint/dist/joint.all.min.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.min.css" />
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css"/>
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css"/>
+    <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css"/>
+    <link rel="stylesheet" href="bower_components/joint/dist/joint.all.min.css"/>
+    <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.min.css"/>
+    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css"/>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -26,15 +27,7 @@
 
     <script>
         PageContext = {
-            path: '/oa',
-            currentUser: {
-                objectId: '12',
-                name: 'admin',
-                organization: {
-                    objectId: '',
-                    name: '默认组织结构'
-                }
-            }
+            path: '/oa'
         };
     </script>
 
@@ -50,9 +43,9 @@
     </div>
     <div class="t_r">
         <ul>
-            <li><p>欢迎您：<span>admin</span></p></li>
-            <li><a href="#"><img src="assets/images/34.png"/></a></li>
-            <li><a href="#"><img src="assets/images/36.png"/></a></li>
+            <li><p>欢迎您：<span ng-bind="PageContext.currentUser.name"></span></p></li>
+            <li><a href="javascript:void(0)"><img src="assets/images/34.png"/></a></li>
+            <li><a href="{{PageContext.path + '/j_spring_security_logout'}}"><img src="assets/images/36.png"/></a></li>
             <div class="clear"></div>
         </ul>
         <div class="clear"></div>
@@ -78,6 +71,7 @@
 <!-- bower:js -->
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/lodash/dist/lodash.compat.js"></script>
 <script src="bower_components/restangular/dist/restangular.js"></script>
@@ -92,6 +86,7 @@
 <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
 <script src="bower_components/moment/moment.js"></script>
 <script src="bower_components/angular-uuid4/angular-uuid4.js"></script>
+<script src="bower_components/angular-ui-select/dist/select.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -99,6 +94,7 @@
 <script src="components/common.js"></script>
 <script src="components/filter/filter.js"></script>
 <script src="components/ui/table.js"></script>
+<script src="components/ui/user-select.js"></script>
 <script src="components/validation/validation.rule.js"></script>
 <script src="components/base.js"></script>
 

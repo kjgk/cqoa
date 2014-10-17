@@ -27,7 +27,7 @@
                     <td style="width: 120px;">操作</td>
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
-                    <td>{{PageContext.currentUser.name}}</td>
+                    <td>{{x.proposer.name}}</td>
                     <td>{{x.beginDate|$date}}~{{x.endDate|$date}}</td>
                     <td>{{x.localCity===1?"是":"否"}}</td>
                     <td>{{x.description}}</td>

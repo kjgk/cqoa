@@ -4,7 +4,9 @@ angular.module('app', ['app.oa', 'app.mobile'])
 
     .value('PageContext', PageContext)
 
-    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, RestangularProvider, $datepickerProvider, $timepickerProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $modalProvider, cfpLoadingBarProvider, RestangularProvider, $datepickerProvider, $timepickerProvider) {
+
+        $modalProvider.options.backdrop = 'static';
 
         $urlRouterProvider.otherwise('/oa/task/pending');
 
@@ -32,6 +34,7 @@ angular.module('app', ['app.oa', 'app.mobile'])
                     cfpLoadingBar.complete();
                     if (response.data && response.data.success === false) {
                         toaster.pop('error', "错误", response.data.message);
+                        return $q.reject(response.data);
                     }
                     return response || $q.when(response);
                 },
@@ -55,9 +58,25 @@ angular.module('app', ['app.oa', 'app.mobile'])
 
     })
 
-    .controller('MainCtrl', function ($rootScope, PageContext, DateFormat) {
+    .controller('MainCtrl', function ($rootScope, $http, PageContext, DateFormat) {
 
         $rootScope.PageContext = PageContext;
         $rootScope.DateFormat = DateFormat;
+
+        $http({
+            url: PageContext.path + '/security/getCurrentUserInfo',
+            method: 'GET'
+        }).then(function (response) {
+            var userInfo = response.data.userInfo;
+            $rootScope.PageContext.currentUser = {
+                objectId: userInfo.objectId,
+                name: userInfo.name,
+                organization: {
+                    objectId: userInfo.organizationId,
+                    name: userInfo.organizationName,
+                    type: userInfo.organizationType
+                }
+            };
+        });
     })
 ;

@@ -24,7 +24,7 @@ public class TaskInfo extends AbstractEntity {
 
     private String owner;
 
-    private String actor;
+    private String handler;
 
     private Date taskCreateTime;
 
@@ -135,23 +135,19 @@ public class TaskInfo extends AbstractEntity {
     }
 
     public String getOwner() {
-
         return owner;
     }
 
     public void setOwner(String owner) {
-
         this.owner = owner;
     }
 
-    public String getActor() {
-
-        return actor;
+    public String getHandler() {
+        return handler;
     }
 
-    public void setActor(String actor) {
-
-        this.actor = actor;
+    public void setHandler(String handler) {
+        this.handler = handler;
     }
 
     public Date getTaskCreateTime() {

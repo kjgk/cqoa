@@ -3,6 +3,7 @@ package com.withub.model.oa.po;
 import com.withub.model.entity.AbstractBaseEntity;
 import com.withub.model.system.po.Code;
 import com.withub.model.system.po.Organization;
+import com.withub.model.system.po.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -40,6 +41,10 @@ public class CarUse extends AbstractBaseEntity {
     @OneToOne(targetEntity = Code.class)
     @JoinColumn(name = "status")
     private Code status;
+
+    @OneToOne(targetEntity = User.class)
+    @JoinColumn(name = "proposer")
+    private User proposer;
 
     //================================ 属性方法 ==========================================================
 
@@ -98,5 +103,13 @@ public class CarUse extends AbstractBaseEntity {
 
     public void setStatus(Code status) {
         this.status = status;
+    }
+
+    public User getProposer() {
+        return proposer;
+    }
+
+    public void setProposer(User proposer) {
+        this.proposer = proposer;
     }
 }

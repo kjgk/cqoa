@@ -49,6 +49,7 @@ public class MiscellaneousServiceImpl extends EntityServiceImpl implements Misce
 
         Code status = codeService.getCodeByTag("MiscellaneousStatus", "Create");
         miscellaneous.setStatus(status);
+        miscellaneous.setProposer(miscellaneous.getCurrentUser());
         save(miscellaneous);
     }
 

@@ -13,11 +13,11 @@
                     <td>申请人</td>
                     <td>状态</td>
                     <td>申请时间</td>
-                    <td style="width: 120px;">操作</td>
+                    <td style="width: 240px;">操作</td>
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{x.description}}</td>
-                    <td>{{PageContext.currentUser.name}}</td>
+                    <td>{{x.proposer.name}}</td>
                     <td>{{x.status.name}}</td>
                     <td>{{x.createTime|$date:DateFormat.MINUTE}}</td>
                     <td>
