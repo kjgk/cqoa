@@ -11,24 +11,29 @@
                 <input type="text" class="form-control" name="name" ng-model="driver.name" validator="required">
             </div>
         </div>
+
         <div class="form-group">
             <label class="col-sm-3 control-label">状态</label>
+            <div class="col-sm-9 btn-group">
+                <label ng-class="{btn: true, 'btn-primary': true, active: driver.status == 1}">
+                    <input type="radio" class="hidden" ng-model="driver.status" ng-value="1"/> 在职
+                </label>
+                <label ng-class="{btn: true, 'btn-primary': true, active: driver.status == 0}">
 
-            <div class="col-sm-4">
-                <input type="radio" name="status" ng-model="driver.status" ng-value="1"/> 在职
-            </div>
-            <div class="col-sm-4">
-                <input type="radio" name="status" ng-model="driver.status" ng-value="0"/> 离职
+                    <input type="radio" class="hidden" ng-model="driver.status" ng-value="0"/> 离职
+                </label>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">性别</label>
+            <div class="col-sm-9 btn-group">
+                <label ng-class="{btn: true, 'btn-primary': true, active: driver.gender == 1}">
+                    <input type="radio" class="hidden" ng-model="driver.gender" ng-value="1"/> 男
+                </label>
+                <label ng-class="{btn: true, 'btn-primary': true, active: driver.gender == 0}">
 
-            <div class="col-sm-4">
-                <input type="radio" name="gender" ng-model="driver.gender" ng-value="1"/> 男
-            </div>
-            <div class="col-sm-4">
-                <input type="radio" name="gender" ng-model="driver.gender" ng-value="0"/> 女
+                    <input type="radio" class="hidden" ng-model="driver.gender" ng-value="0"/> 女
+                </label>
             </div>
         </div>
         <div class="form-group">
