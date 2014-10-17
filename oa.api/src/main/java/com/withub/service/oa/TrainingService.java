@@ -3,8 +3,9 @@ package com.withub.service.oa;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.Training;
+import com.withub.service.EntityService;
 
-public interface TrainingService {
+public interface TrainingService extends EntityService {
 
     public Training getTraining(String objectId) throws Exception;
 
