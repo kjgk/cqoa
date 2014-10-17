@@ -11,7 +11,6 @@ import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.exception.BaseBusinessException;
 import com.withub.model.system.po.User;
 import com.withub.model.workflow.po.FlowType;
-import com.withub.service.EntityService;
 import com.withub.service.std.SystemEventService;
 import com.withub.service.system.PermissionService;
 import com.withub.service.system.UserService;
@@ -35,9 +34,6 @@ import java.util.List;
 public class AdvisorService {
 
     //======================== 属性声明 ==================================================================
-
-    @Autowired
-    private EntityService entityService;
 
     @Autowired
     private PermissionService permissionService;
@@ -192,46 +188,4 @@ public class AdvisorService {
         }
     }
 
-
-    //======================== 属性方法 ==================================================================
-
-    public EntityService getEntityService() {
-
-        return entityService;
-    }
-
-    public void setEntityService(EntityService entityService) {
-
-        this.entityService = entityService;
-    }
-
-    public PermissionService getPermissionService() {
-
-        return permissionService;
-    }
-
-    public void setPermissionService(PermissionService permissionService) {
-
-        this.permissionService = permissionService;
-    }
-
-    public SystemEventService getSystemEventService() {
-
-        return systemEventService;
-    }
-
-    public void setSystemEventService(SystemEventService systemEventService) {
-
-        this.systemEventService = systemEventService;
-    }
-
-    public UserService getUserService() {
-
-        return userService;
-    }
-
-    public void setUserService(UserService userService) {
-
-        this.userService = userService;
-    }
 }

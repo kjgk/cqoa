@@ -17,25 +17,25 @@
             </div>
             <table simple-table="grid" class="rbga" border="1">
                 <tr class="rlm_bga">
-                    <td>状态</td>
-                    <td>开始日期</td>
-                    <td>结束日期</td>
+                    <td>培训时间</td>
                     <td>培训地点</td>
                     <td>培训内容</td>
                     <td>培训对象</td>
                     <td>参训人数</td>
                     <td>公示情况</td>
+                    <td>状态</td>
+                    <td>申请时间</td>
                     <td style="width: 120px;">操作</td>
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
-                    <td>{{x.status.name}}</td>
-                    <td>{{x.beginDate|$date}}</td>
-                    <td>{{x.endDate|$date}}</td>
+                    <td>{{x.beginDate|$date}}~{{x.endDate|$date}}</td>
                     <td>{{x.address}}</td>
                     <td>{{x.content}}</td>
                     <td>{{x.target}}</td>
                     <td>{{x.peopleCount | number}}</td>
                     <td>{{x.publicity}}</td>
+                    <td>{{x.status.name}}</td>
+                    <td>{{x.createTime|$date:DateFormat.MINUTE }}</td>
                     <td>
                         <button class="btn btn-xs btn-primary" ng-click="updateTraining(x)">编辑</button>
                         &nbsp;

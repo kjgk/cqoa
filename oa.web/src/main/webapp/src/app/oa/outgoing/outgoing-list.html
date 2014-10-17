@@ -18,28 +18,28 @@
             <table simple-table="grid" class="rbga" border="1">
                 <tr class="rlm_bga">
                     <td>出差人</td>
-                    <td>状态</td>
-                    <td>开始日期</td>
-                    <td>结束日期</td>
+                    <td>出差时间</td>
                     <td>本市出差</td>
                     <td>出差事由</td>
                     <td>目的地</td>
                     <td>路线</td>
                     <td>交通工具</td>
                     <td>是否派车</td>
+                    <td>状态</td>
+                    <td>申请时间</td>
                     <td style="width: 120px;">操作</td>
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{PageContext.currentUser.name}}</td>
-                    <td>{{x.status.name}}</td>
-                    <td>{{x.beginDate|$date}}</td>
-                    <td>{{x.endDate|$date}}</td>
+                    <td>{{x.beginDate|$date}}~{{x.endDate|$date}}</td>
                     <td>{{x.localCity===1?"是":"否"}}</td>
                     <td>{{x.description}}</td>
                     <td>{{x.destination}}</td>
                     <td>{{x.driveRoute}}</td>
                     <td>{{x.transportation}}</td>
                     <td>{{x.requiredCar===1?"是":"否"}}</td>
+                    <td>{{x.status.name}}</td>
+                    <td>{{x.createTime|$date:DateFormat.MINUTE }}</td>
                     <td>
                         <button class="btn btn-xs btn-primary" ng-click="updateOutgoing(x)">编辑</button>
                         &nbsp;

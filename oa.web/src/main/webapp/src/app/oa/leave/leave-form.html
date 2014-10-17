@@ -28,11 +28,14 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">本市出差</label>
 
-            <div class="col-sm-5">
-                <input type="radio" name="localCity" ng-model="leave.localCity" ng-value="1"/> 是
-            </div>
-            <div class="col-sm-5">
-                <input type="radio" name="localCity" ng-model="leave.localCity" ng-value="0"/> 否
+            <div class="col-sm-10 btn-group">
+                <label ng-class="{btn: true, 'btn-primary': true, active: leave.localCity == 1}">
+                    <input type="radio" class="hidden" ng-model="leave.localCity" ng-value="1"/> 是
+                </label>
+                <label ng-class="{btn: true, 'btn-primary': true, active: leave.localCity == 0}">
+
+                    <input type="radio" class="hidden" ng-model="leave.localCity" ng-value="0"/> 否
+                </label>
             </div>
         </div>
         <div class="form-group">
