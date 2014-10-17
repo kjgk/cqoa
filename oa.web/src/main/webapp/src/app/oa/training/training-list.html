@@ -17,6 +17,7 @@
             </div>
             <table simple-table="grid" class="rbga" border="1">
                 <tr class="rlm_bga">
+                    <td>申请人</td>
                     <td>培训时间</td>
                     <td>培训地点</td>
                     <td>培训内容</td>
@@ -28,6 +29,7 @@
                     <td style="width: 120px;">操作</td>
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
+                    <td>{{x.proposer.name}}</td>
                     <td>{{x.beginDate|$date}}~{{x.endDate|$date}}</td>
                     <td>{{x.address}}</td>
                     <td>{{x.content}}</td>
