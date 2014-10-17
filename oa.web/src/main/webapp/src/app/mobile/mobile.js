@@ -6,7 +6,7 @@ angular.module('app.mobile', ['base'])
             .state('mobile', {
                 url: '/mobile',
                 text: '移动办公平台',
-                templateUrl: 'app/mobile/mobile.html',
+                templateUrl: 'app/mobile/mobile-menu.html',
                 controller: 'MobileCtrl'
             });
 

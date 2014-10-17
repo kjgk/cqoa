@@ -3,7 +3,7 @@
 angular.module('withub.ui')
     .directive('userSelect', function ($http) {
         return {
-            templateUrl: 'components/ui/user-select.html',
+            templateUrl: 'components/ui/template/user-select.html',
             restrict: 'EA',
             scope: {
                 ngModel: '='

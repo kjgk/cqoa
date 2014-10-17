@@ -5,7 +5,7 @@ angular.module('app.oa', ['base'])
         $stateProvider
             .state('oa', {
                 url: '/oa',
-                templateUrl: 'app/oa/oa.html',
+                templateUrl: 'app/oa/oa-menu.html',
                 controller: 'OaCtrl'
             });
 
