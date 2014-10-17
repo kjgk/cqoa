@@ -104,6 +104,10 @@ angular.module('app.oa')
         };
 
         $scope.process = function (result) {
+            if (result == 'pass' && $scope.flowNode.manualSelectHandler == 1 && _.isEmpty($scope.approveInfo.approvers)) {
+                toaster.pop('warning', "警告", "请选择审批人！");
+                return;
+            }
             TaskService.processTask(result, {
                 taskId: $scope.approveInfo.taskId,
                 opinion: $scope.approveInfo.opinion,

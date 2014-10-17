@@ -34,6 +34,7 @@ angular.module('app', ['app.oa', 'app.mobile'])
                     cfpLoadingBar.complete();
                     if (response.data && response.data.success === false) {
                         toaster.pop('error', "错误", response.data.message);
+                        return $q.reject(response.data);
                     }
                     return response || $q.when(response);
                 },
