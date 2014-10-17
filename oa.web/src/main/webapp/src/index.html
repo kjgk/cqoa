@@ -11,12 +11,12 @@
     <link rel="stylesheet" href="app/vendor.css">
 
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
-    <link rel="stylesheet" href="bower_components/joint/dist/joint.all.min.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.min.css" />
-    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css"/>
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css"/>
+    <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css"/>
+    <link rel="stylesheet" href="bower_components/joint/dist/joint.all.min.css"/>
+    <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.min.css"/>
+    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css"/>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -27,15 +27,7 @@
 
     <script>
         PageContext = {
-            path: '/oa',
-            currentUser: {
-                objectId: '12',
-                name: 'admin',
-                organization: {
-                    objectId: '',
-                    name: '默认组织结构'
-                }
-            }
+            path: '/oa'
         };
     </script>
 
@@ -51,9 +43,9 @@
     </div>
     <div class="t_r">
         <ul>
-            <li><p>欢迎您：<span>admin</span></p></li>
-            <li><a href="#"><img src="assets/images/34.png"/></a></li>
-            <li><a href="#"><img src="assets/images/36.png"/></a></li>
+            <li><p>欢迎您：<span ng-bind="PageContext.currentUser.name"></span></p></li>
+            <li><a href="javascript:void(0)"><img src="assets/images/34.png"/></a></li>
+            <li><a href="{{PageContext.path + '/j_spring_security_logout'}}"><img src="assets/images/36.png"/></a></li>
             <div class="clear"></div>
         </ul>
         <div class="clear"></div>
