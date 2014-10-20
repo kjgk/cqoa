@@ -37,7 +37,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('MiscellaneousCtrl', function ($scope, $q, $modal, toaster, SimpleTable, MiscellaneousService) {
+    .controller('MiscellaneousCtrl', function ($scope, $q, $modal, toaster, SimpleTable, MiscellaneousService, InstanceService) {
 
         $scope.grid = SimpleTable(MiscellaneousService.query);
 
@@ -66,15 +66,9 @@ angular.module('app.oa')
                 toaster.pop('success', "信息", "保存成功！");
             });
         };
-        $scope.viewMiscellaneous = function (miscellaneous) {
-            $modal.open({
-                templateUrl: 'app/oa/miscellaneous/miscellaneous-view.html',
-                controller: 'MiscellaneousViewCtrl',
-                resolve: {
-                    objectId: function () {
-                        return miscellaneous.objectId;
-                    }
-                }
+        $scope.viewMiscellaneousInstance = function (miscellaneous) {
+            InstanceService.viewInstance({
+                relatedObjectId: miscellaneous.objectId
             });
         };
         $scope.deleteMiscellaneous = function (miscellaneous) {

@@ -26,12 +26,10 @@ angular.module('app.workflow')
                     params: params
                 });
             },
-            getInstance: function (objectId) {
+            getInstance: function (params) {
                 return $http({
                     url: PageContext.path + '/workflow/instance/view',
-                    params: {
-                        objectId: objectId
-                    },
+                    params: params,
                     method: 'GET'
                 });
             },
@@ -44,14 +42,20 @@ angular.module('app.workflow')
                     method: 'GET'
                 });
             },
-            viewInstance: function (objectId) {
+            viewInstance: function (params) {
+                var _params = {};
+                if (_.isString(params)) {
+                    _params.objectId = params;
+                } else {
+                    _params = params;
+                }
                 $modal.open({
                     templateUrl: 'app/workflow/instance/instance-view.html',
                     controller: 'InstanceViewCtrl',
                     size: 'lg',
                     resolve: {
-                        objectId: function () {
-                            return objectId;
+                        params: function () {
+                            return _params;
                         }
                     }
                 });
@@ -68,13 +72,14 @@ angular.module('app.workflow')
         };
     })
 
-    .controller('InstanceViewCtrl', function ($scope, $modalInstance, InstanceService, objectId) {
+    .controller('InstanceViewCtrl', function ($scope, $modalInstance, InstanceService, params) {
 
-        InstanceService.getInstance(objectId).then(function (response) {
+        InstanceService.getInstance(params).then(function (response) {
             $scope.instance = response.data.data;
-        });
-        InstanceService.queryInstanceTaskLog(objectId).then(function (response) {
-            $scope.taskLogList = response.data.items;
+            InstanceService.queryInstanceTaskLog($scope.instance.objectId).then(function (response) {
+                $scope.taskLogList = response.data.items;
+            });
+
         });
 
         $scope.cancel = function () {
