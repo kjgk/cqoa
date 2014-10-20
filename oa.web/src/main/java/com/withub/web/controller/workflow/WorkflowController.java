@@ -71,6 +71,7 @@ public class WorkflowController extends BaseController {
         for (TaskInfo taskInfo : (List<TaskInfo>) list) {
             Map<String, Object> item = new HashMap<String, Object>();
             item.put("objectId", taskInfo.getObjectId());
+            item.put("instanceId", taskInfo.getInstanceId());
             item.put("instanceName", taskInfo.getInstanceName());
             item.put("flowType", taskInfo.getFlowTypeName());
             item.put("flowNodeType", taskInfo.getFlowNodeType());
@@ -309,7 +310,7 @@ public class WorkflowController extends BaseController {
             item.put("flowNodeName", instanceTaskLog.getFlowNodeName());
             item.put("result", instanceTaskLog.getTaskHandleResultName());
             item.put("opinion", instanceTaskLog.getOpinion());
-            item.put("handler", instanceTaskLog.getActorName());
+            item.put("handler", instanceTaskLog.getHandlerName());
             if (instanceTaskLog.getTaskFinishTime() != null) {
                 item.put("finishTime", instanceTaskLog.getTaskFinishTime().getTime());
             }
@@ -343,9 +344,9 @@ public class WorkflowController extends BaseController {
         model.put("relatedObjectId", instance.getRelatedObjectId());
         model.put("creator", instance.getCreator().getName());
         model.put("status", instance.getStatus().getName());
-        model.put("createTime", DateUtil.getDateFormatString(instance.getCreateTime(), "yyyy-MM-dd HH:mm"));
+        model.put("createTime", instance.getCreateTime());
         if (instance.getFinishTime() != null) {
-            model.put("finishTime", DateUtil.getDateFormatString(instance.getFinishTime(), "yyyy-MM-dd HH:mm"));
+            model.put("finishTime", instance.getFinishTime());
         } else {
             List list = workflowService.listInstanceCurrentHandler(instance.getObjectId());
             String handler = "";
@@ -355,6 +356,7 @@ public class WorkflowController extends BaseController {
                 }
             }
             model.put("handler", StringUtil.trim(handler, ","));
+            model.put("flowNode", instance.getCurrentFlowNode().getName());
         }
 
         modelMap.put("data", model);
@@ -435,18 +437,15 @@ public class WorkflowController extends BaseController {
     //
 
     @RequestMapping(value = "/task/transmit/{objectId}", method = RequestMethod.POST)
-    public void transmitTask(ModelMap modelMap, @PathVariable(value = "objectId") String objectId, HttpServletRequest request) throws Exception {
+    public void transmitTask(ModelMap modelMap, @PathVariable(value = "objectId") String objectId, @RequestBody Map data) throws Exception {
 
-        String handler = request.getParameter("handler");
-        workflowService.transmitTask(objectId, handler);
-        modelMap.put("success", true);
+        workflowService.transmitTask(objectId, data.get("handler").toString());
     }
 
-    @RequestMapping(value = "/task/rollback/{objectId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/task/rollback/{objectId}", method = RequestMethod.POST)
     public void rollbackTask(ModelMap modelMap, @PathVariable(value = "objectId") String objectId) throws Exception {
 
         workflowService.rollbackTask(objectId);
-        modelMap.put("success", true);
     }
 
     @RequestMapping(value = "/task/getTaskHandleOpinion/{objectId}", method = RequestMethod.GET)

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.oa')
+angular.module('app.workflow')
 
     .config(function ($stateProvider) {
         $stateProvider
@@ -11,7 +11,7 @@ angular.module('app.oa')
             })
             .state('oa.task.pending', {
                 url: '/pending',
-                templateUrl: 'app/oa/task/task-pending.html',
+                templateUrl: 'app/workflow/task/task-pending.html',
                 controller: 'TaskPendingCtrl'
             })
         ;
@@ -38,11 +38,26 @@ angular.module('app.oa')
                     method: 'POST',
                     data: approveInfo
                 });
+            },
+            rollbackTask: function (taskId) {
+                return $http({
+                    url: PageContext.path + '/workflow/task/rollback/' + taskId,
+                    method: 'POST'
+                });
+            },
+            transmitTask: function (taskId, handler) {
+                return $http({
+                    url: PageContext.path + '/workflow/task/transmit/' + taskId,
+                    method: 'POST',
+                    data: {
+                        handler: handler
+                    }
+                });
             }
         }
     })
 
-    .controller('TaskPendingCtrl', function ($scope, $q, $modal, toaster, SimpleTable, TaskService) {
+    .controller('TaskPendingCtrl', function ($scope, $q, $modal, toaster, SimpleTable, TaskService, InstanceService) {
 
         $scope.grid = SimpleTable(TaskService.query);
 
@@ -50,7 +65,7 @@ angular.module('app.oa')
             var modalInstance, activity = task.activity.split('@');
             if (activity[1] == 'TaskProcessCtrl') {
                 modalInstance = $modal.open({
-                    templateUrl: 'app/oa/task/task-process.html',
+                    templateUrl: 'app/workflow/task/task-process.html',
                     controller: activity[1],
                     resolve: {
                         task: function () {
@@ -78,6 +93,32 @@ angular.module('app.oa')
             modalInstance.result.then(function (result) {
                 $scope.grid.refresh();
             });
+        };
+
+        $scope.rollbackTask = function (task) {
+            TaskService.rollbackTask(task.objectId).then(function () {
+                toaster.pop('info', "信息", "任务回滚成功！");
+                $scope.grid.refresh();
+            });
+        };
+
+        $scope.transmitTask = function (task) {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/workflow/task/task-transmit.html',
+                controller: 'InstanceTransmitCtrl',
+                resolve: {
+                    taskId: function () {
+                        return task.objectId;
+                    }
+                }
+            });
+            modalInstance.result.then(function (result) {
+                $scope.grid.refresh();
+            });
+        };
+
+        $scope.viewInstance = function (task) {
+            InstanceService.viewInstance(task.instanceId);
         };
     })
 
@@ -116,6 +157,22 @@ angular.module('app.oa')
                 $modalInstance.close();
                 toaster.pop('info', "信息", "审批成功！");
             });
+        };
+    })
+
+    .controller('InstanceTransmitCtrl', function ($scope, $modalInstance, toaster, TaskService, taskId) {
+
+        $scope.hander = {};
+
+        $scope.submit = function () {
+            TaskService.transmitTask(taskId, $scope.hander.objectId).then(function () {
+                $modalInstance.close();
+                toaster.pop('info', "信息", "任务转发成功！");
+            });
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss();
         };
     })
 

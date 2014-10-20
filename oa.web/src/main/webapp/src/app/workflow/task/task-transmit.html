@@ -1,0 +1,21 @@
+<form class="form-horizontal" role="form">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">×</button>
+        <h4 class="modal-title">任务转发</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">处理人</label>
+
+            <div class="col-sm-10">
+                <div user-select ng-model="hander" placeholder="请输入审批人"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-disabled="!hander.objectId" ng-click="submit()">确定</button>
+        <button class="btn btn-warning" ng-click="cancel()">关闭</button>
+    </div>
+</form>

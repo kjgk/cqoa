@@ -6,7 +6,7 @@
 <head>
     <title></title>
     <script type="text/javascript">
-        window.location.href = '${path}' + '/dist/index.html';
+        window.location.href = '/index.html';
     </script>
 </head>
 <body>

@@ -4,6 +4,7 @@
         <ui-select-choices refresh-delay="300" refresh="searchUser($select)" repeat="user in users">
             <div ng-bind-html="user.name|highlight: $select.search"></div>
             <small ng-bind-html="user.organizationName"></small>
+            <small ng-bind-html="user.roleName"></small>
         </ui-select-choices>
     </ui-select>
 </div>
@@ -13,6 +14,7 @@
         <ui-select-choices refresh-delay="300" refresh="searchUser($select)" repeat="user in users">
             <div ng-bind-html="user.name|highlight: $select.search"></div>
             <small ng-bind-html="user.organizationName"></small>
+            <small ng-bind-html="user.roleName"></small>
         </ui-select-choices>
     </ui-select>
 </div>

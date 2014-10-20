@@ -184,6 +184,9 @@ public class UserController extends BaseController {
             if (user.getOrganization() != null) {
                 item.put("organizationName", user.getOrganization().getName());
             }
+            if (user.getRole() != null) {
+                item.put("roleName", user.getRole().getName());
+            }
             items.add(item);
         }
         modelMap.put("items", items);

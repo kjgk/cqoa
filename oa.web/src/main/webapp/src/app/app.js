@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app', ['app.oa', 'app.mobile'])
+angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
 
     .value('PageContext', PageContext)
 
@@ -34,7 +34,7 @@ angular.module('app', ['app.oa', 'app.mobile'])
                     cfpLoadingBar.complete();
                     if (response.data && response.data.success === false) {
                         toaster.pop('error', "错误", response.data.message);
-                        return $q.reject(response.data);
+                        return $q.reject(response);
                     }
                     return response || $q.when(response);
                 },

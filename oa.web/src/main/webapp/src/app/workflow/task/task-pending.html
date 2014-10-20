@@ -23,7 +23,6 @@
                     <td>流程类型</td>
                     <td>流程节点</td>
                     <td>状态</td>
-                    <td>期限(工作小时)</td>
                     <td>发起单位</td>
                     <td>发起人</td>
                     <td>处理结果</td>
@@ -36,7 +35,6 @@
                     <td>{{x.flowType}}</td>
                     <td>{{x.flowNodeName}}</td>
                     <td>{{x.taskStatusName}}</td>
-                    <td>{{x.taskExpiration}}</td>
                     <td>{{x.organizationName}}</td>
                     <td>{{x.creatorName}}</td>
                     <td>{{x.result}}</td>
@@ -44,10 +42,9 @@
                     <td>{{x.taskFinishTime|$date:DateFormat.MINUTE}}</td>
                     <td>
                         <button ng-if="x.taskStatus == 'Running'" class="btn btn-xs btn-primary" ng-click="process(x)">处理</button>
-                        <button ng-if="x.taskStatus == 'Finish'" class="btn btn-xs btn-primary" ng-click="">查看</button>
-                        <button class="btn btn-xs btn-primary" ng-click="">查看审批流程</button>
-                        <button ng-if="x.flowNodeType == 'AndSign' && x.taskStatus == 'Finish' && x.taskLocked == 0" class="btn btn-xs btn-warning" ng-click="">回滚</button>
-                        <button ng-if="x.taskStatus == 'Running'" class="btn btn-xs btn-primary" ng-click="">转发</button>
+                        <button class="btn btn-xs btn-primary" ng-click="viewInstance(x)">查看审批流程</button>
+                        <button ng-if="x.flowNodeType == 'AndSign' && x.taskStatus == 'Finish' && x.taskLocked == 0" class="btn btn-xs btn-warning" ng-click="rollbackTask(x)">回滚</button>
+                        <button ng-if="x.taskStatus == 'Running'" class="btn btn-xs btn-primary" ng-click="transmitTask(x)">转发</button>
                     </td>
                 </tr>
 

@@ -28,9 +28,9 @@ public class InstanceTaskLog extends AbstractEntity {
 
     private String opinion;
 
-    private String actor;
+    private String handler;
 
-    private String actorName;
+    private String handlerName;
 
     private Date taskCreateTime;
 
@@ -128,24 +128,20 @@ public class InstanceTaskLog extends AbstractEntity {
         this.opinion = opinion;
     }
 
-    public String getActor() {
-
-        return actor;
+    public String getHandler() {
+        return handler;
     }
 
-    public void setActor(String actor) {
-
-        this.actor = actor;
+    public void setHandler(String handler) {
+        this.handler = handler;
     }
 
-    public String getActorName() {
-
-        return actorName;
+    public String getHandlerName() {
+        return handlerName;
     }
 
-    public void setActorName(String actorName) {
-
-        this.actorName = actorName;
+    public void setHandlerName(String handlerName) {
+        this.handlerName = handlerName;
     }
 
     public Date getTaskCreateTime() {

@@ -1,0 +1,53 @@
+<div class="right">
+    <div>
+        <div class="rn_c">
+            <div class="ywtj"><p>流程查看</p>
+
+                <div class="tool-bar">
+                    <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i
+                            class="fa fa-search fa-fw"></i> 查询
+                    </button>
+                    <!--<input type="text" class="search" placeholder="请选择流程类型"-->
+                           <!--ng-model='grid.queryInfo.date'-->
+                           <!--bs-datepicker>-->
+                    <!--<input type="text" class="search" placeholder="请选择日期"-->
+                           <!--ng-model='grid.queryInfo.date'-->
+                           <!--bs-datepicker>-->
+                </div>
+                <div class="clear"></div>
+            </div>
+            <table simple-table="grid" class="rbga" border="1">
+
+                <tr class="rlm_bga">
+                    <td>流程名称</td>
+                    <td>流程类型</td>
+                    <td>当前流程节点</td>
+                    <td>当前处理人</td>
+                    <td>发起单位</td>
+                    <td>发起人</td>
+                    <td>状态</td>
+                    <td style="width: 132px;">开始时间</td>
+                    <td style="width: 132px;">完成时间</td>
+                    <td style="width: 90px;">操作</td>
+                </tr>
+                <tr class="nr1" ng-repeat="x in grid.items">
+                    <td>{{x.name}}</td>
+                    <td>{{x.flowType}}</td>
+                    <td>{{x.flowNode}}</td>
+                    <td>{{x.handler}}</td>
+                    <td>{{x.organization}}</td>
+                    <td>{{x.creator}}</td>
+                    <td>{{x.status}}</td>
+                    <td>{{x.createTime|$date:DateFormat.MINUTE}}</td>
+                    <td>{{x.finishTime|$date:DateFormat.MINUTE}}</td>
+                    <td>
+                        <button class="btn btn-xs btn-primary" ng-click="view(x)">查看</button>
+                    </td>
+                </tr>
+
+            </table>
+            <div pagination ng-model="grid.currentPage" total-items="grid.total"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
