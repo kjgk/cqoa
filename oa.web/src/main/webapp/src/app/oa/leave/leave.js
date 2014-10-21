@@ -37,7 +37,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('LeaveCtrl', function ($scope, $q, $modal, toaster, SimpleTable, LeaveService) {
+    .controller('LeaveCtrl', function ($scope, $q, $modal, toaster, SimpleTable, LeaveService,InstanceService) {
 
         $scope.grid = SimpleTable(LeaveService.query);
 
@@ -75,6 +75,11 @@ angular.module('app.oa')
                         return leave.objectId;
                     }
                 }
+            });
+        };
+        $scope.viewLeaveInstance = function (leave) {
+            InstanceService.viewInstance({
+                relatedObjectId: leave.objectId
             });
         };
         $scope.deleteLeave = function (leave) {
@@ -124,15 +129,8 @@ angular.module('app.oa')
         };
     })
 
-    .controller('LeaveViewCtrl', function ($scope, $modalInstance, LeaveService, objectId) {
+    .controller('LeaveViewCtrl', function ($scope, LeaveService) {
 
-        $scope.leave = LeaveService.get(objectId).then(function (data) {
-            $scope.leave = data;
-        });
-        $scope.title = '查看请假申请';
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss();
-        };
+        $scope.leave = LeaveService.get($scope.objectId).$object;
     })
 ;

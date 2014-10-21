@@ -77,12 +77,7 @@ angular.module('app.oa')
                 toaster.pop('success', "信息", "删除成功！");
             });
         };
-        $scope.viewMiscellaneousWorkFlow = function () {
-            $modal.open({
-                templateUrl: 'app/oa/miscellaneous/view-miscellaneous-work-flow.html',
-                controller: 'ViewMiscellaneousWorkFlowCtrl'
-            });
-        };
+
     })
 
     .controller('MiscellaneousCreateCtrl', function ($scope, $modalInstance, MiscellaneousService) {
@@ -104,7 +99,6 @@ angular.module('app.oa')
 
     .controller('MiscellaneousUpdateCtrl', function ($scope, $modalInstance, MiscellaneousService, objectId) {
 
-
         $scope.miscellaneous = MiscellaneousService.get(objectId).$object;
         $scope.title = '修改综合事项申请';
 
@@ -116,15 +110,6 @@ angular.module('app.oa')
             MiscellaneousService.update($scope.miscellaneous).then(function () {
                 $modalInstance.close();
             });
-        };
-    })
-
-    .controller('ViewMiscellaneousWorkFlowCtrl', function ($scope, $modalInstance) {
-
-        $scope.title = '综合事项申请流程';
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss();
         };
     })
 
