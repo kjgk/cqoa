@@ -77,7 +77,7 @@ angular.module('app.oa')
                 }
             });
         };
-        $scope.viewLeaveInstance = function (outgoing) {
+        $scope.viewOutgoingInstance = function (outgoing) {
             InstanceService.viewInstance({
                 relatedObjectId: outgoing.objectId
             });
