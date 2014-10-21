@@ -14,14 +14,26 @@ angular.module('app.workflow')
                 templateUrl: 'app/workflow/instance/instance-list.html',
                 controller: 'InstanceListCtrl'
             })
+            .state('oa.instance.all', {
+                url: '/all',
+                templateUrl: 'app/workflow/instance/instance-all.html',
+                controller: 'InstanceAllCtrl'
+            })
         ;
     })
 
     .factory('InstanceService', function ($http, $modal) {
         return {
-            query: function (params) {
+            queryAll: function (params) {
                 return $http({
                     url: PageContext.path + '/workflow/instance/query',
+                    method: 'GET',
+                    params: params
+                });
+            },
+            queryCurrent: function (params) {
+                return $http({
+                    url: PageContext.path + '/workflow/instance/queryCurrentUserInstance',
                     method: 'GET',
                     params: params
                 });
@@ -66,7 +78,16 @@ angular.module('app.workflow')
 
     .controller('InstanceListCtrl', function ($scope, $q, $modal, toaster, SimpleTable, InstanceService) {
 
-        $scope.grid = SimpleTable(InstanceService.query);
+        $scope.grid = SimpleTable(InstanceService.queryCurrent);
+
+        $scope.view = function (instance) {
+            InstanceService.viewInstance(instance.objectId);
+        };
+    })
+
+    .controller('InstanceAllCtrl', function ($scope, $q, $modal, toaster, SimpleTable, InstanceService) {
+
+        $scope.grid = SimpleTable(InstanceService.queryAll);
 
         $scope.view = function (instance) {
             InstanceService.viewInstance(instance.objectId);

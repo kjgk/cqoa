@@ -2,6 +2,7 @@ package com.withub.model.workflow.po;
 
 import com.withub.model.entity.AbstractBaseEntity;
 import com.withub.model.std.po.FileTemplate;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class FlowType extends AbstractBaseEntity {
 
     @OneToOne(targetEntity = com.withub.model.system.po.Entity.class)
     @JoinColumn(name = "EntityId")
+    @JsonIgnore
     private com.withub.model.system.po.Entity entity;
 
     private String subFlowTypeExpression;
@@ -39,15 +41,18 @@ public class FlowType extends AbstractBaseEntity {
     private Integer enable;
 
     @OneToMany(targetEntity = FlowNode.class, mappedBy = "flowType", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<FlowNode> flowNodeList = new ArrayList<FlowNode>();
 
     @OneToOne(targetEntity = FlowChart.class, mappedBy = "flowType", fetch = FetchType.LAZY)
+    @JsonIgnore
     private FlowChart flowChart;
 
     private String description;
 
     @OneToOne(targetEntity = FileTemplate.class)
     @JoinColumn(name = "FileTemplateId")
+    @JsonIgnore
     private FileTemplate fileTemplate;
 
     private Integer orderNo;

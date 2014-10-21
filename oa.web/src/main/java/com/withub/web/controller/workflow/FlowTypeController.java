@@ -121,6 +121,16 @@ public class FlowTypeController extends BaseController {
         modelMap.put("items", items);
     }
 
+    @RequestMapping(value = "/flowType/list", method = RequestMethod.GET)
+    public void listFlowType(ModelMap modelMap) throws Exception {
+
+        QueryInfo queryInfo = new QueryInfo();
+        queryInfo.setTargetEntity(FlowType.class);
+        this.setAscOrderBy(queryInfo, "orderNo");
+        List list = flowTypeService.list(queryInfo);
+        modelMap.put("items", list);
+    }
+
     @RequestMapping(value = "/flowType/{objectId}/loadWorkflowConfig", method = RequestMethod.GET)
     public void loadWorkflowConfig(@PathVariable String objectId, ModelMap modelMap) throws Exception {
 
