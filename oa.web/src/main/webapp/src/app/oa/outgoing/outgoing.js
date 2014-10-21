@@ -37,7 +37,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('OutgoingCtrl', function ($scope, $q, $modal, toaster, SimpleTable, OutgoingService) {
+    .controller('OutgoingCtrl', function ($scope, $q, $modal, toaster, SimpleTable, OutgoingService,InstanceService) {
 
         $scope.grid = SimpleTable(OutgoingService.query);
 
@@ -75,6 +75,11 @@ angular.module('app.oa')
                         return outgoing.objectId;
                     }
                 }
+            });
+        };
+        $scope.viewLeaveInstance = function (outgoing) {
+            InstanceService.viewInstance({
+                relatedObjectId: outgoing.objectId
             });
         };
         $scope.deleteOutgoing = function (outgoing) {
@@ -126,14 +131,9 @@ angular.module('app.oa')
         };
     })
 
-    .controller('OutgoingViewCtrl', function ($scope, $modalInstance, OutgoingService, objectId) {
+    .controller('OutgoingViewCtrl', function ($scope, OutgoingService) {
 
-        $scope.outgoing = OutgoingService.get(objectId).$object;
-        $scope.title = '查看出差申请';
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss();
-        };
-
+        $scope.outgoing = OutgoingService.get($scope.objectId).$object;
     })
+
 ;
