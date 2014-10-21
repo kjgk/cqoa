@@ -49,14 +49,6 @@ public class CarUse extends AbstractBaseEntity {
     //================================ 属性方法 ==========================================================
 
 
-    public Integer getLocalCity() {
-        return localCity;
-    }
-
-    public void setLocalCity(Integer localCity) {
-        this.localCity = localCity;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -89,12 +81,36 @@ public class CarUse extends AbstractBaseEntity {
         this.address = address;
     }
 
+    public Integer getLocalCity() {
+        return localCity;
+    }
+
+    public void setLocalCity(Integer localCity) {
+        this.localCity = localCity;
+    }
+
+    public List<CarUseInfo> getCarUseInfoList() {
+        return carUseInfoList;
+    }
+
+    public void setCarUseInfoList(List<CarUseInfo> carUseInfoList) {
+        this.carUseInfoList = carUseInfoList;
+    }
+
     public Organization getOrganization() {
         return organization;
     }
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }
+
+    public Outgoing getOutgoing() {
+        return outgoing;
+    }
+
+    public void setOutgoing(Outgoing outgoing) {
+        this.outgoing = outgoing;
     }
 
     public Code getStatus() {
