@@ -1,7 +1,6 @@
 package com.withub.web.controller.workflow;
 
 import com.withub.common.util.CollectionUtil;
-import com.withub.common.util.DateUtil;
 import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.*;
 import com.withub.model.system.po.Organization;
@@ -21,7 +20,10 @@ import com.withub.web.common.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -293,7 +295,7 @@ public class WorkflowController extends BaseController {
         if (onlyShowApproveLog) {
             this.setDescOrderBy(queryInfo, "taskFinishTime");
         } else {
-            this.setAscOrderBy(queryInfo, "taskCreateTime");
+            this.setAscOrderBy(queryInfo, "taskTimeMillis");
         }
 
         List list = workflowService.list(queryInfo);

@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "WF_TASK")
 public class Task extends AbstractEntity {
 
-    //=================== 属性声明 ============================================
+    //======================== 属性声明 ==================================================================
 
     @ManyToOne(targetEntity = MasterTask.class)
     @JoinColumn(name = "masterTaskId")
@@ -48,6 +48,8 @@ public class Task extends AbstractEntity {
     @JoinColumn(name = "result")
     private Code result;
 
+    private Long timeMillis;
+
     private Date createTime;
 
     private Date finishTime;
@@ -60,7 +62,7 @@ public class Task extends AbstractEntity {
     @OneToMany(targetEntity = TaskContext.class, mappedBy = "task", fetch = FetchType.LAZY)
     private List<TaskContext> contextList;
 
-    //=================== 属性方法 ============================================
+    //======================== 属性方法 ==================================================================
 
     public MasterTask getMasterTask() {
 
@@ -180,6 +182,14 @@ public class Task extends AbstractEntity {
     public void setCreateTime(Date createTime) {
 
         this.createTime = createTime;
+    }
+
+    public Long getTimeMillis() {
+        return timeMillis;
+    }
+
+    public void setTimeMillis(Long timeMillis) {
+        this.timeMillis = timeMillis;
     }
 
     public Date getFinishTime() {

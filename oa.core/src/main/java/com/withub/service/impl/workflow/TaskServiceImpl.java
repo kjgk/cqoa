@@ -470,6 +470,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
                     }
                 }
                 task.setCreateTime(taskCreateTime);
+                task.setTimeMillis(taskCreateTime.getTime());
                 task.setArriveTime(taskCreateTime);
                 task.setDeliver(userService.getSystemUser());
                 task.setExpiration(flowNode.getExpiration());
@@ -502,13 +503,13 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
 
             if (flowNodeType == FlowNodeType.Begin || flowNodeType == FlowNodeType.End) {
                 User systemUser = userService.getSystemUser();
-                handlerList = new ArrayList<User>();
+                handlerList = new ArrayList<>();
                 handlerList.add(systemUser);
             } else if (flowNodeType == FlowNodeType.First) {
-                handlerList = new ArrayList<User>();
+                handlerList = new ArrayList<>();
                 handlerList.add(user);
             } else if (flowNodeType == FlowNodeType.Modify) {
-                handlerList = new ArrayList<User>();
+                handlerList = new ArrayList<>();
                 handlerList.add(subInstance.getInstance().getCreator());
             }
 
@@ -533,6 +534,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
                     }
                 }
                 task.setCreateTime(taskCreateTime);
+                task.setTimeMillis(taskCreateTime.getTime());
                 task.setArriveTime(taskCreateTime);
                 task.setDeliver(userService.getSystemUser());
                 task.setExpiration(flowNode.getExpiration());

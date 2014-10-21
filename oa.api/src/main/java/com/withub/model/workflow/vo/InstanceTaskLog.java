@@ -34,6 +34,8 @@ public class InstanceTaskLog extends AbstractEntity {
 
     private Date taskCreateTime;
 
+    private Long taskTimeMillis;
+
     private Date taskFinishTime;
 
     //=================== 属性方法 ============================================
@@ -152,6 +154,14 @@ public class InstanceTaskLog extends AbstractEntity {
     public void setTaskCreateTime(Date taskCreateTime) {
 
         this.taskCreateTime = taskCreateTime;
+    }
+
+    public Long getTaskTimeMillis() {
+        return taskTimeMillis;
+    }
+
+    public void setTaskTimeMillis(Long taskTimeMillis) {
+        this.taskTimeMillis = taskTimeMillis;
     }
 
     public Date getTaskFinishTime() {
