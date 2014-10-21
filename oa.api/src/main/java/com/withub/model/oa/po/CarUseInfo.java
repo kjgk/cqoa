@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @javax.persistence.Entity
-@Table(name = "OA_CARUSE")
+@Table(name = "OA_CARUSEINFO")
 public class CarUseInfo extends AbstractBaseEntity {
 
     //================================ 属性声明 ==========================================================

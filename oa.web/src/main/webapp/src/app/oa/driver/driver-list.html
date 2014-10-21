@@ -4,13 +4,13 @@
             <div class="ywtj"><p>司机管理</p>
 
                 <div class="tool-bar">
-                    <button class="btn btn-primary btn-sm" ng-click="createDriver()"><i
-                            class="fa fa-plus fa-fw"></i> 添加
-                    </button>
+                    <input type="text" class="search" placeholder="请输入姓名" ng-model="grid.queryInfo.name">
                     <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i
                             class="fa fa-search fa-fw"></i> 查询
                     </button>
-                    <input type="text" class="search" placeholder="请输入姓名" ng-model="grid.queryInfo.name">
+                    <button class="btn btn-primary btn-sm" ng-click="createDriver()"><i
+                            class="fa fa-plus fa-fw"></i> 添加
+                    </button>
                 </div>
                 <div class="clear"></div>
             </div>
