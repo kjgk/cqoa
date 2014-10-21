@@ -19,6 +19,7 @@ angular.module('app.workflow', [])
             templateUrl: 'app/workflow/common/flow-type-select.html',
             restrict: 'EA',
             replace: true,
+            scope: true,
             link: function (scope, element, attrs) {
                 scope.placeholder = attrs.placeholder;
                 WorkflowService.listFlowType().then(function (response) {

@@ -136,7 +136,7 @@ public class WorkflowController extends BaseController {
 
         this.setStringValueEqualsQueryCondition(request, queryInfo, "flowType.objectId", "flowType");
 
-        this.setStringValueEqualsQueryCondition(request, queryInfo, "status.objectId", "statusId");
+        this.setStringValueEqualsQueryCondition(request, queryInfo, "status.objectId", "status");
 
         if (date != null) {
             List dateList = new ArrayList();
@@ -197,7 +197,7 @@ public class WorkflowController extends BaseController {
 
         this.setStringValueEqualsQueryCondition(request, queryInfo, "flowType.objectId", "flowType");
 
-        this.setStringValueEqualsQueryCondition(request, queryInfo, "status.objectId", "statusId");
+        this.setStringValueEqualsQueryCondition(request, queryInfo, "status.objectId", "status");
 
         this.setStringValueEqualsQueryCondition(request, queryInfo, "status.codeTag", "statusTag");
 
