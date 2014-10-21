@@ -1,0 +1,40 @@
+<form class="form-horizontal" role="form">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">×</button>
+        <h4 class="modal-title">审批记录查看</h4>
+    </div>
+    <div class="modal-body">
+
+        <fieldset>
+            <div style="max-height: 272px; overflow-y: auto;">
+                <table class="table table-condensed table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>流程节点</th>
+                        <th>处理人</th>
+                        <th>处理结果</th>
+                        <th>处理意见</th>
+                        <th>完成时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="x in taskLogList">
+                        <td>{{$index+1}}</td>
+                        <td>{{x.flowNodeName}}</td>
+                        <td>{{x.handler}}</td>
+                        <td>{{x.result}}</td>
+                        <td>{{x.opinion}}</td>
+                        <td>{{x.finishTime|$date:DateFormat.MINUTE}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </fieldset>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">关闭</button>
+    </div>
+</form>

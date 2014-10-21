@@ -69,10 +69,11 @@
         <fieldset>
             <legend>流程日志</legend>
 
-            <div style="max-height: 320px; overflow-y: auto;">
+            <div style="max-height: 272px; overflow-y: auto;">
                 <table class="table table-condensed table-striped table-bordered">
                     <thead>
                     <tr>
+                        <th></th>
                         <th>流程节点</th>
                         <th>处理人</th>
                         <th>处理结果</th>
@@ -82,6 +83,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="x in taskLogList">
+                        <td>{{$index+1}}</td>
                         <td>{{x.flowNodeName}}</td>
                         <td>{{x.handler}}</td>
                         <td>{{x.result}}</td>

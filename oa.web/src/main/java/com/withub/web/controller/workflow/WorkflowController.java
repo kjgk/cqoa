@@ -391,6 +391,7 @@ public class WorkflowController extends BaseController {
         data.put("rejectAction", flowNode.getRejectAction());
         data.put("completeAction", flowNode.getCompleteAction());
         data.put("discardAction", flowNode.getDiscardAction());
+        data.put("name", flowNode.getName());
         if (flowNode.getManualSelectHandler() != null && flowNode.getManualSelectHandler() == 1) {
             NextFlowNodeInfo nextFlowNodeInfo = workflowService.getNextFlowNodeInfo(taskId);
             if (nextFlowNodeInfo != null) {

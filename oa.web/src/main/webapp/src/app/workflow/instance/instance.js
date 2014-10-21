@@ -33,11 +33,12 @@ angular.module('app.workflow')
                     method: 'GET'
                 });
             },
-            queryInstanceTaskLog: function (instanceId) {
+            queryInstanceTaskLog: function (instanceId, onlyShowApproveLog) {
                 return $http({
                     url: PageContext.path + '/workflow/instance/listInstanceTaskLog',
                     params: {
-                        instanceId: instanceId
+                        instanceId: instanceId,
+                        onlyShowApproveLog: onlyShowApproveLog
                     },
                     method: 'GET'
                 });

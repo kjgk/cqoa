@@ -122,7 +122,7 @@ angular.module('app.workflow')
         };
     })
 
-    .controller('TaskProcessCtrl', function ($scope, $timeout, $http, $modalInstance, TaskService, task, viewTemplate, toaster) {
+    .controller('TaskProcessCtrl', function ($scope, $timeout, $http, $modal, $modalInstance, TaskService, InstanceService, task, viewTemplate, toaster) {
 
         $scope.title = '处理';
 
@@ -158,6 +158,21 @@ angular.module('app.workflow')
                 toaster.pop('info', "信息", "审批成功！");
             });
         };
+
+        $scope.viewInstanceLog = function () {
+            $modal.open({
+                templateUrl: 'app/workflow/instance/instance-view-log.html',
+                size: 'lg',
+                controller: function ($scope, $modalInstance) {
+                    InstanceService.queryInstanceTaskLog(task.instanceId, true).then(function (response) {
+                        $scope.taskLogList = response.data.items;
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss();
+                        };
+                    });
+                }
+            });
+        }
     })
 
     .controller('InstanceTransmitCtrl', function ($scope, $modalInstance, toaster, TaskService, taskId) {
