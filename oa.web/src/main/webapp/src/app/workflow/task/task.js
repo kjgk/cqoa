@@ -14,6 +14,11 @@ angular.module('app.workflow')
                 templateUrl: 'app/workflow/task/task-pending.html',
                 controller: 'TaskPendingCtrl'
             })
+            .state('oa.task.handled', {
+                url: '/handled',
+                templateUrl: 'app/workflow/task/task-handled.html',
+                controller: 'TaskHandledCtrl'
+            })
         ;
     })
 
@@ -57,9 +62,9 @@ angular.module('app.workflow')
         }
     })
 
-    .controller('TaskPendingCtrl', function ($scope, $q, $modal, toaster, SimpleTable, TaskService, InstanceService) {
+    .controller('TaskPendingCtrl', function ($scope, $modal, toaster, SimpleTable, TaskService, InstanceService) {
 
-        $scope.grid = SimpleTable(TaskService.query);
+        $scope.grid = SimpleTable(TaskService.query, {params: {statusTag: 'Running'}});
 
         $scope.process = function (task) {
             var modalInstance, activity = task.activity.split('@');
@@ -91,13 +96,6 @@ angular.module('app.workflow')
                 })
             }
             modalInstance.result.then(function (result) {
-                $scope.grid.refresh();
-            });
-        };
-
-        $scope.rollbackTask = function (task) {
-            TaskService.rollbackTask(task.objectId).then(function () {
-                toaster.pop('info', "信息", "任务回滚成功！");
                 $scope.grid.refresh();
             });
         };
@@ -191,4 +189,19 @@ angular.module('app.workflow')
         };
     })
 
+    .controller('TaskHandledCtrl', function ($scope, $modal, toaster, SimpleTable, TaskService, InstanceService) {
+
+        $scope.grid = SimpleTable(TaskService.query, {params: {statusTag: 'Finish'}});
+
+        $scope.rollbackTask = function (task) {
+            TaskService.rollbackTask(task.objectId).then(function () {
+                toaster.pop('info', "信息", "任务回滚成功！");
+                $scope.grid.refresh();
+            });
+        };
+
+        $scope.viewInstance = function (task) {
+            InstanceService.viewInstance(task.instanceId);
+        };
+    })
 ;

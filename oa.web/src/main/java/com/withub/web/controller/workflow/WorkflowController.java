@@ -26,10 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/workflow")
@@ -43,7 +40,7 @@ public class WorkflowController extends BaseController {
     //================================= Controller 方法 ==================================================
 
     @RequestMapping(value = "/task/queryCurrentUserTask", method = RequestMethod.GET)
-    public void queryCurrentUserTask(HttpServletRequest request, ModelMap modelMap) throws Exception {
+    public void queryCurrentUserTask(HttpServletRequest request, Date date, ModelMap modelMap) throws Exception {
 
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setTargetEntity(TaskInfo.class);
@@ -59,6 +56,11 @@ public class WorkflowController extends BaseController {
         this.setStringValueEqualsQueryCondition(request, queryInfo, "taskStatusTag", "statusTag");
 
         this.setStringValueNotEqualsQueryCondition(queryInfo, "flowNodeType", "First");
+
+        if (date != null) {
+            this.setQueryInfoCondition(queryInfo, "taskCreateTime", date, ExpressionOperation.LessThanOrEquals);
+            this.setQueryInfoCondition(queryInfo, "taskFinishTime", date, ExpressionOperation.GreaterThanOrEquals);
+        }
 
         this.setDescOrderBy(queryInfo, "taskCreateTime");
 
