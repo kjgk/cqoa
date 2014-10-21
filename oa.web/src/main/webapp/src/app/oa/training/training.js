@@ -37,7 +37,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('TrainingCtrl', function ($scope, $q, $modal, toaster, SimpleTable, TrainingService) {
+    .controller('TrainingCtrl', function ($scope, $q, $modal, toaster, SimpleTable, TrainingService,InstanceService) {
 
         $scope.grid = SimpleTable(TrainingService.query);
 
@@ -77,6 +77,11 @@ angular.module('app.oa')
                 }
             });
         };
+        $scope.viewTrainingInstance = function (training) {
+            InstanceService.viewInstance({
+                relatedObjectId: training.objectId
+            });
+        };
         $scope.deleteTraining = function (training) {
             TrainingService.remove(training.objectId).then(function () {
                 $scope.grid.refresh();
@@ -88,6 +93,8 @@ angular.module('app.oa')
     .controller('TrainingCreateCtrl', function ($scope, $modalInstance, TrainingService) {
 
         $scope.training = {
+            beginDate: new Date(),
+            endDate: new Date()
         };
         $scope.title = '新增培训申请';
 
@@ -123,14 +130,9 @@ angular.module('app.oa')
         };
     })
 
-    .controller('TrainingViewCtrl', function ($scope, $modalInstance, TrainingService, objectId) {
+    .controller('TrainingViewCtrl', function ($scope, TrainingService) {
 
-        $scope.training = TrainingService.get(objectId).$object;
-        $scope.title = '查看培训申请';
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss();
-        };
+        $scope.training = TrainingService.get($scope.objectId).$object;
     })
 
 ;
