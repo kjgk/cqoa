@@ -4,12 +4,12 @@
             <div class="ywtj"><p>已办事项</p>
 
                 <div class="tool-bar">
+                    <label>日期</label>
+                    <input type="text" class="search" placeholder="请选择日期"
+                           ng-model='grid.queryInfo.date' bs-datepicker>
                     <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i
                             class="fa fa-search fa-fw"></i> 查询
                     </button>
-                    <input type="text" class="search" placeholder="请选择日期"
-                           ng-model='grid.queryInfo.date'
-                           bs-datepicker>
                 </div>
                 <div class="clear"></div>
             </div>

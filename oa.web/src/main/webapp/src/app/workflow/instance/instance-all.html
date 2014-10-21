@@ -1,7 +1,7 @@
 <div class="right">
     <div>
         <div class="rn_c">
-            <div class="ywtj"><p>发起流程</p>
+            <div class="ywtj"><p>流程查看</p>
 
                 <div class="tool-bar">
                     <label>日期</label>
@@ -10,6 +10,9 @@
                     <label>流程类型</label>
                     <input type="text" class="search" placeholder="请选择流程类型"
                            ng-model='grid.queryInfo.flowType' flow-type-select >
+                    <label>发起人</label>
+                    <input type="text" class="search" placeholder="请输入发起人"
+                           ng-model='grid.queryInfo.creator'>
                     <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i
                             class="fa fa-search fa-fw"></i> 查询
                     </button>
@@ -23,6 +26,8 @@
                     <td>流程类型</td>
                     <td>当前流程节点</td>
                     <td>当前处理人</td>
+                    <td>发起单位</td>
+                    <td>发起人</td>
                     <td>状态</td>
                     <td style="width: 132px;">开始时间</td>
                     <td style="width: 132px;">完成时间</td>
@@ -33,6 +38,8 @@
                     <td>{{x.flowType}}</td>
                     <td>{{x.flowNode}}</td>
                     <td>{{x.handler}}</td>
+                    <td>{{x.organization}}</td>
+                    <td>{{x.creator}}</td>
                     <td>{{x.status}}</td>
                     <td>{{x.createTime|$date:DateFormat.MINUTE}}</td>
                     <td>{{x.finishTime|$date:DateFormat.MINUTE}}</td>

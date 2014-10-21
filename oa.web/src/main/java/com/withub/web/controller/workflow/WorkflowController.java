@@ -1,6 +1,7 @@
 package com.withub.web.controller.workflow;
 
 import com.withub.common.util.CollectionUtil;
+import com.withub.common.util.DateUtil;
 import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.*;
 import com.withub.model.system.po.Organization;
@@ -126,18 +127,23 @@ public class WorkflowController extends BaseController {
     }
 
     @RequestMapping(value = "/instance/queryCurrentUserInstance", method = RequestMethod.GET)
-    public void queryCurrentUserInstance(HttpServletRequest request, ModelMap modelMap) throws Exception {
+    public void queryCurrentUserInstance(HttpServletRequest request, Date date, ModelMap modelMap) throws Exception {
 
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setTargetEntity(Instance.class);
 
         this.setPageInfoQueryCondition(request, queryInfo);
 
-        this.setDateRangeQueryCondition(request, queryInfo, "createTime");
-
-        this.setStringValueEqualsQueryCondition(request, queryInfo, "flowType.objectId", "flowTypeId");
+        this.setStringValueEqualsQueryCondition(request, queryInfo, "flowType.objectId", "flowType");
 
         this.setStringValueEqualsQueryCondition(request, queryInfo, "status.objectId", "statusId");
+
+        if (date != null) {
+            List dateList = new ArrayList();
+            dateList.add(date);
+            dateList.add(DateUtil.getEndDate(date));
+            this.setQueryInfoCondition(queryInfo, "createTime", dateList, ExpressionOperation.Between);
+        }
 
         this.setDescOrderBy(queryInfo, "createTime");
 
@@ -146,33 +152,35 @@ public class WorkflowController extends BaseController {
         List list = recordsetInfo.getEntityList();
 
         List items = new ArrayList();
-        for (Instance instance : (List<Instance>) list) {
-            Map<String, Object> item = new HashMap<String, Object>();
-            item.put("objectId", instance.getObjectId());
-            item.put("name", instance.getName());
-            item.put("flowType", instance.getFlowType().getName());
-            if (instance.getResult() != null) {
-                item.put("result", instance.getResult().getName());
-            }
-            item.put("status", instance.getStatus().getName());
-            item.put("createTime", instance.getCreateTime().getTime());
-            if (instance.getFinishTime() != null) {
-                item.put("finishTime", instance.getFinishTime().getTime());
-            } else {
-                String flowNode = "";
-                String handler = "";
-                for (InstanceOrganization instanceOrganization : instance.getOrganizationList()) {
-                    if (instanceOrganization.getTask().getStatus().getCodeTag().equalsIgnoreCase(TaskStatus.Running.name())) {
-                        handler += instanceOrganization.getTask().getHandler().getName() + ",";
-                        if (flowNode == "") {
-                            flowNode = instanceOrganization.getTask().getMasterTask().getFlowNode().getName();
+        if (CollectionUtil.isNotEmpty(list)) {
+            for (Instance instance : (List<Instance>) list) {
+                Map<String, Object> item = new HashMap<String, Object>();
+                item.put("objectId", instance.getObjectId());
+                item.put("name", instance.getName());
+                item.put("flowType", instance.getFlowType().getName());
+                if (instance.getResult() != null) {
+                    item.put("result", instance.getResult().getName());
+                }
+                item.put("status", instance.getStatus().getName());
+                item.put("createTime", instance.getCreateTime().getTime());
+                if (instance.getFinishTime() != null) {
+                    item.put("finishTime", instance.getFinishTime().getTime());
+                } else {
+                    String flowNode = "";
+                    String handler = "";
+                    for (InstanceOrganization instanceOrganization : instance.getOrganizationList()) {
+                        if (instanceOrganization.getTask().getStatus().getCodeTag().equalsIgnoreCase(TaskStatus.Running.name())) {
+                            handler += instanceOrganization.getTask().getHandler().getName() + ",";
+                            if (flowNode == "") {
+                                flowNode = instanceOrganization.getTask().getMasterTask().getFlowNode().getName();
+                            }
                         }
                     }
+                    item.put("flowNode", flowNode);
+                    item.put("handler", StringUtil.trim(handler, ","));
                 }
-                item.put("flowNode", flowNode);
-                item.put("handler", StringUtil.trim(handler, ","));
+                items.add(item);
             }
-            items.add(item);
         }
 
         modelMap.put("total", recordsetInfo.getTotalRecordCount());
@@ -180,14 +188,12 @@ public class WorkflowController extends BaseController {
     }
 
     @RequestMapping(value = "/instance/query", method = RequestMethod.GET)
-    public void queryInstance(HttpServletRequest request, ModelMap modelMap) throws Exception {
+    public void queryInstance(HttpServletRequest request, Date date, ModelMap modelMap) throws Exception {
 
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setTargetEntity(Instance.class);
 
         this.setPageInfoQueryCondition(request, queryInfo);
-
-        this.setDateRangeQueryCondition(request, queryInfo, "createTime");
 
         this.setStringValueEqualsQueryCondition(request, queryInfo, "flowType.objectId", "flowType");
 
@@ -201,7 +207,14 @@ public class WorkflowController extends BaseController {
             this.setNodeLevelCodeQueryCondition(queryInfo, "organization.nodeLevelCode", organization);
         }
 
-        this.setInputFieldQueryCondition(request, queryInfo, "creator.name", "user");
+        this.setInputFieldQueryCondition(request, queryInfo, "creator.name", "creator");
+
+        if (date != null) {
+            List dateList = new ArrayList();
+            dateList.add(date);
+            dateList.add(DateUtil.getEndDate(date));
+            this.setQueryInfoCondition(queryInfo, "createTime", dateList, ExpressionOperation.Between);
+        }
 
         this.setDescOrderBy(queryInfo, "createTime");
 
