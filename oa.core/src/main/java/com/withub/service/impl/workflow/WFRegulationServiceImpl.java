@@ -197,7 +197,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
             }
 
             if (expression.contains("${TaskHandleResult}")) {
-                expression = expression.replace("${TaskHandleResult}", taskHandleResult.toString());
+                expression = expression.replace("${TaskHandleResult}", "\"" + taskHandleResult.toString() + "\"");
             }
             String[] phraseArray = StringUtils.substringsBetween(expression, "{#", "#}");
             if (CollectionUtil.isNotEmpty(phraseArray)) {
