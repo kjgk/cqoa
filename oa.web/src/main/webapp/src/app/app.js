@@ -59,8 +59,7 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
     })
 
     .value('cgBusyDefaults',{
-        delay: 300,
-        minDuration: 800
+        delay: 300
     })
 
     .controller('MainCtrl', function ($rootScope, $http, PageContext, DateFormat) {
