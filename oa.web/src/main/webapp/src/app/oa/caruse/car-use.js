@@ -37,7 +37,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('CarUseCtrl', function ($scope, $q, $modal, toaster, SimpleTable, CarUseService) {
+    .controller('CarUseCtrl', function ($scope, $q, $modal, toaster, SimpleTable, CarUseService,InstanceService) {
 
         $scope.grid = SimpleTable(CarUseService.query);
 
@@ -75,6 +75,11 @@ angular.module('app.oa')
                         return carUse.objectId;
                     }
                 }
+            });
+        };
+        $scope.viewCarUseInstance = function (carUse) {
+            InstanceService.viewInstance({
+                relatedObjectId: carUse.objectId
             });
         };
         $scope.deleteCarUse = function (carUse) {

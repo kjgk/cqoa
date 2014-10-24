@@ -77,8 +77,8 @@ angular.module('app.oa')
     .controller('CarCreateCtrl', function ($scope, $modalInstance, CarService) {
 
         $scope.car = {
-            status:1,
-            purchaseDate:new Date()
+            status: 1,
+            purchaseDate: new Date()
         };
         $scope.title = '新增车辆';
 
@@ -87,7 +87,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            CarService.create($scope.car).then(function () {
+            $scope.promise = CarService.create($scope.car).then(function () {
                 $modalInstance.close();
             });
         };
@@ -95,8 +95,10 @@ angular.module('app.oa')
 
     .controller('CarUpdateCtrl', function ($scope, $modalInstance, CarService, objectId) {
 
+        $scope.promise = CarService.get(objectId);
 
-        $scope.car = CarService.get(objectId).$object;
+        $scope.car = $scope.promise.$object;
+
         $scope.title = '修改车辆';
 
         $scope.cancel = function () {
@@ -104,7 +106,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            CarService.update($scope.car).then(function () {
+            $scope.promise = CarService.update($scope.car).then(function () {
                 $modalInstance.close();
             });
         };

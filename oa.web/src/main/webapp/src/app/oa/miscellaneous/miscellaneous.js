@@ -91,7 +91,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            MiscellaneousService.create($scope.miscellaneous).then(function () {
+           $scope.promise = MiscellaneousService.create($scope.miscellaneous).then(function () {
                 $modalInstance.close();
             });
         };
@@ -99,15 +99,18 @@ angular.module('app.oa')
 
     .controller('MiscellaneousUpdateCtrl', function ($scope, $modalInstance, MiscellaneousService, objectId) {
 
-        $scope.miscellaneous = MiscellaneousService.get(objectId).$object;
         $scope.title = '修改综合事项申请';
+
+        $scope.promise = MiscellaneousService.get(objectId);
+
+        $scope.miscellaneous = $scope.promise.$object;
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
         };
 
         $scope.submit = function () {
-            MiscellaneousService.update($scope.miscellaneous).then(function () {
+            $scope.promise =  MiscellaneousService.update($scope.miscellaneous).then(function () {
                 $modalInstance.close();
             });
         };

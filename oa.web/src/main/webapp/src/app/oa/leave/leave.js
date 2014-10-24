@@ -37,7 +37,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('LeaveCtrl', function ($scope, $q, $modal, toaster, SimpleTable, LeaveService,InstanceService) {
+    .controller('LeaveCtrl', function ($scope, $q, $modal, toaster, SimpleTable, LeaveService, InstanceService) {
 
         $scope.grid = SimpleTable(LeaveService.query);
 
@@ -66,17 +66,6 @@ angular.module('app.oa')
                 toaster.pop('success', "信息", "保存成功！");
             });
         };
-        $scope.viewLeave = function (leave) {
-            $modal.open({
-                templateUrl: 'app/oa/leave/leave-view.html',
-                controller: 'LeaveViewCtrl',
-                resolve: {
-                    objectId: function () {
-                        return leave.objectId;
-                    }
-                }
-            });
-        };
         $scope.viewLeaveInstance = function (leave) {
             InstanceService.viewInstance({
                 relatedObjectId: leave.objectId
@@ -102,7 +91,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            LeaveService.create($scope.leave).then(function () {
+            $scope.promise = LeaveService.create($scope.leave).then(function () {
                 $modalInstance.close();
             });
         };
@@ -110,20 +99,18 @@ angular.module('app.oa')
 
     .controller('LeaveUpdateCtrl', function ($scope, $modalInstance, LeaveService, objectId) {
 
-        $scope.leave = LeaveService.get(objectId).then(function (data) {
-            $scope.leave = data;
-            // ng-quickDate 接收 Date 类型为参数
-            $scope.leave.beginDate = new Date(data.beginDate);
-            $scope.leave.endDate = new Date(data.endDate);
-        });
         $scope.title = '修改请假申请';
+
+        $scope.promise = LeaveService.get(objectId);
+
+        $scope.leave = $scope.promise.$object;
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
         };
 
         $scope.submit = function () {
-            LeaveService.update($scope.leave).then(function () {
+            $scope.promise= LeaveService.update($scope.leave).then(function () {
                 $modalInstance.close();
             });
         };

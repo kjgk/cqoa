@@ -37,7 +37,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('TrainingCtrl', function ($scope, $q, $modal, toaster, SimpleTable, TrainingService,InstanceService) {
+    .controller('TrainingCtrl', function ($scope, $q, $modal, toaster, SimpleTable, TrainingService, InstanceService) {
 
         $scope.grid = SimpleTable(TrainingService.query);
 
@@ -66,17 +66,6 @@ angular.module('app.oa')
                 toaster.pop('success', "信息", "保存成功！");
             });
         };
-        $scope.viewTraining = function (training) {
-            $modal.open({
-                templateUrl: 'app/oa/training/training-view.html',
-                controller: 'TrainingViewCtrl',
-                resolve: {
-                    objectId: function () {
-                        return training.objectId;
-                    }
-                }
-            });
-        };
         $scope.viewTrainingInstance = function (training) {
             InstanceService.viewInstance({
                 relatedObjectId: training.objectId
@@ -103,7 +92,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            TrainingService.create($scope.training).then(function () {
+            $scope.promise = TrainingService.create($scope.training).then(function () {
                 $modalInstance.close();
             });
         };
@@ -111,12 +100,10 @@ angular.module('app.oa')
 
     .controller('TrainingUpdateCtrl', function ($scope, $modalInstance, TrainingService, objectId) {
 
-        $scope.training = TrainingService.get(objectId).then(function (data) {
-            $scope.training = data;
-            // ng-quickDate 接收 Date 类型为参数
-            $scope.training.beginDate = new Date(data.beginDate);
-            $scope.training.endDate = new Date(data.endDate);
-        });
+        $scope.promise = TrainingService.get(objectId);
+
+        $scope.training = $scope.promise.$object;
+
         $scope.title = '修改培训申请';
 
         $scope.cancel = function () {
@@ -124,7 +111,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            TrainingService.update($scope.training).then(function () {
+            $scope.promise = TrainingService.update($scope.training).then(function () {
                 $modalInstance.close();
             });
         };

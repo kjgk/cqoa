@@ -105,7 +105,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            OutgoingService.create($scope.outgoing).then(function () {
+           $scope.promise = OutgoingService.create($scope.outgoing).then(function () {
                 $modalInstance.close();
             });
         };
@@ -113,19 +113,18 @@ angular.module('app.oa')
 
     .controller('OutgoingUpdateCtrl', function ($scope, $modalInstance, OutgoingService, objectId) {
 
-        $scope.outgoing = OutgoingService.get(objectId).then(function (data) {
-            $scope.outgoing = data;
-            $scope.outgoing.beginDate = new Date(data.beginDate);
-            $scope.outgoing.endDate = new Date(data.endDate);
-        });
         $scope.title = '修改出差申请';
+
+        $scope.promise = OutgoingService.get(objectId);
+
+        $scope.outgoing = $scope.promise.$object;
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
         };
 
         $scope.submit = function () {
-            OutgoingService.update($scope.outgoing).then(function () {
+            $scope.promise =  OutgoingService.update($scope.outgoing).then(function () {
                 $modalInstance.close();
             });
         };
