@@ -66,17 +66,6 @@ angular.module('app.oa')
                 toaster.pop('success', "信息", "保存成功！");
             });
         };
-        $scope.viewCarUse = function (carUse) {
-            $modal.open({
-                templateUrl: 'app/oa/caruse/car-use-view.html',
-                controller: 'CarUseViewCtrl',
-                resolve: {
-                    objectId: function () {
-                        return carUse.objectId;
-                    }
-                }
-            });
-        };
         $scope.viewCarUseInstance = function (carUse) {
             InstanceService.viewInstance({
                 relatedObjectId: carUse.objectId
