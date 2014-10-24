@@ -24,6 +24,8 @@
                     <td>区域</td>
                     <td>前往地点</td>
                     <td>状态</td>
+                    <td>车牌号</td>
+                    <td>司机</td>
                     <td>申请时间</td>
                     <td style="width: 160px;">操作</td>
                 </tr>
@@ -34,6 +36,8 @@
                     <td>{{x.localCity===1?"市内":"市外"}}</td>
                     <td>{{x.address }}</td>
                     <td>{{x.status.name}}</td>
+                    <td></td>
+                    <td></td>
                     <td>{{x.createTime|$date:DateFormat.MINUTE }}</td>
                     <td>
                         <button class="btn btn-xs btn-primary" ng-click="updateCarUse(x)">编辑</button>
