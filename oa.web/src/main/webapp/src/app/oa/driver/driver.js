@@ -89,7 +89,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            DriverService.create($scope.driver).then(function () {
+            $scope.promise = DriverService.create($scope.driver).then(function () {
                 $modalInstance.close();
             });
         };
@@ -97,12 +97,10 @@ angular.module('app.oa')
 
     .controller('DriverUpdateCtrl', function ($scope, $modalInstance, DriverService, objectId) {
 
+        $scope.promise = DriverService.get(objectId);
 
-        $scope.driver = DriverService.get(objectId).then(function (data) {
-            $scope.driver = data;
-            $scope.driver.licenseDate = new Date(data.licenseDate);
-            $scope.driver.birthday = new Date(data.birthday);
-        });
+        $scope.driver = $scope.promise.$object;
+
         $scope.title = '修改司机';
 
         $scope.cancel = function () {
@@ -110,7 +108,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            DriverService.update($scope.driver).then(function () {
+            $scope.promise = DriverService.update($scope.driver).then(function () {
                 $modalInstance.close();
             });
         };
