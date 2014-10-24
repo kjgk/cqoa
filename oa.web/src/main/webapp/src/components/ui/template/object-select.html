@@ -1,0 +1,16 @@
+<div ng-if="multiple">
+    <ui-select multiple ng-model="$parent.$parent.ngModel" theme="bootstrap" style="width: 100%;">
+        <ui-select-match placeholder="{{placeholder}}">{{$item.label}}</ui-select-match>
+        <ui-select-choices refresh-delay="300" refresh="doSearch($select)" repeat="item in items">
+            <div ng-bind-html="item.label|highlight: $select.search"></div>
+        </ui-select-choices>
+    </ui-select>
+</div>
+<div ng-if="!multiple">
+    <ui-select ng-model="$parent.$parent.ngModel" theme="bootstrap" style="width: 100%;">
+        <ui-select-match placeholder="{{placeholder}}">{{$select.selected.label}}</ui-select-match>
+        <ui-select-choices refresh-delay="300" refresh="doSearch($select)" repeat="item in items">
+            <div ng-bind-html="item.label|highlight: $select.search"></div>
+        </ui-select-choices>
+    </ui-select>
+</div>

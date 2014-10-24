@@ -33,7 +33,10 @@ angular.module('app.oa')
             },
             remove: function (objectId) {
                 return api.doDELETE(objectId);
-            }
+            }/*,
+            allot: function (carUseInfo) {
+                return api.doPOST(carUse);
+            }*/
         }
     })
 
@@ -75,6 +78,21 @@ angular.module('app.oa')
             CarUseService.remove(carUse.objectId).then(function () {
                 $scope.grid.refresh();
                 toaster.pop('success', "信息", "删除成功！");
+            });
+        };
+        $scope.allotCarUse = function (carUse) {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/oa/caruse/car-use-allot.html',
+                controller: 'CarUseAllotCtrl',
+                resolve: {
+                    objectId: function () {
+                        return carUse.objectId;
+                    }
+                }
+            });
+            modalInstance.result.then(function (result) {
+                $scope.grid.refresh();
+                toaster.pop('success', "信息", "分配成功！");
             });
         };
     })
@@ -121,5 +139,28 @@ angular.module('app.oa')
     .controller('CarUseViewCtrl', function ($scope, CarUseService) {
 
         $scope.carUse = CarUseService.get($scope.objectId).$object;
+    })
+
+    .controller('CarUseAllotCtrl', function ($scope, $modalInstance, CarUseService, objectId) {
+
+        $scope.title = '分配车辆';
+
+        $scope.carUserInfo = {
+            carUser: {
+                objectId: objectId
+            },
+            driver: {},
+            car: {}
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss();
+        };
+
+        $scope.submit = function () {
+//            $scope.promise = CarUseService.allot($scope.carUserInfo).then(function () {
+//                $modalInstance.close();
+//            });
+        };
     })
 ;

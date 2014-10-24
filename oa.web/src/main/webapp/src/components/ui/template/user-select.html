@@ -1,20 +1,20 @@
 <div ng-if="multiple">
     <ui-select multiple ng-model="$parent.$parent.ngModel" theme="bootstrap" style="width: 100%;">
         <ui-select-match placeholder="{{placeholder}}">{{$item.name}}</ui-select-match>
-        <ui-select-choices refresh-delay="300" refresh="searchUser($select)" repeat="user in users">
-            <div ng-bind-html="user.name|highlight: $select.search"></div>
-            <small ng-bind-html="user.organizationName"></small>
-            <small ng-bind-html="user.roleName"></small>
+        <ui-select-choices refresh-delay="300" refresh="doSearch($select)" repeat="item in items">
+            <div ng-bind-html="item.name|highlight: $select.search"></div>
+            <small ng-bind-html="item.organizationName"></small>
+            <small ng-bind-html="item.roleName"></small>
         </ui-select-choices>
     </ui-select>
 </div>
 <div ng-if="!multiple">
     <ui-select ng-model="$parent.$parent.ngModel" theme="bootstrap" style="width: 100%;">
         <ui-select-match placeholder="{{placeholder}}">{{$select.selected.name}}</ui-select-match>
-        <ui-select-choices refresh-delay="300" refresh="searchUser($select)" repeat="user in users">
-            <div ng-bind-html="user.name|highlight: $select.search"></div>
-            <small ng-bind-html="user.organizationName"></small>
-            <small ng-bind-html="user.roleName"></small>
+        <ui-select-choices refresh-delay="300" refresh="doSearch($select)" repeat="item in items">
+            <div ng-bind-html="item.name|highlight: $select.search"></div>
+            <small ng-bind-html="item.organizationName"></small>
+            <small ng-bind-html="item.roleName"></small>
         </ui-select-choices>
     </ui-select>
 </div>

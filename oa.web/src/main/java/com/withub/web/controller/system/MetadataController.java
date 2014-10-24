@@ -286,6 +286,9 @@ public class MetadataController extends BaseController {
         List items = new ArrayList();
         if (StringUtil.isNotEmpty(keyword)) {
             List<AbstractEntity> entityList = metadataService.searchEntity(entityName, queryProperty, keyword);
+            if (StringUtil.isEmpty(queryProperty)) {
+                queryProperty = "name";
+            }
             for (AbstractEntity entity : entityList) {
                 HashMap item = new HashMap();
                 item.put("value", entity.getObjectId());

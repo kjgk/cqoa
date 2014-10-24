@@ -38,7 +38,7 @@ public class MetadataServiceImpl extends EntityServiceImpl implements MetadataSe
     public List<AbstractEntity> searchEntity(String entityName, String queryProperty, String keyword) throws Exception {
 
         String hql;
-        if (queryProperty.equals("name")) {
+        if (StringUtil.isEmpty(queryProperty)) {
             hql = "from " + entityName + " where ( name like ? or pinYin like ? ) and objectStatus = 1 order by name";
             return listByHql(hql, "%" + keyword + "%", keyword + "%");
         } else {

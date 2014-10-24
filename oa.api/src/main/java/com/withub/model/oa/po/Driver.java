@@ -20,6 +20,8 @@ public class Driver extends AbstractBaseEntity {
 
     private String name;
 
+    private String pinYin;
+
     private Integer gender;
 
     private String identityCard;
@@ -116,5 +118,13 @@ public class Driver extends AbstractBaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getPinYin() {
+        return pinYin;
+    }
+
+    public void setPinYin(String pinYin) {
+        this.pinYin = pinYin;
     }
 }
