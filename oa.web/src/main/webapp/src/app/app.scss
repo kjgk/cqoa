@@ -823,3 +823,16 @@ section {
   }
 }
 
+.cg-busy {
+  top: 56px;
+}
+
+.cg-busy-default-sign {
+  background-color: #f1f1f1;
+  border: 1px solid #cccccc;
+  border-top-width: 1;
+  border-radius: 0;
+}
+.cg-busy-default-wrapper{
+  top: 36% !important;
+}

@@ -53,6 +53,13 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
 
     })
 
+    .value('cgBusyDefaults',{
+        message: '正在处理，请稍候...',
+        backdrop: true,
+        delay: 300,
+        minDuration: 700
+    })
+
     .controller('MainCtrl', function ($rootScope, $http, PageContext, DateFormat) {
 
         $rootScope.PageContext = PageContext;

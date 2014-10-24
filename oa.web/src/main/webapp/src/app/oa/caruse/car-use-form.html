@@ -1,4 +1,4 @@
-<form class="form-horizontal" role="form" name="carUseForm">
+<form class="form-horizontal" role="form" name="carUseForm" >
     <div class="modal-header">
         <h4 class="modal-title">{{title}}</h4>
     </div>
@@ -32,7 +32,7 @@
                 <textarea type="text" class="form-control"
                           name="description" ng-model="carUse.description"
                           rows="5"
-                          validator="required"/>
+                          validator="required"></textarea>
             </div>
         </div>
         <div class="form-group">
@@ -81,4 +81,5 @@
         <button class="btn btn-primary" validation-submit="carUseForm" ng-click="submit()">保存</button>
         <button class="btn btn-warning" ng-click="cancel()">取消</button>
     </div>
+    <div cg-busy="promise"></div>
 </form>

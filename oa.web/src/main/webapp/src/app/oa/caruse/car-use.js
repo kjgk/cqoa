@@ -90,7 +90,7 @@ angular.module('app.oa')
         $scope.carUse = {
             beginTime: new Date(),
             endTime: new Date(),
-            localCity:0
+            localCity: 0
         };
         $scope.title = '新增用车申请';
 
@@ -99,7 +99,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            CarUseService.create($scope.carUse).then(function () {
+            $scope.promise = CarUseService.create($scope.carUse).then(function () {
                 $modalInstance.close();
             });
         };
@@ -107,9 +107,10 @@ angular.module('app.oa')
 
     .controller('CarUseUpdateCtrl', function ($scope, $modalInstance, CarUseService, objectId) {
 
-        $scope.carUse = CarUseService.get(objectId).then(function (data) {
-            $scope.carUse = data;
-        });
+        $scope.promise = CarUseService.get(objectId);
+
+        $scope.carUse = $scope.promise.$object;
+
         $scope.title = '修改用车申请';
 
         $scope.cancel = function () {
@@ -117,7 +118,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            CarUseService.update($scope.carUse).then(function () {
+            $scope.promise = CarUseService.update($scope.carUse).then(function () {
                 $modalInstance.close();
             });
         };
