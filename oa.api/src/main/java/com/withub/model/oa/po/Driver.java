@@ -1,7 +1,10 @@
 package com.withub.model.oa.po;
 
 import com.withub.model.entity.AbstractBaseEntity;
+import com.withub.model.system.po.User;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Date;
 
@@ -10,6 +13,10 @@ import java.util.Date;
 public class Driver extends AbstractBaseEntity {
 
     //================================ 属性声明 ==========================================================
+
+    @OneToOne(targetEntity = User.class)
+    @JoinColumn(name = "userId")
+    private User user;
 
     private String name;
 
@@ -101,5 +108,13 @@ public class Driver extends AbstractBaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

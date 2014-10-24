@@ -123,16 +123,8 @@ angular.module('app.oa')
         };
     })
 
-    .controller('CarUseViewCtrl', function ($scope, $modalInstance, CarUseService, objectId) {
+    .controller('CarUseViewCtrl', function ($scope, CarUseService) {
 
-        $scope.carUse = CarUseService.get(objectId).then(function (data) {
-            $scope.carUse = data;
-        });
-        $scope.title = '查看用车申请';
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss();
-        };
-
+        $scope.carUse = CarUseService.get($scope.objectId).$object;
     })
 ;
