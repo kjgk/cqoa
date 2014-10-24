@@ -22,9 +22,14 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
             }
         });
 
-        $httpProvider.interceptors.push(function ($q, $location, $filter, toaster) {
+        $httpProvider.interceptors.push(function ($q, $location, $filter, toaster, cgBusyMessage) {
             return {
                 'request': function (request) {
+                    if (request.method == 'GET') {
+                        cgBusyMessage.setMessage('正在加载，请稍候...');
+                    } else {
+                        cgBusyMessage.setMessage('正在处理，请稍候...');
+                    }
                     return request || $q.when(request);
                 },
                 'response': function (response) {
@@ -54,10 +59,8 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
     })
 
     .value('cgBusyDefaults',{
-        message: '正在处理，请稍候...',
-        backdrop: true,
         delay: 300,
-        minDuration: 700
+        minDuration: 800
     })
 
     .controller('MainCtrl', function ($rootScope, $http, PageContext, DateFormat) {

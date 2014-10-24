@@ -22,7 +22,7 @@ angular.module('withub.ui', [])
 
                 scope.$watch('grid.loading', function () {
                     if (scope.grid.loading === true) {
-                        element.find('tr:last').not('.loading-text').after('<tr class="loading-text"><td colspan="100">正在加载数据...</td></tr>');
+                        element.find('tr:last').not('.loading-text').after('<tr class="loading-text"><td colspan="100">正在加载，请稍候...</td></tr>');
                         element.find('tr.empty-text').remove();
                     } else {
                         element.find('tr.loading-text').remove();

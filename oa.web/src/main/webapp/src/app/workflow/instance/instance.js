@@ -96,12 +96,11 @@ angular.module('app.workflow')
 
     .controller('InstanceViewCtrl', function ($scope, $modalInstance, InstanceService, params) {
 
-        InstanceService.getInstance(params).then(function (response) {
+        $scope.promise = InstanceService.getInstance(params).then(function (response) {
             $scope.instance = response.data.data;
-            InstanceService.queryInstanceTaskLog($scope.instance.objectId).then(function (response) {
+            return InstanceService.queryInstanceTaskLog($scope.instance.objectId).then(function (response) {
                 $scope.taskLogList = response.data.items;
             });
-
         });
 
         $scope.cancel = function () {
