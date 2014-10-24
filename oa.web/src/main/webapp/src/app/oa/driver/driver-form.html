@@ -13,21 +13,26 @@
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">状态</label>
-                <div class="col-sm-4">
-                    <input type="radio" ng-model="driver.status" ng-value="1"/> 在职
-                </div>
-                <div class="col-sm-4">
 
-                    <input type="radio" ng-model="driver.status" ng-value="0"/> 离职
-                </div>
+            <div class="col-sm-9">
+                <label class="radio-inline c-radio">
+                    <input type="radio" ng-model="driver.status" ng-value="1">
+                    <span class="fa fa-circle"></span>在职</label>
+                <label class="radio-inline c-radio">
+                    <input type="radio" ng-model="driver.status" ng-value="0">
+                    <span class="fa fa-circle"></span>离职</label>
+            </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">性别</label>
-            <div class="col-sm-4">
-                <input type="radio" ng-model="driver.gender" ng-value="1"/> 男
-            </div>
-            <div class="col-sm-4">
-                <input type="radio" ng-model="driver.gender" ng-value="0"/> 女
+
+            <div class="col-sm-9">
+                <label class="radio-inline c-radio">
+                    <input type="radio" ng-model="driver.gender" ng-value="1">
+                    <span class="fa fa-circle"></span>男</label>
+                <label class="radio-inline c-radio">
+                    <input type="radio" ng-model="driver.gender" ng-value="0">
+                    <span class="fa fa-circle"></span>女</label>
             </div>
         </div>
         <div class="form-group">
