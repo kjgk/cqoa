@@ -39,4 +39,5 @@
         <button ng-if="flowNode.completeAction" class="btn btn-success" ng-click="process('complete')">完成</button>
         <button ng-if="flowNode.discardAction" class="btn btn-danger" validation-submit="approveForm" ng-click="process('discard')">弃权</button>
     </div>
+    <div cg-busy="promise"></div>
 </form>

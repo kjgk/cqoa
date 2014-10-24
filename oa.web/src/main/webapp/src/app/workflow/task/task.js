@@ -134,7 +134,7 @@ angular.module('app.workflow')
             approvers: []
         };
 
-        TaskService.getFlowNodeByTaskId(task.objectId).then(function (response) {
+        $scope.promise = TaskService.getFlowNodeByTaskId(task.objectId).then(function (response) {
             $scope.flowNode = response.data.data;
         });
 
@@ -147,7 +147,7 @@ angular.module('app.workflow')
                 toaster.pop('warning', "警告", "请选择审批人！");
                 return;
             }
-            TaskService.processTask(result, {
+            $scope.promise = TaskService.processTask(result, {
                 taskId: $scope.approveInfo.taskId,
                 opinion: $scope.approveInfo.opinion,
                 approvers: _.pluck($scope.approveInfo.approvers, 'objectId')
@@ -178,7 +178,7 @@ angular.module('app.workflow')
         $scope.hander = {};
 
         $scope.submit = function () {
-            TaskService.transmitTask(taskId, $scope.hander.objectId).then(function () {
+            $scope.promise = TaskService.transmitTask(taskId, $scope.hander.objectId).then(function () {
                 $modalInstance.close();
                 toaster.pop('info', "信息", "任务转发成功！");
             });
