@@ -164,10 +164,10 @@ angular.module('app.workflow')
                 controller: function ($scope, $modalInstance) {
                     $scope.promise = InstanceService.queryInstanceTaskLog(task.instanceId, true).then(function (response) {
                         $scope.taskLogList = response.data.items;
-                        $scope.cancel = function () {
-                            $modalInstance.dismiss();
-                        };
                     });
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss();
+                    };
                 }
             });
         }
