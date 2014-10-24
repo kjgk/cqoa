@@ -19,6 +19,19 @@ angular.module('withub.ui', [])
                 scope.$watch('grid.currentPage', function () {
                     scope.grid.fetchData(scope.grid.currentPage);
                 });
+
+                scope.$watch('grid.loading', function () {
+                    if (scope.grid.loading === true) {
+                        element.find('tr:last').not('.loading-text').after('<tr class="loading-text"><td colspan="100">正在加载数据...</td></tr>');
+                    } else {
+                        element.find('tr.loading-text').remove();
+                        if (_.isEmpty(scope.grid.items)) {
+                            element.find('tr:last').not('.empty-text').after('<tr class="empty-text"><td colspan="100">没有数据！</td></tr>');
+                        } else {
+                            element.find('tr.empty-text').remove();
+                        }
+                    }
+                });
             }
         }
     })
@@ -38,6 +51,7 @@ angular.module('withub.ui', [])
                     queryInfo: {},
                     params: options.params || {},
                     currentPage: 1,
+                    loading: false,
                     pageSize: options.pageSize || paginationConfig.itemsPerPage,
 
                     fetchData: function (page) {
@@ -46,10 +60,15 @@ angular.module('withub.ui', [])
                             pageNo: page,
                             pageSize: me.pageSize
                         });
+                        me.items = [];
+                        me.total = 0;
+                        me.loading = true;
                         fetchFn(params).then(function (response) {
                             var result = response.data;
                             me.items = result.items;
                             me.total = result.total;
+                        }).finally(function () {
+                            me.loading = false;
                         });
                     },
                     refresh: function () {

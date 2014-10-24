@@ -10,7 +10,7 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
 
         $urlRouterProvider.otherwise('/oa/task/pending');
 
-        cfpLoadingBarProvider.includeSpinner = false;
+        cfpLoadingBarProvider.includeSpinner = false;   // ignoreLoadingBar
 
         RestangularProvider.setBaseUrl(PageContext.path);
 
@@ -22,16 +22,12 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
             }
         });
 
-        $httpProvider.interceptors.push(function ($q, $location, $filter, cfpLoadingBar, toaster) {
+        $httpProvider.interceptors.push(function ($q, $location, $filter, toaster) {
             return {
                 'request': function (request) {
-                    if (request.cfpLoading === undefined || request.cfpLoading) {
-                        cfpLoadingBar.start();
-                    }
                     return request || $q.when(request);
                 },
                 'response': function (response) {
-                    cfpLoadingBar.complete();
                     if (response.data && response.data.success === false) {
                         toaster.pop('error', "错误", response.data.message);
                         return $q.reject(response);
@@ -40,7 +36,6 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
                 },
 
                 'responseError': function (rejection) {
-                    cfpLoadingBar.complete();
                     toaster.pop('error', rejection.config.method + ':' + rejection.config.url, rejection.status + ':' + rejection.statusText);
                     return $q.reject(rejection);
                 }
