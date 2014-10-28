@@ -62,7 +62,6 @@ angular.module('withub.ui', [])
                             pageSize: me.pageSize
                         });
                         me.items = [];
-                        me.total = 0;
                         me.loading = true;
                         fetchFn(params).then(function (response) {
                             var result = response.data;
