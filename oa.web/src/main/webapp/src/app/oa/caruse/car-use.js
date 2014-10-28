@@ -14,6 +14,7 @@ angular.module('app.oa')
 
     .factory('CarUseService', function ($http, Restangular) {
         var api = Restangular.all('oa/carUse');
+
         return {
             query: function (params) {
                 return $http({
@@ -33,14 +34,14 @@ angular.module('app.oa')
             },
             remove: function (objectId) {
                 return api.doDELETE(objectId);
-            }/*,
+            },
             allot: function (carUseInfo) {
-                return api.doPOST(carUse);
-            }*/
+                return  Restangular.all('oa/allot').doPOST(carUseInfo);
+            }
         }
     })
 
-    .controller('CarUseCtrl', function ($scope, $q, $modal, toaster, SimpleTable, CarUseService,InstanceService) {
+    .controller('CarUseCtrl', function ($scope, $q, $modal, toaster, SimpleTable, CarUseService, InstanceService) {
 
         $scope.grid = SimpleTable(CarUseService.query);
 
@@ -146,7 +147,7 @@ angular.module('app.oa')
         $scope.title = '分配车辆';
 
         $scope.carUserInfo = {
-            carUser: {
+            carUse: {
                 objectId: objectId
             },
             driver: {},
@@ -158,9 +159,15 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-//            $scope.promise = CarUseService.allot($scope.carUserInfo).then(function () {
-//                $modalInstance.close();
-//            });
+            $scope.carUserInfo.driver.objectId = $scope.driverSelect.value;
+            $scope.carUserInfo.car.objectId = $scope.carSelect.value;
+
+            $scope.promise = CarUseService.allot($scope.carUserInfo);
+
+            $scope.promise.then(function () {
+                $modalInstance.close();
+            });
+
         };
     })
 ;

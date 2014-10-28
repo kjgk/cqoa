@@ -4,6 +4,7 @@ import com.withub.model.entity.AbstractBaseEntity;
 import com.withub.model.system.po.Code;
 import com.withub.model.system.po.Organization;
 import com.withub.model.system.po.User;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;

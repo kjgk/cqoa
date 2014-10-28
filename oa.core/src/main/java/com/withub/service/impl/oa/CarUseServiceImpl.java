@@ -5,6 +5,7 @@ import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.CarUse;
 import com.withub.model.oa.po.CarUse;
+import com.withub.model.oa.po.CarUseInfo;
 import com.withub.model.system.po.Code;
 import com.withub.service.EntityServiceImpl;
 import com.withub.service.oa.CarUseService;
@@ -60,4 +61,10 @@ public class CarUseServiceImpl extends EntityServiceImpl implements CarUseServic
         save(carUse);
     }
 
+
+    @Override
+    public void addCarUseInfo(CarUseInfo carUseInfo) throws Exception {
+
+        save(carUseInfo);
+    }
 }

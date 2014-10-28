@@ -1,6 +1,7 @@
 package com.withub.model.oa.po;
 
 import com.withub.model.entity.AbstractBaseEntity;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -43,6 +44,7 @@ public class CarUseInfo extends AbstractBaseEntity {
         this.driver = driver;
     }
 
+    @JsonIgnore
     public CarUse getCarUse() {
         return carUse;
     }
