@@ -36,7 +36,7 @@ angular.module('app.oa')
                 return api.doDELETE(objectId);
             },
             allot: function (carUseInfo) {
-                return  Restangular.all('oa/allot').doPOST(carUseInfo);
+                return Restangular.one('oa/carUse', carUseInfo.carUse.objectId).post('allot', carUseInfo);
             }
         }
     })
@@ -161,10 +161,7 @@ angular.module('app.oa')
         $scope.submit = function () {
             $scope.carUserInfo.driver.objectId = $scope.driverSelect.value;
             $scope.carUserInfo.car.objectId = $scope.carSelect.value;
-
-            $scope.promise = CarUseService.allot($scope.carUserInfo);
-
-            $scope.promise.then(function () {
+            $scope.promise = CarUseService.allot($scope.carUserInfo).then(function () {
                 $modalInstance.close();
             });
 

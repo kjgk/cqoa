@@ -66,12 +66,11 @@ public class CarUseController extends BaseController {
         carUseService.deleteCarUse(objectId);
     }
 
+    @RequestMapping(value = "/carUse/{objectId}/allot", method = RequestMethod.POST)
+    public void createCarUseInfo(@PathVariable("objectId") String objectId, @RequestBody CarUseInfo carUseInfo) throws Exception {
 
-    @RequestMapping(value = "/allot")
-    public void createCarUseInfo(@RequestBody CarUseInfo carUseInfo) throws Exception {
-
-        CarUseInfo carUseInfo2 = carUseInfo;
-
+        carUseInfo.setCarUse(new CarUse());
+        carUseInfo.getCarUse().setObjectId(objectId);
         carUseService.addCarUseInfo(carUseInfo);
     }
 }

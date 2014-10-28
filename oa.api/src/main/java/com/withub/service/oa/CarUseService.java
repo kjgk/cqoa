@@ -20,7 +20,6 @@ public interface CarUseService extends EntityService {
 
     public void updateCarUse(CarUse carUse) throws Exception;
 
-
     public void addCarUseInfo(CarUseInfo carUseInfo) throws Exception;
 
 }

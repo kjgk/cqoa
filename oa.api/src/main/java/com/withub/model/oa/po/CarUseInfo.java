@@ -24,6 +24,7 @@ public class CarUseInfo extends AbstractBaseEntity {
 
     @ManyToOne(targetEntity = CarUse.class)
     @JoinColumn(name = "carUseId")
+    @JsonIgnore
     private CarUse carUse;
 
     //================================ 属性方法 ==========================================================
@@ -44,7 +45,6 @@ public class CarUseInfo extends AbstractBaseEntity {
         this.driver = driver;
     }
 
-    @JsonIgnore
     public CarUse getCarUse() {
         return carUse;
     }

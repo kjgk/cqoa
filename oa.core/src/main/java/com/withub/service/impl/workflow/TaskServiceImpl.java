@@ -93,6 +93,12 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
 
     public void commit(Task task, TaskHandleResult taskHandleResult, String opinion, List<User> nextHandlerList, List<User> firstNodeHandlerList) throws Exception {
 
+        User currentUser = SpringSecurityUtil.getCurrentUser();
+        commit(currentUser, task, taskHandleResult, opinion, nextHandlerList, firstNodeHandlerList);
+    }
+
+    public void commit(User currentUser, Task task, TaskHandleResult taskHandleResult, String opinion, List<User> nextHandlerList, List<User> firstNodeHandlerList) throws Exception {
+
         if (!task.getStatus().getCodeTag().equals(TaskStatus.Running.toString())) {
             return;
         }
@@ -231,7 +237,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
             nextSubInstance.setCreateTime(DateUtil.getCurrentTime());
             nextSubInstance.setCreator(instance.getCreator());
             save(nextSubInstance);
-            createTask(nextSubInstance, masterTask, nextFlowNode, null, null);
+            createTask(currentUser, nextSubInstance, masterTask, nextFlowNode, null, null);
             return;
         }
 
@@ -249,12 +255,12 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
         }
 
         if (nextFlowNode.getFlowNodeType() == FlowNodeType.End || nextFlowNode.getFlowNodeType() == FlowNodeType.First) {
-            createTask(subInstance, masterTask, nextFlowNode, nextHandlerList, firstNodeHandlerList);
+            createTask(currentUser, subInstance, masterTask, nextFlowNode, nextHandlerList, firstNodeHandlerList);
             return;
         }
 
         if (CollectionUtil.isNotEmpty(firstNodeHandlerList)) {
-            createTask(subInstance, masterTask, nextFlowNode, firstNodeHandlerList, null);
+            createTask(currentUser, subInstance, masterTask, nextFlowNode, firstNodeHandlerList, null);
         } else {
             if (CollectionUtil.isEmpty(nextHandlerList)) {
                 nextHandlerList = new ArrayList<User>();
@@ -264,7 +270,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
                     nextHandlerList = wfRegulationService.parseTaskHandler(instance, nextFlowNode);
                 }
             }
-            createTask(subInstance, masterTask, nextFlowNode, nextHandlerList, firstNodeHandlerList);
+            createTask(currentUser, subInstance, masterTask, nextFlowNode, nextHandlerList, firstNodeHandlerList);
         }
     }
 
@@ -429,7 +435,12 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
 
     public void createTask(SubInstance subInstance, MasterTask previousMasterTask, FlowNode flowNode, List<User> handlerList, List<User> firstNodeHandlerList) throws Exception {
 
-        User user = SpringSecurityUtil.getCurrentUser();
+        User currentUser = SpringSecurityUtil.getCurrentUser();
+        createTask(currentUser, subInstance, previousMasterTask, flowNode, handlerList, firstNodeHandlerList);
+    }
+
+    public void createTask(User currentUser, SubInstance subInstance, MasterTask previousMasterTask, FlowNode flowNode, List<User> handlerList, List<User> firstNodeHandlerList) throws Exception {
+
         FlowNodeType flowNodeType = flowNode.getFlowNodeType();
 
         Date taskCreateTime = DateUtil.getCurrentTime();
@@ -446,7 +457,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
                 masterTask.setSubInstance(subInstance);
                 masterTask.setPreviousMasterTask(previousMasterTask);
                 masterTask.setFlowNode(flowNode);
-                masterTask.setStarter(user);
+                masterTask.setStarter(currentUser);
                 masterTask.setStatus(taskRunningStatus);
                 save(masterTask);
 
@@ -459,7 +470,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
                 task.setHandler(handler);
                 // 代理实现
                 if (flowNode.getAllowAgent() == 1) {
-                    if (handler.getObjectId().equals(user.getObjectId()) || handler.getObjectId().equals(SystemConstant.USER_SYSTEM)) {
+                    if (handler.getObjectId().equals(currentUser.getObjectId()) || handler.getObjectId().equals(SystemConstant.USER_SYSTEM)) {
                         task.setSourceType(TaskSourceType.SYSTEM);
                     } else {
                         User agent = agencyService.getAgent(handler);
@@ -495,7 +506,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
             masterTask.setSubInstance(subInstance);
             masterTask.setPreviousMasterTask(previousMasterTask);
             masterTask.setFlowNode(flowNode);
-            masterTask.setStarter(user);
+            masterTask.setStarter(currentUser);
             Code status = codeService.getCodeByEnum(TaskStatus.Running);
             masterTask.setStatus(status);
             masterTask.setCreateTime(DateUtil.getCurrentTime());
@@ -507,7 +518,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
                 handlerList.add(systemUser);
             } else if (flowNodeType == FlowNodeType.First) {
                 handlerList = new ArrayList<>();
-                handlerList.add(user);
+                handlerList.add(currentUser);
             } else if (flowNodeType == FlowNodeType.Modify) {
                 handlerList = new ArrayList<>();
                 handlerList.add(subInstance.getInstance().getCreator());
@@ -523,7 +534,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
                 task.setHandler(handler);
                 // 代理实现
                 if (flowNode.getAllowAgent() == 1) {
-                    if (handler.getObjectId().equals(user.getObjectId()) || handler.getObjectId().equals(SystemConstant.USER_SYSTEM)) {
+                    if (handler.getObjectId().equals(currentUser.getObjectId()) || handler.getObjectId().equals(SystemConstant.USER_SYSTEM)) {
                         task.setSourceType(TaskSourceType.SYSTEM);
                     } else {
                         User agent = agencyService.getAgent(handler);
@@ -578,6 +589,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
             }
         }
     }
+
 
     public void finishInstance(Instance instance) throws Exception {
 
