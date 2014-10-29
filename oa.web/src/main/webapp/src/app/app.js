@@ -62,7 +62,7 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
         delay: 300
     })
 
-    .controller('MainCtrl', function ($rootScope, $http, PageContext, DateFormat) {
+    .controller('MainCtrl', function ($rootScope, $window, $http, PageContext, DateFormat) {
 
         $rootScope.PageContext = PageContext;
         $rootScope.DateFormat = DateFormat;
@@ -83,6 +83,16 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
                 },
                 isAdmin: userInfo.isAdmin == 1
             };
+        });
+
+        // 高度自适应
+        $rootScope.windowWidth = $window.innerWidth;
+        $rootScope.windowHeight = $window.innerHeight;
+        angular.element($window).bind('resize', function () {
+            $rootScope.windowWidth = $window.innerWidth;
+            $rootScope.windowHeight = $window.innerHeight;
+            $rootScope.$apply('windowWidth');
+            $rootScope.$apply('windowHeight');
         });
     })
 ;
