@@ -2,10 +2,13 @@ package com.withub.web.controller.system;
 
 import com.withub.common.util.CollectionUtil;
 import com.withub.common.util.StringUtil;
+import com.withub.model.entity.enumeration.OrderByType;
 import com.withub.model.entity.query.ExpressionOperation;
+import com.withub.model.entity.query.OrderByProperty;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.system.po.Organization;
+import com.withub.model.system.po.Role;
 import com.withub.service.system.CodeService;
 import com.withub.service.system.OrganizationService;
 import com.withub.web.common.BaseController;
@@ -224,6 +227,29 @@ public class OrganizationController extends BaseController {
         }
 
         modelMap.put("total", total);
+        modelMap.put("items", items);
+    }
+
+
+    @RequestMapping(value = "/organization/list", method = RequestMethod.GET)
+    public void listOrganization(HttpServletRequest request, ModelMap modelMap) throws Exception {
+
+        QueryInfo queryInfo = new QueryInfo();
+        queryInfo.setTargetEntity(Organization.class);
+
+        setAscOrderBy(queryInfo, "nodeLevelCode");
+
+        List list = organizationService.list(queryInfo);
+
+        List items = new ArrayList();
+        for (Organization organization : (List<Organization>) list) {
+            Map item = new HashMap();
+            item.put("value", organization.getObjectId());
+            item.put("label", organization.getName());
+            item.put("nodeLevel", organization.getNodeLevel());
+            items.add(item);
+        }
+
         modelMap.put("items", items);
     }
 }

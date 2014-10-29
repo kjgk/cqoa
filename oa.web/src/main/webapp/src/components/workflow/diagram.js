@@ -126,8 +126,8 @@ angular.module('workflow', ['ui.router', 'uuid4'])
                                 {value: 'submit', content: '提交' },
                                 {value: 'finish', content: '完成' }
                             ]},
-                            OrganizationId: { type: 'text', group: 'base', label: '组织机构ID', index: 8 },
-                            RoleId: { type: 'text', group: 'base', label: '角色ID', index: 9 },
+                            OrganizationId: { type: 'select', group: 'base', label: '组织机构', index: 8, options: $scope.organizationList },
+                            RoleId: { type: 'select', group: 'base', label: '角色', index: 9, options: $scope.roleList },
                             UseRootNode: { type: 'text', group: 'base', label: '使用根节点', index: 10 },
                             OrganizationProperty: { type: 'text', group: 'base', label: '组织机构属性', index: 11 },
                             RoleProperty: { type: 'text', group: 'base', label: '角色属性', index: 12 },
@@ -191,18 +191,22 @@ angular.module('workflow', ['ui.router', 'uuid4'])
 
         $scope.save = function () {
             $http({
-                url: '/oa/workflow/flowType/' + $state.params.id + '/saveWorkflowConfig',
+                url: PageContext.path + '/workflow/flowType/' + $state.params.id + '/saveWorkflowConfig',
                 method: 'POST',
                 data: {
                     content: graph.toJSON()
                 }
-            }).then(function () {
-                alert('保存成功!');
+            }).then(function (response) {
+                if (response.data.success) {
+                    alert('保存成功!');
+                } else {
+                    alert('保存失败!');
+                }
             });
         }
 
         $http({
-            url: '/oa/workflow/flowType/' + $state.params.id + '/loadWorkflowConfig',
+            url: PageContext.path + '/workflow/flowType/' + $state.params.id + '/loadWorkflowConfig',
             method: 'GET'
         }).then(function (response) {
             if (response.data.data) {
@@ -217,6 +221,40 @@ angular.module('workflow', ['ui.router', 'uuid4'])
                 ]};
                 graph.fromJSON(defaultDiagram);
             }
+        });
+
+        $http({
+            url: PageContext.path + '/system/role/list',
+            method: 'GET'
+        }).then(function (response) {
+            $scope.roleList = [
+                {value: '', content: ''}
+            ];
+            _.each(response.data.items, function (item) {
+                $scope.roleList.push({
+                    value: item.value,
+                    content: item.label
+                })
+            })
+        });
+
+        $http({
+            url: PageContext.path + '/system/organization/list',
+            method: 'GET'
+        }).then(function (response) {
+            $scope.organizationList = [
+                {value: '', content: ''}
+            ];
+            _.each(response.data.items, function (item) {
+                if (item.nodeLevel == 1) {
+                    return true;
+                } else {
+                    $scope.organizationList.push({
+                        value: item.value,
+                        content: (item.nodeLevel > 2 ? " > " : "") + item.label
+                    });
+                }
+            })
         });
 
     })

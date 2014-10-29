@@ -14,9 +14,14 @@ public class LogoutSuccessHandlerImpl implements org.springframework.security.we
 
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
-        WithubUserDetails userDetails = (WithubUserDetails) authentication.getPrincipal();
-        SecurityEventPublisher.publishLogoutEvent(this, userDetails.getAccountId());
-        response.sendRedirect(request.getContextPath());
+        if (authentication != null) {
+            WithubUserDetails userDetails = (WithubUserDetails) authentication.getPrincipal();
+            SecurityEventPublisher.publishLogoutEvent(this, userDetails.getAccountId());
+            response.sendRedirect(request.getContextPath());
+        } else {
+            response.sendRedirect(request.getContextPath());
+        }
+
     }
 
 }
