@@ -10,6 +10,7 @@
                     <li><a ui-sref="oa.task.pending">待办事项</a></li>
                     <li><a ui-sref="oa.task.handled">已办事项</a></li>
                     <li><a ui-sref="oa.instance.list">发起流程</a></li>
+                    <li><a href="javascript:;" ng-click="modifyPassword()">修改密码</a></li>
                 </ul>
             </div>
 
@@ -19,16 +20,10 @@
                 <div class="clear"></div>
                 <ul>
                     <li><a ui-sref="oa.instance.all">流程查看</a></li>
-                    <li><a ui-sref="oa.carUse">用车申请</a></li>
-                    <li><a ui-sref="oa.miscellaneous">综合事项申请</a></li>
-                    <li><a ui-sref="oa.outgoing">出差申请</a></li>
-                    <li><a ui-sref="oa.leave">请假申请</a></li>
-                    <li><a ui-sref="oa.training">培训申请</a></li>
-                    <li><a ui-sref="oa.car">车辆管理</a></li>
-                    <li><a ui-sref="oa.driver">司机管理</a></li>
+                    <li ng-repeat="x in menus"><a href="#{{x.url}}">{{x.text}}</a></li>
                 </ul>
             </div>
-            <div class="l_lbxh">
+            <div ng-if="PageContext.currentUser.isAdmin" class="l_lbxh">
                 <p><img src="assets/images/l_6.png"/>系统管理</p><img src="assets/images/l_3.png"/>
 
                 <div class="clear"></div>

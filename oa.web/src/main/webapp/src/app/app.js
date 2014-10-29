@@ -58,7 +58,7 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
 
     })
 
-    .value('cgBusyDefaults',{
+    .value('cgBusyDefaults', {
         delay: 300
     })
 
@@ -67,6 +67,7 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
         $rootScope.PageContext = PageContext;
         $rootScope.DateFormat = DateFormat;
 
+        // 加载登录用户信息
         $http({
             url: PageContext.path + '/security/getCurrentUserInfo',
             method: 'GET'
@@ -79,7 +80,8 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
                     objectId: userInfo.organizationId,
                     name: userInfo.organizationName,
                     type: userInfo.organizationType
-                }
+                },
+                isAdmin: userInfo.isAdmin == 1
             };
         });
     })
