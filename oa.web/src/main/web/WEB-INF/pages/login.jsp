@@ -4,7 +4,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-<title></title>
+<title>重庆市第二中级人民法院办公系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <link charset="utf-8" rel="stylesheet" href="${path}/css/login.css"/>
 <script type="text/javascript" src="${path}/scripts/jquery/jquery-1.9.1.min.js"></script>

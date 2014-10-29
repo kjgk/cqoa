@@ -47,7 +47,7 @@ angular.module('withub.ui', [])
                 var me = this;
                 options = options || {};
 
-                var pageSize = $rootScope.windowHeight > 940 ? 15 : 10;
+                var pageSize = $rootScope.windowHeight && $rootScope.windowHeight > 940 ? 15 : 10;
 
                 var self = {
                     items: [],
