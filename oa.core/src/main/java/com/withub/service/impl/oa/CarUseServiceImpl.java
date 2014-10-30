@@ -4,7 +4,6 @@ import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.CarUse;
-import com.withub.model.oa.po.CarUse;
 import com.withub.model.oa.po.CarUseInfo;
 import com.withub.model.system.po.Code;
 import com.withub.service.EntityServiceImpl;
@@ -65,9 +64,7 @@ public class CarUseServiceImpl extends EntityServiceImpl implements CarUseServic
     @Override
     public void addCarUseInfo(CarUseInfo carUseInfo) throws Exception {
 
-        executeHql("delete from " + CarUseInfo.class.getName() + " a where a.carUse.objectId = ?", carUseInfo.getCarUse().getObjectId());
-
+        executeHql("delete from " + CarUseInfo.class.getName() + " a where a.carUse.objectId = ? ", carUseInfo.getCarUse().getObjectId());
         save(carUseInfo);
     }
-
 }

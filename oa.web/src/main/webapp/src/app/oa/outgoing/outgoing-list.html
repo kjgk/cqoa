@@ -27,7 +27,7 @@
                     <td>是否派车</td>
                     <td>状态</td>
                     <td>申请时间</td>
-                    <td style="width: 120px;">操作</td>
+                    <td style="width: 180px;">操作</td>
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{x.proposer.name}}</td>
@@ -51,7 +51,7 @@
 
             </table>
 
-            <div pagination ng-model="grid.currentPage" total-items="grid.total"></div>
+            <div pagination ng-model="grid.currentPage" total-items="grid.total" items-per-page="grid.pageSize"></div>
         </div>
     </div>
     <div class="clear"></div>

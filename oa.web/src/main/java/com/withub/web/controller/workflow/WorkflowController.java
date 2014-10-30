@@ -17,6 +17,7 @@ import com.withub.model.workflow.vo.ApproveInfo;
 import com.withub.model.workflow.vo.InstanceTaskLog;
 import com.withub.model.workflow.vo.TaskInfo;
 import com.withub.service.workflow.WorkflowService;
+import com.withub.util.SpringSecurityUtil;
 import com.withub.web.common.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -424,46 +425,46 @@ public class WorkflowController extends BaseController {
     public void passTask(ModelMap modelMap, @RequestBody ApproveInfo approveInfo) throws Exception {
 
         if (CollectionUtil.isEmpty(approveInfo.getApprovers())) {
-            workflowService.passTask(approveInfo.getTaskId(), approveInfo.getOpinion());
+            workflowService.passTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getOpinion());
         } else {
             List<User> approverList = new ArrayList();
             for (String approverId : approveInfo.getApprovers()) {
                 User approver = workflowService.get(User.class, approverId);
                 approverList.add(approver);
             }
-            workflowService.passTask(approveInfo.getTaskId(), approveInfo.getOpinion(), approverList);
+            workflowService.passTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getOpinion(), approverList);
         }
     }
 
     @RequestMapping(value = "/task/reject", method = RequestMethod.POST)
     public void rejectTask(ModelMap modelMap, @RequestBody ApproveInfo approveInfo) throws Exception {
 
-        workflowService.rejectTask(approveInfo.getTaskId(), approveInfo.getOpinion());
+        workflowService.rejectTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getOpinion());
     }
 
     @RequestMapping(value = "/task/return", method = RequestMethod.POST)
     public void returnTask(ModelMap modelMap, @RequestBody ApproveInfo approveInfo) throws Exception {
 
-        workflowService.returnTask(approveInfo.getTaskId(), approveInfo.getOpinion());
+        workflowService.returnTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getOpinion());
     }
 
     @RequestMapping(value = "/task/complete", method = RequestMethod.POST)
     public void completeTask(ModelMap modelMap, @RequestBody ApproveInfo approveInfo) throws Exception {
 
-        workflowService.completeTask(approveInfo.getTaskId(), approveInfo.getOpinion());
+        workflowService.completeTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getOpinion());
     }
     //
 
     @RequestMapping(value = "/task/transmit/{objectId}", method = RequestMethod.POST)
     public void transmitTask(ModelMap modelMap, @PathVariable(value = "objectId") String objectId, @RequestBody Map data) throws Exception {
 
-        workflowService.transmitTask(objectId, data.get("handler").toString());
+        workflowService.transmitTask(SpringSecurityUtil.getCurrentUser(), objectId, data.get("handler").toString());
     }
 
     @RequestMapping(value = "/task/rollback/{objectId}", method = RequestMethod.POST)
     public void rollbackTask(ModelMap modelMap, @PathVariable(value = "objectId") String objectId) throws Exception {
 
-        workflowService.rollbackTask(objectId);
+        workflowService.rollbackTask(SpringSecurityUtil.getCurrentUser(), objectId);
     }
 
     @RequestMapping(value = "/task/getTaskHandleOpinion/{objectId}", method = RequestMethod.GET)

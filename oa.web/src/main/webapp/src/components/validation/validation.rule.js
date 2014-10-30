@@ -9,7 +9,17 @@ angular.module('validation.rule', ['validation'])
             },
             url: /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/,
             email: /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
-            number: /^\d+$/
+            number: /^\d+$/,
+            minlength: function (value, scope, element, attrs) {
+                return value.length >= attrs.minLength;
+            },
+            maxlength: function (value, scope, element, attrs) {
+                return value.length <= attrs.maxLength;
+            },
+            password: /^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).*$/,
+            matching: function (value, scope, element, attrs) {
+                return value === attrs.validatorPassword;
+            }
         };
 
         var defaultMsg = {
@@ -27,6 +37,22 @@ angular.module('validation.rule', ['validation'])
             },
             number: {
                 error: '请输入数字',
+                success: '<i class="fa fa-check"></i>'
+            },
+            minlength: {
+                error: '最小长度不匹配',
+                success: '<i class="fa fa-check"></i>'
+            },
+            maxlength: {
+                error: '最大长度不匹配',
+                success: '<i class="fa fa-check"></i>'
+            },
+            password: {
+                error: '必须包含至少一个大写字母,一个小写字母,一个数字',
+                success: '<i class="fa fa-check"></i>'
+            },
+            matching: {
+                error: '密码不一致',
                 success: '<i class="fa fa-check"></i>'
             }
         };

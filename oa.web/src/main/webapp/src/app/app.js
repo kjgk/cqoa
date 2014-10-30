@@ -58,15 +58,16 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
 
     })
 
-    .value('cgBusyDefaults',{
+    .value('cgBusyDefaults', {
         delay: 300
     })
 
-    .controller('MainCtrl', function ($rootScope, $http, PageContext, DateFormat) {
+    .controller('MainCtrl', function ($rootScope, $window, $http, PageContext, DateFormat) {
 
         $rootScope.PageContext = PageContext;
         $rootScope.DateFormat = DateFormat;
 
+        // 加载登录用户信息
         $http({
             url: PageContext.path + '/security/getCurrentUserInfo',
             method: 'GET'
@@ -79,8 +80,19 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
                     objectId: userInfo.organizationId,
                     name: userInfo.organizationName,
                     type: userInfo.organizationType
-                }
+                },
+                isAdmin: userInfo.isAdmin == 1
             };
+        });
+
+        // 高度自适应
+        $rootScope.windowWidth = $window.innerWidth;
+        $rootScope.windowHeight = $window.innerHeight;
+        angular.element($window).bind('resize', function () {
+            $rootScope.windowWidth = $window.innerWidth;
+            $rootScope.windowHeight = $window.innerHeight;
+            $rootScope.$apply('windowWidth');
+            $rootScope.$apply('windowHeight');
         });
     })
 ;

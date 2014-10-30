@@ -3,6 +3,8 @@
 body {
   margin: auto;
   padding: 0px;
+  min-width: 980px;
+  background: #2798EC;
 }
 
 .clear {
@@ -833,6 +835,7 @@ section {
   border-top-width: 1;
   border-radius: 0;
 }
-.cg-busy-default-wrapper{
-  top: 36% !important;
+
+.cg-busy-default-wrapper {
+  top: 32% !important;
 }

@@ -14,10 +14,7 @@ import com.withub.web.common.ext.TreeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -166,7 +163,17 @@ public class SecurityController extends BaseController {
         if (result == PasswordChangeResult.OldPasswordError) {
             throw new BaseBusinessException("", "原始密码输入错误！");
         }
+    }
 
+    @RequestMapping(value = "/modifyPassword", method = RequestMethod.POST)
+    public void modifyPassword(@RequestBody Map data, ModelMap modelMap) throws Exception {
+
+        String accountId = SpringSecurityUtil.getAccountId();
+        PasswordChangeResult result = accountService.changePassword(accountId, "", (String) data.get("oldPassword"), (String) data.get("newPassword"));
+
+        if (result == PasswordChangeResult.OldPasswordError) {
+            throw new BaseBusinessException("", "原始密码输入错误！");
+        }
     }
 
     @RequestMapping(value = "/onlineUser/query", method = RequestMethod.GET)

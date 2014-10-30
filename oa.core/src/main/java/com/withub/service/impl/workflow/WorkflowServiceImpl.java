@@ -271,35 +271,35 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
         return taskInfo;
     }
 
-    public void commitTask(String taskId, TaskHandleResult result, String opinion) throws Exception {
+    public void commitTask(User currentUser, String taskId, TaskHandleResult result, String opinion) throws Exception {
 
-        Task task = (Task) get(Task.class, taskId);
-        taskService.commit(task, result, opinion, null, null);
+        Task task = get(Task.class, taskId);
+        taskService.commit(currentUser, task, result, opinion, null, null);
     }
 
-    public void passTask(String taskId, String opinion) throws Exception {
+    public void passTask(User currentUser, String taskId, String opinion) throws Exception {
 
-        commitTask(taskId, TaskHandleResult.Pass, opinion);
+        commitTask(currentUser, taskId, TaskHandleResult.Pass, opinion);
     }
 
-    public void passTask(String taskId, String opinion, User nextHandler) throws Exception {
+    public void passTask(User currentUser, String taskId, String opinion, User nextHandler) throws Exception {
 
         List<User> nextHandlerList = new ArrayList<User>();
         nextHandlerList.add(nextHandler);
 
-        Task task = (Task) get(Task.class, taskId);
-        taskService.commit(task, TaskHandleResult.Pass, opinion, nextHandlerList, null);
+        Task task = get(Task.class, taskId);
+        taskService.commit(currentUser, task, TaskHandleResult.Pass, opinion, nextHandlerList, null);
     }
 
-    public void passTask(String taskId, String opinion, List<User> nextHandlerList) throws Exception {
+    public void passTask(User currentUser, String taskId, String opinion, List<User> nextHandlerList) throws Exception {
 
-        Task task = (Task) get(Task.class, taskId);
-        taskService.commit(task, TaskHandleResult.Pass, opinion, nextHandlerList, null);
+        Task task = get(Task.class, taskId);
+        taskService.commit(currentUser, task, TaskHandleResult.Pass, opinion, nextHandlerList, null);
     }
 
     public void addTaskContext(String taskId, String contextKey, String contextValue) throws Exception {
 
-        Task task = (Task) get(Task.class, taskId);
+        Task task = get(Task.class, taskId);
         TaskContext taskContext = new TaskContext();
         taskContext.setTask(task);
         taskContext.setContextKey(contextKey);
@@ -307,28 +307,28 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
         save(taskContext);
     }
 
-    public void returnTask(String taskId, String opinion) throws Exception {
+    public void returnTask(User currentUser, String taskId, String opinion) throws Exception {
 
-        commitTask(taskId, TaskHandleResult.Return, opinion);
+        commitTask(currentUser, taskId, TaskHandleResult.Return, opinion);
     }
 
-    public void rejectTask(String taskId, String opinion) throws Exception {
+    public void rejectTask(User currentUser, String taskId, String opinion) throws Exception {
 
-        commitTask(taskId, TaskHandleResult.Reject, opinion);
+        commitTask(currentUser, taskId, TaskHandleResult.Reject, opinion);
     }
 
-    public void completeTask(String taskId, String opinion) throws Exception {
+    public void completeTask(User currentUser, String taskId, String opinion) throws Exception {
 
-        commitTask(taskId, TaskHandleResult.Complete, opinion);
+        commitTask(currentUser, taskId, TaskHandleResult.Complete, opinion);
     }
 
-    public void rollbackTask(String taskId) throws Exception {
+    public void rollbackTask(User currentUser, String taskId) throws Exception {
 
-        Task task = (Task) get(Task.class, taskId);
+        Task task = get(Task.class, taskId);
         taskService.rollback(task);
     }
 
-    public void transmitTask(String taskId, String handler) throws Exception {
+    public void transmitTask(User currentUser, String taskId, String handler) throws Exception {
 
         Task task = get(Task.class, taskId);
         User user = get(User.class, handler);
@@ -380,7 +380,7 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
         // 如果是退回修改后的提交,则结束当前任务
         EntityModifyTask objectModifyTask = taskService.getEntityModifyTask(relateObjectId);
         if (objectModifyTask != null) {
-            taskService.commit(objectModifyTask.getTask(), TaskHandleResult.Submit, "提交", null, nextHandlerList);
+            taskService.commit(entity.getCurrentUser(), objectModifyTask.getTask(), TaskHandleResult.Submit, "提交", null, nextHandlerList);
         }
     }
 
@@ -416,7 +416,8 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
         List<User> nextHandlerList = new ArrayList<User>();
         User user = event.getDecisionEventArgs().getUser();
         nextHandlerList.add(user);
-        taskService.createTask(subInstance, masterTask, flowNodeRoute.getToFlowNode(), nextHandlerList, null);
+        // todo test event.getDecisionEventArgs().getEntityInstance().getCurrentUser()
+        taskService.createTask(event.getDecisionEventArgs().getEntityInstance().getCurrentUser(), subInstance, masterTask, flowNodeRoute.getToFlowNode(), nextHandlerList, null);
 
         hql = "select o from " + Task.class.getName() + " o where o.masterTask.subInstance.objectId=?"
                 + " and o.handler.objectId=? order by o.createTime desc";
@@ -429,7 +430,7 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
         } catch (Exception e) {
             throw new BaseBusinessException("", "分支[" + flowNodeRoute.getRamus().getName() + "]没有定义任务处理结果类型.");
         }
-        commitTask(task.getObjectId(), taskHandleResult, event.getDecisionEventArgs().getOpinion());
+        commitTask(event.getDecisionEventArgs().getEntityInstance().getCurrentUser(), task.getObjectId(), taskHandleResult, event.getDecisionEventArgs().getOpinion());
     }
 
     public void onEntityLogicDeleteEvent(EntityLogicDeleteEvent event) throws Exception {

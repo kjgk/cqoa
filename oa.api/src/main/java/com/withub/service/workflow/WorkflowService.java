@@ -63,25 +63,25 @@ public interface WorkflowService extends EntityService {
 
     public TaskInfo getCurrentUserApproveTaskByRelatedObjectId(String relatedObjectId) throws Exception;
 
-    public void commitTask(String taskId, TaskHandleResult result, String opinion) throws Exception;
+    public void commitTask(User currentUser, String taskId, TaskHandleResult result, String opinion) throws Exception;
 
-    public void passTask(String taskId, String opinion) throws Exception;
+    public void passTask(User currentUser, String taskId, String opinion) throws Exception;
 
-    public void passTask(String taskId, String opinion, User nextHandler) throws Exception;
+    public void passTask(User currentUser, String taskId, String opinion, User nextHandler) throws Exception;
 
-    public void passTask(String taskId, String opinion, List<User> nextHandlerList) throws Exception;
+    public void passTask(User currentUser, String taskId, String opinion, List<User> nextHandlerList) throws Exception;
 
     public void addTaskContext(String taskId, String contextKey, String contextValue) throws Exception;
 
-    public void returnTask(String taskId, String opinion) throws Exception;
+    public void returnTask(User currentUser, String taskId, String opinion) throws Exception;
 
-    public void rejectTask(String taskId, String opinion) throws Exception;
+    public void rejectTask(User currentUser, String taskId, String opinion) throws Exception;
 
-    public void completeTask(String taskId, String opinion) throws Exception;
+    public void completeTask(User currentUser, String taskId, String opinion) throws Exception;
 
-    public void rollbackTask(String taskId) throws Exception;
+    public void rollbackTask(User currentUser, String taskId) throws Exception;
 
-    public void transmitTask(String taskId, String handler) throws Exception;
+    public void transmitTask(User currentUser, String taskId, String handler) throws Exception;
 
     public List<Task> getFlowNodeTask(Instance instance, String flowNodeId) throws Exception;
 

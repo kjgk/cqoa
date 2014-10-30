@@ -38,7 +38,7 @@ angular.module('withub.ui', [])
     })
 
     .provider('SimpleTable', function (paginationConfig) {
-        this.$get = function () {
+        this.$get = function ($rootScope) {
             return  function SimpleGrid(fetchFn, options) {
                 if (!(this instanceof SimpleGrid)) {
                     return new SimpleGrid(fetchFn, options);
@@ -47,13 +47,15 @@ angular.module('withub.ui', [])
                 var me = this;
                 options = options || {};
 
+                var pageSize = $rootScope.windowHeight && $rootScope.windowHeight > 940 ? 15 : 10;
+
                 var self = {
                     items: [],
                     queryInfo: {},
                     params: options.params || {},
                     currentPage: 1,
                     loading: false,
-                    pageSize: options.pageSize || paginationConfig.itemsPerPage,
+                    pageSize: options.pageSize || pageSize || paginationConfig.itemsPerPage,
 
                     fetchData: function (page) {
                         page = page || me.currentPage;
@@ -62,7 +64,6 @@ angular.module('withub.ui', [])
                             pageSize: me.pageSize
                         });
                         me.items = [];
-                        me.total = 0;
                         me.loading = true;
                         fetchFn(params).then(function (response) {
                             var result = response.data;
