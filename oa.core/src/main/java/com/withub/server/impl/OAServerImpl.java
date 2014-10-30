@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service("workflowServer")
 @Transactional
-public class WorkflowServerImpl implements WorkflowServer {
+public class OAServerImpl implements WorkflowServer {
 
     @Autowired
     private TaskService taskService;
@@ -35,7 +35,5 @@ public class WorkflowServerImpl implements WorkflowServer {
         User currentUser = taskService.get(User.class, currentUserId);
 
         taskService.commit(currentUser, task, taskHandleResult, opinion, handlerList, null);
-
-
     }
 }
