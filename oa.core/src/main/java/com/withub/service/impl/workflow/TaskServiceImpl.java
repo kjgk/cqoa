@@ -76,7 +76,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
         Instance instance = event.getInstanceEventArgs().getInstance();
         FlowType flowType = instance.getFlowType();
         FlowNode beginFlowNode = flowTypeService.getBeginFlowNode(flowType);
-        createTask(event.getInstanceEventArgs().getSubInstance(), null, beginFlowNode, null, event.getInstanceEventArgs().getFirstNodeHandlerList());
+        createTask(event.getInstanceEventArgs().getInstance().getCurrentUser(), event.getInstanceEventArgs().getSubInstance(), null, beginFlowNode, null, event.getInstanceEventArgs().getFirstNodeHandlerList());
     }
 
     public EntityModifyTask getEntityModifyTask(String relatedObjectId) throws Exception {
@@ -91,11 +91,11 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
         return task;
     }
 
-    public void commit(Task task, TaskHandleResult taskHandleResult, String opinion, List<User> nextHandlerList, List<User> firstNodeHandlerList) throws Exception {
-
-        User currentUser = SpringSecurityUtil.getCurrentUser();
-        commit(currentUser, task, taskHandleResult, opinion, nextHandlerList, firstNodeHandlerList);
-    }
+//    public void commit(Task task, TaskHandleResult taskHandleResult, String opinion, List<User> nextHandlerList, List<User> firstNodeHandlerList) throws Exception {
+//
+//        User currentUser = SpringSecurityUtil.getCurrentUser();
+//        commit(currentUser, task, taskHandleResult, opinion, nextHandlerList, firstNodeHandlerList);
+//    }
 
     public void commit(User currentUser, Task task, TaskHandleResult taskHandleResult, String opinion, List<User> nextHandlerList, List<User> firstNodeHandlerList) throws Exception {
 
@@ -433,11 +433,11 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
         abortInstanceRunningTasks(instance);
     }
 
-    public void createTask(SubInstance subInstance, MasterTask previousMasterTask, FlowNode flowNode, List<User> handlerList, List<User> firstNodeHandlerList) throws Exception {
-
-        User currentUser = SpringSecurityUtil.getCurrentUser();
-        createTask(currentUser, subInstance, previousMasterTask, flowNode, handlerList, firstNodeHandlerList);
-    }
+//    public void createTask(SubInstance subInstance, MasterTask previousMasterTask, FlowNode flowNode, List<User> handlerList, List<User> firstNodeHandlerList) throws Exception {
+//
+//        User currentUser = SpringSecurityUtil.getCurrentUser();
+//        createTask(currentUser, subInstance, previousMasterTask, flowNode, handlerList, firstNodeHandlerList);
+//    }
 
     public void createTask(User currentUser, SubInstance subInstance, MasterTask previousMasterTask, FlowNode flowNode, List<User> handlerList, List<User> firstNodeHandlerList) throws Exception {
 
@@ -578,13 +578,13 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
                 // 判断是否自动提交任务
                 // TODO : 应该根据TaskExecuteMode来判断,自动提交前应该实行一个服务调用接口
                 if (flowNodeType == FlowNodeType.Begin) {
-                    commit(task, TaskHandleResult.Start, "流程启动", null, firstNodeHandlerList);
+                    commit(currentUser, task, TaskHandleResult.Start, "流程启动", null, firstNodeHandlerList);
                 } else if (flowNodeType == FlowNodeType.First) {
-                    commit(task, TaskHandleResult.Submit, "提交", null, firstNodeHandlerList);
+                    commit(currentUser, task, TaskHandleResult.Submit, "提交", null, firstNodeHandlerList);
                 } else if (flowNodeType == FlowNodeType.End) {
-                    commit(task, TaskHandleResult.Complete, "流程结束", null, null);
+                    commit(currentUser, task, TaskHandleResult.Complete, "流程结束", null, null);
                 } else if (flowNode.getSuspendInstance() == 1) {
-                    commit(task, TaskHandleResult.Suspend, flowNode.getSuspendDescription(), null, null);
+                    commit(currentUser, task, TaskHandleResult.Suspend, flowNode.getSuspendDescription(), null, null);
                 }
             }
         }

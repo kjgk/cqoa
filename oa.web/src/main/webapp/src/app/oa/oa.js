@@ -30,7 +30,6 @@ angular.module('app.oa', ['base'])
             _.each(response.data.nodes, function (node) {
                 if (node.text == '业务管理') {
                     loadMenu(node.id).then(function (response) {
-                        console.log(response.data.nodes)
                         _.each(response.data.nodes, function (node) {
                             $scope.menus.push({
                                 text: node.text,
