@@ -69,7 +69,7 @@ angular.module('withub.ui', [])
                             var result = response.data;
                             me.items = result.items;
                             me.total = result.total;
-                        }).finally(function () {
+                        })['finally'](function () {
                             me.loading = false;
                         });
                     },
