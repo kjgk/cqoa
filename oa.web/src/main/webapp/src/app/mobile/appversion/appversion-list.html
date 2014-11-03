@@ -1,0 +1,50 @@
+<div class="right">
+    <div>
+        <div class="rn_c">
+            <div class="ywtj"><p>App版本管理</p>
+
+                <div class="tool-bar">
+                    <input type="text" class="search" placeholder="请输入版本号" ng-model="grid.queryInfo.version">
+                    <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i
+                            class="fa fa-search fa-fw"></i> 查询
+                    </button>
+                    <button class="btn btn-primary btn-sm" ng-click="createAppVersion()"><i
+                            class="fa fa-plus fa-fw"></i> 添加
+                    </button>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <table simple-table="grid" class="rbga" border="1">
+                <tr class="rlm_bga">
+                    <td>平台</td>
+                    <td>版本号</td>
+                    <td>附件地址</td>
+                    <td>状态</td>
+                    <td>备注</td>
+                    <td>上传人</td>
+                    <td>上传时间</td>
+                    <td style="width: 120px;">操作</td>
+                </tr>
+                <tr class="nr1" ng-repeat="x in grid.items">
+                    <td>{{x.platform}}</td>
+                    <td>{{x.version}}</td>
+                    <td>{{x.attachmentAddress}}</td>
+                    <td>{{x.status===1?"启用":"未启用"}}</td>
+                    <td>{{x.description}}</td>
+                    <td>{{"暂时不取"}}</td>
+                    <td>{{x.createTime|$date:DateFormat.MINUTE }}</td>
+                    <td>
+                        <button class="btn btn-xs btn-primary" ng-click="updateAppVersion(x)">编辑</button>
+                        &nbsp;
+                        <button class="btn btn-xs btn-danger" ng-click="deleteAppVersion(x)">删除</button>
+                    </td>
+                </tr>
+
+            </table>
+
+            <div pagination ng-model="grid.currentPage" total-items="grid.total" items-per-page="grid.pageSize"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
