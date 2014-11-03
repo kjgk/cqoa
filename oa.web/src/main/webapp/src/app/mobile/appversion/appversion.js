@@ -126,7 +126,7 @@ angular.module('app.mobile')
 
         $scope.apkUrl = apkUrl;
 
-        $scope.title = 'Apk二维码';
+        $scope.title = '二维码扫描';
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
