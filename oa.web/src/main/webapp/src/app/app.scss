@@ -632,6 +632,7 @@ img {
   .tool-bar {
     position: absolute;
     right: 0;
+    white-space: nowrap;
     label {
       font-size: 14px;
       font-weight: 100;

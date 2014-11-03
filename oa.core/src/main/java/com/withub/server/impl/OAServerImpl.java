@@ -47,7 +47,7 @@ public class OAServerImpl implements OAServer {
 
         Task task = taskService.getTaskById(taskId);
         TaskHandleResult taskHandleResult = TaskHandleResult.valueOf(result);
-        List<User> handlerList = new ArrayList<>();
+        List<User> handlerList = new ArrayList();
         if (CollectionUtil.isNotEmpty(nextHandlerList)) {
             for (String userId : nextHandlerList) {
                 handlerList.add(taskService.get(User.class, userId));

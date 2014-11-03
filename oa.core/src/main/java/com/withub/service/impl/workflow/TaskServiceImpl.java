@@ -514,13 +514,13 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
 
             if (flowNodeType == FlowNodeType.Begin || flowNodeType == FlowNodeType.End) {
                 User systemUser = userService.getSystemUser();
-                handlerList = new ArrayList<>();
+                handlerList = new ArrayList();
                 handlerList.add(systemUser);
             } else if (flowNodeType == FlowNodeType.First) {
-                handlerList = new ArrayList<>();
+                handlerList = new ArrayList();
                 handlerList.add(currentUser);
             } else if (flowNodeType == FlowNodeType.Modify) {
-                handlerList = new ArrayList<>();
+                handlerList = new ArrayList();
                 handlerList.add(subInstance.getInstance().getCreator());
             }
 
@@ -718,7 +718,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
 
         Agency agency = event.getAgencyEventArgs().getAgency();
         String hql = "select o from " + Task.class.getName() + " o"
-                + " where handler.objectId<>owner.objectId and handler.objectId=? and o.status.codeTag=?";
+                + " where handler.objectIdowner.objectId and handler.objectId=? and o.status.codeTag=?";
         List list = listByHql(hql, agency.getAgent().getObjectId(), TaskStatus.Running.name());
         if (CollectionUtil.isEmpty(list)) {
             return;

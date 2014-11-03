@@ -2,6 +2,7 @@
   "name": "app",
   "version": "0.0.0",
   "dependencies": {
+    "polyfill": "https://raw.githubusercontent.com/inexorabletash/polyfill/master/polyfill.js",
     "jquery": "1.9.x",
     "angular": "1.2.x",
     "angular-sanitize": "~1.3.0",
@@ -21,7 +22,8 @@
     "bootstrap-additions": "~0.2.3",
     "angular-uuid4": "~0.2.0",
     "angular-ui-select": "~0.8.3",
-    "kjgk-angular-busy": "4.1.x"
+    "kjgk-angular-busy": "4.1.x",
+    "respond": "~1.4.2"
   },
   "devDependencies": {
     "angular-mocks": "1.2.x"

@@ -34,7 +34,9 @@
                     <td>{{x.taskFinishTime|$date:DateFormat.MINUTE}}</td>
                     <td>
                         <button ng-if="x.taskStatus == 'Running'" class="btn btn-xs btn-primary" ng-click="process(x)">处理</button>
+                        &nbsp;
                         <button class="btn btn-xs btn-primary" ng-click="viewInstance(x)">查看审批流程</button>
+                        &nbsp;
                         <button ng-if="x.taskStatus == 'Running'" class="btn btn-xs btn-primary" ng-click="transmitTask(x)">转发</button>
                     </td>
                 </tr>
