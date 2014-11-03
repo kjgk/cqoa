@@ -1,0 +1,11 @@
+<form class="form-horizontal" role="form">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">×</button>
+        <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+        <qrcode data="{{apkUrl}}"
+                size="{{260}}">
+        </qrcode>
+    </div>
+</form>

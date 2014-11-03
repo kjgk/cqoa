@@ -70,12 +70,24 @@ angular.module('app.mobile')
                 toaster.pop('success', "信息", "删除成功！");
             });
         };
+        $scope.viewQrCode = function (appVersion) {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/mobile/appVersion/qrcode-view.html',
+                controller: 'QrCodeViewCtrl',
+                size:'sm',
+                resolve: {
+                    apkUrl: function () {
+                        return appVersion.apkUrl;
+                    }
+                }
+            });
+        }
     })
 
     .controller('AppVersionCreateCtrl', function ($scope, $modalInstance, AppVersionService) {
 
         $scope.appVersion = {
-                status:1
+            status: 1
         };
 
         $scope.title = '新增App';
@@ -108,6 +120,18 @@ angular.module('app.mobile')
                 $modalInstance.close();
             });
         };
-    });
+    })
+
+    .controller('QrCodeViewCtrl', function ($scope, $modalInstance, apkUrl) {
+
+        $scope.apkUrl = apkUrl;
+
+        $scope.title = 'Apk二维码';
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss();
+        };
+
+    })
 
 ;

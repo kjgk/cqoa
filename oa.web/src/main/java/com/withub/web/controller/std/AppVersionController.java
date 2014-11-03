@@ -30,6 +30,7 @@ public class AppVersionController extends BaseController {
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setTargetEntity(AppVersion.class);
         setPageInfoQueryCondition(request, queryInfo);
+        setDescOrderBy(queryInfo,"createTime");
 
         String version = request.getParameter("version");
         if (StringUtil.isNotEmpty(version)) {

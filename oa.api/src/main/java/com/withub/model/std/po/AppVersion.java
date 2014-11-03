@@ -16,7 +16,7 @@ public class AppVersion extends AbstractBaseEntity {
 
     private String description;
 
-    private String attachmentAddress;
+    private String apkUrl;
 
     // 状态：1代表启用，0代表未启用
     private Integer status;
@@ -47,12 +47,12 @@ public class AppVersion extends AbstractBaseEntity {
         this.description = description;
     }
 
-    public String getAttachmentAddress() {
-        return attachmentAddress;
+    public String getApkUrl() {
+        return apkUrl;
     }
 
-    public void setAttachmentAddress(String attachmentAddress) {
-        this.attachmentAddress = attachmentAddress;
+    public void setApkUrl(String apkUrl) {
+        this.apkUrl = apkUrl;
     }
 
     public Integer getStatus() {

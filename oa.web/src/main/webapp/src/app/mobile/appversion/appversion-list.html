@@ -18,9 +18,9 @@
                 <tr class="rlm_bga">
                     <td>平台</td>
                     <td>版本号</td>
-                    <td>附件地址</td>
+                    <td>ApkUrl</td>
                     <td>状态</td>
-                    <td>备注</td>
+                    <td>描述</td>
                     <td>上传人</td>
                     <td>上传时间</td>
                     <td style="width: 120px;">操作</td>
@@ -28,7 +28,7 @@
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{x.platform}}</td>
                     <td>{{x.version}}</td>
-                    <td>{{x.attachmentAddress}}</td>
+                    <td>{{x.apkUrl}}</td>
                     <td>{{x.status===1?"启用":"未启用"}}</td>
                     <td>{{x.description}}</td>
                     <td>{{"暂时不取"}}</td>
@@ -37,6 +37,8 @@
                         <button class="btn btn-xs btn-primary" ng-click="updateAppVersion(x)">编辑</button>
                         &nbsp;
                         <button class="btn btn-xs btn-danger" ng-click="deleteAppVersion(x)">删除</button>
+                        &nbsp;
+                        <button class="btn btn-xs btn-warning" ng-click="viewQrCode(x)">查看二维码</button>
                     </td>
                 </tr>
 
