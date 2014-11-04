@@ -4,6 +4,7 @@ import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.std.FileUploadInfo;
 import com.withub.model.std.po.AppVersion;
+import com.withub.model.system.po.User;
 import com.withub.service.EntityService;
 
 public interface AppVersionService extends EntityService {
@@ -16,7 +17,10 @@ public interface AppVersionService extends EntityService {
 
     public void deleteAppVersion(String objectId) throws Exception;
 
-    public AppVersion getEnabledAppVersion() throws Exception;
+    public void enableAppVersion(String objectId, User currentUser) throws Exception;
 
+    public void disableAppVersion(String objectId, User currentUser) throws Exception;
+
+    public AppVersion getEnabledAppVersion() throws Exception;
 
 }

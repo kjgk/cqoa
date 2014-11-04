@@ -31,6 +31,12 @@ angular.module('app.mobile')
             },
             remove: function (objectId) {
                 return api.doDELETE(objectId);
+            },
+            enable: function (objectId) {
+                return Restangular.one('std/appVersion/enable', objectId).post();
+            },
+            disable: function (objectId) {
+                return Restangular.one('std/appVersion/disable', objectId).post();
             }
         }
     })
@@ -49,45 +55,30 @@ angular.module('app.mobile')
                 toaster.pop('success', "信息", "保存成功！");
             });
         };
-        $scope.updateAppVersion = function (appVersion) {
-            var modalInstance = $modal.open({
-                templateUrl: 'app/mobile/appVersion/appVersion-form.html',
-                controller: 'AppVersionUpdateCtrl',
-                resolve: {
-                    objectId: function () {
-                        return appVersion.objectId;
-                    }
-                }
-            });
-            modalInstance.result.then(function (result) {
-                $scope.grid.refresh();
-                toaster.pop('success', "信息", "保存成功！");
-            });
-        };
         $scope.deleteAppVersion = function (appVersion) {
             AppVersionService.remove(appVersion.objectId).then(function () {
                 $scope.grid.refresh();
                 toaster.pop('success', "信息", "删除成功！");
             });
         };
-        $scope.viewQrCode = function (appVersion) {
-            var modalInstance = $modal.open({
-                templateUrl: 'app/mobile/appVersion/qrcode-view.html',
-                controller: 'QrCodeViewCtrl',
-                size: 'sm',
-                resolve: {
-                    apkUrl: function () {
-                        return appVersion.apkUrl;
-                    }
-                }
+        $scope.enableAppVersion = function (appVersion) {
+            AppVersionService.enable(appVersion.objectId).then(function () {
+                $scope.grid.refresh();
+                toaster.pop('success', "信息", "启用成功！");
             });
-        }
+        };
+        $scope.disableAppVersion = function (appVersion) {
+            AppVersionService.disable(appVersion.objectId).then(function () {
+                $scope.grid.refresh();
+                toaster.pop('success', "信息", "停用成功！");
+            });
+        };
     })
 
     .controller('AppVersionCreateCtrl', function ($scope, $modalInstance, FileUploader, AppVersionService) {
 
         $scope.appVersion = {
-            status: 1
+            status: 0
         };
 
         $scope.title = '新增App';
@@ -99,7 +90,7 @@ angular.module('app.mobile')
             autoUpload: true
         });
 
-        uploader.onProgressItem = function(fileItem, progress) {
+        uploader.onProgressItem = function (fileItem, progress) {
             uploader.progress = progress;
         };
 
@@ -137,7 +128,7 @@ angular.module('app.mobile')
             autoUpload: true
         });
 
-        uploader.onProgressItem = function(fileItem, progress) {
+        uploader.onProgressItem = function (fileItem, progress) {
             uploader.progress = progress;
         };
 
@@ -158,18 +149,6 @@ angular.module('app.mobile')
                 $modalInstance.close();
             });
         };
-    })
-
-    .controller('QrCodeViewCtrl', function ($scope, $modalInstance, apkUrl) {
-
-        $scope.apkUrl = apkUrl;
-
-        $scope.title = '二维码扫描';
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss();
-        };
-
     })
 
 ;
