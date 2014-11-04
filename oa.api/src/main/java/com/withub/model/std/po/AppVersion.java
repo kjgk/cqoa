@@ -1,7 +1,10 @@
 package com.withub.model.std.po;
 
 import com.withub.model.entity.AbstractBaseEntity;
+import com.withub.model.std.FileUploadInfo;
+
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @javax.persistence.Entity
 @Table(name = "STD_APPVERSION")
@@ -20,6 +23,9 @@ public class AppVersion extends AbstractBaseEntity {
 
     // 状态：1代表启用，0代表未启用
     private Integer status;
+
+    @Transient
+    private FileUploadInfo fileUploadInfo;
 
     //================================ 属性方法 ==========================================================
 
@@ -63,4 +69,11 @@ public class AppVersion extends AbstractBaseEntity {
         this.status = status;
     }
 
+    public FileUploadInfo getFileUploadInfo() {
+        return fileUploadInfo;
+    }
+
+    public void setFileUploadInfo(FileUploadInfo fileUploadInfo) {
+        this.fileUploadInfo = fileUploadInfo;
+    }
 }

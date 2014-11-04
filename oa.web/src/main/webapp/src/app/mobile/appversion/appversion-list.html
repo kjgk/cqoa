@@ -1,4 +1,4 @@
-<div class="right">
+<div class="right_">
     <div>
         <div class="rn_c">
             <div class="ywtj"><p>App版本管理</p>
@@ -18,27 +18,27 @@
                 <tr class="rlm_bga">
                     <td>平台</td>
                     <td>版本号</td>
-                    <td>ApkUrl</td>
+                    <td>安装文件</td>
                     <td>状态</td>
                     <td>描述</td>
                     <td>上传人</td>
                     <td>上传时间</td>
-                    <td style="width: 120px;">操作</td>
+                    <td style="width: 180px;">操作</td>
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{x.platform}}</td>
                     <td>{{x.version}}</td>
-                    <td>{{x.apkUrl}}</td>
+                    <td>{{}}</td>
                     <td>{{x.status===1?"启用":"未启用"}}</td>
                     <td>{{x.description}}</td>
-                    <td>{{"暂时不取"}}</td>
+                    <td>{{x.creatorInfo.name}}</td>
                     <td>{{x.createTime|$date:DateFormat.MINUTE }}</td>
                     <td>
                         <button class="btn btn-xs btn-primary" ng-click="updateAppVersion(x)">编辑</button>
                         &nbsp;
-                        <button class="btn btn-xs btn-danger" ng-click="deleteAppVersion(x)">删除</button>
-                        &nbsp;
                         <button class="btn btn-xs btn-warning" ng-click="viewQrCode(x)">二维码扫描</button>
+                        &nbsp;
+                        <button class="btn btn-xs btn-danger" ng-click="deleteAppVersion(x)">删除</button>
                     </td>
                 </tr>
 

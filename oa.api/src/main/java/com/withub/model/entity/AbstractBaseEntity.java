@@ -8,6 +8,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @MappedSuperclass
 public abstract class AbstractBaseEntity extends AbstractEntity {
@@ -106,5 +108,15 @@ public abstract class AbstractBaseEntity extends AbstractEntity {
     public void setCurrentUser(User currentUser) {
 
         this.currentUser = currentUser;
+    }
+
+    public Map getCreatorInfo() {
+
+        Map data = new HashMap();
+        if (getCreator() != null) {
+            data.put("objectId", getCreator().getObjectId());
+            data.put("name", getCreator().getName());
+        }
+        return data;
     }
 }

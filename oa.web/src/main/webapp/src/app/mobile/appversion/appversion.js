@@ -11,11 +11,11 @@ angular.module('app.mobile')
     })
 
     .factory('AppVersionService', function ($http, Restangular) {
-        var api = Restangular.all('oa/appVersion');
+        var api = Restangular.all('std/appVersion');
         return {
             query: function (params) {
                 return $http({
-                    url: PageContext.path + '/oa/appVersion',
+                    url: PageContext.path + '/std/appVersion',
                     method: 'GET',
                     params: params
                 });
@@ -74,7 +74,7 @@ angular.module('app.mobile')
             var modalInstance = $modal.open({
                 templateUrl: 'app/mobile/appVersion/qrcode-view.html',
                 controller: 'QrCodeViewCtrl',
-                size:'sm',
+                size: 'sm',
                 resolve: {
                     apkUrl: function () {
                         return appVersion.apkUrl;
@@ -84,13 +84,32 @@ angular.module('app.mobile')
         }
     })
 
-    .controller('AppVersionCreateCtrl', function ($scope, $modalInstance, AppVersionService) {
+    .controller('AppVersionCreateCtrl', function ($scope, $modalInstance, FileUploader, AppVersionService) {
 
         $scope.appVersion = {
             status: 1
         };
 
         $scope.title = '新增App';
+
+        var uploader = $scope.uploader = new FileUploader({
+            url: PageContext.path + '/std/swf/upload',
+            alias: 'attachment',
+            removeAfterUpload: true,
+            autoUpload: true
+        });
+
+        uploader.onProgressItem = function(fileItem, progress) {
+            uploader.progress = progress;
+        };
+
+        uploader.onSuccessItem = function (fileItem, response, status, headers) {
+            $scope.appVersion.apkUrl = ' ';
+            $scope.appVersion.fileUploadInfo = {
+                fileName: response.fileName,
+                tempFileName: response.tempFileName
+            };
+        };
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
@@ -103,13 +122,32 @@ angular.module('app.mobile')
         };
     })
 
-    .controller('AppVersionUpdateCtrl', function ($scope, $modalInstance, AppVersionService, objectId) {
+    .controller('AppVersionUpdateCtrl', function ($scope, $modalInstance, FileUploader, AppVersionService, objectId) {
 
         $scope.promise = AppVersionService.get(objectId);
 
         $scope.appVersion = $scope.promise.$object;
 
         $scope.title = '修改App';
+
+        var uploader = $scope.uploader = new FileUploader({
+            url: PageContext.path + '/std/swf/upload',
+            alias: 'attachment',
+            removeAfterUpload: true,
+            autoUpload: true
+        });
+
+        uploader.onProgressItem = function(fileItem, progress) {
+            uploader.progress = progress;
+        };
+
+        uploader.onSuccessItem = function (fileItem, response, status, headers) {
+            $scope.appVersion.apkUrl = ' ';
+            $scope.appVersion.fileUploadInfo = {
+                fileName: response.fileName,
+                tempFileName: response.tempFileName
+            };
+        };
 
         $scope.cancel = function () {
             $modalInstance.dismiss();

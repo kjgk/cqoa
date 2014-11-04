@@ -2,6 +2,7 @@ package com.withub.service.std;
 
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
+import com.withub.model.std.FileUploadInfo;
 import com.withub.model.std.po.AppVersion;
 import com.withub.service.EntityService;
 

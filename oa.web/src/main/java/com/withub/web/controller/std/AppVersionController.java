@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
-@RequestMapping(value = "/oa")
+@RequestMapping(value = "/std")
 public class AppVersionController extends BaseController {
 
     @Autowired

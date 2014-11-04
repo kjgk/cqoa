@@ -24,12 +24,14 @@
 
 
         <div class="form-group">
-            <label class="col-sm-2 control-label">ApkUrl</label>
+            <label class="col-sm-2 control-label">安装文件</label>
 
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="apkUrl"
-                       ng-model="appVersion.apkUrl"
-                       validator="required">
+            <div class="col-sm-10" ng-show="!uploader.isUploading" >
+                <input type="file" class="form-control" ng-model="appVersion.apkUrl" name="apkUrl"
+                       nv-file-select uploader="uploader" validator="required"/>
+            </div>
+            <div class="col-sm-10" ng-show="uploader.isUploading" >
+                <progressbar class="progress-striped progress-lg active" value="uploader.progress" type="success"><b>{{uploader.progress}}%</b></progressbar>
             </div>
         </div>
 

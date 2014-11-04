@@ -12,6 +12,7 @@
         <intercept-url pattern="/images/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/scripts/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/services/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/std/file/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/security/captcha" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/securityServlet/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/security/login.page" access="IS_AUTHENTICATED_ANONYMOUSLY"/>

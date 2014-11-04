@@ -840,3 +840,12 @@ section {
 .cg-busy-default-wrapper {
   top: 32% !important;
 }
+
+.progress-lg {
+  height: 32px;
+
+  .progress-bar {
+    font-size: 16px;
+    line-height: 32px
+  }
+}
