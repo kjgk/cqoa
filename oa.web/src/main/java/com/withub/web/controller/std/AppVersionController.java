@@ -7,9 +7,8 @@ import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.std.po.AppVersion;
 import com.withub.model.std.po.FileInfo;
 import com.withub.service.std.AppVersionService;
-import com.withub.spring.SpringContextUtil;
-import com.withub.util.SpringSecurityUtil;
 import com.withub.service.std.FileService;
+import com.withub.util.SpringSecurityUtil;
 import com.withub.web.common.BaseController;
 import com.withub.web.util.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,13 +84,13 @@ public class AppVersionController extends BaseController {
     @RequestMapping(value = "/appVersion/enable/{objectId}", method = RequestMethod.POST)
     public void enableAppVersion(@PathVariable("objectId") String objectId) throws Exception {
 
-        appVersionService.enableAppVersion(objectId,SpringSecurityUtil.getCurrentUser());
+        appVersionService.enableAppVersion(objectId, SpringSecurityUtil.getCurrentUser());
     }
 
     @RequestMapping(value = "/appVersion/disable/{objectId}", method = RequestMethod.POST)
     public void disableAppVersion(@PathVariable("objectId") String objectId) throws Exception {
 
-        appVersionService.disableAppVersion(objectId,SpringSecurityUtil.getCurrentUser());
+        appVersionService.disableAppVersion(objectId, SpringSecurityUtil.getCurrentUser());
     }
 
     @RequestMapping(value = "/appVersion/current", method = RequestMethod.GET)

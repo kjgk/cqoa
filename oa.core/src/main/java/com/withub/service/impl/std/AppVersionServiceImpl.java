@@ -10,6 +10,7 @@ import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.std.po.AppVersion;
 import com.withub.model.std.po.FileInfo;
+import com.withub.model.system.po.User;
 import com.withub.service.EntityServiceImpl;
 import com.withub.service.std.AppVersionService;
 import com.withub.service.std.FileService;
@@ -69,6 +70,24 @@ public class AppVersionServiceImpl extends EntityServiceImpl implements AppVersi
         logicDelete(AppVersion.class, objectId);
     }
 
+
+    public void enableAppVersion(String objectId, User currentUser) throws Exception {
+
+        executeHql("update " + AppVersion.class.getName() + " a set a.status = 0 where 1=1");
+
+        AppVersion appVersion = getAppVersion(objectId);
+        appVersion.setCurrentUser(currentUser);
+        appVersion.setStatus(1);
+        save(appVersion);
+    }
+
+    public void disableAppVersion(String objectId, User currentUser) throws Exception {
+
+        AppVersion appVersion = getAppVersion(objectId);
+        appVersion.setCurrentUser(currentUser);
+        appVersion.setStatus(0);
+        save(appVersion);
+    }
 
     public AppVersion getEnabledAppVersion() throws Exception {
 
