@@ -5,6 +5,8 @@ import com.withub.model.entity.query.ExpressionOperation;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.std.po.AppVersion;
 import com.withub.service.std.AppVersionService;
+import com.withub.spring.SpringContextUtil;
+import com.withub.util.SpringSecurityUtil;
 import com.withub.web.common.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.*;
 
 
 @Controller
@@ -30,7 +33,7 @@ public class AppVersionController extends BaseController {
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setTargetEntity(AppVersion.class);
         setPageInfoQueryCondition(request, queryInfo);
-        setDescOrderBy(queryInfo,"createTime");
+        setDescOrderBy(queryInfo, "createTime");
 
         String version = request.getParameter("version");
         if (StringUtil.isNotEmpty(version)) {
@@ -64,6 +67,18 @@ public class AppVersionController extends BaseController {
     public void deleteAppVersion(@PathVariable("objectId") String objectId) throws Exception {
 
         appVersionService.deleteAppVersion(objectId);
+    }
+
+    @RequestMapping(value = "/appVersion/enable/{objectId}", method = RequestMethod.POST)
+    public void enableAppVersion(@PathVariable("objectId") String objectId) throws Exception {
+
+        appVersionService.enableAppVersion(objectId,SpringSecurityUtil.getCurrentUser());
+    }
+
+    @RequestMapping(value = "/appVersion/disable/{objectId}", method = RequestMethod.POST)
+    public void disableAppVersion(@PathVariable("objectId") String objectId) throws Exception {
+
+        appVersionService.disableAppVersion(objectId,SpringSecurityUtil.getCurrentUser());
     }
 
 }

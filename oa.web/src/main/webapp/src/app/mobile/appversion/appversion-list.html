@@ -18,7 +18,6 @@
                 <tr class="rlm_bga">
                     <td>平台</td>
                     <td>版本号</td>
-                    <td>安装文件</td>
                     <td>状态</td>
                     <td>描述</td>
                     <td>上传人</td>
@@ -28,15 +27,18 @@
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{x.platform}}</td>
                     <td>{{x.version}}</td>
-                    <td>{{}}</td>
                     <td>{{x.status===1?"启用":"未启用"}}</td>
                     <td>{{x.description}}</td>
                     <td>{{x.creatorInfo.name}}</td>
                     <td>{{x.createTime|$date:DateFormat.MINUTE }}</td>
                     <td>
-                        <button class="btn btn-xs btn-primary" ng-click="updateAppVersion(x)">编辑</button>
+                        <button ng-show="x.status==0"
+                                class="btn btn-xs btn-success" ng-click="enableAppVersion(x)">启用
+                        </button>
                         &nbsp;
-                        <button class="btn btn-xs btn-warning" ng-click="viewQrCode(x)">二维码扫描</button>
+                        <button ng-show="x.status==1"
+                                class="btn btn-xs btn-primary" ng-click="disableAppVersion(x)">停用
+                        </button>
                         &nbsp;
                         <button class="btn btn-xs btn-danger" ng-click="deleteAppVersion(x)">删除</button>
                     </td>
