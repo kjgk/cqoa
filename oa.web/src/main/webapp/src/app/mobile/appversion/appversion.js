@@ -78,7 +78,7 @@ angular.module('app.mobile')
     .controller('AppVersionCreateCtrl', function ($scope, $modalInstance, FileUploader, AppVersionService) {
 
         $scope.appVersion = {
-            status: 1
+            status: 0
         };
 
         $scope.title = '新增App';
