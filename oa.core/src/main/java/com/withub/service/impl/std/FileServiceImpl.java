@@ -176,7 +176,7 @@ public class FileServiceImpl extends EntityServiceImpl implements FileService {
     public List<FileInfo> listFileInfo(String relatedObjectId) throws Exception {
 
         String hql = "select o from " + FileInfo.class.getName() + " o"
-                + " where o.objectStatus=1 and o.relatedObjectId=? order by createTime";
+                + " where o.objectStatus=1 and o.relatedObjectId=? order by orderNo";
         List list = listByHql(hql, relatedObjectId);
 
         return (List<FileInfo>) list;

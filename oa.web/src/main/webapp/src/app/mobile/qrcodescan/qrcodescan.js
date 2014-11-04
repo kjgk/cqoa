@@ -4,9 +4,15 @@ angular.module('app.mobile')
         $stateProvider
             .state('mobile.qrcodescan', {
                 url: '/qrcodescan',
-                templateUrl: 'app/mobile/qrcodescan/qrcodescan-list.html',
-                controller: function(){
+                templateUrl: 'app/mobile/qrcodescan/qrcodescan-index.html',
+                controller: function ($scope, $http) {
 
+                    $http({
+                        url: PageContext.path + '/std/appVersion/current',
+                        method: 'GET'
+                    }).success(function(response){
+                        $scope.fileList = response.data.fileList;
+                    })
                 }
             })
         ;

@@ -46,13 +46,11 @@ public class AppVersionServiceImpl extends EntityServiceImpl implements AppVersi
 
         fileService.save(appVersion, appVersion.getFileUploadInfo());
 
-
         FileInfo fileInfo = fileService.getFileInfoByRelatedObjectId(appVersion.getObjectId());
 
-
-        String url = "http://192.168.7.13:3000/oa/std/file/download?fileInfoId=" + fileInfo.getObjectId();
-        int width = 100;
-        int height = 100;
+        String url = ConfigUtil.getSystemConfigInfo().getUrl() + "/std/appVersion/download/" + fileInfo.getObjectId() + "/" + fileInfo.getName();
+        int width = 320;
+        int height = 320;
         String format = "png";
         Hashtable hints = new Hashtable();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
@@ -71,4 +69,9 @@ public class AppVersionServiceImpl extends EntityServiceImpl implements AppVersi
         logicDelete(AppVersion.class, objectId);
     }
 
+
+    public AppVersion getEnabledAppVersion() throws Exception {
+
+        return (AppVersion) getByHql("from " + AppVersion.class.getName() + " where status = 1 and objectStatus = 1");
+    }
 }

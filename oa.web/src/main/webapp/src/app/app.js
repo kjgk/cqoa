@@ -86,13 +86,14 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
         });
 
         // 高度自适应
-        $rootScope.windowWidth = $window.innerWidth;
-        $rootScope.windowHeight = $window.innerHeight;
+        $rootScope.windowWidth = document.documentElement.clientWidth;
+        $rootScope.windowHeight = document.documentElement.clientHeight;
         angular.element($window).bind('resize', function () {
-            $rootScope.windowWidth = $window.innerWidth;
-            $rootScope.windowHeight = $window.innerHeight;
+            $rootScope.windowWidth = document.documentElement.clientWidth;
+            $rootScope.windowHeight = document.documentElement.clientHeight;
             $rootScope.$apply('windowWidth');
             $rootScope.$apply('windowHeight');
+
         });
     })
 ;

@@ -1,6 +1,7 @@
 package com.withub.model.std.po;
 
 import com.withub.model.entity.AbstractBaseEntity;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -14,6 +15,7 @@ public class FileInfo extends AbstractBaseEntity {
 
     @OneToOne(targetEntity = com.withub.model.system.po.Entity.class)
     @JoinColumn(name = "EntityId")
+    @JsonIgnore
     private com.withub.model.system.po.Entity entity;
 
     private String relatedObjectId;

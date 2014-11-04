@@ -16,4 +16,7 @@ public interface AppVersionService extends EntityService {
 
     public void deleteAppVersion(String objectId) throws Exception;
 
+    public AppVersion getEnabledAppVersion() throws Exception;
+
+
 }
