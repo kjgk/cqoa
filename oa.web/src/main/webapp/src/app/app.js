@@ -33,6 +33,10 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
                     return request || $q.when(request);
                 },
                 'response': function (response) {
+                    if (response.data === 'SessionInvalid') {
+                        window.location.href = PageContext.path;
+                        return $q.reject(response);
+                    }
                     if (response.data && response.data.success === false) {
                         toaster.pop('error', "错误", response.data.message);
                         return $q.reject(response);
@@ -72,6 +76,7 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
             url: PageContext.path + '/security/getCurrentUserInfo',
             method: 'GET'
         }).then(function (response) {
+            console.log(response)
             var userInfo = response.data.userInfo;
             $rootScope.PageContext.currentUser = {
                 objectId: userInfo.objectId,
