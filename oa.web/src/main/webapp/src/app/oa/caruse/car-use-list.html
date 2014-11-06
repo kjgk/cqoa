@@ -4,9 +4,19 @@
             <div class="ywtj"><p>用车申请</p>
 
                 <div class="tool-bar">
-                    <input type="text" class="search" placeholder="请选择用车时间"
-                           ng-model='grid.queryInfo.date'
-                           bs-datepicker>
+
+                    <div class="dropdown" style="width: 180px; float:left;">
+                        <a class="dropdown-toggle" id="query-date" role="button" data-toggle="dropdown">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="请选择用车时间" date-time-input="YYYY-MM-DD" data-ng-model="grid.queryInfo.date">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker data-ng-model="grid.queryInfo.date" data-datetimepicker-config="{ dropdownSelector: '#query-date', minView: 'day' }"/>
+                        </ul>
+                    </div>
+
                     <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i
                             class="fa fa-search fa-fw"></i> 查询
                     </button>

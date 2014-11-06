@@ -812,7 +812,11 @@ section {
   border-radius: 500px;
 }
 
-
+.daterange-split {
+  position: absolute !important;
+  left: -6px;
+  top: 8px;
+}
 
 #toast-container > div {
   opacity: 0.9;
