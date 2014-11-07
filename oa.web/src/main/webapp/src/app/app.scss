@@ -633,13 +633,7 @@ img {
     position: absolute;
     right: 0;
     white-space: nowrap;
-    label {
-      font-size: 14px;
-      font-weight: 100;
-    }
-    label:after {
-      content: ':';
-    }
+
     .btn {
       margin: -1px 0 0 0;
     }
@@ -657,6 +651,7 @@ img {
       border: 1px solid #719EC4;
     }
 
+
     input[bs-datepicker] {
       width: 132px;
       background-image: linear-gradient(#fff, #f5f5f5);
@@ -664,6 +659,30 @@ img {
     }
     input[bs-datepicker]:hover {
       background-image: linear-gradient(#fff, #e9e9e9);
+    }
+
+    .form-group {
+      label  {
+        font-size: 14px;
+        font-weight: 100;
+        margin-left: 6px;
+      }
+      label:after {
+        content: ':';
+      }
+      input {
+        width: 140px;
+      }
+      .dropdown {
+        display: inline-block;
+        input[date-time-input] {
+          width: 130px;
+        }
+      }
+    }
+
+    .btn {
+      margin-left: 2px;
     }
 
   }
@@ -726,7 +745,6 @@ section {
 .form-horizontal .form-control-static {
   padding-bottom: 0;
 }
-
 
 .c-checkbox, .c-radio {
   margin-right: 4px;

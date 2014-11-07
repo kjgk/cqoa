@@ -76,7 +76,6 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
             url: PageContext.path + '/security/getCurrentUserInfo',
             method: 'GET'
         }).then(function (response) {
-            console.log(response)
             var userInfo = response.data.userInfo;
             $rootScope.PageContext.currentUser = {
                 objectId: userInfo.objectId,
@@ -98,7 +97,6 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
             $rootScope.windowHeight = document.documentElement.clientHeight;
             $rootScope.$apply('windowWidth');
             $rootScope.$apply('windowHeight');
-
         });
     })
 ;

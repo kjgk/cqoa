@@ -4,26 +4,27 @@
             <div class="ywtj"><p>用车申请</p>
 
                 <div class="tool-bar">
-
-                    <div class="dropdown" style="width: 180px; float:left;">
-                        <a class="dropdown-toggle" id="query-date" role="button" data-toggle="dropdown">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="请选择用车时间" date-time-input="YYYY-MM-DD" data-ng-model="grid.queryInfo.date">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" id="query-date" role="button" data-toggle="dropdown">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-sm" placeholder="请选择用车时间" date-time-input="YYYY-MM-DD"
+                                               data-ng-model="grid.queryInfo.date">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="grid.queryInfo.date"
+                                                    data-datetimepicker-config="{ dropdownSelector: '#query-date', minView: 'day' }"/>
+                                </ul>
                             </div>
-                        </a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <datetimepicker data-ng-model="grid.queryInfo.date" data-datetimepicker-config="{ dropdownSelector: '#query-date', minView: 'day' }"/>
-                        </ul>
-                    </div>
+                        </div>
 
-                    <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i
-                            class="fa fa-search fa-fw"></i> 查询
-                    </button>
-                    <button class="btn btn-primary btn-sm" ng-click="createCarUse()"><i
-                            class="fa fa-plus fa-fw"></i> 添加
-                    </button>
-                   </div>
+                        <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i class="fa fa-search fa-fw"></i> 查询</button>
+                        <button class="btn btn-primary btn-sm" ng-click="createCarUse()"><i class="fa fa-plus fa-fw"></i> 添加</button>
+                    </form>
+                </div>
                 <div class="clear"></div>
             </div>
             <table simple-table="grid" class="rbga" border="1">
@@ -57,7 +58,7 @@
                         <button class="btn btn-xs btn-success" ng-show="x.status.codeTag=='Archive'" ng-click="allotCarUse(x)">分配车辆</button>
                         &nbsp;
                         <button class="btn btn-xs btn-danger" ng-click="deleteCarUse(x)">删除</button>
-                    </td    >
+                    </td>
                 </tr>
 
             </table>

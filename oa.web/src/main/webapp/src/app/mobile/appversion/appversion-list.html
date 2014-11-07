@@ -4,13 +4,14 @@
             <div class="ywtj"><p>App版本管理</p>
 
                 <div class="tool-bar">
-                    <input type="text" class="search" placeholder="请输入版本号" ng-model="grid.queryInfo.version">
-                    <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i
-                            class="fa fa-search fa-fw"></i> 查询
-                    </button>
-                    <button class="btn btn-primary btn-sm" ng-click="createAppVersion()"><i
-                            class="fa fa-plus fa-fw"></i> 添加
-                    </button>
+                    <form class="form-inline" role="form">
+                        <div class="form-group form-group-sm">
+                            <input type="text" class="form-control input-sm" placeholder="请输入版本号"
+                                   ng-model='grid.queryInfo.version'>
+                        </div>
+                        <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i class="fa fa-search fa-fw"></i> 查询</button>
+                        <button class="btn btn-primary btn-sm" ng-click="createAppVersion()"><i class="fa fa-plus fa-fw"></i> 添加</button>
+                    </form>
                 </div>
                 <div class="clear"></div>
             </div>
