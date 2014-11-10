@@ -4,7 +4,7 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
 
     .value('PageContext', PageContext)
 
-    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $modalProvider, cfpLoadingBarProvider, RestangularProvider, $datepickerProvider, $timepickerProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $modalProvider, cfpLoadingBarProvider, RestangularProvider) {
 
         $modalProvider.options.backdrop = 'static';
 
@@ -50,16 +50,6 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
                 }
             };
         });
-
-        angular.extend($datepickerProvider.defaults, {
-            dateFormat: 'yyyy年M月d日',
-            autoclose: true
-        });
-
-        angular.extend($timepickerProvider.defaults, {
-            timeFormat: 'HH:mm'
-        });
-
     })
 
     .value('cgBusyDefaults', {
