@@ -15,16 +15,11 @@
             <label class="col-sm-2 control-label">请假时间</label>
 
             <div class="col-sm-5">
-                <input type="text" class="form-control"
-                       ng-model='leave.beginDate' name="beginDate"
-                       data-max-date="{{leave.endDate}}"
-                       bs-datepicker="">
+                    <input date-picker ng-model="leave.beginDate" placeholder="请选择开始时间" ng-validator="required">
             </div>
             <div class="col-sm-5">
-                <input type="text" class="form-control"
-                       ng-model='leave.endDate' name="endDate"
-                       data-min-date="{{leave.beginDate}}"
-                       bs-datepicker="">
+                <label class="daterange-split">至</label>
+                <input date-picker ng-model="leave.endDate" placeholder="请选择结束时间" ng-validator="required">
             </div>
         </div>
         <div class="form-group">

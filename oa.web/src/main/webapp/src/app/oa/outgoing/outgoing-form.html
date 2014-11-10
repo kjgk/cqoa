@@ -16,16 +16,11 @@
             <label class="col-sm-2 control-label">出差时间</label>
 
             <div class="col-sm-5">
-                <input type="text" class="form-control"
-                       ng-model='outgoing.beginDate' name="beginDate"
-                       data-max-date="{{outgoing.endDate}}"
-                       bs-datepicker="">
+                <input date-picker ng-model="outgoing.beginDate" placeholder="请选择开始时间" ng-validator="required">
             </div>
             <div class="col-sm-5">
-                <input type="text" class="form-control"
-                       ng-model='outgoing.endDate' name="endDate"
-                       data-min-date="{{outgoing.beginDate}}"
-                       bs-datepicker="">
+                <label class="daterange-split">至</label>
+                <input date-picker ng-model="outgoing.endDate" placeholder="请选择结束时间" ng-validator="required">
             </div>
         </div>
         <div class="form-group">
