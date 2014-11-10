@@ -2,24 +2,14 @@
     <div>
         <div class="rn_c">
             <div class="ywtj"><p>培训申请</p>
+
                 <div class="tool-bar">
                     <form class="form-inline" role="form">
                         <div class="form-group">
-                            <div class="dropdown">
-                                <a class="dropdown-toggle" id="query-date" role="button" data-toggle="dropdown">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control input-sm" placeholder="请选择培训时间" date-time-input="YYYY-MM-DD"
-                                               data-ng-model="grid.queryInfo.date">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    </div>
-                                </a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker data-ng-model="grid.queryInfo.date"
-                                                    data-datetimepicker-config="{ dropdownSelector: '#query-date', minView: 'day' }"/>
-                                </ul>
+                            <div class="form-group">
+                                <input date-picker ng-model="grid.queryInfo.date" placeholder="请选择培训时间">
                             </div>
                         </div>
-
                         <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i class="fa fa-search fa-fw"></i> 查询</button>
                         <button class="btn btn-primary btn-sm" ng-click="createTraining()"><i class="fa fa-plus fa-fw"></i> 添加</button>
                     </form>

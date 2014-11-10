@@ -7,19 +7,7 @@
                     <form class="form-inline" role="form">
                         <div class="form-group">
                             <label>日期</label>
-                            <div class="dropdown">
-                                <a class="dropdown-toggle" id="query-date" role="button" data-toggle="dropdown">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control input-sm" placeholder="请选择日期" date-time-input="YYYY-MM-DD"
-                                               data-ng-model="grid.queryInfo.date">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    </div>
-                                </a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker data-ng-model="grid.queryInfo.date"
-                                                    data-datetimepicker-config="{ dropdownSelector: '#query-date', minView: 'day' }"/>
-                                </ul>
-                            </div>
+                            <input date-picker ng-model="grid.queryInfo.date" placeholder="请选择日期">
                         </div>
                         <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i class="fa fa-search fa-fw"></i> 查询</button>
                     </form>

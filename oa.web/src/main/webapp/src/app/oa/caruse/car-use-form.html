@@ -26,32 +26,11 @@
             <label class="col-sm-2 control-label">用车时间</label>
 
             <div class="col-sm-5">
-                <div class="dropdown">
-                    <a class="dropdown-toggle" id="beginTime" role="button" data-toggle="dropdown">
-                        <div class="input-group">
-                            <input type="text" class="form-control" date-time-input="YYYY-MM-DD HH:mm" data-ng-model="carUse.beginTime" validator="required">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <datetimepicker data-ng-model="carUse.beginTime" data-datetimepicker-config="{ dropdownSelector: '#beginTime' }"/>
-                    </ul>
-                </div>
+                <input date-picker ng-model="carUse.beginTime" format="YYYY-MM-DD HH:mm" placeholder="请选择开始时间" ng-validator="required">
             </div>
-
             <div class="col-sm-5">
                 <label class="daterange-split">至</label>
-                <div class="dropdown">
-                    <a class="dropdown-toggle" id="endTime" role="button" data-toggle="dropdown">
-                        <div class="input-group">
-                            <input type="text" class="form-control" date-time-input="YYYY-MM-DD HH:mm" data-ng-model="carUse.endTime" validator="required">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <datetimepicker data-ng-model="carUse.endTime" data-datetimepicker-config="{ dropdownSelector: '#endTime' }"/>
-                    </ul>
-                </div>
+                <input date-picker ng-model="carUse.endTime" format="YYYY-MM-DD HH:mm" placeholder="请选择结束时间" ng-validator="required">
             </div>
         </div>
 

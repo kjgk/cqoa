@@ -101,8 +101,8 @@ angular.module('app.oa')
     .controller('CarUseCreateCtrl', function ($scope, $modalInstance, CarUseService) {
 
         $scope.carUse = {
-            beginTime: new Date(),
-            endTime: new Date(),
+//            beginTime: new Date(),
+//            endTime: new Date(),
             localCity: 0
         };
         $scope.title = '新增用车申请';
