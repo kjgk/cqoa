@@ -31,9 +31,7 @@
             <label class="col-sm-2 control-label">购买日期</label>
 
             <div class="col-sm-10">
-                <input type="text" class="form-control"
-                       ng-model='car.purchaseDate' name="purchaseDate"
-                       bs-datepicker="">
+                <input date-picker ng-model="car.purchaseDate" placeholder="请选择购买日期" ng-validator="required">
             </div>
         </div>
 
