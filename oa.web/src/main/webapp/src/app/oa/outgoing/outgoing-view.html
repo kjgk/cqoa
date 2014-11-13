@@ -1,73 +1,74 @@
 <fieldset ng-controller="OutgoingViewCtrl">
-        <div class="form-group">
-            <label class="col-sm-2 control-label">出差人</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{outgoing.proposer.name}}</p>
-            </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">申请人</label>
+
+        <div class="col-sm-4">
+            <p class="form-control-static">{{outgoing.proposer.name}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">申请部门</label>
+        <label class="col-sm-2 control-label">申请部门</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{outgoing.proposer.organization.name}}</p>
-            </div>
+        <div class="col-sm-4">
+            <p class="form-control-static">{{outgoing.proposer.organization.name}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">申请时间</label>
+    </div>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{outgoing.createTime|$date:DateFormat.MINUTE}}</p>
-            </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">出差时间</label>
+
+        <div class="col-sm-10">
+            <p class="form-control-static">{{outgoing.endDate|$date}} 至 {{outgoing.endDate|$date}}</p>
         </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">本市出差</label>
 
-        <div class="form-group">
-            <label class="col-sm-2 control-label">出差时间</label>
-
-            <div class="col-sm-10">
-                <p class="form-control-static">{{outgoing.endDate|$date}}  至  {{outgoing.endDate|$date}}</p>
-            </div>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{outgoing.localCity===1?"是":"否"}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">本市出差</label>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">出差事由</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{outgoing.localCity===1?"是":"否"}}</p>
-            </div>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{outgoing.description}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">出差事由</label>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">目的地</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{outgoing.description}}</p>
-            </div>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{outgoing.destination}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">目的地</label>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">路线</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{outgoing.destination}}</p>
-            </div>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{outgoing.driveRoute}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">路线</label>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">交通工具</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{outgoing.driveRoute}}</p>
-            </div>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{outgoing.transportation}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">交通工具</label>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">是否派车</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{outgoing.transportation}}</p>
-            </div>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{outgoing.requiredCar===1?"是":"否"}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">是否派车</label>
+    </div>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{outgoing.requiredCar===1?"是":"否"}}</p>
-            </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">申请时间</label>
+
+        <div class="col-sm-10">
+            <p class="form-control-static">{{outgoing.createTime|$date:DateFormat.MINUTE}}</p>
         </div>
+    </div>
 </fieldset>
