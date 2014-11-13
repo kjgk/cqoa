@@ -37,7 +37,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('DriverCtrl', function ($scope, $q, $modal, toaster, SimpleTable, DriverService) {
+    .controller('DriverCtrl', function ($scope, $q, $modal, SimpleTable, DriverService) {
 
         $scope.grid = SimpleTable(DriverService.query);
 

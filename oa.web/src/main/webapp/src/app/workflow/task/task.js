@@ -62,7 +62,7 @@ angular.module('app.workflow')
         }
     })
 
-    .controller('TaskPendingCtrl', function ($scope, $modal, toaster, SimpleTable, TaskService, InstanceService) {
+    .controller('TaskPendingCtrl', function ($scope, $modal, SimpleTable, TaskService, InstanceService) {
 
         $scope.grid = SimpleTable(TaskService.query, {params: {statusTag: 'Running'}});
 
@@ -177,7 +177,7 @@ angular.module('app.workflow')
         }
     })
 
-    .controller('InstanceTransmitCtrl', function ($scope, $modalInstance, toaster, TaskService, taskId) {
+    .controller('InstanceTransmitCtrl', function ($scope, $modalInstance, TaskService, taskId) {
 
         $scope.hander = {};
 
@@ -193,7 +193,7 @@ angular.module('app.workflow')
         };
     })
 
-    .controller('TaskHandledCtrl', function ($scope, $modal, toaster, SimpleTable, TaskService, InstanceService) {
+    .controller('TaskHandledCtrl', function ($scope, $modal, SimpleTable, TaskService, InstanceService) {
 
         $scope.grid = SimpleTable(TaskService.query, {params: {statusTag: 'Finish'}});
 

@@ -37,7 +37,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('OutgoingCtrl', function ($scope, $q, $modal, toaster, SimpleTable, OutgoingService,InstanceService) {
+    .controller('OutgoingCtrl', function ($scope, $q, $modal, SimpleTable, OutgoingService,InstanceService) {
 
         $scope.grid = SimpleTable(OutgoingService.query);
 

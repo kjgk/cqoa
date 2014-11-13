@@ -41,7 +41,7 @@ angular.module('app.mobile')
         }
     })
 
-    .controller('AppVersionCtrl', function ($scope, $q, $modal, toaster, SimpleTable, AppVersionService) {
+    .controller('AppVersionCtrl', function ($scope, $q, $modal, SimpleTable, AppVersionService) {
 
         $scope.grid = SimpleTable(AppVersionService.query);
 

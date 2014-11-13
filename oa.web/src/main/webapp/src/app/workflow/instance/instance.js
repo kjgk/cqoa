@@ -76,7 +76,7 @@ angular.module('app.workflow')
         }
     })
 
-    .controller('InstanceListCtrl', function ($scope, $q, $modal, toaster, SimpleTable, InstanceService) {
+    .controller('InstanceListCtrl', function ($scope, $q, $modal, SimpleTable, InstanceService) {
 
         $scope.grid = SimpleTable(InstanceService.queryCurrent);
 
@@ -85,7 +85,7 @@ angular.module('app.workflow')
         };
     })
 
-    .controller('InstanceAllCtrl', function ($scope, $q, $modal, toaster, SimpleTable, InstanceService) {
+    .controller('InstanceAllCtrl', function ($scope, $q, $modal, SimpleTable, InstanceService) {
 
         $scope.grid = SimpleTable(InstanceService.queryAll);
 

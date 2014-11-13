@@ -41,7 +41,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('CarUseCtrl', function ($scope, $q, $modal, toaster, SimpleTable, CarUseService, InstanceService) {
+    .controller('CarUseCtrl', function ($scope, $q, $modal, SimpleTable, CarUseService, InstanceService) {
 
         $scope.grid = SimpleTable(CarUseService.query);
 

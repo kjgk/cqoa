@@ -37,7 +37,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('LeaveCtrl', function ($scope, $q, $modal, toaster, SimpleTable, LeaveService, InstanceService) {
+    .controller('LeaveCtrl', function ($scope, $q, $modal, SimpleTable, LeaveService, InstanceService) {
 
         $scope.grid = SimpleTable(LeaveService.query);
 
