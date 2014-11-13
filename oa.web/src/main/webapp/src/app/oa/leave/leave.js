@@ -72,9 +72,12 @@ angular.module('app.oa')
             });
         };
         $scope.deleteLeave = function (leave) {
-            LeaveService.remove(leave.objectId).then(function () {
-                $scope.grid.refresh();
-                Toaster.success("删除成功！");
+
+            Dialog.confirmDelete().then(function () {
+                LeaveService.remove(leave.objectId).then(function () {
+                    $scope.grid.refresh();
+                    Toaster.success("删除成功！");
+                });
             });
         };
     })
@@ -109,7 +112,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            $scope.promise= LeaveService.update($scope.leave).then(function () {
+            $scope.promise = LeaveService.update($scope.leave).then(function () {
                 $modalInstance.close();
             });
         };

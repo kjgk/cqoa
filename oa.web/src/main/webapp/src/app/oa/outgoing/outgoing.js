@@ -37,7 +37,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('OutgoingCtrl', function ($scope, $q, $modal, SimpleTable, OutgoingService,InstanceService) {
+    .controller('OutgoingCtrl', function ($scope, $q, $modal, SimpleTable, OutgoingService, InstanceService) {
 
         $scope.grid = SimpleTable(OutgoingService.query);
 
@@ -83,9 +83,12 @@ angular.module('app.oa')
             });
         };
         $scope.deleteOutgoing = function (outgoing) {
-            OutgoingService.remove(outgoing.objectId).then(function () {
-                $scope.grid.refresh();
-                Toaster.success("删除成功！");
+
+            Dialog.confirmDelete().then(function () {
+                OutgoingService.remove(outgoing.objectId).then(function () {
+                    $scope.grid.refresh();
+                    Toaster.success("删除成功！");
+                });
             });
         };
     })
@@ -105,7 +108,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-           $scope.promise = OutgoingService.create($scope.outgoing).then(function () {
+            $scope.promise = OutgoingService.create($scope.outgoing).then(function () {
                 $modalInstance.close();
             });
         };
@@ -124,7 +127,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            $scope.promise =  OutgoingService.update($scope.outgoing).then(function () {
+            $scope.promise = OutgoingService.update($scope.outgoing).then(function () {
                 $modalInstance.close();
             });
         };

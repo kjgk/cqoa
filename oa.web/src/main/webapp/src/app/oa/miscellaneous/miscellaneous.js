@@ -72,9 +72,12 @@ angular.module('app.oa')
             });
         };
         $scope.deleteMiscellaneous = function (miscellaneous) {
-            MiscellaneousService.remove(miscellaneous.objectId).then(function () {
-                $scope.grid.refresh();
-                Toaster.success("删除成功！");
+
+            Dialog.confirmDelete().then(function () {
+                MiscellaneousService.remove(miscellaneous.objectId).then(function () {
+                    $scope.grid.refresh();
+                    Toaster.success("删除成功！");
+                });
             });
         };
 
@@ -91,7 +94,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-           $scope.promise = MiscellaneousService.create($scope.miscellaneous).then(function () {
+            $scope.promise = MiscellaneousService.create($scope.miscellaneous).then(function () {
                 $modalInstance.close();
             });
         };
@@ -110,7 +113,7 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            $scope.promise =  MiscellaneousService.update($scope.miscellaneous).then(function () {
+            $scope.promise = MiscellaneousService.update($scope.miscellaneous).then(function () {
                 $modalInstance.close();
             });
         };

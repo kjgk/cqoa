@@ -67,9 +67,11 @@ angular.module('app.oa')
             });
         };
         $scope.deleteCar = function (car) {
-            CarService.remove(car.objectId).then(function () {
-                $scope.grid.refresh();
-                Toaster.success("删除成功！");
+            Dialog.confirmDelete().then(function () {
+                CarService.remove(car.objectId).then(function () {
+                    $scope.grid.refresh();
+                    Toaster.success("删除成功！");
+                });
             });
         };
     })

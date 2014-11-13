@@ -72,9 +72,11 @@ angular.module('app.oa')
             });
         };
         $scope.deleteTraining = function (training) {
-            TrainingService.remove(training.objectId).then(function () {
-                $scope.grid.refresh();
-                Toaster.success("删除成功！");
+            Dialog.confirmDelete().then(function () {
+                TrainingService.remove(training.objectId).then(function () {
+                    $scope.grid.refresh();
+                    Toaster.success("删除成功！");
+                });
             });
         };
     })
