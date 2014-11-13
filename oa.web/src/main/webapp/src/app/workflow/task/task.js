@@ -147,10 +147,14 @@ angular.module('app.workflow')
                 toaster.pop('warning', "警告", "请选择审批人！");
                 return;
             }
+            if ((result == 'return' || result == 'reject') && _.isEmpty($scope.approveInfo.opinion)) {
+                toaster.pop('warning', "警告", "请输入审批意见！");
+                return;
+            }
             $scope.promise = TaskService.processTask(result, {
                 taskId: $scope.approveInfo.taskId,
                 opinion: $scope.approveInfo.opinion,
-                approvers: _.pluck($scope.approveInfo.approvers, 'objectId')
+                approvers: $scope.approveInfo.approvers
             }).then(function () {
                 $modalInstance.close();
                 toaster.pop('info', "信息", "审批成功！");

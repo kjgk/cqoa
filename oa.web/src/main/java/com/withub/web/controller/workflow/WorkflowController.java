@@ -16,6 +16,7 @@ import com.withub.model.workflow.po.Task;
 import com.withub.model.workflow.vo.ApproveInfo;
 import com.withub.model.workflow.vo.InstanceTaskLog;
 import com.withub.model.workflow.vo.TaskInfo;
+import com.withub.service.workflow.WFRegulationService;
 import com.withub.service.workflow.WorkflowService;
 import com.withub.util.SpringSecurityUtil;
 import com.withub.web.common.BaseController;
@@ -38,6 +39,9 @@ public class WorkflowController extends BaseController {
 
     @Autowired
     private WorkflowService workflowService;
+
+    @Autowired
+    private WFRegulationService wfRegulationService;
 
     //================================= Controller 方法 ==================================================
 
@@ -416,6 +420,10 @@ public class WorkflowController extends BaseController {
                     data.put("handlerFetchCount", nextFlowNodeInfo.getNextFlowNode().getHandlerFetchCount());
                     data.put("nextFlowNodeName", nextFlowNodeInfo.getNextFlowNode().getName());
                 }
+
+                Instance instance = workflowService.getInstanceByTaskId(taskId);
+                List<User> handlerList = wfRegulationService.parseTaskHandler(instance, nextFlowNodeInfo.getNextFlowNode());
+                data.put("handlerList", handlerList);
             }
         }
         putData(modelMap, data);

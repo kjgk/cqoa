@@ -16,8 +16,7 @@
                     <textarea class="form-control"
                               name="description" ng-model="approveInfo.opinion"
                               rows="4"
-                              placeholder="请输入审批意见"
-                              validator="required"></textarea>
+                              placeholder="请输入审批意见"></textarea>
                     <h5><a class="pull-right" href="javascript:;" ng-click="viewInstanceLog()">查看审批记录</a></h5>
                 </div>
             </div>
@@ -25,8 +24,9 @@
                 <label class="col-sm-12 control-label" style="text-align: left; margin-bottom: 8px;">请选择下一个流程节点【{{flowNode.nextFlowNodeName}}】的审批人</label>
 
                 <div class="col-sm-10 col-sm-offset-2">
-                    <div ng-if="flowNode.handlerFetchCount == 1" user-select ng-model="approveInfo.approvers[0]" placeholder="请输入审批人"></div>
-                    <div ng-if="flowNode.handlerFetchCount > 1" user-select multiple ng-model="approveInfo.approvers" placeholder="请输入审批人"></div>
+                    <select class="form-control" ng-model="approveInfo.approvers[0]" ng-options="x.objectId as x.name for x in flowNode.handlerList">
+                        <option value="">请选择审批人</option>
+                    </select>
                 </div>
             </div>
         </fieldset>
@@ -34,10 +34,10 @@
 
     <div class="modal-footer" style="text-align: center;">
         <button ng-if="flowNode.passAction" class="btn btn-primary" ng-click="process('pass')">通过</button>
-        <button ng-if="flowNode.returnAction" class="btn btn-danger" validation-submit="approveForm" ng-click="process('return')">退回</button>
-        <button ng-if="flowNode.rejectAction" class="btn btn-danger" validation-submit="approveForm" ng-click="process('reject')">否决</button>
+        <button ng-if="flowNode.returnAction" class="btn btn-danger" ng-click="process('return')">退回</button>
+        <button ng-if="flowNode.rejectAction" class="btn btn-danger" ng-click="process('reject')">否决</button>
         <button ng-if="flowNode.completeAction" class="btn btn-success" ng-click="process('complete')">完成</button>
-        <button ng-if="flowNode.discardAction" class="btn btn-danger" validation-submit="approveForm" ng-click="process('discard')">弃权</button>
+        <button ng-if="flowNode.discardAction" class="btn btn-danger" ng-click="process('discard')">弃权</button>
     </div>
     <div cg-busy="promise"></div>
 </form>

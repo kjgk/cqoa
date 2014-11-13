@@ -93,7 +93,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
                     handlerList.add((User) userValue);
                 }
             }
-        } else if (StringUtil.isNotEmpty(flowNode.getOrganizationId()) && StringUtil.isNotEmpty(flowNode.getRoleId())) {
+        } /*else if (StringUtil.isNotEmpty(flowNode.getOrganizationId()) && StringUtil.isNotEmpty(flowNode.getRoleId())) {
             String hql = "select o from " + UserOrganizationRole.class.getName() + " o"
                     + " where o.organization.objectId=? and o.role.objectId=?";
             List userOrganizationRoleList = listByHql(hql, flowNode.getOrganizationId(), flowNode.getRoleId());
@@ -110,6 +110,25 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
             if (CollectionUtil.isNotEmpty(userOrganizationRoleList)) {
                 for (UserOrganizationRole userOrganizationRole : (List<UserOrganizationRole>) userOrganizationRoleList) {
                     handlerList.add(userOrganizationRole.getUser());
+                }
+            }
+        }*/
+
+        else if (StringUtil.isNotEmpty(flowNode.getOrganizationId())) {
+            String hql = "select o from " + User.class.getName() + " o" + " where o.organization.objectId=?";
+            List userList = listByHql(hql, flowNode.getOrganizationId());
+            if (CollectionUtil.isNotEmpty(userList)) {
+                for (User user : (List<User>) userList) {
+                    handlerList.add(user);
+                }
+            }
+        }
+        else if (StringUtil.isNotEmpty(flowNode.getRoleId())) {
+            String hql = "select o from " + User.class.getName() + " o" + " where o.role.objectId=?";
+            List userList = listByHql(hql, flowNode.getRoleId());
+            if (CollectionUtil.isNotEmpty(userList)) {
+                for (User user : (List<User>) userList) {
+                    handlerList.add(user);
                 }
             }
         }
@@ -129,7 +148,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
             }
         }
 
-        List<User> userList = new ArrayList<User>();
+        /*List<User> userList = new ArrayList<User>();
         if (flowNode.getHandlerFetchType() == HandlerFetchType.Random) {
             List<Integer> indexList = RandomUtil.getUniqueRandom(0, handlerList.size() - 1, flowNode.getHandlerFetchCount());
             for (Integer index : indexList) {
@@ -170,8 +189,9 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
 
         if (CollectionUtil.isEmpty(userList)) {
             throw new BaseBusinessException("", "未找到流程节点[" + flowNode.getName() + "]上的任务执行人! 请联系系统管理员!");
-        }
-        return userList;
+        }*/
+
+        return handlerList;
     }
 
     public FlowNodeRoute parseFlowNodeRoute(Instance instance, FlowNode flowNode, TaskHandleResult taskHandleResult) throws Exception {
