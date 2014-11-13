@@ -67,9 +67,11 @@ angular.module('app.oa')
             });
         };
         $scope.deleteDriver = function (driver) {
-            DriverService.remove(driver.objectId).then(function () {
-                $scope.grid.refresh();
-                Toaster.success("删除成功！");
+            Dialog.confirmDelete().then(function () {
+                DriverService.remove(driver.objectId).then(function () {
+                    $scope.grid.refresh();
+                    Toaster.success("删除成功！");
+                });
             });
         };
     })
