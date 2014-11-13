@@ -39,11 +39,8 @@
                     <td>{{x.createTime|$date:DateFormat.MINUTE }}</td>
                     <td>
                         <button class="btn btn-xs btn-primary" ng-click="updateCarUse(x)">编辑</button>
-                        &nbsp;
                         <button class="btn btn-xs btn-primary" ng-click="viewCarUseInstance(x)">查看流程</button>
-                        &nbsp;
                         <button class="btn btn-xs btn-success" ng-show="x.status.codeTag=='Archive'" ng-click="allotCarUse(x)">分配车辆</button>
-                        &nbsp;
                         <button class="btn btn-xs btn-danger" ng-click="deleteCarUse(x)">删除</button>
                     </td>
                 </tr>

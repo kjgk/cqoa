@@ -4,7 +4,7 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
 
     .value('PageContext', PageContext)
 
-    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $modalProvider, cfpLoadingBarProvider, RestangularProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $modalProvider, ngDialogProvider, cfpLoadingBarProvider, RestangularProvider) {
 
         $modalProvider.options.backdrop = 'static';
 
@@ -20,6 +20,12 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
             } else {
                 deferred.reject(data.message);
             }
+        });
+
+        ngDialogProvider.setDefaults({
+            className: 'ngdialog-theme-default',
+            closeByDocument: false,
+            closeByEscape: true
         });
 
         $httpProvider.interceptors.push(function ($q, $location, $filter, toaster, cgBusyMessage) {
