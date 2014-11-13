@@ -14,17 +14,17 @@ angular.module('withub.common', [])
             alert: function (message) {
                 return ngDialog.open({
                     template: 'components/ui/template/dialog-alert.html',
-                    controller: function ($scope) {
+                    controller: ['$scope', function ($scope) {
                         $scope.message = message || '';
-                    }
+                    }]
                 });
             },
             confirm: function (message) {
                 return ngDialog.openConfirm({
                     template: 'components/ui/template/dialog-confirm.html',
-                    controller: function ($scope) {
+                    controller: ['$scope', function ($scope) {
                         $scope.message = message || '';
-                    }
+                    }]
                 });
             },
             confirmDelete: function () {
