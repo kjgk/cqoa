@@ -20,7 +20,6 @@
                 <tr class="rlm_bga">
                     <td>请假人</td>
                     <td>请假时间</td>
-                    <td>本市出差</td>
                     <td>请假事由</td>
                     <td>状态</td>
                     <td>申请时间</td>
@@ -29,7 +28,6 @@
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{x.proposer.name}}</td>
                     <td>{{x.beginDate|$date}}~{{x.endDate|$date}}</td>
-                    <td>{{x.localCity===1?"是":"否"}}</td>
                     <td>{{x.description}}</td>
                     <td>{{x.status.name}}</td>
                     <td>{{x.createTime|$date:DateFormat.MINUTE }}</td>

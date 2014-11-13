@@ -82,7 +82,6 @@ angular.module('app.oa')
     .controller('LeaveCreateCtrl', function ($scope, $modalInstance, LeaveService) {
 
         $scope.leave = {
-            localCity: 0
         };
         $scope.title = '新增请假申请';
 

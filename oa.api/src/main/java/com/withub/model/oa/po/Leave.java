@@ -20,8 +20,6 @@ public class Leave extends AbstractBaseEntity {
 
     private Date endDate;
 
-    private Integer localCity;
-
     @OneToOne(targetEntity = Organization.class)
     @JoinColumn(name = "organizationId")
     private Organization organization;
@@ -53,14 +51,6 @@ public class Leave extends AbstractBaseEntity {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    public Integer getLocalCity() {
-        return localCity;
-    }
-
-    public void setLocalCity(Integer localCity) {
-        this.localCity = localCity;
     }
 
     public Organization getOrganization() {
