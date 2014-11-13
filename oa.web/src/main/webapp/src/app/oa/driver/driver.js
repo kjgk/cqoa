@@ -48,7 +48,7 @@ angular.module('app.oa')
             });
             modalInstance.result.then(function (result) {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "保存成功！");
+                Toaster.success("保存成功！");
             });
         };
         $scope.updateDriver = function (driver) {
@@ -63,13 +63,13 @@ angular.module('app.oa')
             });
             modalInstance.result.then(function (result) {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "保存成功！");
+                Toaster.success("保存成功！");
             });
         };
         $scope.deleteDriver = function (driver) {
             DriverService.remove(driver.objectId).then(function () {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "删除成功！");
+                Toaster.success("删除成功！");
             });
         };
     })

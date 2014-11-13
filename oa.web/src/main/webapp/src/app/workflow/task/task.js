@@ -120,7 +120,7 @@ angular.module('app.workflow')
         };
     })
 
-    .controller('TaskProcessCtrl', function ($scope, $timeout, $http, $modal, $modalInstance, TaskService, InstanceService, task, viewTemplate, toaster) {
+    .controller('TaskProcessCtrl', function ($scope, $timeout, $http, $modal, $modalInstance, TaskService, InstanceService, task, viewTemplate) {
 
         $scope.title = '处理';
 
@@ -144,11 +144,11 @@ angular.module('app.workflow')
 
         $scope.process = function (result) {
             if (result == 'pass' && $scope.flowNode.manualSelectHandler == 1 && _.isEmpty($scope.approveInfo.approvers)) {
-                toaster.pop('warning', "警告", "请选择审批人！");
+                Toaster.warning('请选择审批人！');
                 return;
             }
             if ((result == 'return' || result == 'reject') && _.isEmpty($scope.approveInfo.opinion)) {
-                toaster.pop('warning', "警告", "请输入审批意见！");
+                Toaster.warning('请输入审批意见！');
                 return;
             }
             $scope.promise = TaskService.processTask(result, {
@@ -157,7 +157,7 @@ angular.module('app.workflow')
                 approvers: $scope.approveInfo.approvers
             }).then(function () {
                 $modalInstance.close();
-                toaster.pop('info', "信息", "审批成功！");
+                Toaster.info("审批成功！");
             });
         };
 
@@ -184,7 +184,7 @@ angular.module('app.workflow')
         $scope.submit = function () {
             $scope.promise = TaskService.transmitTask(taskId, $scope.hander.objectId).then(function () {
                 $modalInstance.close();
-                toaster.pop('info', "信息", "任务转发成功！");
+                Toaster.info("任务转发成功！");
             });
         };
 
@@ -199,7 +199,7 @@ angular.module('app.workflow')
 
         $scope.rollbackTask = function (task) {
             TaskService.rollbackTask(task.objectId).then(function () {
-                toaster.pop('info', "信息", "任务回滚成功！");
+                Toaster.info("任务回滚成功！");
                 $scope.grid.refresh();
             });
         };

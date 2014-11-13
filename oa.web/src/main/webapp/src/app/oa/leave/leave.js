@@ -48,7 +48,7 @@ angular.module('app.oa')
             });
             modalInstance.result.then(function (result) {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "保存成功！");
+                Toaster.success("保存成功！");
             });
         };
         $scope.updateLeave = function (leave) {
@@ -63,7 +63,7 @@ angular.module('app.oa')
             });
             modalInstance.result.then(function (result) {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "保存成功！");
+                Toaster.success("保存成功！");
             });
         };
         $scope.viewLeaveInstance = function (leave) {
@@ -74,7 +74,7 @@ angular.module('app.oa')
         $scope.deleteLeave = function (leave) {
             LeaveService.remove(leave.objectId).then(function () {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "删除成功！");
+                Toaster.success("删除成功！");
             });
         };
     })

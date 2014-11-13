@@ -48,7 +48,7 @@ angular.module('app.oa')
             });
             modalInstance.result.then(function (result) {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "保存成功！");
+                Toaster.success("保存成功！");
             });
         };
         $scope.updateTraining = function (training) {
@@ -63,7 +63,7 @@ angular.module('app.oa')
             });
             modalInstance.result.then(function (result) {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "保存成功！");
+                Toaster.success("保存成功！");
             });
         };
         $scope.viewTrainingInstance = function (training) {
@@ -74,7 +74,7 @@ angular.module('app.oa')
         $scope.deleteTraining = function (training) {
             TrainingService.remove(training.objectId).then(function () {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "删除成功！");
+                Toaster.success("删除成功！");
             });
         };
     })

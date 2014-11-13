@@ -52,25 +52,25 @@ angular.module('app.mobile')
             });
             modalInstance.result.then(function (result) {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "保存成功！");
+                Toaster.success("保存成功！");
             });
         };
         $scope.deleteAppVersion = function (appVersion) {
             AppVersionService.remove(appVersion.objectId).then(function () {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "删除成功！");
+                Toaster.success("删除成功！");
             });
         };
         $scope.enableAppVersion = function (appVersion) {
             AppVersionService.enable(appVersion.objectId).then(function () {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "启用成功！");
+                Toaster.success("启用成功！");
             });
         };
         $scope.disableAppVersion = function (appVersion) {
             AppVersionService.disable(appVersion.objectId).then(function () {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "停用成功！");
+                Toaster.success("停用成功！");
             });
         };
     })

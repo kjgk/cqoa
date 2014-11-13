@@ -65,7 +65,7 @@ angular.module('app.oa', ['base'])
                 }]
             });
             modalInstance.result.then(function (result) {
-                toaster.pop('success', "信息", "密码修改成功！");
+                Toaster.success("密码修改成功！");
             });
         };
 

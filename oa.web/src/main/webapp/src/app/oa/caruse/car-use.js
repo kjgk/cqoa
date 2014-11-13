@@ -52,7 +52,7 @@ angular.module('app.oa')
             });
             modalInstance.result.then(function (result) {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "保存成功！");
+                Toaster.success("保存成功！");
             });
         };
         $scope.updateCarUse = function (carUse) {
@@ -67,7 +67,7 @@ angular.module('app.oa')
             });
             modalInstance.result.then(function (result) {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "保存成功！");
+                Toaster.success("保存成功！");
             });
         };
         $scope.viewCarUseInstance = function (carUse) {
@@ -95,7 +95,7 @@ angular.module('app.oa')
             });
             modalInstance.result.then(function (result) {
                 $scope.grid.refresh();
-                toaster.pop('success', "信息", "分配成功！");
+                Toaster.success("分配成功！");
             });
         };
     })

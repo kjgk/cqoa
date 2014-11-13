@@ -28,7 +28,7 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
             closeByEscape: true
         });
 
-        $httpProvider.interceptors.push(function ($q, $location, $filter, toaster, cgBusyMessage) {
+        $httpProvider.interceptors.push(function ($q, $location, $filter, cgBusyMessage) {
             return {
                 'request': function (request) {
                     if (request.method == 'GET') {
@@ -44,14 +44,14 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
                         return $q.reject(response);
                     }
                     if (response.data && response.data.success === false) {
-                        toaster.pop('error', "错误", response.data.message);
+                        Toaster.error(response.data.message);
                         return $q.reject(response);
                     }
                     return response || $q.when(response);
                 },
 
                 'responseError': function (rejection) {
-                    toaster.pop('error', rejection.config.method + ':' + rejection.config.url, rejection.status + ':' + rejection.statusText);
+                    Toaster.error(rejection.config.method + ':' + rejection.config.url, rejection.status + ':' + rejection.statusText);
                     return $q.reject(rejection);
                 }
             };
