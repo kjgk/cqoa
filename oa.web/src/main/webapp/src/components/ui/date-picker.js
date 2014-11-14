@@ -9,7 +9,9 @@ angular.module('withub.ui')
             replace: true,
             scope: {
                 ngModel: '=',
-                ngValidator: '@'
+                ngValidator: '@',
+                dateBefore: '=',
+                dateAfter: '='
             },
             compile: function (elenemt, attrs) {
 
@@ -32,7 +34,8 @@ angular.module('withub.ui')
                 };
 
                 if (attrs.ngValidator !== undefined) {
-                    elenemt.find('input[date-time-input]').attr('validator', "{{ngValidator}}");
+                    elenemt.find('input[date-time-input]').attr('validator', '{{ngValidator}}')
+                        .attr('daterange-error-message', attrs.daterangeErrorMessage);
                 }
                 elenemt.find('a.dropdown-toggle').attr('id', gid);
                 elenemt.find('input[date-time-input]')

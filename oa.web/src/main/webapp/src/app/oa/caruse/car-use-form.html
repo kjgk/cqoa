@@ -24,13 +24,14 @@
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">用车时间</label>
-
             <div class="col-sm-5">
-                <input date-picker ng-model="carUse.beginTime" format="YYYY-MM-DD HH:mm" placeholder="请选择开始时间" ng-validator="required">
+                <input date-picker ng-model="carUse.beginTime" format="YYYY-MM-DD HH:mm" placeholder="请选择开始时间"
+                       ng-validator="required,daterange" date-before="carUse.endTime" daterange-error-message="开始时间必须在结束时间之前">
             </div>
             <div class="col-sm-5">
                 <label class="daterange-split">至</label>
-                <input date-picker ng-model="carUse.endTime" format="YYYY-MM-DD HH:mm" placeholder="请选择结束时间" ng-validator="required">
+                <input date-picker ng-model="carUse.endTime" format="YYYY-MM-DD HH:mm" placeholder="请选择结束时间"
+                       ng-validator="required,daterange" date-after="carUse.beginTime" daterange-error-message="结束时间必须在开始时间之后">
             </div>
         </div>
 

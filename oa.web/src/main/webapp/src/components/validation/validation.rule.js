@@ -19,6 +19,15 @@ angular.module('validation.rule', ['validation'])
             password: /^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).*$/,
             matching: function (value, scope, element, attrs) {
                 return value === attrs.validatorPassword;
+            },
+            daterange: function (value, scope, element, attrs) {
+                if(scope.$parent.dateBefore) {
+                    return moment(value).isBefore(moment(scope.$parent.dateBefore));
+                }
+                if(scope.$parent.dateAfter) {
+                    return moment(value).isAfter(moment(scope.$parent.dateAfter));
+                }
+                return true;
             }
         };
 
@@ -53,6 +62,10 @@ angular.module('validation.rule', ['validation'])
             },
             matching: {
                 error: '密码不一致',
+                success: '<i class="fa fa-check"></i>'
+            },
+            daterange: {
+                error: '日期区间错误',
                 success: '<i class="fa fa-check"></i>'
             }
         };
