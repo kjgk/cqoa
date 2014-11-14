@@ -18,13 +18,11 @@ import com.withub.model.workflow.event.instanceevent.InstanceDeleteEvent;
 import com.withub.model.workflow.event.taskevent.TaskEventArgs;
 import com.withub.model.workflow.event.taskevent.TaskEventPublisher;
 import com.withub.model.workflow.po.*;
+import com.withub.model.workflow.vo.TaskFlowNodeInfo;
 import com.withub.model.workflow.vo.TaskInfo;
 import com.withub.service.EntityServiceImpl;
 import com.withub.service.system.CodeService;
-import com.withub.service.workflow.FlowTypeService;
-import com.withub.service.workflow.InstanceService;
-import com.withub.service.workflow.TaskService;
-import com.withub.service.workflow.WorkflowService;
+import com.withub.service.workflow.*;
 import com.withub.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +39,9 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
 
     @Autowired
     private FlowTypeService flowTypeService;
+
+    @Autowired
+    private WFRegulationService wfRegulationService;
 
     @Autowired
     private InstanceService instanceService;
@@ -269,6 +270,38 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
         }
 
         return taskInfo;
+    }
+
+    /**
+     * 获取任务节点的审批信息
+     * @param taskId
+     * @return
+     * @throws Exception
+     */
+    public TaskFlowNodeInfo getTaskFlowNode(String taskId) throws Exception {
+
+        FlowNode flowNode = getFlowNodeByTaskId(taskId);
+        TaskFlowNodeInfo taskFlowNodeInfo = new TaskFlowNodeInfo();
+        taskFlowNodeInfo.setFlowNodeName(flowNode.getName());
+        taskFlowNodeInfo.setPassAction(flowNode.getPassAction());
+        taskFlowNodeInfo.setReturnAction(flowNode.getReturnAction());
+        taskFlowNodeInfo.setRejectAction(flowNode.getRejectAction());
+        taskFlowNodeInfo.setCompleteAction(flowNode.getCompleteAction());
+        taskFlowNodeInfo.setDiscardAction(flowNode.getDiscardAction());
+        if (flowNode.getManualSelectHandler() != null && flowNode.getManualSelectHandler() == 1) {
+            NextFlowNodeInfo nextFlowNodeInfo = getNextFlowNodeInfo(taskId);
+            if (nextFlowNodeInfo != null) {
+                taskFlowNodeInfo.setManualSelectHandler(nextFlowNodeInfo.getCurrentFlowNode().getManualSelectHandler());
+                if (nextFlowNodeInfo.getNextFlowNode() != null) {
+                    taskFlowNodeInfo.setHandlerFetchCount(nextFlowNodeInfo.getNextFlowNode().getHandlerFetchCount());
+                    taskFlowNodeInfo.setNextFlowNodeName(nextFlowNodeInfo.getNextFlowNode().getName());
+                }
+                Instance instance = getInstanceByTaskId(taskId);
+                List<User> handlerList = wfRegulationService.parseTaskHandler(instance, nextFlowNodeInfo.getNextFlowNode());
+                taskFlowNodeInfo.setHandlerList(handlerList);
+            }
+        }
+        return taskFlowNodeInfo;
     }
 
     public void commitTask(User currentUser, String taskId, TaskHandleResult result, String opinion) throws Exception {

@@ -12,6 +12,7 @@ import com.withub.model.workflow.event.instanceevent.InstanceDeleteEvent;
 import com.withub.model.workflow.po.FlowNode;
 import com.withub.model.workflow.po.Instance;
 import com.withub.model.workflow.po.Task;
+import com.withub.model.workflow.vo.TaskFlowNodeInfo;
 import com.withub.model.workflow.vo.TaskInfo;
 import com.withub.service.EntityService;
 
@@ -62,6 +63,8 @@ public interface WorkflowService extends EntityService {
     public Task getTaskById(String taskId) throws Exception;
 
     public TaskInfo getCurrentUserApproveTaskByRelatedObjectId(String relatedObjectId) throws Exception;
+
+    public TaskFlowNodeInfo getTaskFlowNode(String taskId) throws Exception;
 
     public void commitTask(User currentUser, String taskId, TaskHandleResult result, String opinion) throws Exception;
 

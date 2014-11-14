@@ -2,10 +2,13 @@ package com.withub.server;
 
 
 import com.withub.model.oa.po.*;
+import com.withub.model.workflow.vo.TaskFlowNodeInfo;
 
 import java.util.List;
 
 public interface OAServer {
+
+    public String getTaskFlowNodeInfo(String currentUserId, String taskId) throws Exception;
 
     public void commitTask(String currentUserId, String taskId, String result, String opinion, List<String> nextHandlerList) throws Exception;
 

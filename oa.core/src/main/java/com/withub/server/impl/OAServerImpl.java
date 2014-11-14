@@ -1,21 +1,26 @@
 package com.withub.server.impl;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.withub.common.util.CollectionUtil;
 import com.withub.model.oa.po.*;
 import com.withub.model.system.po.User;
 import com.withub.model.workflow.enumeration.TaskHandleResult;
 import com.withub.model.workflow.po.Task;
+import com.withub.model.workflow.vo.TaskFlowNodeInfo;
 import com.withub.server.OAServer;
 import com.withub.service.oa.*;
 import com.withub.service.system.UserService;
 import com.withub.service.workflow.TaskService;
+import com.withub.service.workflow.WorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service("oaServer")
@@ -24,6 +29,9 @@ public class OAServerImpl implements OAServer {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private WorkflowService workflowService;
 
     @Autowired
     private UserService userService;
@@ -42,6 +50,27 @@ public class OAServerImpl implements OAServer {
 
     @Autowired
     private TrainingService trainingService;
+
+    public String getTaskFlowNodeInfo(String currentUserId, String taskId) throws Exception {
+
+        TaskFlowNodeInfo taskFlowNodeInfo = workflowService.getTaskFlowNode(taskId);
+
+        List<User> userList = taskFlowNodeInfo.getHandlerList();
+        taskFlowNodeInfo.setHandlerList(null);
+
+        JSONObject data = (JSONObject) JSONObject.toJSON(taskFlowNodeInfo);
+        if (CollectionUtil.isNotEmpty(userList)) {
+            List list = new ArrayList();
+            for (User user : userList) {
+                Map item = new HashMap();
+                item.put("objectId", user.getObjectId());
+                item.put("name", user.getName());
+                list.add(item);
+            }
+            data.put("handlerList", list);
+        }
+        return data.toString();
+    }
 
     public void commitTask(String currentUserId, String taskId, String result, String opinion, List<String> nextHandlerList) throws Exception {
 

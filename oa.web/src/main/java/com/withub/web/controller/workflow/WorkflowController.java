@@ -15,6 +15,7 @@ import com.withub.model.workflow.po.InstanceOrganization;
 import com.withub.model.workflow.po.Task;
 import com.withub.model.workflow.vo.ApproveInfo;
 import com.withub.model.workflow.vo.InstanceTaskLog;
+import com.withub.model.workflow.vo.TaskFlowNodeInfo;
 import com.withub.model.workflow.vo.TaskInfo;
 import com.withub.service.workflow.WFRegulationService;
 import com.withub.service.workflow.WorkflowService;
@@ -400,33 +401,11 @@ public class WorkflowController extends BaseController {
         modelMap.put("success", true);
     }
 
-    @RequestMapping(value = "/task/getFlowNodeByTaskId/{taskId}", method = RequestMethod.GET)
-    public void getFlowNodeByTaskId(ModelMap modelMap, @PathVariable(value = "taskId") String taskId) throws Exception {
+    @RequestMapping(value = "/task/getTaskFlowNode/{taskId}", method = RequestMethod.GET)
+    public void getTaskFlowNode(ModelMap modelMap, @PathVariable(value = "taskId") String taskId) throws Exception {
 
-        FlowNode flowNode = workflowService.getFlowNodeByTaskId(taskId);
-
-        Map data = new HashMap();
-        data.put("passAction", flowNode.getPassAction());
-        data.put("returnAction", flowNode.getReturnAction());
-        data.put("rejectAction", flowNode.getRejectAction());
-        data.put("completeAction", flowNode.getCompleteAction());
-        data.put("discardAction", flowNode.getDiscardAction());
-        data.put("name", flowNode.getName());
-        if (flowNode.getManualSelectHandler() != null && flowNode.getManualSelectHandler() == 1) {
-            NextFlowNodeInfo nextFlowNodeInfo = workflowService.getNextFlowNodeInfo(taskId);
-            if (nextFlowNodeInfo != null) {
-                data.put("manualSelectHandler", nextFlowNodeInfo.getCurrentFlowNode().getManualSelectHandler());
-                if (nextFlowNodeInfo.getNextFlowNode() != null) {
-                    data.put("handlerFetchCount", nextFlowNodeInfo.getNextFlowNode().getHandlerFetchCount());
-                    data.put("nextFlowNodeName", nextFlowNodeInfo.getNextFlowNode().getName());
-                }
-
-                Instance instance = workflowService.getInstanceByTaskId(taskId);
-                List<User> handlerList = wfRegulationService.parseTaskHandler(instance, nextFlowNodeInfo.getNextFlowNode());
-                data.put("handlerList", handlerList);
-            }
-        }
-        putData(modelMap, data);
+        TaskFlowNodeInfo taskFlowNodeInfo = workflowService.getTaskFlowNode(taskId);
+        putData(modelMap, taskFlowNodeInfo);
     }
 
     @RequestMapping(value = "/task/pass", method = RequestMethod.POST)

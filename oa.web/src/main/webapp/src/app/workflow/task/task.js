@@ -31,9 +31,9 @@ angular.module('app.workflow')
                     params: params
                 });
             },
-            getFlowNodeByTaskId: function (taskId) {
+            getTaskFlowNode: function (taskId) {
                 return $http({
-                    url: PageContext.path + '/workflow/task/getFlowNodeByTaskId/' + taskId,
+                    url: PageContext.path + '/workflow/task/getTaskFlowNode/' + taskId,
                     method: 'GET'
                 });
             },
@@ -134,7 +134,7 @@ angular.module('app.workflow')
             approvers: []
         };
 
-        $scope.promise = TaskService.getFlowNodeByTaskId(task.objectId).then(function (response) {
+        $scope.promise = TaskService.getTaskFlowNode(task.objectId).then(function (response) {
             $scope.flowNode = response.data.data;
         });
 
