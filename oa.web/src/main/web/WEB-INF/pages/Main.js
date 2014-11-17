@@ -12,6 +12,7 @@ Ext.define('withub.ext.Main', {
         });
 
         var tabPanel = Ext.create('Ext.tab.Panel', {
+            id: 'tab-panel',
             region: 'center',
             border: false,
             margins: '0 5 5 0'

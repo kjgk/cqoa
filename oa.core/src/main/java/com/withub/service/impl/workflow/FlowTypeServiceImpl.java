@@ -124,19 +124,12 @@ public class FlowTypeServiceImpl extends EntityServiceImpl implements FlowTypeSe
                 flowNode.setHandlerFetchCount(linkedHashMap.get("HandlerFetchCount") == null ? 1 : Integer.parseInt(linkedHashMap.get("HandlerFetchCount").toString()));
 
 
+
                 // 当有多个任务处理人时的取人方式
-                LinkedHashMap handlerFetchTypeMap = (LinkedHashMap) linkedHashMap.get("HandlerFetchType");
-                if (handlerFetchTypeMap != null) {
-                    if ((Boolean) handlerFetchTypeMap.get("Random")) {
-                        flowNode.setHandlerFetchType(HandlerFetchType.Random);
-                    } else if ((Boolean) handlerFetchTypeMap.get("IdleMost")) {
-                        flowNode.setHandlerFetchType(HandlerFetchType.IdleMost);
-                    } else if ((Boolean) handlerFetchTypeMap.get("TaskLeast")) {
-                        flowNode.setHandlerFetchType(HandlerFetchType.TaskLeast);
-                    } else {
-                        flowNode.setHandlerFetchType(null);
-                    }
-                }
+                flowNode.setHandlerFetchType(null);
+//                flowNode.setHandlerFetchType(linkedHashMap.get("HandlerFetchType") == null ? null
+//                        : HandlerFetchType.valueOf(linkedHashMap.get("HandlerFetchType").toString()));
+
 
                 flowNode.setManualSelectHandler(0);
                 flowNode.setAllowAgent(0);

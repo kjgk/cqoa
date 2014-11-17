@@ -22,6 +22,7 @@
     <script type="text/javascript" src="${path}/scripts/swfupload/swfupload.speed.js"></script>
     <script type="text/javascript" src="${path}/scripts/swfupload/swfupload.queue.js"></script>
     <script type="text/javascript" src="${path}/scripts/extjs/ext-all.js"></script>
+    <script type="text/javascript" src="${path}/scripts/extjs/ux/IFrame.js"></script>
     <script type="text/javascript" src="${path}/scripts/extjs/locale/ext-lang-zh_CN.js"></script>
     <script type="text/javascript" src="${path}/scripts/withub/common.js"></script>
     <script type="text/javascript" src="${path}/scripts/withub/ext/util/RendererUtil.js"></script>

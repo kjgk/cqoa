@@ -64,9 +64,23 @@ Ext.define('withub.ext.workflow.flowType.FlowTypeList', {
                     text: '编辑流程图',
                     iconCls: 'icon-edit',
                     handler: function () {
-                        //centerWindow(PageContext.contextPath + "/workflow/flowType/flowChartEdit.page" + "?flowTypeId=" + record.get('objectId'), 1400, 600);
-                        //window.open(PageContext.contextPath + "/workflow/flowType/flowChartEdit.page" + "?flowTypeId=" + record.get('objectId'));
-                        window.open("/diagram.html#/" + record.get('objectId'));
+                        var id = 'diagram-' + record.get('objectId');
+                        var tabPanel = window.parent.Ext.getCmp('tab-panel');
+                        var frame = tabPanel.getComponent(id);
+                        if (!frame) {
+                            frame = new Ext.ux.IFrame({
+                                id: id,
+                                closable: true,
+                                title: record.get('name'),
+                                src: "/diagram.html#/" + record.get('objectId')
+//                                src: "../dist/diagram.html#/" + record.get('objectId')
+                            });
+                            frame.on('afterrender', function () {
+                                frame.el.mask('界面加载中...');
+                            });
+                            tabPanel.add(frame);
+                        }
+                        tabPanel.setActiveTab(frame);
                     },
                     scope: this
                 },

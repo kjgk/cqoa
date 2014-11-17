@@ -93,7 +93,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
                     handlerList.add((User) userValue);
                 }
             }
-        } /*else if (StringUtil.isNotEmpty(flowNode.getOrganizationId()) && StringUtil.isNotEmpty(flowNode.getRoleId())) {
+        } else if (StringUtil.isNotEmpty(flowNode.getOrganizationId()) && StringUtil.isNotEmpty(flowNode.getRoleId())) {
             String hql = "select o from " + UserOrganizationRole.class.getName() + " o"
                     + " where o.organization.objectId=? and o.role.objectId=?";
             List userOrganizationRoleList = listByHql(hql, flowNode.getOrganizationId(), flowNode.getRoleId());
@@ -102,7 +102,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
                     handlerList.add(userOrganizationRole.getUser());
                 }
             }
-        } else if (StringUtil.isNotEmpty(flowNode.getOrganizationProperty()) && StringUtil.isNotEmpty(flowNode.getRoleId())) {
+        } /*else if (StringUtil.isNotEmpty(flowNode.getOrganizationProperty()) && StringUtil.isNotEmpty(flowNode.getRoleId())) {
             Organization organization = (Organization) getPropertyValue(relatedEntity, flowNode.getOrganizationProperty());
             String hql = "select o from " + UserOrganizationRole.class.getName() + " o"
                     + " where o.organization.objectId=? and o.role.objectId=?";
@@ -148,7 +148,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
             }
         }
 
-        /*List<User> userList = new ArrayList<User>();
+        /*List<User> userList = new ArrayList();
         if (flowNode.getHandlerFetchType() == HandlerFetchType.Random) {
             List<Integer> indexList = RandomUtil.getUniqueRandom(0, handlerList.size() - 1, flowNode.getHandlerFetchCount());
             for (Integer index : indexList) {
@@ -165,7 +165,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
                 }
             } else {
                 String userId = ((Object[]) list.get(0))[0].toString();
-                User user = (User) get(User.class, userId);
+                User user = get(User.class, userId);
                 userList.add(user);
             }
         } else if (flowNode.getHandlerFetchType() == HandlerFetchType.TaskLeast) {
@@ -182,7 +182,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
                 }
             } else {
                 String userId = ((Object[]) list.get(0))[0].toString();
-                User user = (User) get(User.class, userId);
+                User user = get(User.class, userId);
                 userList.add(user);
             }
         }

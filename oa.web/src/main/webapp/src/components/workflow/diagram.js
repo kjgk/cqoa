@@ -131,14 +131,13 @@ angular.module('workflow', ['ui.router', 'uuid4'])
 //                            UseRootNode: { type: 'text', group: 'base', label: '使用根节点', index: 10 },
 //                            OrganizationProperty: { type: 'text', group: 'base', label: '组织机构属性', index: 11 },
 //                            RoleProperty: { type: 'text', group: 'base', label: '角色属性', index: 12 },
-                            HandlerFetchCount: { type: 'text', group: 'base', label: '取人数', defaultValue: 1, index: 13 },
-//                            HandlerFetchType: { type: 'object', group: 'base', label: '取人方式', index: 14,
-//                                properties: {
-//                                    Random: { type: 'toggle', label: '随机' },
-//                                    IdleMost: { type: 'toggle', label: '最空闲' },
-//                                    TaskLeast: { type: 'toggle', label: '同类任务最少' }
-//                                } },
-                            TimeLimit: { type: 'text', group: 'base', label: '处理时限（工作小时）', defaultValue: 0, index: 15 },
+//                            HandlerFetchCount: { type: 'text', group: 'base', label: '取人数', defaultValue: 1, index: 13 },
+//                            HandlerFetchType: { type: 'select', defaultValue: 'Random', group: 'base', label: '取人方式', index: 14, options: [
+//                                {value: 'Random', content: '随机' },
+//                                {value: 'IdleMost', content: '最空闲' },
+//                                {value: 'TaskLeast', content: '同类任务最少' }
+//                            ]},
+//                            TimeLimit: { type: 'text', group: 'base', label: '处理时限（工作小时）', defaultValue: 0, index: 15 },
                             FlowNodeAction: { type: 'object', group: 'base', label: '行为动作', index: 16,
                                 properties: {
                                     passAction: { type: 'toggle', label: '通过' },

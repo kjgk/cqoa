@@ -268,6 +268,8 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
                     nextHandlerList.add(userService.getSystemUser());
                 } else {
                     nextHandlerList = wfRegulationService.parseTaskHandler(instance, nextFlowNode);
+                    // todo 过滤审批人列表
+                    nextHandlerList = nextHandlerList.subList(0, 1);
                 }
             }
             createTask(currentUser, subInstance, masterTask, nextFlowNode, nextHandlerList, firstNodeHandlerList);
