@@ -199,9 +199,11 @@ angular.module('app.workflow')
         $scope.grid = SimpleTable(TaskService.query, {params: {statusTag: 'Finish'}});
 
         $scope.rollbackTask = function (task) {
-            TaskService.rollbackTask(task.objectId).then(function () {
-                Toaster.info("任务回滚成功！");
-                $scope.grid.refresh();
+            Dialog.confirm('确认回滚？').then(function () {
+                TaskService.rollbackTask(task.objectId).then(function () {
+                    Toaster.info("任务回滚成功！");
+                    $scope.grid.refresh();
+                });
             });
         };
 
