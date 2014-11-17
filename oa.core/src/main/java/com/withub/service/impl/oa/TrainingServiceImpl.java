@@ -57,6 +57,7 @@ public class TrainingServiceImpl extends EntityServiceImpl implements TrainingSe
     @Override
     public void updateTraining(Training training) throws Exception {
 
+        training.setProposer(training.getCurrentUser());
         save(training);
     }
 

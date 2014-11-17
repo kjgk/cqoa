@@ -57,6 +57,7 @@ public class OutgoingServiceImpl extends EntityServiceImpl implements OutgoingSe
     @Override
     public void updateOutgoing(Outgoing outgoing) throws Exception {
 
+        outgoing.setProposer(outgoing.getCurrentUser());
         save(outgoing);
     }    
 

@@ -143,12 +143,13 @@ angular.module('app.workflow')
         };
 
         $scope.process = function (result) {
-            if (result == 'pass' && $scope.flowNode.manualSelectHandler == 1 && _.isEmpty($scope.approveInfo.approvers)) {
-                Toaster.warning('请选择审批人！');
+            if (result == 'pass' && $scope.flowNode.manualSelectHandler == 1
+                && (_.isEmpty($scope.approveInfo.approvers) || $scope.approveInfo.approvers[0] == null)) {
+                Dialog.alert('请选择审批人！');
                 return;
             }
             if ((result == 'return' || result == 'reject') && _.isEmpty($scope.approveInfo.opinion)) {
-                Toaster.warning('请输入审批意见！');
+                Dialog.alert('请输入审批意见！');
                 return;
             }
             $scope.promise = TaskService.processTask(result, {

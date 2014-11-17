@@ -57,6 +57,7 @@ public class CarUseServiceImpl extends EntityServiceImpl implements CarUseServic
     @Override
     public void updateCarUse(CarUse carUse) throws Exception {
 
+        carUse.setProposer(carUse.getCurrentUser());
         save(carUse);
     }
 

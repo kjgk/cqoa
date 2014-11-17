@@ -62,6 +62,7 @@ public class LeaveServiceImpl extends EntityServiceImpl implements LeaveService 
     @Override
     public void updateLeave(Leave leave) throws Exception {
 
+        leave.setProposer(leave.getCurrentUser());
         save(leave);
     }
 

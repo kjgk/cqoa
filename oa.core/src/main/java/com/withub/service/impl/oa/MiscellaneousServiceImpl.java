@@ -56,6 +56,7 @@ public class MiscellaneousServiceImpl extends EntityServiceImpl implements Misce
     @Override
     public void updateMiscellaneous(Miscellaneous miscellaneous) throws Exception {
 
+        miscellaneous.setProposer(miscellaneous.getCurrentUser());
         save(miscellaneous);
     }
 

@@ -288,6 +288,7 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
         taskFlowNodeInfo.setRejectAction(flowNode.getRejectAction());
         taskFlowNodeInfo.setCompleteAction(flowNode.getCompleteAction());
         taskFlowNodeInfo.setDiscardAction(flowNode.getDiscardAction());
+        taskFlowNodeInfo.setManualSelectHandler(0);
         if (flowNode.getManualSelectHandler() != null && flowNode.getManualSelectHandler() == 1) {
             NextFlowNodeInfo nextFlowNodeInfo = getNextFlowNodeInfo(taskId);
             if (nextFlowNodeInfo != null) {

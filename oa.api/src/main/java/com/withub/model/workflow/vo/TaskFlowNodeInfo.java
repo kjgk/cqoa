@@ -24,7 +24,7 @@ public class TaskFlowNodeInfo implements Serializable {
 
     private Integer handlerFetchCount;
 
-    private String nextFlowNodeName;
+    private String nextFlowNodeName = "";
 
     private List<User> handlerList;
 
