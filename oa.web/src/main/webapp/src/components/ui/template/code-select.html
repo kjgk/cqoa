@@ -1,3 +1,4 @@
-<select ng-options="x.value as x.label for x in items">
-    <option value="">全部</option>
-</select>
+<option ng-if="placeholder" value="">{{placeholder}}</option>
+<option ng-if="showAll" value="">全部</option>
+<option ng-if="showNone" value="">无</option>
+<option ng-repeat="x in items" ng-value="x.value">{{x.label}}</option>

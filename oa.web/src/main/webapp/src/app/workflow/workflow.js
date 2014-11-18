@@ -18,15 +18,19 @@ angular.module('app.workflow', [])
         return {
             templateUrl: 'app/workflow/common/flow-type-select.html',
             restrict: 'EA',
-            replace: true,
+            replace: false,
             scope: true,
-            link: function (scope, element, attrs) {
-                scope.placeholder = attrs.placeholder;
-                WorkflowService.listFlowType().then(function (response) {
-                    scope.items = response.data.items;
-                });
+            compile: function (elenemt, attrs) {
+
+                return function (scope, element, attrs) {
+                    scope.placeholder = attrs.placeholder;
+                    scope.showAll = attrs.showAll !== undefined && attrs.showAll !== false;
+                    scope.showNone = attrs.showNone !== undefined && attrs.showNone !== false;
+                    WorkflowService.listFlowType().then(function (response) {
+                        scope.items = response.data.items;
+                    });
+                }
             }
         }
     })
-
 ;

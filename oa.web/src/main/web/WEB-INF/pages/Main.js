@@ -55,6 +55,9 @@ Ext.define('withub.ext.Main', {
             success: function (response) {
                 var result = Ext.decode(response.responseText);
                 Ext.each(result['nodes'], function (node) {
+                    if (node.id == '2A52FA66-0FA7-4A86-AC1E-4F03D2CD9454') {
+                        return true;
+                    }
                     var treePanel = Ext.create('withub.ext.base.Tree', {
                         title: '<span style="color: #003399; font-size: 14px; font-weight: bold;">' + node.text + '</span>',
                         singleExpand: false,

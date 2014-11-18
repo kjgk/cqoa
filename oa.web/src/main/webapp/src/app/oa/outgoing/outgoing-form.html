@@ -16,15 +16,16 @@
             <label class="col-sm-2 control-label">出差时间</label>
 
             <div class="col-sm-5">
-                <input date-picker ng-model="outgoing.beginDate" placeholder="请选择开始时间" ng-validator="required">
+                <input date-picker ng-model="outgoing.beginDate" placeholder="请选择开始时间" ng-validator1="required">
             </div>
             <div class="col-sm-5">
                 <label class="daterange-split">至</label>
-                <input date-picker ng-model="outgoing.endDate" placeholder="请选择结束时间" ng-validator="required">
+                <input date-picker ng-model="outgoing.endDate" placeholder="请选择结束时间" ng-validator1="required">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">本市出差</label>
+
             <div class="col-sm-10">
                 <label class="radio-inline c-radio">
                     <input type="radio" ng-model="outgoing.localCity" ng-value="1">
@@ -40,7 +41,7 @@
             <div class="col-sm-10">
                 <textarea class="form-control" name="description"
                           ng-model="outgoing.description"
-                          validator="required"
+                          validator1="required"
                           rows="5"/>
             </div>
         </div>
@@ -50,7 +51,7 @@
             <div class="col-sm-10">
                 <input type="text" class="form-control" name="destination"
                        ng-model="outgoing.destination"
-                       validator="required">
+                       validator1="required">
             </div>
         </div>
         <div class="form-group">
@@ -58,19 +59,21 @@
 
             <div class="col-sm-10">
                 <input type="text" class="form-control"
-                       name="driveRoute" ng-model="outgoing.driveRoute" validator="required">
+                       name="driveRoute" ng-model="outgoing.driveRoute" validator1="required">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">交通工具</label>
 
             <div class="col-sm-10">
-                <input type="text" class="form-control"
-                       name="transportation" ng-model="outgoing.transportation" validator="required">
+                <select class="form-control" code-select="Vehicle" placeholder="请选择交通工具"
+                        name="transportation" ng-model="outgoing.transportation.objectId" validator="required">
+                </select>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">是否派车</label>
+
             <div class="col-sm-10">
                 <label class="radio-inline c-radio">
                     <input type="radio" ng-model="outgoing.requiredCar" ng-value="1">

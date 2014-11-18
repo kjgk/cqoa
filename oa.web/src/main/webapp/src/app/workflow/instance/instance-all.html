@@ -9,15 +9,17 @@
                             <label>日期</label>
                             <input date-picker ng-model="grid.queryInfo.date" placeholder="请选择日期">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-init="grid.queryInfo.flowType=''">
                             <label>流程类型</label>
-                            <input type="text" class="form-control input-sm" placeholder="请选择流程类型"
-                                   ng-model='grid.queryInfo.flowType' flow-type-select>
+                            <select class="form-control input-sm" flow-type-select show-all
+                                    ng-model='grid.queryInfo.flowType'>
+                            </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-init="grid.queryInfo.status=''">
                             <label>状态</label>
-                            <input type="text" class="form-control input-sm" placeholder="请选择状态"
-                                   ng-model='grid.queryInfo.status' code-select="InstanceStatus">
+                            <select class="form-control input-sm" code-select="InstanceStatus" show-all
+                                    ng-model='grid.queryInfo.status'>
+                            </select>
                         </div>
                         <div class="form-group form-group-sm">
                             <label>发起人</label>
