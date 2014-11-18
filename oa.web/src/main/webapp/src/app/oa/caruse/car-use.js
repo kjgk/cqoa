@@ -5,9 +5,19 @@ angular.module('app.oa')
     .config(function ($stateProvider) {
         $stateProvider
             .state('oa.carUse', {
-                url: '/caruse',
+                abstract: true,
+                template: '<div ui-view></div>',
+                url: '/caruse'
+            })
+            .state('oa.carUse.list', {
+                url: '/list',
                 templateUrl: 'app/oa/caruse/car-use-list.html',
                 controller: 'CarUseCtrl'
+            })
+            .state('oa.carUse.allot', {
+                url: '/allot',
+                templateUrl: 'app/oa/caruse/car-use-allot-list.html',
+                controller: 'CarUseAllotListCtrl'
             })
         ;
     })
@@ -34,6 +44,13 @@ angular.module('app.oa')
             },
             remove: function (objectId) {
                 return api.doDELETE(objectId);
+            },
+            queryForAllot: function (params) {
+                return $http({
+                    url: PageContext.path + '/oa/carUse/allot',
+                    method: 'GET',
+                    params: params
+                });
             },
             allot: function (carUseInfo) {
                 return Restangular.one('oa/carUse', carUseInfo.carUse.objectId).post('allot', carUseInfo);
@@ -83,9 +100,15 @@ angular.module('app.oa')
                 });
             });
         };
+    })
+
+    .controller('CarUseAllotListCtrl', function ($scope, $q, $modal, SimpleTable, CarUseService) {
+
+        $scope.grid = SimpleTable(CarUseService.queryForAllot);
+
         $scope.allotCarUse = function (carUse) {
             var modalInstance = $modal.open({
-                templateUrl: 'app/oa/caruse/car-use-allot.html',
+                templateUrl: 'app/oa/caruse/car-use-allot-form.html',
                 controller: 'CarUseAllotCtrl',
                 resolve: {
                     objectId: function () {

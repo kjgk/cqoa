@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-@Service("carUseUseService")
+@Service("carUseService")
 @Transactional(rollbackForClassName = {"Exception", "BaseBusinessException"})
 public class CarUseServiceImpl extends EntityServiceImpl implements CarUseService {
 
@@ -64,6 +64,12 @@ public class CarUseServiceImpl extends EntityServiceImpl implements CarUseServic
 
     @Override
     public void addCarUseInfo(CarUseInfo carUseInfo) throws Exception {
+
+        CarUse carUse = getCarUse(carUseInfo.getCarUse().getObjectId());
+        Code status = codeService.getCodeByTag("CarUseStatus", "Alloted");
+        carUse.setStatus(status);
+        carUse.setCurrentUser(carUseInfo.getCurrentUser());
+        save(carUse);
 
         executeHql("delete from " + CarUseInfo.class.getName() + " a where a.carUse.objectId = ? ", carUseInfo.getCarUse().getObjectId());
         save(carUseInfo);
