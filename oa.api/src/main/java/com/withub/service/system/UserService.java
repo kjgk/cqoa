@@ -14,6 +14,8 @@ public interface UserService extends EntityService {
 
     public void addUser(User user) throws Exception;
 
+    public void addUser(User user, boolean event) throws Exception;
+
     public void updateUser(User user) throws Exception;
 
     public void archiveUser(String userId) throws Exception;

@@ -41,7 +41,7 @@
                                     fieldLabel: '性别',
                                     name: 'sex.objectId',
                                     codeColumnTag: 'Sex',
-                                    columns: 2,
+                                    columns: 3,
                                     allowBlank: false
                                 },
                                 {
@@ -102,9 +102,7 @@
                             items: [
                                 {
                                     fieldLabel: '手机',
-                                    name: 'mobile',
-                                    minLength: 11,
-                                    maxLength: 11
+                                    name: 'mobile'
                                 },
                                 {
                                     fieldLabel: '电子邮箱',

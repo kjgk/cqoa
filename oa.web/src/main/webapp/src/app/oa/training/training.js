@@ -84,8 +84,6 @@ angular.module('app.oa')
     .controller('TrainingCreateCtrl', function ($scope, $modalInstance, TrainingService) {
 
         $scope.training = {
-            beginDate: new Date(),
-            endDate: new Date()
         };
         $scope.title = '新增培训申请';
 
