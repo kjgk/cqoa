@@ -267,6 +267,12 @@ public class UserServiceImpl extends EntityServiceImpl implements UserService {
         return listByHql(hql, roleTag, UserStatus.Active.name());
     }
 
+    public List listByOrganizationId(String organizationId) throws Exception {
+
+        String hql = "from User where organization.objectId = ? and status.codeTag = ? and objectStatus = 1 order by name";
+        return listByHql(hql, organizationId, UserStatus.Active.name());
+    }
+
     //============================ 属性方法 ===============================================================
 
 

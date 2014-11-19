@@ -261,6 +261,21 @@ public class UserController extends BaseController {
             }
         }
         modelMap.put("items", list);
+    }
 
+    @RequestMapping(value = "/user/listByOrganizationId/{organizationId}", method = RequestMethod.GET)
+    public void listByOrganizationId(ModelMap modelMap, @PathVariable("organizationId") String organizationId) throws Exception {
+
+        List<User> userList = userService.listByOrganizationId(organizationId);
+        List list = new ArrayList();
+        if (CollectionUtil.isNotEmpty(userList)) {
+            for (User user : userList) {
+                Map item = new HashMap();
+                item.put("objectId", user.getObjectId());
+                item.put("name", user.getName());
+                list.add(item);
+            }
+        }
+        modelMap.put("items", list);
     }
 }

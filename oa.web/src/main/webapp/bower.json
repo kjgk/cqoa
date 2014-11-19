@@ -26,7 +26,8 @@
     "angular-bootstrap-datetimepicker": "~0.3.0",
     "angular-date-time-input": "~0.1.0",
     "angular-validation": "https://raw.githubusercontent.com/kjgk/angular-validation/master/dist/angular-validation.js",
-    "ngDialog": "~0.3.4"
+    "ngDialog": "~0.3.4",
+    "angular-ui-tree": "~2.1.5"
   },
   "devDependencies": {
     "angular-mocks": "1.2.x"

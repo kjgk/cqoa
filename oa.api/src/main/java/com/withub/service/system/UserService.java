@@ -39,4 +39,6 @@ public interface UserService extends EntityService {
     public List<User> searchUser(String keyword) throws Exception;
 
     public List<User> listByRoleTag(String roleTag) throws Exception;
+
+    public List<User> listByOrganizationId(String organizationId) throws Exception;
 }
