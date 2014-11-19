@@ -30,7 +30,7 @@
                     <td>{{x.description}}</td>
                     <td>{{x.proposer.name}}</td>
                     <td>{{x.beginTime|$date:DateFormat.MINUTE}} ~ {{x.endTime|$date:DateFormat.MINUTE}}</td>
-                    <td>{{x.localCity===1?"市内":"市外"}}</td>
+                    <td>{{getRegionText(x.region)}}</td>
                     <td>{{x.address }}</td>
                     <td>{{x.status.name}}</td>
                     <td>{{x.carUseInfoList[0].car.name}}</td>

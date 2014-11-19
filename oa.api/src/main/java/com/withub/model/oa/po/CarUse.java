@@ -25,7 +25,9 @@ public class CarUse extends AbstractBaseEntity {
 
     private String address;
 
-    private Integer localCity;
+    // 区域
+    // 0 代表辖区内，1 代表市内，2 代表市外
+    private Integer region;
 
     @OneToMany(targetEntity = CarUseInfo.class, mappedBy = "carUse", fetch = FetchType.LAZY)
     private List<CarUseInfo> carUseInfoList;
@@ -82,12 +84,12 @@ public class CarUse extends AbstractBaseEntity {
         this.address = address;
     }
 
-    public Integer getLocalCity() {
-        return localCity;
+    public Integer getRegion() {
+        return region;
     }
 
-    public void setLocalCity(Integer localCity) {
-        this.localCity = localCity;
+    public void setRegion(Integer region) {
+        this.region = region;
     }
 
     public List<CarUseInfo> getCarUseInfoList() {

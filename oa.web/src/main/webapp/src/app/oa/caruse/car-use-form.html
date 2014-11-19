@@ -40,10 +40,13 @@
 
             <div class="col-sm-10">
                 <label class="radio-inline c-radio">
-                    <input type="radio" ng-model="carUse.localCity" ng-value="1">
+                    <input type="radio" ng-model="carUse.region" ng-value="0">
+                    <span class="fa fa-circle"></span>辖区内</label>
+                <label class="radio-inline c-radio">
+                    <input type="radio" ng-model="carUse.region" ng-value="1">
                     <span class="fa fa-circle"></span>市内</label>
                 <label class="radio-inline c-radio">
-                    <input type="radio" ng-model="carUse.localCity" ng-value="0">
+                    <input type="radio" ng-model="carUse.region" ng-value="2">
                     <span class="fa fa-circle"></span>市外</label>
             </div>
 

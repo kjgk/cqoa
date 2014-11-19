@@ -29,7 +29,7 @@
         <label class="col-sm-2 control-label">区域</label>
 
         <div class="col-sm-10">
-            <p class="form-control-static">{{carUse.localCity===1?"市内":"市外"}}</p>
+            <p class="form-control-static">{{getRegionText(carUse.region)}}</p>
         </div>
     </div>
         <div class="form-group">
