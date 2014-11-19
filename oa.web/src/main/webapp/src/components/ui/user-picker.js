@@ -11,7 +11,7 @@ angular.module('withub.ui')
                 placeholder: '@'
             },
             link: function (scope, element, attrs, ngModel) {
-                scope.users = [];
+                scope.users = scope.users || [];
                 scope.removeUser = function (user) {
                     scope.users = _.reject(scope.users, user);
                 };
@@ -53,6 +53,9 @@ angular.module('withub.ui')
 
         $scope.organizationUsers = {};
         $scope.selectedUserList = users || [];
+        _.forEach($scope.selectedUserList, function (user) {
+            user.selected = true;
+        });
 
         $scope.promise = loadOrganization('Root').success(function (response) {
             $scope.organizations = response.nodes;
