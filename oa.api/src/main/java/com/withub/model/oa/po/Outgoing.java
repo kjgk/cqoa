@@ -34,7 +34,9 @@ public class Outgoing extends AbstractBaseEntity {
 
     private String driveRoute;
 
-    private String transportation;
+    @OneToOne(targetEntity = Code.class)
+    @JoinColumn(name = "transportation")
+    private Code transportation;
 
     // 是否派车
     private Integer requiredCar;
@@ -105,11 +107,11 @@ public class Outgoing extends AbstractBaseEntity {
         this.driveRoute = driveRoute;
     }
 
-    public String getTransportation() {
+    public Code getTransportation() {
         return transportation;
     }
 
-    public void setTransportation(String transportation) {
+    public void setTransportation(Code transportation) {
         this.transportation = transportation;
     }
 

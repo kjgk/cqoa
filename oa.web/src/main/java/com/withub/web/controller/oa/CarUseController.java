@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Controller
@@ -39,6 +41,27 @@ public class CarUseController extends BaseController {
 
         putRecordsetInfo(modelMap, carUseService.queryCarUse(queryInfo));
     }
+
+    @RequestMapping(value = "/carUse/allot", method = RequestMethod.GET)
+    public void queryCarUseAllot(HttpServletRequest request, Date date, ModelMap modelMap) throws Exception {
+
+        QueryInfo queryInfo = new QueryInfo();
+        queryInfo.setTargetEntity(CarUse.class);
+        if (date != null) {
+            setQueryInfoCondition(queryInfo, "beginTime", date, ExpressionOperation.LessThanOrEquals);
+            setQueryInfoCondition(queryInfo, "endTime", date, ExpressionOperation.GreaterThanOrEquals);
+        }
+
+        List<String> statusList = new ArrayList<>();
+        statusList.add("WaitAllot");
+        statusList.add("Alloted");
+        setQueryInfoCondition(queryInfo, "status.codeTag", statusList, ExpressionOperation.In);
+
+        setPageInfoQueryCondition(request, queryInfo);
+
+        putRecordsetInfo(modelMap, carUseService.queryCarUse(queryInfo));
+    }
+
 
     @RequestMapping(value = "/carUse/{objectId}", method = RequestMethod.GET)
     public void getCarUse(@PathVariable("objectId") String objectId, ModelMap modelMap) throws Exception {
