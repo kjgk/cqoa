@@ -257,6 +257,7 @@ public class UserController extends BaseController {
                 Map item = new HashMap();
                 item.put("objectId", user.getObjectId());
                 item.put("name", user.getName());
+                item.put("organizationId", user.getOrganization().getObjectId());
                 list.add(item);
             }
         }
@@ -273,6 +274,7 @@ public class UserController extends BaseController {
                 Map item = new HashMap();
                 item.put("objectId", user.getObjectId());
                 item.put("name", user.getName());
+                item.put("organizationId", user.getOrganization().getObjectId());
                 list.add(item);
             }
         }

@@ -102,16 +102,12 @@ angular.module('withub.ui')
         };
 
         $scope.getOrganizationUserSelectCount = function (item) {
-
-            var userList = $scope.organizationUsers[item.id];
             var count = 0;
-            if (userList) {
-                _.forEach(userList, function (user) {
-                    if (user.selected) {
-                        count++
-                    }
-                });
-            }
+            _.forEach($scope.selectedUserList, function (user) {
+                if (user.organizationId == item.id) {
+                    count++
+                }
+            });
             return count;
         };
 
