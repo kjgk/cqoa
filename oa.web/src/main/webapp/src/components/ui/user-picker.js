@@ -125,6 +125,9 @@ angular.module('withub.ui')
         };
 
         $scope.submit = function () {
+            _.forEach($scope.selectedUserList, function (user) {
+                delete user.selected;
+            });
             $modalInstance.close($scope.selectedUserList);
         };
     })
