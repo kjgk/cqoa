@@ -1,5 +1,6 @@
 package com.withub.service.impl.oa;
 
+import com.withub.common.util.DateUtil;
 import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
@@ -56,6 +57,8 @@ public class LeaveServiceImpl extends EntityServiceImpl implements LeaveService 
         Code status = codeService.getCodeByTag("LeaveStatus", "Create");
         leave.setStatus(status);
         leave.setProposer(leave.getCurrentUser());
+        Integer duration = (int) DateUtil.getDiffDays(leave.getBeginDate(), leave.getEndDate());
+        leave.setDuration(duration);
         save(leave);
     }
 

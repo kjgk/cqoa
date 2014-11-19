@@ -1,5 +1,6 @@
 package com.withub.service.impl.oa;
 
+import com.withub.common.util.DateUtil;
 import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
@@ -13,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
+import java.util.Date;
+
 
 @Service("outgoingService")
 @Transactional(rollbackForClassName = {"Exception", "BaseBusinessException"})
@@ -20,7 +24,7 @@ public class OutgoingServiceImpl extends EntityServiceImpl implements OutgoingSe
 
     @Autowired
     private CodeService codeService;
-    
+
     public Outgoing getOutgoing(String objectId) throws Exception {
 
         return get(Outgoing.class, objectId);
@@ -35,6 +39,7 @@ public class OutgoingServiceImpl extends EntityServiceImpl implements OutgoingSe
 
         logicDelete(Outgoing.class, objectId);
     }
+
 
     public void submitOutgoing(Outgoing outgoing) throws Exception {
 
@@ -51,6 +56,8 @@ public class OutgoingServiceImpl extends EntityServiceImpl implements OutgoingSe
         Code status = codeService.getCodeByTag("OutgoingStatus", "Create");
         outgoing.setStatus(status);
         outgoing.setProposer(outgoing.getCurrentUser());
+        Integer duration = (int) DateUtil.getDiffDays(outgoing.getBeginDate(), outgoing.getEndDate());
+        outgoing.setDuration(duration);
         save(outgoing);
     }
 
@@ -59,6 +66,6 @@ public class OutgoingServiceImpl extends EntityServiceImpl implements OutgoingSe
 
         outgoing.setProposer(outgoing.getCurrentUser());
         save(outgoing);
-    }    
+    }
 
 }

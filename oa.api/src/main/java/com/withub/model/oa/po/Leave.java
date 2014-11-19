@@ -35,6 +35,8 @@ public class Leave extends AbstractBaseEntity {
     @JoinColumn(name = "proposer")
     private User proposer;
 
+    private Integer duration;
+
     //================================ 属性方法 ==========================================================
 
     public Date getBeginDate() {
@@ -83,5 +85,13 @@ public class Leave extends AbstractBaseEntity {
 
     public void setProposer(User proposer) {
         this.proposer = proposer;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 }
