@@ -32,6 +32,9 @@ public class CarUse extends AbstractBaseEntity {
     @OneToMany(targetEntity = CarUseInfo.class, mappedBy = "carUse", fetch = FetchType.LAZY)
     private List<CarUseInfo> carUseInfoList;
 
+    @OneToMany(targetEntity = CarUseUser.class, mappedBy = "carUse", fetch = FetchType.LAZY)
+    private List<CarUseUser> carUseUserList;
+
     // 用车部门
     @OneToOne(targetEntity = Organization.class)
     @JoinColumn(name = "organizationId")
@@ -130,5 +133,13 @@ public class CarUse extends AbstractBaseEntity {
 
     public void setProposer(User proposer) {
         this.proposer = proposer;
+    }
+
+    public List<CarUseUser> getCarUseUserList() {
+        return carUseUserList;
+    }
+
+    public void setCarUseUserList(List<CarUseUser> carUseUserList) {
+        this.carUseUserList = carUseUserList;
     }
 }

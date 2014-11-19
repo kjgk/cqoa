@@ -1,30 +1,37 @@
 <fieldset ng-controller="CarUseViewCtrl">
-        <div class="form-group">
-            <label class="col-sm-2 control-label">申请人</label>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">申请人</label>
 
-            <div class="col-sm-4">
-                <p class="form-control-static">{{carUse.proposer.name}}</p>
-            </div>
-            <label class="col-sm-2 control-label">申请部门</label>
-
-            <div class="col-sm-4">
-                <p class="form-control-static">{{carUse.proposer.organization.name}}</p>
-            </div>
+        <div class="col-sm-4">
+            <p class="form-control-static">{{carUse.proposer.name}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">用车事由</label>
+        <label class="col-sm-2 control-label">申请部门</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{carUse.description}}</p>
-            </div>
+        <div class="col-sm-4">
+            <p class="form-control-static">{{carUse.proposer.organization.name}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">用车时间</label>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">用车人</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{carUse.beginTime|$date:DateFormat.MINUTE}}~{{carUse.endTime|$date:DateFormat.MINUTE}}</p>
-            </div>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{carUse.carUseUserList|caruseusername}}</p>
         </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">用车事由</label>
+
+        <div class="col-sm-10">
+            <p class="form-control-static">{{carUse.description}}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">用车时间</label>
+
+        <div class="col-sm-10">
+            <p class="form-control-static">{{carUse.beginTime|$date:DateFormat.MINUTE}}~{{carUse.endTime|$date:DateFormat.MINUTE}}</p>
+        </div>
+    </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">区域</label>
 
@@ -32,13 +39,13 @@
             <p class="form-control-static">{{getRegionText(carUse.region)}}</p>
         </div>
     </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">前往地点</label>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">前往地点</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{carUse.address}}</p>
-            </div>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{carUse.address}}</p>
         </div>
+    </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">申请时间</label>
 

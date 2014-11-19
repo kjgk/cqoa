@@ -5,6 +5,7 @@ import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.CarUse;
 import com.withub.model.oa.po.CarUseInfo;
+import com.withub.model.oa.po.CarUseUser;
 import com.withub.model.system.po.Code;
 import com.withub.service.EntityServiceImpl;
 import com.withub.service.oa.CarUseService;
@@ -52,6 +53,11 @@ public class CarUseServiceImpl extends EntityServiceImpl implements CarUseServic
         carUse.setStatus(status);
         carUse.setProposer(carUse.getCurrentUser());
         save(carUse);
+
+        for (CarUseUser carUseUser : carUse.getCarUseUserList()) {
+            carUseUser.setCarUse(carUse);
+            save(carUseUser);
+        }
     }
 
     @Override
@@ -59,6 +65,13 @@ public class CarUseServiceImpl extends EntityServiceImpl implements CarUseServic
 
         carUse.setProposer(carUse.getCurrentUser());
         save(carUse);
+
+        executeHql("delete from CarUseUser a where a.carUse.objectId = ?", carUse.getObjectId());
+
+        for (CarUseUser carUseUser : carUse.getCarUseUserList()) {
+            carUseUser.setCarUse(carUse);
+            save(carUseUser);
+        }
     }
 
 

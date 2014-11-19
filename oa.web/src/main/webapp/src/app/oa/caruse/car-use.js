@@ -22,6 +22,16 @@ angular.module('app.oa')
         ;
     })
 
+    .filter('caruseusername', function () {
+        return function (input) {
+            var username = [];
+            _.forEach(input, function (carUseUser) {
+                username.push(carUseUser.user.name);
+            });
+            return username.join('，');
+        }
+    })
+
     .factory('CarUseService', function ($http, Restangular) {
         var api = Restangular.all('oa/carUse');
 
@@ -146,8 +156,11 @@ angular.module('app.oa')
     .controller('CarUseCreateCtrl', function ($scope, $modalInstance, CarUseService) {
 
         $scope.carUse = {
-            region: 0
+            region: 0,
+            carUseUserList: []
         };
+        $scope.userList = [];
+
         $scope.title = '新增用车申请';
 
         $scope.cancel = function () {
@@ -155,6 +168,11 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
+            _.forEach($scope.userList, function (user) {
+                $scope.carUse.carUseUserList.push({
+                    user: {objectId: user.objectId}
+                })
+            });
             $scope.promise = CarUseService.create($scope.carUse).then(function () {
                 $modalInstance.close();
             });
@@ -165,7 +183,20 @@ angular.module('app.oa')
 
         $scope.promise = CarUseService.get(objectId);
 
-        $scope.carUse = $scope.promise.$object;
+        $scope.userList = [];
+        $scope.promise.then(function (response) {
+            $scope.carUse = response;
+            _.forEach($scope.carUse.carUseUserList, function (carUseUser) {
+                $scope.userList.push({
+                    objectId: carUseUser.user.objectId,
+                    name: carUseUser.user.name,
+                    organization: {
+                        objectId: carUseUser.user.organization.objectId
+                    }
+                })
+            });
+        });
+
 
         $scope.title = '修改用车申请';
 
@@ -174,6 +205,11 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
+            _.forEach($scope.userList, function (user) {
+                $scope.carUse.carUseUserList.push({
+                    user: {objectId: user.objectId}
+                })
+            });
             $scope.promise = CarUseService.update($scope.carUse).then(function () {
                 $modalInstance.close();
             });
