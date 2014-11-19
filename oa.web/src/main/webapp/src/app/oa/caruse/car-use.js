@@ -100,6 +100,16 @@ angular.module('app.oa')
                 });
             });
         };
+        $scope.getRegionText = function (region) {
+            switch (region) {
+                case 0:
+                    return "辖区内";
+                case 1:
+                    return "市内";
+                case 2:
+                    return "市外";
+            }
+        }
     })
 
     .controller('CarUseAllotListCtrl', function ($scope, $q, $modal, SimpleTable, CarUseService) {
@@ -121,14 +131,22 @@ angular.module('app.oa')
                 Toaster.success("分配成功！");
             });
         };
+        $scope.getRegionText = function (region) {
+            switch (region) {
+                case 0:
+                    return "辖区内";
+                case 1:
+                    return "市内";
+                case 2:
+                    return "市外";
+            }
+        }
     })
 
     .controller('CarUseCreateCtrl', function ($scope, $modalInstance, CarUseService) {
 
         $scope.carUse = {
-//            beginTime: new Date(),
-//            endTime: new Date(),
-            localCity: 0
+            region: 0
         };
         $scope.title = '新增用车申请';
 
@@ -165,6 +183,16 @@ angular.module('app.oa')
     .controller('CarUseViewCtrl', function ($scope, CarUseService) {
 
         $scope.carUse = CarUseService.get($scope.objectId).$object;
+        $scope.getRegionText = function (region) {
+            switch (region) {
+                case 0:
+                    return "辖区内";
+                case 1:
+                    return "市内";
+                case 2:
+                    return "市外";
+            }
+        }
     })
 
     .controller('CarUseAllotCtrl', function ($scope, $modalInstance, CarUseService, objectId) {
