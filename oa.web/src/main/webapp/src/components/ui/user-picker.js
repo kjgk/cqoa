@@ -82,11 +82,17 @@ angular.module('withub.ui')
                 $scope.promise = loadUser(item.id).success(function (response) {
                     $scope.userList = [];
                     _.forEach(response.items, function (item) {
-                        var selected = _.where($scope.selectedUserList, item);
+                        var selected = _.where($scope.selectedUserList, {objectId: item.objectId});
                         if (selected.length > 0) {
                             $scope.userList.push(selected[0]);
                         } else {
-                            $scope.userList.push(item);
+                            $scope.userList.push({
+                                objectId: item.objectId,
+                                name: item.name,
+                                organization: {
+                                    objectId: item.organizationId
+                                }
+                            });
                         }
 
                     });
@@ -107,7 +113,7 @@ angular.module('withub.ui')
         $scope.getOrganizationUserSelectCount = function (item) {
             var count = 0;
             _.forEach($scope.selectedUserList, function (user) {
-                if (user.organizationId == item.id) {
+                if (user.organization.objectId == item.id) {
                     count++
                 }
             });
