@@ -83,6 +83,34 @@ Ext.define('withub.ext.system.user.UserList', {
                         }).show();
                     },
                     scope: this
+                },
+                '-',
+                {
+                    xtype: 'button',
+                    text: '同步用户',
+                    iconCls: 'icon-refresh',
+                    handler: function () {
+                        var mask = new Ext.LoadMask(this.gridPanel.getEl(), {
+                            msg: '正在同步用户数据，请稍候...'
+                        });
+                        mask.show();
+                        Ext.Ajax.request({
+                            url: PageContext.contextPath + "/oa/dataImport/user",
+                            success: function (response) {
+                                mask.hide();
+                                var result = Ext.decode(response.responseText);
+                                if (result.success) {
+                                    ExtUtil.Msg.info("同步成功!", function () {
+                                        this.gridPanel.getStore().load();
+                                    }, this);
+                                } else {
+                                    ExtUtil.Msg.error(result.message);
+                                }
+                            },
+                            scope: this
+                        });
+                    },
+                    scope: this
                 }
             ]
         });

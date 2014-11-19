@@ -1,6 +1,9 @@
 package com.withub.service.impl.oa;
 
 import com.withub.common.util.CollectionUtil;
+import com.withub.common.util.DateUtil;
+import com.withub.model.system.enumeration.AccountStatus;
+import com.withub.model.system.enumeration.AccountType;
 import com.withub.model.system.po.*;
 import com.withub.service.EntityServiceImpl;
 import com.withub.service.oa.DataImportService;
@@ -61,8 +64,8 @@ public class DataImportServiceImpl extends EntityServiceImpl implements DataImpo
                     organization.setName((String) data[1]);
                     organization.setCode(orgId);
                     organization.setOrganizationType(codeService.getCodeByTag("OrganizationType", "Department"));
-                    organizationService.addOrganization(organization);
                     logger.info("正在导入组织机构：" + organization.getName());
+                    organizationService.addOrganization(organization);
                 }
             }
         }
@@ -107,9 +110,21 @@ public class DataImportServiceImpl extends EntityServiceImpl implements DataImpo
                     user.setRole(rolePersonnel);
                     user.setOrganization(organization);
                     user.setMobile((String) data[6]);
-                    userService.addUser(user, false);
-                    flag = true;
+
                     logger.info("正在导入用户：" + user.getName());
+
+                    userService.addUser(user, false);
+                    Account account = new Account();
+                    account.setCurrentUser(systemUser);
+                    account.setUser(user);
+                    account.setName((String) data[2]);
+                    account.setPassword((String) data[3]);
+                    account.setSalt((String) data[4]);
+                    account.setAccountStatus(AccountStatus.Normal);
+                    account.setAccountType(AccountType.Normal);
+                    account.setPasswordTime(DateUtil.getCurrentTime());
+                    userService.save(account);
+                    flag = true;
                 }
             }
 
