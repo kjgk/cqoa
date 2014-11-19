@@ -40,7 +40,7 @@ Ext.define('withub.ext.system.organization.Organization', {
                 },
                 {
                     fieldLabel: '标识',
-                    name: 'nodeTag',
+                    name: 'code',
                     maxLength: 30
                 },
                 {

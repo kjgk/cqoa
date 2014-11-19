@@ -146,7 +146,6 @@ public class SecurityController extends BaseController {
             userInfo.put("parentOrganizationId", parentOrganizationId);
             userInfo.put("organizationId", currentUser.getOrganization() == null ? "" : currentUser.getOrganization().getObjectId());
             userInfo.put("organizationName", currentUser.getOrganization() == null ? "" : currentUser.getOrganization().getFullName());
-            userInfo.put("organizationType", currentUser.getOrganization() == null ? "" : currentUser.getOrganization().getOrganizationType().getCodeTag());
             modelMap.put("userInfo", userInfo);
         } else {
             modelMap.put("userInfo", null);

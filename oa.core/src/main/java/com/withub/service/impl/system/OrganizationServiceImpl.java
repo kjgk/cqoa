@@ -17,6 +17,11 @@ public class OrganizationServiceImpl extends com.withub.service.EntityServiceImp
         return getRootEntity(Organization.class);
     }
 
+    public Organization getOrganizationByCode(String code) throws Exception {
+
+        return (Organization) getByHql("from " + Organization.class.getName() + " where code = ?", code);
+    }
+
     public void addOrganization(Organization organization) throws Exception {
 
         Organization parent = get(Organization.class, organization.getParent().getObjectId());

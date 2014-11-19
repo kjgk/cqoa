@@ -97,6 +97,29 @@ Ext.define('withub.ext.system.organization.OrganizationManager', {
                 },
                 scope: this
             });
+            items.push({
+                text: '同步组织机构',
+                iconCls: 'icon-refresh',
+                hidden: record.get('depth') > 1,
+                handler: function () {
+                    Ext.Ajax.request({
+                        url: PageContext.contextPath + "/oa/dataImport/organization",
+                        success: function (response) {
+                            var result = Ext.decode(response.responseText);
+                            if (result.success) {
+                                ExtUtil.Msg.info("同步成功!", function () {
+                                    store.load({
+                                        node: record
+                                    });
+                                });
+                            } else {
+                                ExtUtil.Msg.error(result.message);
+                            }
+                        }
+                    });
+                },
+                scope: this
+            });
         }, this);
 
         this.gridPanel.on('createcontextmenu', function (items, store, record, index, event) {

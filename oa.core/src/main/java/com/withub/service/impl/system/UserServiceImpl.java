@@ -74,6 +74,11 @@ public class UserServiceImpl extends EntityServiceImpl implements UserService {
 
     public void addUser(User user) throws Exception {
 
+        addUser(user, true);
+    }
+
+    public void addUser(User user, boolean event) throws Exception {
+
         user.setObjectId(StringUtil.getUuid());
         user.setAdministrator(0);
 
@@ -112,7 +117,9 @@ public class UserServiceImpl extends EntityServiceImpl implements UserService {
         userOrganizationHistory.setStatus(1);
         save(userOrganizationHistory);
 
-        SystemEventPublisher.publishUserSaveEvent(this, user);
+        if (event) {
+            SystemEventPublisher.publishUserSaveEvent(this, user);
+        }
     }
 
     public void updateUser(User user) throws Exception {
