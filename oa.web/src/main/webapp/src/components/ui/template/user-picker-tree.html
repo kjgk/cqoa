@@ -3,7 +3,7 @@
         <i class="fa fa-lg fa-fw" ng-class="{'fa-caret-right': collapsed, 'fa-caret-down': !collapsed}"></i>
     </a>
     <a class="node-text" title="{{item.text}}">
-        <i class="{{item.icon}}"></i>{{item.text}} <span ng-show="getOrganizationUserSelectCount(item)>0" ng-bind="getOrganizationUserSelectCount(item)" class="badge pull-right" style="margin: 4px 8px;"></span>
+        <i class="{{item.icon}}"></i>{{item.text}} <span ng-show="getOrganizationUserSelectCount(item)>0" ng-bind="getOrganizationUserSelectCount(item)" class="badge pull-right" style="margin: 4px 8px 0 0;"></span>
     </a>
 </div>
 <ol ui-tree-nodes ng-model="item.items" ng-class="{hidden: collapsed}">
