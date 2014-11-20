@@ -21,7 +21,7 @@ angular.module('withub.ui')
                         controller: 'UserPickerSelectCtrl',
                         resolve: {
                             users: function () {
-                                return scope.users;
+                                return _.clone(scope.users);
                             }
                         }
                     });
