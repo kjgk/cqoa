@@ -20,9 +20,9 @@ public class OutgoingUser extends AbstractEntity {
     private User user;
 
     @ManyToOne(targetEntity = Outgoing.class)
-    @JoinColumn(name = "outGoingId")
+    @JoinColumn(name = "outgoingId")
     @JsonIgnore
-    private Outgoing outGoing;
+    private Outgoing outgoing;
 
     //================================ 属性方法 ==========================================================
 
@@ -35,12 +35,11 @@ public class OutgoingUser extends AbstractEntity {
     }
 
     public Outgoing getOutgoing() {
-        return outGoing;
+        return outgoing;
     }
 
-    public void setOutgoing(Outgoing outGoing) {
-        this.outGoing = outGoing;
+    public void setOutgoing(Outgoing outgoing) {
+        this.outgoing = outgoing;
     }
-
 }
 

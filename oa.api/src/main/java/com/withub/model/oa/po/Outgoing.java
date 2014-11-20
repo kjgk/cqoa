@@ -50,7 +50,7 @@ public class Outgoing extends AbstractBaseEntity {
 
     private Integer duration;
 
-    @OneToMany(targetEntity = OutgoingUser.class, mappedBy = "outGoing", fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = OutgoingUser.class, mappedBy = "outgoing", fetch = FetchType.LAZY)
     private List<OutgoingUser> outgoingUserList;
 
     //================================ 属性方法 ==========================================================
