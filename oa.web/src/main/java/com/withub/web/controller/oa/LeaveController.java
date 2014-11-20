@@ -4,6 +4,7 @@ import com.withub.model.entity.query.ExpressionOperation;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.oa.po.Leave;
 import com.withub.service.oa.LeaveService;
+import com.withub.util.SpringSecurityUtil;
 import com.withub.web.common.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,10 @@ public class LeaveController extends BaseController {
             setQueryInfoCondition(queryInfo, "endDate", date, ExpressionOperation.GreaterThanOrEquals);
         }
         setPageInfoQueryCondition(request, queryInfo);
+
+        setQueryInfoCondition(queryInfo, "creator.objectId", SpringSecurityUtil.getCurrentUser().getObjectId() , ExpressionOperation.Equals);
+
+        setDescOrderBy(queryInfo, "createTime");
 
         putRecordsetInfo(modelMap, leaveService.queryLeave(queryInfo));
     }

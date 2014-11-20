@@ -2,9 +2,12 @@
     <div>
         <div class="rn_c">
             <div class="ywtj"><p>综合事项申请</p>
-                <button class="btn btn-primary btn-sm pull-right" ng-click="createMiscellaneous()"><i
-                        class="fa fa-plus fa-fw"></i> 添加
-                </button>
+                <div class="tool-bar">
+                    <form class="form-inline" role="form">
+                        <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i class="fa fa-search fa-fw"></i> 查询</button>
+                        <button class="btn btn-primary btn-sm" ng-click="createMiscellaneous()"><i class="fa fa-plus fa-fw"></i> 添加</button>
+                    </form>
+                </div>
                 <div class="clear"></div>
             </div>
             <table simple-table="grid" class="rbga" border="1">

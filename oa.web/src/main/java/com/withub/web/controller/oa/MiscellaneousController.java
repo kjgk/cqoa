@@ -1,8 +1,10 @@
 package com.withub.web.controller.oa;
 
+import com.withub.model.entity.query.ExpressionOperation;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.oa.po.Miscellaneous;
 import com.withub.service.oa.MiscellaneousService;
+import com.withub.util.SpringSecurityUtil;
 import com.withub.web.common.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,10 @@ public class MiscellaneousController extends BaseController {
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setTargetEntity(Miscellaneous.class);
         setPageInfoQueryCondition(request, queryInfo);
+
+        setQueryInfoCondition(queryInfo, "creator.objectId", SpringSecurityUtil.getCurrentUser().getObjectId() , ExpressionOperation.Equals);
+
+        setDescOrderBy(queryInfo, "createTime");
 
         putRecordsetInfo(modelMap, miscellaneousService.queryMiscellaneous(queryInfo));
     }

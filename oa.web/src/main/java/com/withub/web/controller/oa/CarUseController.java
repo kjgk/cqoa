@@ -5,6 +5,7 @@ import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.oa.po.CarUse;
 import com.withub.model.oa.po.CarUseInfo;
 import com.withub.service.oa.CarUseService;
+import com.withub.util.SpringSecurityUtil;
 import com.withub.web.common.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,10 @@ public class CarUseController extends BaseController {
         }
 
         setPageInfoQueryCondition(request, queryInfo);
+
+        setQueryInfoCondition(queryInfo, "creator.objectId", SpringSecurityUtil.getCurrentUser().getObjectId(), ExpressionOperation.Equals);
+
+        setDescOrderBy(queryInfo, "createTime");
 
         putRecordsetInfo(modelMap, carUseService.queryCarUse(queryInfo));
     }
