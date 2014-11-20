@@ -231,7 +231,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('CarUseAllotCtrl', function ($scope, $modalInstance, CarUseService, objectId) {
+    .controller('CarUseAllotCtrl', function ($scope, $modalInstance, CarUseService, DriverService, CarService, objectId) {
 
         $scope.title = '分配车辆';
 
@@ -239,17 +239,22 @@ angular.module('app.oa')
             carUse: {
                 objectId: objectId
             },
-            driver: {},
-            car: {}
+            driver: {objectId: ''},
+            car: {objectId: ''}
         };
+
+        CarService.query().then(function(response){
+            $scope.carList = response.data.items;
+        });
+        DriverService.query().then(function(response){
+            $scope.driverList = response.data.items;
+        });
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
         };
 
         $scope.submit = function () {
-            $scope.carUserInfo.driver.objectId = $scope.driverSelect.value;
-            $scope.carUserInfo.car.objectId = $scope.carSelect.value;
             $scope.promise = CarUseService.allot($scope.carUserInfo).then(function () {
                 $modalInstance.close();
             });

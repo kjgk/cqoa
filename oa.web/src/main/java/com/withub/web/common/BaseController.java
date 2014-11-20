@@ -42,8 +42,15 @@ public class BaseController {
 
     public void setPageInfoQueryCondition(HttpServletRequest request, QueryInfo queryInfo) {
 
-        queryInfo.setRecordsetIndex(Integer.parseInt(request.getParameter("pageNo")) - 1);
-        queryInfo.setRecordsetSize(Integer.parseInt(request.getParameter("pageSize")));
+        String pageNo = request.getParameter("pageNo");
+        String pageSize = request.getParameter("pageSize");
+        if (StringUtil.isEmpty(pageNo) && StringUtil.isEmpty(pageSize)) {
+            queryInfo.setRecordsetIndex(0);
+            queryInfo.setRecordsetSize(Integer.MAX_VALUE);
+        } else {
+            queryInfo.setRecordsetIndex(Integer.parseInt(request.getParameter("pageNo")) - 1);
+            queryInfo.setRecordsetSize(Integer.parseInt(request.getParameter("pageSize")));
+        }
     }
 
     public void setDateRangeQueryCondition(HttpServletRequest request, QueryInfo queryInfo, String property) {

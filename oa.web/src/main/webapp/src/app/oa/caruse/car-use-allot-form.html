@@ -7,14 +7,19 @@
             <label class="col-sm-2 control-label">司机</label>
 
             <div class="col-sm-10">
-                <div object-select ng-model="driverSelect" entity="Driver" placeholder="请输入司机姓名" ></div>
+                <select class="form-control" ng-model="carUserInfo.driver.objectId" validator="required">
+                    <option value="">请选择司机</option>
+                    <option ng-repeat="x in driverList" value="{{x.objectId}}">{{x.name}}</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">车辆</label>
-
             <div class="col-sm-10">
-                <div object-select ng-model="carSelect" entity="Car" query-property="name" placeholder="请输入车辆名称" ></div>
+                <select class="form-control" ng-model="carUserInfo.car.objectId" validator="required">
+                    <option value="">请选择车辆</option>
+                    <option ng-repeat="x in carList" value="{{x.objectId}}">{{x.name + '#' + x.license}}</option>
+                </select>
             </div>
         </div>
     </div>
