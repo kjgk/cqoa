@@ -38,6 +38,8 @@ public class AuthorizationClusterServiceImpl extends EntityServiceImpl implement
 
         Entity userClusterEntity = userClusterService.getEntityByClassName(AuthorizationCluster.class.getName());
         userClusterService.saveUserClusterDetails(userClusterEntity, authorizationCluster.getObjectId(), authorizationCluster.getUserClusterDetailList());
+
+        userClusterService.updateUserClusterCache(authorizationCluster, null);
     }
 
     public void updateAuthorizationCluster(AuthorizationCluster authorizationCluster) throws Exception {

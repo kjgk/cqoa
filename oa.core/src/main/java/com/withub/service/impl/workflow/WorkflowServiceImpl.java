@@ -92,7 +92,8 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
 
     public FlowNode getNextApproveFlowNode(String taskId) throws Exception {
 
-        Task task = (Task) get(Task.class, taskId);
+        Task task = get(Task.class, taskId);
+        Instance instance = getInstanceByTaskId(taskId);
         FlowNode currentFlowNode = task.getMasterTask().getFlowNode();
 
         List<FlowNodeRoute> flowNodeRouteList = currentFlowNode.getFlowNodeRouteList();
@@ -101,14 +102,8 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
             return null;
         }
 
-        FlowNode nextFlowNode = null;
-        for (FlowNodeRoute flowNodeRoute : flowNodeRouteList) {
-            if (flowNodeRoute.getToFlowNode().getFlowNodeType().equals(FlowNodeType.AndSign)) {
-                // TODO 根据分支规则判断
-                nextFlowNode = flowNodeRoute.getToFlowNode();
-                break;
-            }
-        }
+        FlowNodeRoute flowNodeRoute = wfRegulationService.parseFlowNodeRoute(instance, currentFlowNode, TaskHandleResult.Pass);
+        FlowNode nextFlowNode = flowNodeRoute.getToFlowNode();
         return nextFlowNode;
     }
 
@@ -123,7 +118,8 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
 
         NextFlowNodeInfo nextFlowNodeInfo = new NextFlowNodeInfo();
 
-        Task task = (Task) get(Task.class, taskId);
+        Task task = get(Task.class, taskId);
+        Instance instance = getInstanceByTaskId(taskId);
         FlowNode currentFlowNode = task.getMasterTask().getFlowNode();
         nextFlowNodeInfo.setCurrentFlowNode(currentFlowNode);
 
@@ -133,14 +129,8 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
             return null;
         }
 
-        FlowNode nextFlowNode = null;
-        for (FlowNodeRoute flowNodeRoute : flowNodeRouteList) {
-            if (flowNodeRoute.getToFlowNode().getFlowNodeType().equals(FlowNodeType.AndSign)) {
-                // TODO 根据分支规则判断
-                nextFlowNode = flowNodeRoute.getToFlowNode();
-                break;
-            }
-        }
+        FlowNodeRoute flowNodeRoute = wfRegulationService.parseFlowNodeRoute(instance, currentFlowNode, TaskHandleResult.Pass);
+        FlowNode nextFlowNode = flowNodeRoute.getToFlowNode();
 
         nextFlowNodeInfo.setNextFlowNode(nextFlowNode);
         if (nextFlowNode == null) {
@@ -150,7 +140,6 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
         String hql = "select o from " + InstanceOrganization.class.getName() + " o"
                 + " where o.instance.objectId=? and o.flowNode.objectId=?"
                 + " order by o.createTime desc";
-        Instance instance = task.getMasterTask().getSubInstance().getInstance();
         InstanceOrganization instanceOrganization = (InstanceOrganization) getByHql(hql, instance.getObjectId(), nextFlowNode.getObjectId());
         if (instanceOrganization != null) {
             nextFlowNodeInfo.setHandler(instanceOrganization.getUser());

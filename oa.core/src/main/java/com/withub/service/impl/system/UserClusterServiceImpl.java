@@ -147,7 +147,7 @@ public class UserClusterServiceImpl extends com.withub.service.EntityServiceImpl
 
     private void throughUserClusterRegulationTree(UserClusterDetail userClusterDetail, StringBuilder sb) throws Exception {
 
-        sb.append("(");
+        sb.append("(1=1");
         UserClusterRegulation userClusterRegulation = get(UserClusterRegulation.class, userClusterDetail.getUserClusterRegulation().getObjectId());
         Entity entity = userClusterRegulation.getEntity();
         EntityType entityType = EntityType.valueOf(entity.getEntityType().getCodeTag());
@@ -169,7 +169,7 @@ public class UserClusterServiceImpl extends com.withub.service.EntityServiceImpl
             } catch (Exception e) {
                 // do nothing
             }
-            sb.append(" exists( select b from " + containedClassName + " b where b." + relatedProperty + ".objectId = o.objectId");
+            sb.append(" and exists( select b from " + containedClassName + " b where b." + relatedProperty + ".objectId = o.objectId");
 
             if (lastPropertyName.endsWith("objectId")) {
                 String className = ReflectionUtil.getDeclaredField(containedInstance, lastPropertyName.replace(".objectId", "")).getType().getName();
@@ -179,30 +179,34 @@ public class UserClusterServiceImpl extends com.withub.service.EntityServiceImpl
                     String nodeLevelCode = recursionEntity.getNodeLevelCode();
                     if (containedEntity.getEntityName().equals(Organization.class.getSimpleName())) {
                         if (ConfigUtil.getSystemConfigInfo().getDatabaseType().equalsIgnoreCase("Oracle")) {
-                            sb.append(" and instr(user.organization.nodeLevelCode" + ",'" + nodeLevelCode + "')=0)");
+                            sb.append(" and instr(o.organization.nodeLevelCode" + ",'" + nodeLevelCode + "')=0");
+                        } else if (ConfigUtil.getSystemConfigInfo().getDatabaseType().equalsIgnoreCase("MySql")) {
+                            sb.append(" and instr(o.organization.nodeLevelCode" + ",'" + nodeLevelCode + "')>0");
                         } else {
-                            sb.append(" and charindex('" + nodeLevelCode + "'," + "user.organization.nodeLevelCode)=1)");
+                            sb.append(" and charindex('" + nodeLevelCode + "'," + "o.organization.nodeLevelCode)=1");
                         }
                     } else {
                         // TODO
                     }
                 } else {
-                    sb.append(" and b." + lastPropertyName + "='" + userClusterDetail.getRelatedObjectId() + "')");
+                    sb.append(" and b." + lastPropertyName + "='" + userClusterDetail.getRelatedObjectId() + "'");
                 }
             } else {
-                sb.append(" and b." + lastPropertyName + "='" + userClusterDetail.getRelatedObjectId() + "')");
+                sb.append(" and b." + lastPropertyName + "='" + userClusterDetail.getRelatedObjectId() + "'");
             }
         } else {
             if (entityType == EntityType.Recursion) {
                 AbstractRecursionEntity recursionEntity = (AbstractRecursionEntity) getEntityByClassName(entity.getClassName(), userClusterDetail.getRelatedObjectId());
                 String nodeLevelCode = recursionEntity.getNodeLevelCode();
                 if (ConfigUtil.getSystemConfigInfo().getDatabaseType().equalsIgnoreCase("Oracle")) {
-                    sb.append(" and instr(user.organization.nodeLevelCode" + ",'" + nodeLevelCode + "')=0)");
+                    sb.append(" and instr(o.organization.nodeLevelCode" + ",'" + nodeLevelCode + "')=0");
+                } else if (ConfigUtil.getSystemConfigInfo().getDatabaseType().equalsIgnoreCase("MySql")) {
+                    sb.append(" and instr(o.organization.nodeLevelCode" + ",'" + nodeLevelCode + "')>0");
                 } else {
-                    sb.append(" and charindex('" + nodeLevelCode + "'," + "user.organization.nodeLevelCode)=1)");
+                    sb.append(" and charindex('" + nodeLevelCode + "'," + "o.organization.nodeLevelCode)=1");
                 }
             } else {
-                sb.append(userProperty + "='" + userClusterDetail.getRelatedObjectId() + "'");
+                sb.append(" and " + userProperty + "='" + userClusterDetail.getRelatedObjectId() + "'");
             }
         }
 
