@@ -100,8 +100,11 @@ angular.module('app.oa')
             requiredCar: 0,
             transportation: {
                 objectId: ''
-            }
+            },
+            outgoingUserList: []
         };
+        $scope.userList = [];
+
         $scope.title = '新增出差申请';
 
         $scope.cancel = function () {
@@ -109,6 +112,12 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
+            _.forEach($scope.userList, function (user) {
+                $scope.outgoing.outgoingUserList.push({
+                    user: {objectId: user.objectId}
+                })
+            });
+
             $scope.promise = OutgoingService.create($scope.outgoing).then(function () {
                 $modalInstance.close();
             });

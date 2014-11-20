@@ -4,8 +4,10 @@ import com.withub.common.util.DateUtil;
 import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
+import com.withub.model.oa.po.CarUseUser;
 import com.withub.model.oa.po.Outgoing;
 import com.withub.model.oa.po.Outgoing;
+import com.withub.model.oa.po.OutgoingUser;
 import com.withub.model.system.po.Code;
 import com.withub.service.EntityServiceImpl;
 import com.withub.service.oa.OutgoingService;
@@ -59,6 +61,11 @@ public class OutgoingServiceImpl extends EntityServiceImpl implements OutgoingSe
         Integer duration = (int) DateUtil.getDiffDays(outgoing.getBeginDate(), outgoing.getEndDate());
         outgoing.setDuration(duration);
         save(outgoing);
+
+        for (OutgoingUser outgoingUser : outgoing.getOutgoingUserList()) {
+            outgoingUser.setOutgoing(outgoing);
+            save(outgoingUser);
+        }
     }
 
     @Override
@@ -66,6 +73,13 @@ public class OutgoingServiceImpl extends EntityServiceImpl implements OutgoingSe
 
         outgoing.setProposer(outgoing.getCurrentUser());
         save(outgoing);
+
+        executeHql("delete from OutgoingUser a where a.outgoing.objectId = ?", outgoing.getObjectId());
+
+        for (OutgoingUser outgoingUser : outgoing.getOutgoingUserList()) {
+            outgoingUser.setOutgoing(outgoing);
+            save(outgoingUser);
+        }
     }
 
 }

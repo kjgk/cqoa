@@ -5,10 +5,9 @@ import com.withub.model.system.po.Code;
 import com.withub.model.system.po.Organization;
 import com.withub.model.system.po.User;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @javax.persistence.Entity
 @Table(name = "OA_OUTGOING")
@@ -50,6 +49,9 @@ public class Outgoing extends AbstractBaseEntity {
     private User proposer;
 
     private Integer duration;
+
+    @OneToMany(targetEntity = OutgoingUser.class, mappedBy = "outGoing", fetch = FetchType.LAZY)
+    private List<OutgoingUser> outgoingUserList;
 
     //================================ 属性方法 ==========================================================
 
@@ -147,5 +149,13 @@ public class Outgoing extends AbstractBaseEntity {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public List<OutgoingUser> getOutgoingUserList() {
+        return outgoingUserList;
+    }
+
+    public void setOutgoingUserList(List<OutgoingUser> outgoingUserList) {
+        this.outgoingUserList = outgoingUserList;
     }
 }
