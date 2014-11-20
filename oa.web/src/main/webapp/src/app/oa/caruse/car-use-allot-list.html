@@ -15,20 +15,22 @@
             </div>
             <table simple-table="grid" class="rbga" border="1">
                 <tr class="rlm_bga">
+                    <td style="width: 72px;">申请人</td>
+                    <td>用车人</td>
                     <td>用车事由</td>
-                    <td>申请人</td>
-                    <td>用车时间</td>
-                    <td>区域</td>
+                    <td style="width: 260px;">用车时间</td>
+                    <td style="width: 72px;">区域</td>
                     <td>前往地点</td>
                     <td>状态</td>
                     <td>车辆</td>
                     <td>司机</td>
-                    <td>申请时间</td>
-                    <td style="width: 240px;">操作</td>
+                    <td style="width: 130px;">申请时间</td>
+                    <td style="width: 90px;">操作</td>
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
-                    <td>{{x.description}}</td>
                     <td>{{x.proposer.name}}</td>
+                    <td>{{x.carUseUserList|caruseusername}}</td>
+                    <td>{{x.description}}</td>
                     <td>{{x.beginTime|$date:DateFormat.MINUTE}} ~ {{x.endTime|$date:DateFormat.MINUTE}}</td>
                     <td>{{getRegionText(x.region)}}</td>
                     <td>{{x.address }}</td>

@@ -1,4 +1,5 @@
-/* CSS Document */
+@import 'variables';
+
 /*---------------------------------------default----------------------------------------------------*/
 body {
   margin: auto;
@@ -49,7 +50,7 @@ img {
 
 /*---------------------------------------home----------------------------------------------------*/
 .top {
-  font-size: 14px;
+  font-size: $font-size-base;
   height: 98px;
   background: url(../assets/images/top_bg.png) repeat-x;
 }
@@ -60,7 +61,7 @@ img {
   font-size: 38px;
   color: #f4f4f4;
   line-height: 68px;
-  font-family: "microsoft yahei";
+  font-family: $font-family-sans-serif;
   text-shadow: 1px 1px #196299;
   float: left;
 }
@@ -87,7 +88,7 @@ img {
   margin-top: 8px;
   border: 2px solid #0c6eb5;
   border-bottom: none;
-  font-family: "microsoft yahei";
+  font-family: $font-family-sans-serif;
   font-size: 16px;
   margin-left: 11px;
   line-height: 34px;
@@ -166,8 +167,8 @@ img {
   width: 212px;
   background: url(../assets/images/l_1.png) no-repeat;
   color: #FFF;
-  font-size: 18px;
-  font-family: "microsoft yahei";
+  font-size: $font-size-large;
+  font-family: $font-family-sans-serif;
   margin-left: 11px;
   margin-top: 1px;
   height: 46px;
@@ -183,7 +184,7 @@ img {
 }
 
 .l_lbxh p {
-  font-size: 14px;
+  font-size: $font-size-base;
   font-weight: bold;
   color: #03528a;
   text-indent: 7px;
@@ -210,7 +211,7 @@ img {
 
 .l_lbxh ul {
   line-height: 24px;
-  font-size: 12px;
+  font-size: $font-size-base;
   padding-left: 34px;
   padding-top: 8px;
   padding-bottom: 5px;
@@ -238,7 +239,7 @@ img {
   border: 7px solid #e6e7ed;
   margin-right: 18px;
   margin-left: 250px;
-  font-size: 12px;
+  font-size: $font-size-small;
 }
 
 .r_lm {
@@ -252,8 +253,8 @@ img {
 
 .r_lm li {
   float: left;
-  font-family: "microsoft yahei";
-  font-size: 18px;
+  font-family: $font-family-sans-serif;
+  font-size: $font-size-large;
   margin-left: 8px;
   margin-right: 5px;
 }
@@ -273,7 +274,7 @@ img {
 
 .rlm_bga {
   background: url(../assets/images/bg_46.png) repeat-x #a6d5fd;
-  font-size: 14px;
+  font-size: $font-size-base;
   color: #014172;
   padding-left: 10px;
   line-height: 40px;
@@ -302,7 +303,7 @@ img {
 
 .bg1 {
   font-size: 20px;
-  font-family: "microsoft yahei";
+  font-family: $font-family-sans-serif;
   color: #00223c;
   background: #e3f7ff;
 }
@@ -319,7 +320,7 @@ img {
 .foot {
   background: #2798ec;
   text-align: center;
-  font-size: 12px;
+  font-size: $font-size-small;
   color: #00223c;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -327,7 +328,7 @@ img {
 
 .foot p {
   text-align: center;
-  font-size: 12px;
+  font-size: $font-size-small;
   color: #00223c;
   padding-top: 10px;
 }
@@ -380,7 +381,7 @@ img {
 }
 
 .ywtj1 {
-  font-size: 14px;
+  font-size: $font-size-base;
   font-weight: bold;
   color: #024f97;
   padding-top: 5px;
@@ -401,7 +402,7 @@ img {
   text-align: center;
   line-height: 30px;
   border-color: #75c4ff;
-  font-size: 14px;
+  font-size: $font-size-base;
 }
 
 .shux1 {
@@ -415,7 +416,7 @@ img {
   float: left;
   text-align: center;
   line-height: 32px;
-  font-size: 14px;
+  font-size: $font-size-base;
 }
 
 .bgys {
@@ -441,7 +442,7 @@ img {
   float: left;
   text-align: center;
   line-height: 32px;
-  font-size: 14px;
+  font-size: $font-size-base;
 }
 
 .rbge td {
@@ -475,7 +476,7 @@ img {
   font-size: 38px;
   color: #f4f4f4;
   line-height: 68px;
-  font-family: "microsoft yahei";
+  font-family: $font-family-sans-serif;
   text-shadow: 1px 1px #196299;
   float: left;
   margin-top: 152px;
@@ -540,14 +541,14 @@ img {
   font-weight: bold;
   font-size: 16px;
   color: #545353;
-  font-family: "microsoft yahei";
+  font-family: $font-family-sans-serif;
   padding-top: 5px;
   width: 158px;
   padding-left: 66px;
 }
 
 .tcsj p {
-  font-size: 14px;
+  font-size: $font-size-base;
   font-family: "宋体";
   font-weight: lighter;
   color: #3184c8;
@@ -564,7 +565,7 @@ img {
   background: #FFF;
   border: 7px solid #e6e7ed;
   margin: 18px;
-  font-size: 12px;
+  font-size: $font-size-small;
   margin-bottom: 0px;
   padding: 10px;
 }
@@ -573,7 +574,7 @@ img {
   background: #FFF;
   border: 7px solid #e6e7ed;
   margin: 18px 0px 0px 18px;
-  font-size: 12px;
+  font-size: $font-size-small;
   width: 44%;
   float: left;
   padding: 10px;
@@ -583,7 +584,7 @@ img {
   background: #FFF;
   border: 7px solid #e6e7ed;
   margin: 18px 18px 0px 0px;
-  font-size: 12px;
+  font-size: $font-size-small;
   width: 44%;
   float: right;
   padding: 10px;
@@ -641,7 +642,7 @@ img {
 
     .form-group {
       label {
-        font-size: 14px;
+        font-size: $font-size-base;
         font-weight: 100;
         margin-left: 6px;
       }
@@ -670,7 +671,7 @@ tr.empty-text, tr.loading-text {
   height: 64px;
   color: #AAAAAA;
   font-weight: 100;
-  font-size: 18px;
+  font-size: $font-size-large;
   cursor: default;
 }
 
@@ -772,7 +773,7 @@ section {
   bottom: 0;
   opacity: 0;
   text-align: center !important;
-  font-size: 12px;
+  font-size: $font-size-small;
   line-height: 18px;
   vertical-align: middle;
 }
@@ -856,7 +857,7 @@ section {
   }
 }
 
-.input-group-addon{
+.input-group-addon {
   cursor: pointer;
 }
 
@@ -869,7 +870,7 @@ section {
     padding: 0;
     li.user-item {
       float: left;
-      font-size: 14px;
+      font-size: $font-size-base;
       cursor: default;
       margin: 5px 0 0 5px;
       border: 1px solid #999;
@@ -881,7 +882,7 @@ section {
         color: #d9534f;
       }
     }
-    li.user-item:last-child{
+    li.user-item:last-child {
       margin: 5px 0 5px 5px;
     }
     li.placeholder {
@@ -900,7 +901,7 @@ section {
   h3 {
     margin: 0 0 6px 0;
     padding: 0 0 4px 0;
-    font-size: 18px;
+    font-size: $font-size-large;
     border-bottom: 1px solid #999;
   }
   .empty-text {

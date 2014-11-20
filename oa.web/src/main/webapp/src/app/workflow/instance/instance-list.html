@@ -33,7 +33,7 @@
                     <td>流程类型</td>
                     <td>当前流程节点</td>
                     <td>当前处理人</td>
-                    <td>状态</td>
+                    <td style="width: 100px;">状态</td>
                     <td style="width: 132px;">开始时间</td>
                     <td style="width: 132px;">完成时间</td>
                     <td style="width: 90px;">操作</td>
@@ -43,7 +43,7 @@
                     <td>{{x.flowType}}</td>
                     <td>{{x.flowNode}}</td>
                     <td>{{x.handler}}</td>
-                    <td>{{x.status}}</td>
+                    <td><span instance-status="x.status"></span></td>
                     <td>{{x.createTime|$date:DateFormat.MINUTE}}</td>
                     <td>{{x.finishTime|$date:DateFormat.MINUTE}}</td>
                     <td>

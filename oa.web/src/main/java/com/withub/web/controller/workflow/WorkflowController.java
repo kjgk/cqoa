@@ -167,7 +167,7 @@ public class WorkflowController extends BaseController {
                 if (instance.getResult() != null) {
                     item.put("result", instance.getResult().getName());
                 }
-                item.put("status", instance.getStatus().getName());
+                item.put("status", instance.getStatus());
                 item.put("createTime", instance.getCreateTime().getTime());
                 if (instance.getFinishTime() != null) {
                     item.put("finishTime", instance.getFinishTime().getTime());
@@ -243,7 +243,7 @@ public class WorkflowController extends BaseController {
             if (instance.getResult() != null) {
                 item.put("result", instance.getResult().getName());
             }
-            item.put("status", instance.getStatus().getName());
+            item.put("status", instance.getStatus());
             item.put("createTime", instance.getCreateTime().getTime());
             if (instance.getFinishTime() != null) {
                 item.put("finishTime", instance.getFinishTime().getTime());

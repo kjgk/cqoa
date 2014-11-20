@@ -1,15 +1,5 @@
 $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 
-$brand-primary: #2798EC;;
-$brand-success: #5cb85c;;
-$brand-info: #5bc0de;;
-$brand-warning: #f0ad4e;;
-$brand-danger: #d9534f;;
-
-$border-radius-base: 0px;;
-$border-radius-large: 0px;;
-$border-radius-small: 0px;;
-
-$font-family-sans-serif:  "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+@import 'variables';
 
 @import '../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap';
