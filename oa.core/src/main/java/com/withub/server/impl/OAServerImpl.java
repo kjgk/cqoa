@@ -4,12 +4,14 @@ package com.withub.server.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.withub.common.util.CollectionUtil;
 import com.withub.model.oa.po.*;
+import com.withub.model.system.po.Organization;
 import com.withub.model.system.po.User;
 import com.withub.model.workflow.enumeration.TaskHandleResult;
 import com.withub.model.workflow.po.Task;
 import com.withub.model.workflow.vo.TaskFlowNodeInfo;
 import com.withub.server.OAServer;
 import com.withub.service.oa.*;
+import com.withub.service.system.OrganizationService;
 import com.withub.service.system.UserService;
 import com.withub.service.workflow.TaskService;
 import com.withub.service.workflow.WorkflowService;
@@ -51,6 +53,10 @@ public class OAServerImpl implements OAServer {
     @Autowired
     private TrainingService trainingService;
 
+    @Autowired
+    private OrganizationService organizationService;
+
+
     public String getTaskFlowNodeInfo(String currentUserId, String taskId) throws Exception {
 
         TaskFlowNodeInfo taskFlowNodeInfo = workflowService.getTaskFlowNode(taskId);
@@ -87,6 +93,42 @@ public class OAServerImpl implements OAServer {
         taskService.commit(currentUser, task, taskHandleResult, opinion, handlerList, null);
     }
 
+    public String getOrganizationList() throws Exception {
+
+        List list = new ArrayList();
+        Organization root = organizationService.getRootOrganization();
+        Map item;
+
+        for (Organization child : root.getChildList()) {
+            item = new HashMap();
+            item.put("objectId", child.getObjectId());
+            item.put("name", child.getName());
+            list.add(item);
+        }
+
+        JSONObject data = new JSONObject();
+        data.put("organizationList", list);
+
+        return data.toString();
+    }
+
+    public String getUserList(String organizationId) throws Exception {
+
+        List list = new ArrayList();
+        List<User> userList = userService.listByOrganizationId(organizationId);
+        Map item;
+        for (User user : userList) {
+            item = new HashMap();
+            item.put("objectId", user.getObjectId());
+            item.put("name", user.getName());
+            list.add(item);
+        }
+
+        JSONObject data = new JSONObject();
+        data.put("userList", list);
+
+        return data.toString();
+    }
 
     @Override
     public void submitMiscellaneous(Miscellaneous miscellaneous) throws Exception {
