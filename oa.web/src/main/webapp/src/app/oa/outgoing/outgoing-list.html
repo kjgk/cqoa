@@ -18,7 +18,8 @@
             <table simple-table="grid" class="rbga" border="1">
                 <tr class="rlm_bga">
                     <td style="width: 72px;">申请人</td>
-                    <td>出差时间</td>
+                    <td>出差人</td>
+                    <td style="width: 160px;">出差时间</td>
                     <td>本市出差</td>
                     <td>出差事由</td>
                     <td>目的地</td>
@@ -31,6 +32,7 @@
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{x.proposer.name}}</td>
+                    <td>{{x.outgoingUserList|outgoingusername}}</td>
                     <td>{{x.beginDate|$date}}~{{x.endDate|$date}}</td>
                     <td>{{x.localCity===1?"是":"否"}}</td>
                     <td>{{x.description}}</td>

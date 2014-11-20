@@ -12,6 +12,16 @@ angular.module('app.oa')
         ;
     })
 
+    .filter('outgoingusername', function () {
+        return function (input) {
+            var username = [];
+            _.forEach(input, function (outgoingUser) {
+                username.push(outgoingUser.user.name);
+            });
+            return username.join('，');
+        }
+    })
+
     .factory('OutgoingService', function ($http, Restangular) {
         var api = Restangular.all('oa/outgoing');
         return {
@@ -130,13 +140,31 @@ angular.module('app.oa')
 
         $scope.promise = OutgoingService.get(objectId);
 
-        $scope.outgoing = $scope.promise.$object;
+        $scope.userList = [];
+        $scope.promise.then(function (response) {
+            $scope.outgoing = response;
+            _.forEach($scope.outgoing.outgoingUserList, function (outgoingUser) {
+                $scope.userList.push({
+                    objectId: outgoingUser.user.objectId,
+                    name: outgoingUser.user.name,
+                    organization: {
+                        objectId: outgoingUser.user.organization.objectId
+                    }
+                })
+            });
+        });
 
         $scope.cancel = function () {
             $modalInstance.dismiss();
         };
 
         $scope.submit = function () {
+            _.forEach($scope.userList, function (user) {
+                $scope.outgoing.outgoingUserList.push({
+                    user: {objectId: user.objectId}
+                })
+            });
+
             $scope.promise = OutgoingService.update($scope.outgoing).then(function () {
                 $modalInstance.close();
             });
