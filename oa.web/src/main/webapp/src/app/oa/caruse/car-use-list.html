@@ -8,8 +8,12 @@
                         <div class="form-group">
                             <input date-picker ng-model="grid.queryInfo.date" placeholder="请选择用车时间">
                         </div>
-                        <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i class="fa fa-search fa-fw"></i> 查询</button>
-                        <button class="btn btn-primary btn-sm" ng-click="createCarUse()"><i class="fa fa-plus fa-fw"></i> 添加</button>
+                        <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i
+                                class="fa fa-search fa-fw"></i> 查询
+                        </button>
+                        <button class="btn btn-primary btn-sm" ng-click="createCarUse()"><i
+                                class="fa fa-plus fa-fw"></i> 添加
+                        </button>
                     </form>
                 </div>
                 <div class="clear"></div>
@@ -33,7 +37,7 @@
                     <td>{{x.carUseUserList|caruseusername}}</td>
                     <td>{{x.description}}</td>
                     <td>{{x.beginTime|$date:DateFormat.MINUTE}} ~ {{x.endTime|$date:DateFormat.MINUTE}}</td>
-                    <td>{{getRegionText(x.region)}}</td>
+                    <td>{{x.region|region}}</td>
                     <td>{{x.address }}</td>
                     <td>{{x.status.name}}</td>
                     <td>{{x.carUseInfoList[0].car.name}}</td>

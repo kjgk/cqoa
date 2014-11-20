@@ -32,7 +32,7 @@
                     <td>{{x.carUseUserList|caruseusername}}</td>
                     <td>{{x.description}}</td>
                     <td>{{x.beginTime|$date:DateFormat.MINUTE}} ~ {{x.endTime|$date:DateFormat.MINUTE}}</td>
-                    <td>{{getRegionText(x.region)}}</td>
+                    <td>{{x.region|region}}</td>
                     <td>{{x.address }}</td>
                     <td>{{x.status.name}}</td>
                     <td>{{x.carUseInfoList[0].car.name}}</td>

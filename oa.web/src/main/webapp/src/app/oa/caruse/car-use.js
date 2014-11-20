@@ -32,6 +32,12 @@ angular.module('app.oa')
         }
     })
 
+    .filter('region', function () {
+        return function (input) {
+            return ["辖区内", "市内", "市外"][input];
+        }
+    })
+
     .factory('CarUseService', function ($http, Restangular) {
         var api = Restangular.all('oa/carUse');
 
@@ -110,16 +116,6 @@ angular.module('app.oa')
                 });
             });
         };
-        $scope.getRegionText = function (region) {
-            switch (region) {
-                case 0:
-                    return "辖区内";
-                case 1:
-                    return "市内";
-                case 2:
-                    return "市外";
-            }
-        }
     })
 
     .controller('CarUseAllotListCtrl', function ($scope, $q, $modal, SimpleTable, CarUseService) {
@@ -141,16 +137,6 @@ angular.module('app.oa')
                 Toaster.success("分配成功！");
             });
         };
-        $scope.getRegionText = function (region) {
-            switch (region) {
-                case 0:
-                    return "辖区内";
-                case 1:
-                    return "市内";
-                case 2:
-                    return "市外";
-            }
-        }
     })
 
     .controller('CarUseCreateCtrl', function ($scope, $modalInstance, CarUseService) {
@@ -219,16 +205,6 @@ angular.module('app.oa')
     .controller('CarUseViewCtrl', function ($scope, CarUseService) {
 
         $scope.carUse = CarUseService.get($scope.objectId).$object;
-        $scope.getRegionText = function (region) {
-            switch (region) {
-                case 0:
-                    return "辖区内";
-                case 1:
-                    return "市内";
-                case 2:
-                    return "市外";
-            }
-        }
     })
 
     .controller('CarUseAllotCtrl', function ($scope, $modalInstance, CarUseService, DriverService, CarService, objectId) {
@@ -243,10 +219,10 @@ angular.module('app.oa')
             car: {objectId: ''}
         };
 
-        CarService.query().then(function(response){
+        CarService.query().then(function (response) {
             $scope.carList = response.data.items;
         });
-        DriverService.query().then(function(response){
+        DriverService.query().then(function (response) {
             $scope.driverList = response.data.items;
         });
 
