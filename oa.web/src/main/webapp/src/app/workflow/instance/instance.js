@@ -22,6 +22,26 @@ angular.module('app.workflow')
         ;
     })
 
+    .directive('instanceStatus', function () {
+        return {
+            template: '<label style="margin-bottom: 0; font-size: 100%; width: 54px; display: inline-block;" class="label {{labelClass}}">{{status.name}}</label>',
+            restrict: 'A',
+            replace: true,
+            scope: {
+                status: '=instanceStatus'
+            },
+            link: function (scope, element, attrs, ngModel) {
+
+                console.log(scope.status.codeTag)
+                scope.labelClass = {
+                    Running: 'label-success',
+                    Stop: 'label-danger',
+                    Finish: 'label-primary'
+                }[scope.status.codeTag]
+            }
+        };
+    })
+
     .factory('InstanceService', function ($http, $modal) {
         return {
             queryAll: function (params) {
