@@ -30,7 +30,6 @@ import com.withub.service.workflow.FlowTypeService;
 import com.withub.service.workflow.InstanceService;
 import com.withub.service.workflow.TaskService;
 import com.withub.service.workflow.WFRegulationService;
-import com.withub.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -596,15 +595,23 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
     public void finishInstance(Instance instance) throws Exception {
 
         Code status = codeService.getCodeByEnum(InstanceStatus.Finish);
+        Code result = codeService.getCodeByEnum(InstanceResult.Pass);
+
         instance.setStatus(status);
         FlowNode endFlowNode = flowTypeService.getEndFlowNode(instance.getFlowType());
         instance.setCurrentFlowNode(endFlowNode);
         instance.setFinishTime(DateUtil.getCurrentTime());
+        if (instance.getResult() == null) {
+            instance.setResult(result);
+        }
         update(instance);
 
         SubInstance subInstance = instance.getSubInstanceList().get(0);
         subInstance.setStatus(status);
         subInstance.setFinishTime(DateUtil.getCurrentTime());
+        if (subInstance.getResult() == null) {
+            subInstance.setResult(result);
+        }
         update(subInstance);
 
         InstanceEventArgs instanceEventArgs = new InstanceEventArgs();
