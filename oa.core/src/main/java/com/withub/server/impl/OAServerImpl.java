@@ -4,6 +4,8 @@ package com.withub.server.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.withub.common.util.CollectionUtil;
 import com.withub.model.oa.po.*;
+import com.withub.model.system.po.Code;
+import com.withub.model.system.po.CodeColumn;
 import com.withub.model.system.po.Organization;
 import com.withub.model.system.po.User;
 import com.withub.model.workflow.enumeration.TaskHandleResult;
@@ -11,6 +13,7 @@ import com.withub.model.workflow.po.Task;
 import com.withub.model.workflow.vo.TaskFlowNodeInfo;
 import com.withub.server.OAServer;
 import com.withub.service.oa.*;
+import com.withub.service.system.CodeService;
 import com.withub.service.system.OrganizationService;
 import com.withub.service.system.UserService;
 import com.withub.service.workflow.TaskService;
@@ -38,6 +41,9 @@ public class OAServerImpl implements OAServer {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CodeService codeService;
 
     @Autowired
     private MiscellaneousService miscellaneousService;
@@ -117,6 +123,20 @@ public class OAServerImpl implements OAServer {
             Map item = new HashMap();
             item.put("objectId", user.getObjectId());
             item.put("name", user.getName());
+            list.add(item);
+        }
+
+        return JSONSerializer.toJSON(list).toString();
+    }
+
+    public String getCodeList(String codeColumnTag) throws Exception {
+
+        List list = new ArrayList();
+        CodeColumn codeColumn = codeService.getCodeColumnByTag(codeColumnTag);
+        for (Code code : codeColumn.getCodeList()) {
+            Map item = new HashMap();
+            item.put("objectId", code.getObjectId());
+            item.put("name", code.getName());
             list.add(item);
         }
 

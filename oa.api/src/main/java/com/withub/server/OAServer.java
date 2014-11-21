@@ -31,4 +31,6 @@ public interface OAServer {
 
     public String getUserList(String organizationId) throws Exception;
 
+    public String getCodeList(String codeColumnTag) throws Exception;
+
 }
