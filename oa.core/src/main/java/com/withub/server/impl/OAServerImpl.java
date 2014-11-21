@@ -15,6 +15,7 @@ import com.withub.service.system.OrganizationService;
 import com.withub.service.system.UserService;
 import com.withub.service.workflow.TaskService;
 import com.withub.service.workflow.WorkflowService;
+import net.sf.json.JSONSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,37 +98,29 @@ public class OAServerImpl implements OAServer {
 
         List list = new ArrayList();
         Organization root = organizationService.getRootOrganization();
-        Map item;
 
         for (Organization child : root.getChildList()) {
-            item = new HashMap();
+            Map item = new HashMap();
             item.put("objectId", child.getObjectId());
             item.put("name", child.getName());
             list.add(item);
         }
 
-        JSONObject data = new JSONObject();
-        data.put("organizationList", list);
-
-        return data.toString();
+        return JSONSerializer.toJSON(list).toString();
     }
 
     public String getUserList(String organizationId) throws Exception {
 
         List list = new ArrayList();
         List<User> userList = userService.listByOrganizationId(organizationId);
-        Map item;
         for (User user : userList) {
-            item = new HashMap();
+            Map item = new HashMap();
             item.put("objectId", user.getObjectId());
             item.put("name", user.getName());
             list.add(item);
         }
 
-        JSONObject data = new JSONObject();
-        data.put("userList", list);
-
-        return data.toString();
+        return JSONSerializer.toJSON(list).toString();
     }
 
     @Override

@@ -5,7 +5,7 @@ body {
   margin: auto;
   padding: 0px;
   min-width: 980px;
-  background: #2798EC;
+  background: $brand-primary;
 }
 
 .clear {
@@ -143,7 +143,7 @@ img {
 }
 
 .main {
-  background: url(../assets/images/left_bg.png) #2798ec repeat-y left;
+  background: url(../assets/images/left_bg.png) $brand-primary repeat-y left;
   padding-top: 10px;
 }
 
@@ -318,7 +318,7 @@ img {
 }
 
 .foot {
-  background: #2798ec;
+  background: $brand-primary;
   text-align: center;
   font-size: $font-size-small;
   color: #00223c;
@@ -557,7 +557,7 @@ img {
 
 /*---------------------------------------add----------------------------------------------------*/
 .main2 {
-  background: #2798ec;
+  background: $brand-primary;
   padding-top: 10px;
 }
 
@@ -689,13 +689,22 @@ section {
 }
 
 .validation.validation-valid {
-  color: #32cd54;
+  color: $brand-success;
   font-size: 80%
 }
 
 .validation.validation-invalid {
-  color: #A94442;
+  color: $brand-danger;
   font-size: 80%
+}
+
+.has-error {
+  select {
+    color: #843534;
+  }
+  input {
+    color: #843534;
+  }
 }
 
 .modal-content {
@@ -703,13 +712,25 @@ section {
   border-radius: 0;
 
   .modal-header {
-    background-color: #2798EC;
+    background-color: $brand-primary;
     color: #FFFFFF;
     cursor: default;
   }
 }
 
-.form-group {
+.modal-header {
+  padding: 12px;
+}
+
+.modal-dialog {
+  legend {
+    padding-bottom: 2px;
+    margin-bottom: 12px;
+    font-size: $font-size-large;
+  }
+  .form-group {
+    margin-bottom: 10px;
+  }
 }
 
 .form-horizontal .checkbox,
@@ -930,7 +951,7 @@ section {
       margin-top: 1px;
     }
     .node-element-select {
-      background-color: #2798EC !important;
+      background-color: $brand-primary !important;
       a.node-text {
         color: #ffffff !important;
       }
