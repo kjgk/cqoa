@@ -58,6 +58,7 @@ public class OutgoingServiceImpl extends EntityServiceImpl implements OutgoingSe
         Code status = codeService.getCodeByTag("OutgoingStatus", "Create");
         outgoing.setStatus(status);
         outgoing.setProposer(outgoing.getCurrentUser());
+        outgoing.setOrganization(outgoing.getCurrentUser().getOrganization());
         Integer duration = (int) DateUtil.getDiffDays(outgoing.getBeginDate(), outgoing.getEndDate());
         outgoing.setDuration(duration);
         save(outgoing);
@@ -72,6 +73,7 @@ public class OutgoingServiceImpl extends EntityServiceImpl implements OutgoingSe
     public void updateOutgoing(Outgoing outgoing) throws Exception {
 
         outgoing.setProposer(outgoing.getCurrentUser());
+        outgoing.setOrganization(outgoing.getCurrentUser().getOrganization());
         save(outgoing);
 
         executeHql("delete from OutgoingUser a where a.outgoing.objectId = ?", outgoing.getObjectId());

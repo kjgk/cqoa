@@ -109,7 +109,7 @@ angular.module('app.oa')
             localCity: 0,
             requiredCar: 0,
             transportation: {
-                objectId: ''
+                objectId: 'E01E1D5D-55E6-4BC1-9EF0-2D98ABACE8FF'
             },
             outgoingUserList: []
         };
@@ -134,7 +134,7 @@ angular.module('app.oa')
         };
     })
 
-    .controller('OutgoingUpdateCtrl', function ($scope, $modalInstance, OutgoingService, objectId) {
+    .controller('OutgoingUpdateCtrl', function ($scope, $timeout, $modalInstance, OutgoingService, objectId) {
 
         $scope.title = '修改出差申请';
 
@@ -143,6 +143,8 @@ angular.module('app.oa')
         $scope.userList = [];
         $scope.promise.then(function (response) {
             $scope.outgoing = response;
+            var transportationId = response.transportation.objectId;
+            $scope.outgoing.transportation = {objectId: ''};
             _.forEach($scope.outgoing.outgoingUserList, function (outgoingUser) {
                 $scope.userList.push({
                     objectId: outgoingUser.user.objectId,
@@ -152,6 +154,11 @@ angular.module('app.oa')
                     }
                 })
             });
+
+            // bug
+            $timeout(function () {
+                $scope.outgoing.transportation = {objectId: transportationId};
+            }, 500);
         });
 
         $scope.cancel = function () {

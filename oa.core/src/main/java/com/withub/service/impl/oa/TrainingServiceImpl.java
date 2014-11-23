@@ -51,6 +51,7 @@ public class TrainingServiceImpl extends EntityServiceImpl implements TrainingSe
         Code status = codeService.getCodeByTag("TrainingStatus", "Create");
         training.setStatus(status);
         training.setProposer(training.getCurrentUser());
+        training.setOrganization(training.getCurrentUser().getOrganization());
         save(training);
     }
 
@@ -58,6 +59,7 @@ public class TrainingServiceImpl extends EntityServiceImpl implements TrainingSe
     public void updateTraining(Training training) throws Exception {
 
         training.setProposer(training.getCurrentUser());
+        training.setOrganization(training.getCurrentUser().getOrganization());
         save(training);
     }
 

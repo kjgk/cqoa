@@ -285,26 +285,7 @@ public class WorkflowController extends BaseController {
         }
 
         List list = workflowService.list(queryInfo);
-
-        if (CollectionUtil.isEmpty(list)) {
-            return;
-        }
-
-        List items = new ArrayList();
-        for (InstanceTaskLog instanceTaskLog : (List<InstanceTaskLog>) list) {
-            Map<String, Object> item = new HashMap<String, Object>();
-            item.put("objectId", instanceTaskLog.getObjectId());
-            item.put("taskId", instanceTaskLog.getTaskId());
-            item.put("flowNodeName", instanceTaskLog.getFlowNodeName());
-            item.put("result", instanceTaskLog.getTaskHandleResultName());
-            item.put("opinion", instanceTaskLog.getOpinion());
-            item.put("handler", instanceTaskLog.getHandlerName());
-            if (instanceTaskLog.getTaskFinishTime() != null) {
-                item.put("finishTime", instanceTaskLog.getTaskFinishTime().getTime());
-            }
-            items.add(item);
-        }
-        modelMap.put("items", items);
+        modelMap.put("items", list);
     }
 
     @RequestMapping(value = "/instance/view", method = RequestMethod.GET)

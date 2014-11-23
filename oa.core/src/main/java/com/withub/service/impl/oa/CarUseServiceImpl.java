@@ -52,6 +52,7 @@ public class CarUseServiceImpl extends EntityServiceImpl implements CarUseServic
         Code status = codeService.getCodeByTag("CarUseStatus", "Create");
         carUse.setStatus(status);
         carUse.setProposer(carUse.getCurrentUser());
+        carUse.setOrganization(carUse.getCurrentUser().getOrganization());
         save(carUse);
 
         for (CarUseUser carUseUser : carUse.getCarUseUserList()) {
@@ -64,6 +65,7 @@ public class CarUseServiceImpl extends EntityServiceImpl implements CarUseServic
     public void updateCarUse(CarUse carUse) throws Exception {
 
         carUse.setProposer(carUse.getCurrentUser());
+        carUse.setOrganization(carUse.getCurrentUser().getOrganization());
         save(carUse);
 
         executeHql("delete from CarUseUser a where a.carUse.objectId = ?", carUse.getObjectId());

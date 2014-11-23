@@ -1,10 +1,13 @@
 package com.withub.model.entity.query;
 
 import com.withub.model.entity.AbstractEntity;
+import com.withub.model.entity.enumeration.OrderByType;
+import com.withub.model.entity.enumeration.PropertyDataType;
 import com.withub.model.system.po.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,6 +65,55 @@ public final class QueryInfo implements Serializable {
      * 查询条件树
      */
     private QueryConditionTree queryConditionTree = new QueryConditionTree();
+
+    //================================ 方法 ===========================================================
+
+    public QueryInfo addCondition(String propertyName, Object propertyValue, ExpressionOperation operation) {
+
+        SqlExpressionConfig sqlExpressionConfig = new SqlExpressionConfig();
+        sqlExpressionConfig.setPropertyName(propertyName);
+        sqlExpressionConfig.setPropertyValue(propertyValue);
+        sqlExpressionConfig.setSqlExpressionOperation(operation);
+        if (propertyValue instanceof Integer) {
+            sqlExpressionConfig.setPropertyDataType(PropertyDataType.Number);
+        }
+        if (propertyValue instanceof Date) {
+            sqlExpressionConfig.setPropertyDataType(PropertyDataType.Date);
+        }
+        if (propertyValue instanceof List) {
+            List list = (List) propertyValue;
+            Object objectValue = list.get(0);
+            if (objectValue instanceof Integer) {
+                sqlExpressionConfig.setPropertyDataType(PropertyDataType.Number);
+            }
+            if (objectValue instanceof Date) {
+                sqlExpressionConfig.setPropertyDataType(PropertyDataType.Date);
+            }
+        }
+        QueryConditionNode queryConditionNode = new QueryConditionNode();
+        queryConditionNode.setSqlExpressionConfig(sqlExpressionConfig);
+        this.getQueryConditionTree().getUserConditionNode().appendNode(queryConditionNode);
+
+        return this;
+    }
+
+    public QueryInfo setAscOrderBy(String property) {
+
+        OrderByProperty orderByProperty = new OrderByProperty();
+        orderByProperty.setPropertyName(property);
+        orderByProperty.setOrderByType(OrderByType.Asc);
+        this.getOrderByPropertyList().add(orderByProperty);
+        return this;
+    }
+
+    public QueryInfo setDescOrderBy(String property) {
+
+        OrderByProperty orderByProperty = new OrderByProperty();
+        orderByProperty.setPropertyName(property);
+        orderByProperty.setOrderByType(OrderByType.Desc);
+        this.getOrderByPropertyList().add(orderByProperty);
+        return this;
+    }
 
     //================================ 属性方法 ===========================================================
 

@@ -57,6 +57,7 @@ public class LeaveServiceImpl extends EntityServiceImpl implements LeaveService 
         Code status = codeService.getCodeByTag("LeaveStatus", "Create");
         leave.setStatus(status);
         leave.setProposer(leave.getCurrentUser());
+        leave.setOrganization(leave.getCurrentUser().getOrganization());
         Integer duration = (int) DateUtil.getDiffDays(leave.getBeginDate(), leave.getEndDate());
         leave.setDuration(duration);
         save(leave);
@@ -66,6 +67,7 @@ public class LeaveServiceImpl extends EntityServiceImpl implements LeaveService 
     public void updateLeave(Leave leave) throws Exception {
 
         leave.setProposer(leave.getCurrentUser());
+        leave.setOrganization(leave.getCurrentUser().getOrganization());
         save(leave);
     }
 

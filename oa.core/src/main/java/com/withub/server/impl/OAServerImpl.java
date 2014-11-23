@@ -1,14 +1,24 @@
 package com.withub.server.impl;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.withub.common.util.CollectionUtil;
 import com.withub.common.util.Md5Util;
+import com.withub.common.util.StringUtil;
+import com.withub.model.entity.query.ExpressionOperation;
+import com.withub.model.entity.query.QueryInfo;
+import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.*;
 import com.withub.model.system.po.*;
+import com.withub.model.workflow.enumeration.FlowNodeType;
 import com.withub.model.workflow.enumeration.TaskHandleResult;
+import com.withub.model.workflow.po.FlowType;
+import com.withub.model.workflow.po.Instance;
 import com.withub.model.workflow.po.Task;
+import com.withub.model.workflow.vo.InstanceTaskLog;
 import com.withub.model.workflow.vo.TaskFlowNodeInfo;
+import com.withub.model.workflow.vo.TaskInfo;
 import com.withub.server.OAServer;
 import com.withub.service.oa.*;
 import com.withub.service.system.AccountService;
@@ -17,15 +27,11 @@ import com.withub.service.system.OrganizationService;
 import com.withub.service.system.UserService;
 import com.withub.service.workflow.TaskService;
 import com.withub.service.workflow.WorkflowService;
-import net.sf.json.JSONSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Service("oaServer")
@@ -79,6 +85,60 @@ public class OAServerImpl implements OAServer {
         return null;
     }
 
+    public RecordsetInfo queryTask(String currentUserId, String flowTypeTag, String taskStatusTag, Integer page, Integer pageSize) throws Exception {
+
+        FlowType flowType = (FlowType) taskService.getByPropertyValue(FlowType.class, "flowTypeTag", flowTypeTag);
+        QueryInfo queryInfo = new QueryInfo();
+        queryInfo.setTargetEntity(TaskInfo.class);
+        queryInfo.addCondition("flowTypeId", flowType.getObjectId(), ExpressionOperation.Equals);
+        queryInfo.addCondition("taskStatusTag", taskStatusTag, ExpressionOperation.Equals);
+        queryInfo.addCondition("handler", currentUserId, ExpressionOperation.Equals);
+        queryInfo.setRecordsetIndex((page - 1) * pageSize);
+        queryInfo.setRecordsetSize(pageSize);
+
+        return taskService.query(queryInfo);
+    }
+
+    public Map queryInstance(String currentUserId, String flowTypeTag, String complate, Integer page, Integer pageSize) throws Exception {
+
+        String sql = " from wf_instance a\n" +
+                "  , (\n" +
+                "      select\n" +
+                "        c.instanceid,\n" +
+                "        max(a.finishtime) finishtime\n" +
+                "      from wf_task a, wf_mastertask b, wf_subinstance c, wf_flowtype d, wf_flownode e\n" +
+                "      where a.mastertaskid = b.objectid and b.subinstanceid = c.objectid \n" +
+                "            and b.flownodeid = e.objectid and d.objectid = e.flowtypeid\n" +
+                "        and a.owner = ?\n" +
+                "        and d.flowtypetag = ?\n" +
+                "        and a.result is not null\n" +
+                "      group by c.instanceid\n" +
+                "    ) b\n" +
+                "where a.objectid = b.instanceid";
+        if (StringUtil.isNotEmpty(complate) && !StringUtil.compareValue("0", complate)) {
+            sql += " and a.result = '69F248C7-30CC-4723-A100-3DECD577FCDD'";
+        }
+
+        List list = workflowService.listBySql("select a.objectid instanceId, a.name instanceName, a.relatedobjectid relatedObjectId, b.finishtime finishTime " +
+                sql + " order by b.finishtime desc limit ?, ?"
+                , currentUserId, flowTypeTag, (page - 1) * pageSize, pageSize);
+        Integer count = Integer.parseInt(workflowService.listBySql("select count(1) " + sql, currentUserId, flowTypeTag).get(0).toString());
+
+        List result = new ArrayList();
+        for (Object[] objects : (List<Object[]>) list) {
+            Map item = new HashMap();
+            item.put("instanceId", objects[0]);
+            item.put("instanceName", objects[1]);
+            item.put("relatedObjectId", objects[2]);
+            item.put("finishTime", ((Date) objects[3]).getTime());
+            result.add(item);
+        }
+
+        Map returnMap = new HashMap();
+        returnMap.put("count", count.toString());
+        returnMap.put("result", JSON.toJSON(result).toString());
+        return returnMap;
+    }
 
     public String getTaskFlowNodeInfo(String currentUserId, String taskId) throws Exception {
 
@@ -99,6 +159,47 @@ public class OAServerImpl implements OAServer {
             data.put("handlerList", list);
         }
         return data.toString();
+    }
+
+    public String getInstance(String instanceId) throws Exception {
+
+        Instance instance = taskService.get(Instance.class, instanceId);
+
+        Map data = new HashMap();
+        data.put("name", instance.getName());
+        data.put("status", instance.getStatus().getName());
+        data.put("flowType", instance.getFlowType().getName());
+        data.put("createTime", instance.getCreateTime().getTime());
+        data.put("creator", instance.getCreator().getName());
+        data.put("organization", instance.getOrganization().getName());
+        if (instance.getFinishTime() != null) {
+            data.put("finishTime", instance.getFinishTime().getTime());
+            List list = workflowService.listInstanceCurrentHandler(instance.getObjectId());
+            String handler = "";
+            if (CollectionUtil.isNotEmpty(list)) {
+                for (User user : (List<User>) list) {
+                    handler += user.getName() + ",";
+                }
+            }
+            data.put("handler", StringUtil.trim(handler, ","));
+            data.put("flowNode", instance.getCurrentFlowNode().getName());
+        } else {
+            data.put("handler", "");
+            data.put("flowNode", "");
+        }
+
+        return JSON.toJSON(data).toString();
+    }
+
+    public String getInstanceTaskLog(String instanceId) throws Exception {
+        QueryInfo queryInfo = new QueryInfo();
+        queryInfo.setTargetEntity(InstanceTaskLog.class);
+        queryInfo.addCondition("instanceId", instanceId, ExpressionOperation.Equals);
+        queryInfo.addCondition("flowNodeType", FlowNodeType.AndSign.toString(), ExpressionOperation.Equals);
+        queryInfo.addCondition("taskHandleResult", null, ExpressionOperation.NotEquals);
+        queryInfo.setDescOrderBy("taskFinishTime");
+        List list = workflowService.list(queryInfo);
+        return JSON.toJSON(list).toString();
     }
 
     public void commitTask(String currentUserId, String taskId, String result, String opinion, List<String> nextHandlerList) throws Exception {
@@ -128,7 +229,7 @@ public class OAServerImpl implements OAServer {
             list.add(item);
         }
 
-        return JSONSerializer.toJSON(list).toString();
+        return JSON.toJSON(list).toString();
     }
 
     public String getUserList(String organizationId) throws Exception {
@@ -142,7 +243,7 @@ public class OAServerImpl implements OAServer {
             list.add(item);
         }
 
-        return JSONSerializer.toJSON(list).toString();
+        return JSON.toJSON(list).toString();
     }
 
     public String getCodeList(String codeColumnTag) throws Exception {
@@ -156,7 +257,7 @@ public class OAServerImpl implements OAServer {
             list.add(item);
         }
 
-        return JSONSerializer.toJSON(list).toString();
+        return JSON.toJSON(list).toString();
     }
 
     @Override
@@ -209,7 +310,7 @@ public class OAServerImpl implements OAServer {
         result.put("description", miscellaneous.getDescription());
         result.put("proposerName", miscellaneous.getProposer().getName());
         result.put("organizationName", miscellaneous.getOrganization().getName());
-        return JSONSerializer.toJSON(result).toString();
+        return JSON.toJSON(result).toString();
     }
 
     @Override
@@ -227,14 +328,14 @@ public class OAServerImpl implements OAServer {
         result.put("address", carUse.getAddress());
         result.put("createTime", carUse.getCreateTime().getTime());
         List users = new ArrayList();
-        for(CarUseUser carUseUser : carUse.getCarUseUserList()) {
+        for (CarUseUser carUseUser : carUse.getCarUseUserList()) {
             Map item = new HashMap();
             item.put("objectId", carUseUser.getUser().getObjectId());
             item.put("name", carUseUser.getUser().getName());
             users.add(item);
         }
         result.put("users", users);
-        return JSONSerializer.toJSON(result).toString();
+        return JSON.toJSON(result).toString();
     }
 
     @Override
@@ -248,7 +349,7 @@ public class OAServerImpl implements OAServer {
         result.put("organizationName", leave.getOrganization().getName());
         result.put("beginDate", leave.getBeginDate().getTime());
         result.put("endDate", leave.getEndDate().getTime());
-        return JSONSerializer.toJSON(result).toString();
+        return JSON.toJSON(result).toString();
     }
 
     @Override
@@ -270,14 +371,14 @@ public class OAServerImpl implements OAServer {
         result.put("requiredCar", outgoing.getRequiredCar());
         result.put("createTime", outgoing.getCreateTime().getTime());
         List users = new ArrayList();
-        for(OutgoingUser outgoingUser : outgoing.getOutgoingUserList()) {
+        for (OutgoingUser outgoingUser : outgoing.getOutgoingUserList()) {
             Map item = new HashMap();
             item.put("objectId", outgoingUser.getUser().getObjectId());
             item.put("name", outgoingUser.getUser().getName());
             users.add(item);
         }
         result.put("users", users);
-        return JSONSerializer.toJSON(result).toString();
+        return JSON.toJSON(result).toString();
     }
 
     @Override
@@ -295,6 +396,6 @@ public class OAServerImpl implements OAServer {
         result.put("target", training.getTarget());
         result.put("peopleCount", training.getPeopleCount());
         result.put("publicity", training.getPublicity());
-        return JSONSerializer.toJSON(result).toString();
+        return JSON.toJSON(result).toString();
     }
 }
