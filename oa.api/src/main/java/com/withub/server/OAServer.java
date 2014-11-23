@@ -1,17 +1,14 @@
 package com.withub.server;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.withub.model.oa.po.*;
-import com.withub.model.system.po.Organization;
-import com.withub.model.workflow.vo.TaskFlowNodeInfo;
+import com.withub.model.system.po.User;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface OAServer {
+
+    public User login(String username, String password) throws Exception;
 
     public String getTaskFlowNodeInfo(String currentUserId, String taskId) throws Exception;
 

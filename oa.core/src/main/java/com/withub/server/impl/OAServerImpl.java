@@ -3,16 +3,15 @@ package com.withub.server.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.withub.common.util.CollectionUtil;
+import com.withub.common.util.Md5Util;
 import com.withub.model.oa.po.*;
-import com.withub.model.system.po.Code;
-import com.withub.model.system.po.CodeColumn;
-import com.withub.model.system.po.Organization;
-import com.withub.model.system.po.User;
+import com.withub.model.system.po.*;
 import com.withub.model.workflow.enumeration.TaskHandleResult;
 import com.withub.model.workflow.po.Task;
 import com.withub.model.workflow.vo.TaskFlowNodeInfo;
 import com.withub.server.OAServer;
 import com.withub.service.oa.*;
+import com.withub.service.system.AccountService;
 import com.withub.service.system.CodeService;
 import com.withub.service.system.OrganizationService;
 import com.withub.service.system.UserService;
@@ -43,6 +42,9 @@ public class OAServerImpl implements OAServer {
     private UserService userService;
 
     @Autowired
+    private AccountService accountService;
+
+    @Autowired
     private CodeService codeService;
 
     @Autowired
@@ -62,6 +64,20 @@ public class OAServerImpl implements OAServer {
 
     @Autowired
     private OrganizationService organizationService;
+
+    public User login(String username, String password) throws Exception {
+
+        Account account = accountService.getAccountByName(username);
+        String encryptedPassword = Md5Util.getStringMD5(account.getSalt() + password);
+        boolean isValidate = !encryptedPassword.equalsIgnoreCase(account.getPassword());
+        if (isValidate) {
+            User user = new User();
+            user.setName(account.getUser().getName());
+            user.setObjectId(account.getUser().getObjectId());
+            return user;
+        }
+        return  null;
+    }
 
 
     public String getTaskFlowNodeInfo(String currentUserId, String taskId) throws Exception {
