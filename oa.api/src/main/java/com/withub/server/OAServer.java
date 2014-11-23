@@ -24,6 +24,16 @@ public interface OAServer {
 
     public void submitTraining(Training training) throws Exception;
 
+    public String getMiscellaneous(String objectId) throws Exception;
+
+    public String getCarUse(String objectId) throws Exception;
+
+    public String getLeave(String objectId) throws Exception;
+
+    public String getOutgoing(String objectId) throws Exception;
+
+    public String getTraining(String objectId) throws Exception;
+
     public String getOrganizationList() throws Exception;
 
     public String getUserList(String organizationId) throws Exception;

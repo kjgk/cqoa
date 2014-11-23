@@ -76,7 +76,7 @@ public class OAServerImpl implements OAServer {
             user.setObjectId(account.getUser().getObjectId());
             return user;
         }
-        return  null;
+        return null;
     }
 
 
@@ -198,5 +198,103 @@ public class OAServerImpl implements OAServer {
         training.setCurrentUser(userService.get(User.class, training.getCurrentUser().getObjectId()));
 
         trainingService.submitTraining(training);
+    }
+
+    @Override
+    public String getMiscellaneous(String objectId) throws Exception {
+
+        Miscellaneous miscellaneous = miscellaneousService.get(Miscellaneous.class, objectId);
+        Map result = new HashMap();
+        result.put("objectId", miscellaneous.getObjectId());
+        result.put("description", miscellaneous.getDescription());
+        result.put("proposerName", miscellaneous.getProposer().getName());
+        result.put("organizationName", miscellaneous.getOrganization().getName());
+        return JSONSerializer.toJSON(result).toString();
+    }
+
+    @Override
+    public String getCarUse(String objectId) throws Exception {
+
+        CarUse carUse = carUseService.get(CarUse.class, objectId);
+        Map result = new HashMap();
+        result.put("objectId", carUse.getObjectId());
+        result.put("description", carUse.getDescription());
+        result.put("proposerName", carUse.getProposer().getName());
+        result.put("organizationName", carUse.getOrganization().getName());
+        result.put("beginTime", carUse.getBeginTime().getTime());
+        result.put("endTime", carUse.getEndTime().getTime());
+        result.put("region", carUse.getRegion());
+        result.put("address", carUse.getAddress());
+        result.put("createTime", carUse.getCreateTime().getTime());
+        List users = new ArrayList();
+        for(CarUseUser carUseUser : carUse.getCarUseUserList()) {
+            Map item = new HashMap();
+            item.put("objectId", carUseUser.getUser().getObjectId());
+            item.put("name", carUseUser.getUser().getName());
+            users.add(item);
+        }
+        result.put("users", users);
+        return JSONSerializer.toJSON(result).toString();
+    }
+
+    @Override
+    public String getLeave(String objectId) throws Exception {
+
+        Leave leave = leaveService.get(Leave.class, objectId);
+        Map result = new HashMap();
+        result.put("objectId", leave.getObjectId());
+        result.put("description", leave.getDescription());
+        result.put("proposerName", leave.getProposer().getName());
+        result.put("organizationName", leave.getOrganization().getName());
+        result.put("beginDate", leave.getBeginDate().getTime());
+        result.put("endDate", leave.getEndDate().getTime());
+        return JSONSerializer.toJSON(result).toString();
+    }
+
+    @Override
+    public String getOutgoing(String objectId) throws Exception {
+
+        Outgoing outgoing = outgoingService.get(Outgoing.class, objectId);
+        Map result = new HashMap();
+        result.put("objectId", outgoing.getObjectId());
+        result.put("description", outgoing.getDescription());
+        result.put("proposerName", outgoing.getProposer().getName());
+        result.put("organizationName", outgoing.getOrganization().getName());
+        result.put("beginDate", outgoing.getBeginDate().getTime());
+        result.put("endDate", outgoing.getEndDate().getTime());
+        result.put("localCity", outgoing.getLocalCity());
+        result.put("destination", outgoing.getDestination());
+        result.put("driverRoute", outgoing.getDriveRoute());
+        result.put("transportation", outgoing.getTransportation().getObjectId());
+        result.put("transportationName", outgoing.getTransportation().getName());
+        result.put("requiredCar", outgoing.getRequiredCar());
+        result.put("createTime", outgoing.getCreateTime().getTime());
+        List users = new ArrayList();
+        for(OutgoingUser outgoingUser : outgoing.getOutgoingUserList()) {
+            Map item = new HashMap();
+            item.put("objectId", outgoingUser.getUser().getObjectId());
+            item.put("name", outgoingUser.getUser().getName());
+            users.add(item);
+        }
+        result.put("users", users);
+        return JSONSerializer.toJSON(result).toString();
+    }
+
+    @Override
+    public String getTraining(String objectId) throws Exception {
+
+        Training training = trainingService.get(Training.class, objectId);
+        Map result = new HashMap();
+        result.put("objectId", training.getObjectId());
+        result.put("proposerName", training.getProposer().getName());
+        result.put("organizationName", training.getOrganization().getName());
+        result.put("beginDate", training.getBeginDate().getTime());
+        result.put("endDate", training.getEndDate().getTime());
+        result.put("address", training.getAddress());
+        result.put("content", training.getContent());
+        result.put("target", training.getTarget());
+        result.put("peopleCount", training.getPeopleCount());
+        result.put("publicity", training.getPublicity());
+        return JSONSerializer.toJSON(result).toString();
     }
 }

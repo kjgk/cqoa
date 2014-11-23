@@ -6,10 +6,8 @@ import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.*;
 import com.withub.model.system.po.Organization;
 import com.withub.model.system.po.User;
-import com.withub.model.workflow.NextFlowNodeInfo;
 import com.withub.model.workflow.enumeration.FlowNodeType;
 import com.withub.model.workflow.enumeration.TaskStatus;
-import com.withub.model.workflow.po.FlowNode;
 import com.withub.model.workflow.po.Instance;
 import com.withub.model.workflow.po.InstanceOrganization;
 import com.withub.model.workflow.po.Task;
@@ -49,63 +47,30 @@ public class WorkflowController extends BaseController {
     @RequestMapping(value = "/task/queryCurrentUserTask", method = RequestMethod.GET)
     public void queryCurrentUserTask(HttpServletRequest request, Date date, ModelMap modelMap) throws Exception {
 
+        String flowTypeId = request.getParameter("flowTypeId");
+        String statusTag = request.getParameter("statusTag");
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setTargetEntity(TaskInfo.class);
 
-        this.setPageInfoQueryCondition(request, queryInfo);
-
-        this.setDateRangeQueryCondition(request, queryInfo, "taskCreateTime");
-
-        this.setStringValueEqualsQueryCondition(request, queryInfo, "flowTypeId", "flowType");
-
-        this.setStringValueEqualsQueryCondition(request, queryInfo, "taskStatus", "statusId");
-
-        this.setStringValueEqualsQueryCondition(request, queryInfo, "taskStatusTag", "statusTag");
-
-        this.setStringValueNotEqualsQueryCondition(queryInfo, "flowNodeType", "First");
-
+        if (StringUtil.isNotEmpty(flowTypeId)) {
+            this.setQueryInfoCondition(queryInfo, "flowTypeId", flowTypeId, ExpressionOperation.Equals);
+        }
+        if (StringUtil.isNotEmpty(statusTag)) {
+            this.setQueryInfoCondition(queryInfo, "taskStatusTag", statusTag, ExpressionOperation.Equals);
+        }
+        this.setQueryInfoCondition(queryInfo, "flowNodeType", "First", ExpressionOperation.NotEquals);
         if (date != null) {
             this.setQueryInfoCondition(queryInfo, "taskCreateTime", date, ExpressionOperation.LessThanOrEquals);
             this.setQueryInfoCondition(queryInfo, "taskFinishTime", date, ExpressionOperation.GreaterThanOrEquals);
         }
-
+        this.setPageInfoQueryCondition(request, queryInfo);
         this.setDescOrderBy(queryInfo, "taskCreateTime");
 
         RecordsetInfo recordsetInfo = workflowService.queryCurrentUserTask(queryInfo);
         List list = recordsetInfo.getEntityList();
 
-        if (CollectionUtil.isEmpty(list)) {
-            return;
-        }
-
-        List items = new ArrayList();
-        for (TaskInfo taskInfo : (List<TaskInfo>) list) {
-            Map<String, Object> item = new HashMap<String, Object>();
-            item.put("objectId", taskInfo.getObjectId());
-            item.put("instanceId", taskInfo.getInstanceId());
-            item.put("instanceName", taskInfo.getInstanceName());
-            item.put("flowType", taskInfo.getFlowTypeName());
-            item.put("flowNodeType", taskInfo.getFlowNodeType());
-            item.put("flowNodeName", taskInfo.getFlowNodeName());
-            item.put("taskStatusName", taskInfo.getTaskStatusName());
-            item.put("creatorName", taskInfo.getCreatorName());
-            item.put("organizationName", taskInfo.getOrganizationName());
-            item.put("result", taskInfo.getTaskHandleResultName());
-            item.put("relatedObjectId", taskInfo.getRelatedObjectId());
-            item.put("activity", taskInfo.getActivity());
-            item.put("taskCreateTime", taskInfo.getTaskCreateTime().getTime());
-            item.put("taskArriveTime", taskInfo.getTaskArriveTime().getTime());
-            item.put("taskExpiration", taskInfo.getTaskExpiration());
-            item.put("taskStatus", taskInfo.getTaskStatusTag());
-            if (taskInfo.getTaskFinishTime() != null) {
-                item.put("taskFinishTime", taskInfo.getTaskFinishTime().getTime());
-            }
-            item.put("taskLocked", taskInfo.getTaskLocked());
-            items.add(item);
-        }
-
         modelMap.put("total", recordsetInfo.getTotalRecordCount());
-        modelMap.put("items", items);
+        modelMap.put("items", list);
     }
 
     @RequestMapping(value = "/task/runningTask", method = RequestMethod.GET)
