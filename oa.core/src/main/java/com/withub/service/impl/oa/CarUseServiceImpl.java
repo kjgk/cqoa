@@ -64,8 +64,11 @@ public class CarUseServiceImpl extends EntityServiceImpl implements CarUseServic
     @Override
     public void updateCarUse(CarUse carUse) throws Exception {
 
+        CarUse temp = get(CarUse.class, carUse.getObjectId());
+
         carUse.setProposer(carUse.getCurrentUser());
         carUse.setOrganization(carUse.getCurrentUser().getOrganization());
+        carUse.setStatus(temp.getStatus());
         save(carUse);
 
         executeHql("delete from CarUseUser a where a.carUse.objectId = ?", carUse.getObjectId());

@@ -5,6 +5,7 @@ import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.Training;
 import com.withub.model.oa.po.Training;
+import com.withub.model.oa.po.Training;
 import com.withub.model.system.po.Code;
 import com.withub.service.EntityServiceImpl;
 import com.withub.service.oa.TrainingService;
@@ -58,9 +59,11 @@ public class TrainingServiceImpl extends EntityServiceImpl implements TrainingSe
     @Override
     public void updateTraining(Training training) throws Exception {
 
+        Training temp = get(Training.class, training.getObjectId());
+
         training.setProposer(training.getCurrentUser());
         training.setOrganization(training.getCurrentUser().getOrganization());
+        training.setStatus(temp.getStatus());
         save(training);
     }
-
 }

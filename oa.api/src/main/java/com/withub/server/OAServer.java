@@ -14,7 +14,7 @@ public interface OAServer {
 
     public RecordsetInfo queryTask(String currentUserId, String flowTypeTag, String taskStatusTag, Integer page, Integer pageSize) throws Exception;
 
-    public Map queryInstance(String currentUserId, String flowTypeTag, String complate, Integer page, Integer pageSize) throws Exception;
+    public Map queryInstance(String currentUserId, String flowTypeTag, String complete, Integer page, Integer pageSize) throws Exception;
 
     public String getTaskFlowNodeInfo(String currentUserId, String taskId) throws Exception;
 

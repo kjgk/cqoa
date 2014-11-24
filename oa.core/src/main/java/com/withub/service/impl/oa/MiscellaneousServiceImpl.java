@@ -3,6 +3,7 @@ package com.withub.service.impl.oa;
 import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
+import com.withub.model.oa.po.Leave;
 import com.withub.model.oa.po.Miscellaneous;
 import com.withub.model.system.po.Code;
 import com.withub.service.EntityServiceImpl;
@@ -57,8 +58,11 @@ public class MiscellaneousServiceImpl extends EntityServiceImpl implements Misce
     @Override
     public void updateMiscellaneous(Miscellaneous miscellaneous) throws Exception {
 
+        Miscellaneous temp = get(Miscellaneous.class, miscellaneous.getObjectId());
+
         miscellaneous.setProposer(miscellaneous.getCurrentUser());
         miscellaneous.setOrganization(miscellaneous.getCurrentUser().getOrganization());
+        miscellaneous.setStatus(temp.getStatus());
         save(miscellaneous);
     }
 

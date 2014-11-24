@@ -4,8 +4,6 @@ import com.withub.common.util.DateUtil;
 import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
-import com.withub.model.oa.po.CarUseUser;
-import com.withub.model.oa.po.Outgoing;
 import com.withub.model.oa.po.Outgoing;
 import com.withub.model.oa.po.OutgoingUser;
 import com.withub.model.system.po.Code;
@@ -15,9 +13,6 @@ import com.withub.service.system.CodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Calendar;
-import java.util.Date;
 
 
 @Service("outgoingService")
@@ -72,8 +67,11 @@ public class OutgoingServiceImpl extends EntityServiceImpl implements OutgoingSe
     @Override
     public void updateOutgoing(Outgoing outgoing) throws Exception {
 
+        Outgoing temp = get(Outgoing.class, outgoing.getObjectId());
+
         outgoing.setProposer(outgoing.getCurrentUser());
         outgoing.setOrganization(outgoing.getCurrentUser().getOrganization());
+        outgoing.setStatus(temp.getStatus());
         save(outgoing);
 
         executeHql("delete from OutgoingUser a where a.outgoing.objectId = ?", outgoing.getObjectId());

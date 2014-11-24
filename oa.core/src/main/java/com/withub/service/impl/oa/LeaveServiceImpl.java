@@ -4,6 +4,7 @@ import com.withub.common.util.DateUtil;
 import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
+import com.withub.model.oa.po.CarUse;
 import com.withub.model.oa.po.Leave;
 import com.withub.model.system.po.Code;
 import com.withub.service.EntityServiceImpl;
@@ -58,16 +59,19 @@ public class LeaveServiceImpl extends EntityServiceImpl implements LeaveService 
         leave.setStatus(status);
         leave.setProposer(leave.getCurrentUser());
         leave.setOrganization(leave.getCurrentUser().getOrganization());
-        Integer duration = (int) DateUtil.getDiffDays(leave.getBeginDate(), leave.getEndDate());
-        leave.setDuration(duration);
+        leave.setDuration(new Long(DateUtil.getDiffDays(leave.getBeginDate(), leave.getEndDate())).intValue());
         save(leave);
     }
 
     @Override
     public void updateLeave(Leave leave) throws Exception {
 
+        Leave temp = get(Leave.class, leave.getObjectId());
+
         leave.setProposer(leave.getCurrentUser());
         leave.setOrganization(leave.getCurrentUser().getOrganization());
+        leave.setStatus(temp.getStatus());
+        leave.setDuration(new Long(DateUtil.getDiffDays(leave.getBeginDate(), leave.getEndDate())).intValue());
         save(leave);
     }
 

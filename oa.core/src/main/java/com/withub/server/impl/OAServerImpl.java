@@ -95,11 +95,16 @@ public class OAServerImpl implements OAServer {
         queryInfo.addCondition("handler", currentUserId, ExpressionOperation.Equals);
         queryInfo.setRecordsetIndex((page - 1) * pageSize);
         queryInfo.setRecordsetSize(pageSize);
+        queryInfo.setDescOrderBy("taskCreateTime");
 
-        return taskService.query(queryInfo);
+        RecordsetInfo recordsetInfo = taskService.query(queryInfo);
+        if (recordsetInfo.getEntityList() == null) {
+            recordsetInfo.setEntityList(new ArrayList());
+        }
+        return recordsetInfo;
     }
 
-    public Map queryInstance(String currentUserId, String flowTypeTag, String complate, Integer page, Integer pageSize) throws Exception {
+    public Map queryInstance(String currentUserId, String flowTypeTag, String complete, Integer page, Integer pageSize) throws Exception {
 
         String sql = " from wf_instance a\n" +
                 "  , (\n" +
@@ -115,7 +120,7 @@ public class OAServerImpl implements OAServer {
                 "      group by c.instanceid\n" +
                 "    ) b\n" +
                 "where a.objectid = b.instanceid";
-        if (StringUtil.isNotEmpty(complate) && !StringUtil.compareValue("0", complate)) {
+        if (StringUtil.isNotEmpty(complete) && !StringUtil.compareValue("0", complete)) {
             sql += " and a.result = '69F248C7-30CC-4723-A100-3DECD577FCDD'";
         }
 
@@ -349,6 +354,7 @@ public class OAServerImpl implements OAServer {
         result.put("organizationName", leave.getOrganization().getName());
         result.put("beginDate", leave.getBeginDate().getTime());
         result.put("endDate", leave.getEndDate().getTime());
+        result.put("createTime", leave.getCreateTime().getTime());
         return JSON.toJSON(result).toString();
     }
 
