@@ -30,6 +30,7 @@
                           ng-model="leave.description"
                           validator="required"
                           rows="5"/>
+                <h5 ng-if="leave.objectId"><a class="pull-right" href="javascript:;" ng-click="viewInstanceLog({relatedObjectId: leave.objectId})">查看审批记录</a></h5>
             </div>
         </div>
     </div>

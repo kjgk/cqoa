@@ -118,13 +118,15 @@ public class OAServerImpl implements OAServer {
                 "        and d.flowtypetag = ?\n" +
                 "        and a.result is not null\n" +
                 "      group by c.instanceid\n" +
-                "    ) b\n" +
-                "where a.objectid = b.instanceid";
+                "    ) b, vw_taskinfo c, sys_user d\n" +
+                "where a.objectid = b.instanceid and .a.objectid = c.instanceid and d.objectid = c.handler\n" +
+                "   and c.taskstatustag = 'Running'";
         if (StringUtil.isNotEmpty(complete) && !StringUtil.compareValue("0", complete)) {
             sql += " and a.result = '69F248C7-30CC-4723-A100-3DECD577FCDD'";
         }
 
-        List list = workflowService.listBySql("select a.objectid instanceId, a.name instanceName, a.relatedobjectid relatedObjectId, b.finishtime finishTime " +
+        List list = workflowService.listBySql("select a.objectid instanceId, a.name instanceName" +
+                ", a.relatedobjectid relatedObjectId, b.finishtime finishTime, c.flownodename flowNodeName, d.name hander " +
                 sql + " order by b.finishtime desc limit ?, ?"
                 , currentUserId, flowTypeTag, (page - 1) * pageSize, pageSize);
         Integer count = Integer.parseInt(workflowService.listBySql("select count(1) " + sql, currentUserId, flowTypeTag).get(0).toString());
@@ -136,6 +138,8 @@ public class OAServerImpl implements OAServer {
             item.put("instanceName", objects[1]);
             item.put("relatedObjectId", objects[2]);
             item.put("finishTime", ((Date) objects[3]).getTime());
+            item.put("flowNodeName", objects[4]);
+            item.put("hander", objects[5]);
             result.add(item);
         }
 

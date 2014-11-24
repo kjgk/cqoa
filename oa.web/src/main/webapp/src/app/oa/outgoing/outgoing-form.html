@@ -89,6 +89,7 @@
                 <label class="radio-inline c-radio">
                     <input type="radio" ng-model="outgoing.requiredCar" ng-value="0">
                     <span class="fa fa-circle"></span>否</label>
+                <h5 ng-if="outgoing.objectId"><a class="pull-right" href="javascript:;" ng-click="viewInstanceLog({relatedObjectId: outgoing.objectId})">查看审批记录</a></h5>
             </div>
         </div>
     </div>

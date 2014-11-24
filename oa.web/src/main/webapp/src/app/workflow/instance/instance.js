@@ -65,16 +65,14 @@ angular.module('app.workflow')
                     method: 'GET'
                 });
             },
-            queryInstanceTaskLog: function (instanceId, onlyShowApproveLog) {
+            queryInstanceTaskLog: function (params, onlyShowApproveLog) {
                 return $http({
                     url: PageContext.path + '/workflow/instance/listInstanceTaskLog',
-                    params: {
-                        instanceId: instanceId,
-                        onlyShowApproveLog: onlyShowApproveLog
-                    },
+                    params: _.extend(params, {onlyShowApproveLog: onlyShowApproveLog}),
                     method: 'GET'
                 });
             },
+            // 流程查看
             viewInstance: function (params) {
                 var _params = {};
                 if (_.isString(params)) {
@@ -85,6 +83,25 @@ angular.module('app.workflow')
                 $modal.open({
                     templateUrl: 'app/workflow/instance/instance-view.html',
                     controller: 'InstanceViewCtrl',
+                    size: 'lg',
+                    resolve: {
+                        params: function () {
+                            return _params;
+                        }
+                    }
+                });
+            },
+            // 审批日志查看
+            viewInstanceLog: function (params) {
+                var _params = {};
+                if (_.isString(params)) {
+                    _params.objectId = params;
+                } else {
+                    _params = params;
+                }
+                $modal.open({
+                    templateUrl: 'app/workflow/instance/instance-view-log.html',
+                    controller: 'InstanceLogViewCtrl',
                     size: 'lg',
                     resolve: {
                         params: function () {
@@ -118,9 +135,20 @@ angular.module('app.workflow')
 
         $scope.promise = InstanceService.getInstance(params).then(function (response) {
             $scope.instance = response.data.data;
-            return InstanceService.queryInstanceTaskLog($scope.instance.objectId).then(function (response) {
+            return InstanceService.queryInstanceTaskLog({instanceId: $scope.instance.objectId}, false).then(function (response) {
                 $scope.taskLogList = response.data.items;
             });
+        });
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss();
+        };
+    })
+
+    .controller('InstanceLogViewCtrl', function ($scope, $modalInstance, InstanceService, params) {
+
+        $scope.promise = InstanceService.queryInstanceTaskLog(params, true).then(function (response) {
+            $scope.taskLogList = response.data.items;
         });
 
         $scope.cancel = function () {

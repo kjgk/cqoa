@@ -57,6 +57,7 @@
             <div class="col-sm-10">
                 <input type="text" class="form-control"
                        name="address" ng-model="carUse.address" validator="required">
+                <h5 ng-if="carUse.objectId"><a class="pull-right" href="javascript:;" ng-click="viewInstanceLog({relatedObjectId: carUse.objectId})">查看审批记录</a></h5>
             </div>
         </div>
     </div>

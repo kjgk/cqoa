@@ -162,20 +162,6 @@ angular.module('app.workflow')
             });
         };
 
-        $scope.viewInstanceLog = function () {
-            $modal.open({
-                templateUrl: 'app/workflow/instance/instance-view-log.html',
-                size: 'lg',
-                controller: function ($scope, $modalInstance) {
-                    $scope.promise = InstanceService.queryInstanceTaskLog(task.instanceId, true).then(function (response) {
-                        $scope.taskLogList = response.data.items;
-                    });
-                    $scope.cancel = function () {
-                        $modalInstance.dismiss();
-                    };
-                }
-            });
-        }
     })
 
     .controller('InstanceTransmitCtrl', function ($scope, $modalInstance, TaskService, taskId) {
