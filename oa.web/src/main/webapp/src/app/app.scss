@@ -322,15 +322,13 @@ img {
   text-align: center;
   font-size: $font-size-small;
   color: #00223c;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px 0;
 }
 
 .foot p {
   text-align: center;
   font-size: $font-size-small;
   color: #00223c;
-  padding-top: 10px;
 }
 
 .rbgb {
@@ -719,14 +717,16 @@ section {
 }
 
 .modal-header {
-  padding: 12px;
+  padding: 13px;
 }
 
 .modal-dialog {
   legend {
-    padding-bottom: 2px;
-    margin-bottom: 12px;
+    padding: 4px 10px;
+    margin-bottom: 8px;
     font-size: $font-size-large;
+    background: #889fb9;
+    color: #FFFFFF;
   }
   .form-group {
     margin-bottom: 10px;

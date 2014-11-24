@@ -62,7 +62,7 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
         delay: 300
     })
 
-    .controller('MainCtrl', function ($rootScope, $window, $http, PageContext, DateFormat) {
+    .controller('MainCtrl', function ($rootScope, $scope, $window, $http, PageContext, DateFormat) {
 
         $rootScope.PageContext = PageContext;
         $rootScope.DateFormat = DateFormat;
@@ -94,5 +94,9 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
             $rootScope.$apply('windowWidth');
             $rootScope.$apply('windowHeight');
         });
+
+        $scope.getMenuHeight = function () {
+            return $rootScope.windowHeight - 204;
+        };
     })
 ;

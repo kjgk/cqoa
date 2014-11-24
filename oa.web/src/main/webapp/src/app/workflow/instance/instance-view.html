@@ -85,10 +85,10 @@
                     <tr ng-repeat="x in taskLogList">
                         <td>{{$index+1}}</td>
                         <td>{{x.flowNodeName}}</td>
-                        <td>{{x.handler}}</td>
-                        <td>{{x.result}}</td>
+                        <td>{{x.handlerName}}</td>
+                        <td>{{x.taskHandleResultName}}</td>
                         <td>{{x.opinion}}</td>
-                        <td>{{x.finishTime|$date:DateFormat.MINUTE}}</td>
+                        <td>{{x.taskFinishTime|$date:DateFormat.MINUTE}}</td>
                     </tr>
                     </tbody>
                 </table>
