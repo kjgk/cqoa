@@ -10,4 +10,13 @@ angular.module('withub.filter', ['withub.common'])
             }
         };
     })
+
+    .filter('emptyText', function () {
+        return function (input) {
+            if (input) {
+                return input;
+            }
+            return '/'
+        };
+    })
 ;

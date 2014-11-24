@@ -8,7 +8,7 @@
                         <div class="form-group">
                             <input date-picker ng-model="grid.queryInfo.date" placeholder="请选择用车时间">
                         </div>
-                        <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i
+                        <button class="btn btn-info btn-sm" ng-click="grid.query()"><i
                                 class="fa fa-search fa-fw"></i> 查询
                         </button>
                         <button class="btn btn-primary btn-sm" ng-click="createCarUse()"><i
@@ -45,7 +45,7 @@
                     <td>{{x.createTime|$date:DateFormat.MINUTE }}</td>
                     <td>
                         <button class="btn btn-xs btn-primary" ng-click="updateCarUse(x)">编辑</button>
-                        <button class="btn btn-xs btn-primary" ng-click="viewCarUseInstance(x)">查看流程</button>
+                        <button class="btn btn-xs btn-info" ng-click="viewCarUseInstance(x)">查看流程</button>
                         <button class="btn btn-xs btn-danger" ng-click="deleteCarUse(x)">删除</button>
                     </td>
                 </tr>

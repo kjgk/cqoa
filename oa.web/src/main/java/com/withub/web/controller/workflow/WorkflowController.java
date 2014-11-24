@@ -64,7 +64,11 @@ public class WorkflowController extends BaseController {
             this.setQueryInfoCondition(queryInfo, "taskFinishTime", date, ExpressionOperation.GreaterThanOrEquals);
         }
         this.setPageInfoQueryCondition(request, queryInfo);
-        this.setDescOrderBy(queryInfo, "taskCreateTime");
+        if(StringUtil.compareValue(statusTag, "Finish")) {
+            this.setDescOrderBy(queryInfo, "taskFinishTime");
+        } else {
+            this.setDescOrderBy(queryInfo, "taskCreateTime");
+        }
 
         RecordsetInfo recordsetInfo = workflowService.queryCurrentUserTask(queryInfo);
         List list = recordsetInfo.getEntityList();

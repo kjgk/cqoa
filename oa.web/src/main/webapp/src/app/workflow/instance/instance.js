@@ -24,7 +24,7 @@ angular.module('app.workflow')
 
     .directive('instanceStatus', function () {
         return {
-            template: '<label style="margin-bottom: 0; font-size: 100%; width: 54px; display: inline-block;" class="label {{labelClass}}">{{status.name}}</label>',
+            template: '<label style="margin-bottom: 0; font-size: 100%; width: 54px; display: inline-block; padding: 4px 8px;" class="label {{labelClass}}">{{status.name}}</label>',
             restrict: 'A',
             replace: true,
             scope: {

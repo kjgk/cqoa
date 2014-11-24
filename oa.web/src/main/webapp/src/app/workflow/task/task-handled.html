@@ -9,7 +9,7 @@
                             <label>日期</label>
                             <input date-picker ng-model="grid.queryInfo.date" placeholder="请选择日期">
                         </div>
-                        <button class="btn btn-warning btn-sm" ng-click="grid.query()"><i class="fa fa-search fa-fw"></i> 查询</button>
+                        <button class="btn btn-info btn-sm" ng-click="grid.query()"><i class="fa fa-search fa-fw"></i> 查询</button>
                     </form>
                 </div>
                 <div class="clear"></div>
@@ -20,26 +20,24 @@
                     <td>流程名称</td>
                     <td>流程类型</td>
                     <td>流程节点</td>
-                    <td>状态</td>
                     <td>发起单位</td>
-                    <td style="width: 120px;">发起人</td>
+                    <td style="width: 90px;">发起人</td>
                     <td style="width: 80px;">处理结果</td>
-                    <td style="width: 130px;">开始时间</td>
-                    <td style="width: 130px;">完成时间</td>
-                    <td style="width: 180px;">操作</td>
+                    <td style="width: 130px;">任务到达时间</td>
+                    <td style="width: 130px;">任务处理时间</td>
+                    <td style="width: 72px;">操作</td>
                 </tr>
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{x.instanceName}}</td>
                     <td>{{x.flowTypeName}}</td>
                     <td>{{x.flowNodeName}}</td>
-                    <td>{{x.taskStatusName}}</td>
                     <td>{{x.organizationName}}</td>
                     <td>{{x.creatorName}}</td>
                     <td>{{x.taskHandleResultName}}</td>
                     <td>{{x.taskArriveTime|$date:DateFormat.MINUTE}}</td>
                     <td>{{x.taskFinishTime|$date:DateFormat.MINUTE}}</td>
                     <td>
-                        <button class="btn btn-xs btn-primary" ng-click="viewInstance(x)">查看审批流程</button>
+                        <button class="btn btn-xs btn-info" ng-click="viewInstance(x)">查看</button>
                         <button ng-if="x.flowNodeType == 'AndSign' && x.taskStatus == 'Finish' && x.taskLocked == 0" class="btn btn-xs btn-warning"
                                 ng-click="rollbackTask(x)">回滚
                         </button>

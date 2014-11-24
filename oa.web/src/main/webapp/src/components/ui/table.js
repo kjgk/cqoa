@@ -47,6 +47,7 @@ angular.module('withub.ui', [])
                 var me = this;
                 options = options || {};
 
+                // 根据窗口高度决定每页记录数
                 var pageSize = $rootScope.windowHeight && $rootScope.windowHeight > 940 ? 15 : 10;
 
                 var self = {

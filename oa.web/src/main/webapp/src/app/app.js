@@ -96,7 +96,7 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
         });
 
         $scope.getMenuHeight = function () {
-            return $rootScope.windowHeight - 204;
+            return $rootScope.windowHeight - 194;
         };
     })
 ;
