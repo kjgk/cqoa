@@ -54,37 +54,12 @@ public class SecurityController extends BaseController {
         return "main";
     }
 
-    @RequestMapping(value = "/protal", method = RequestMethod.GET)
-    public String protal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        return "protal";
-    }
-
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         return "login";
     }
-
-    @RequestMapping(value = "/sessionExpired", method = RequestMethod.GET)
-    public String sessionExpired(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        return "sessionExpired";
-    }
-
-    @RequestMapping(value = "/sessionInvalid", method = RequestMethod.GET)
-    public String sessionInvalid(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        return "sessionInvalid";
-    }
-
-    @RequestMapping(value = "/sessionAuthenticationError", method = RequestMethod.GET)
-    public String sessionAuthenticationError(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        return "sessionAuthenticationError";
-    }
-
 
     @RequestMapping(value = "/loadMenu", method = RequestMethod.GET)
     public void loadMenu(@RequestParam(value = "node") String nodeId, @ModelAttribute(value = "nodes") ArrayList<TreeNode> nodes) throws Exception {

@@ -30,9 +30,9 @@
         <logout success-handler-ref="logoutSuccessHandler" invalidate-session="true"/>
 
         <session-management invalid-session-url="/securityServlet/sessionInvalid"
-                            session-authentication-error-url="/securityServlet/sessionAuthenticationError">
+                            session-authentication-error-url="/securityServlet/sessionInvalid">
             <concurrency-control session-registry-ref="sessionRegistry" max-sessions="100"
-                                 expired-url="/securityServlet/sessionExpired"
+                                 expired-url="/securityServlet/sessionInvalid"
                                  error-if-maximum-exceeded="false"/>
         </session-management>
 
