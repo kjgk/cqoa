@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-    <title></title>
+    <title>后台管理-重庆市第二中级人民法院办公系统</title>
     <link rel="stylesheet" type="text/css" href="${path}/scripts/extjs/resources/css/ext-all-neptune.css"/>
     <link rel="stylesheet" type="text/css" href="${path}/css/icon.css"/>
     <link rel="stylesheet" type="text/css" href="${path}/css/default.css"/>

@@ -89,6 +89,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>DispatcherServlet</servlet-name>
+        <servlet-class>com.withub.web.servlet.DispatcherServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>SecurityServlet</servlet-name>
         <servlet-class>com.withub.web.servlet.SecurityServlet</servlet-class>
     </servlet>
@@ -127,6 +132,16 @@
     <servlet-mapping>
         <servlet-name>PageLoadServlet</servlet-name>
         <url-pattern>/loadPage/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DispatcherServlet</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DispatcherServlet</servlet-name>
+        <url-pattern>/flowTypeDiagram</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
