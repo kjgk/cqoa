@@ -1,0 +1,39 @@
+<div class="right_">
+    <div>
+        <div class="rn_c">
+            <div class="ywtj"><p>人员配置</p>
+                <div class="tool-bar">
+                    <form class="form-inline" role="form">
+                        <button class="btn btn-info btn-sm" ng-click="grid.query()"><i class="fa fa-search fa-fw"></i> 查询</button>
+                        <button class="btn btn-primary btn-sm" ng-click="createUserGroup()"><i class="fa fa-plus fa-fw"></i> 添加</button>
+                    </form>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <table simple-table="grid" class="rbga" border="1">
+                <tr class="rlm_bga">
+                    <td>名称</td>
+                    <td>标识</td>
+                    <td>人员</td>
+                    <td style="width: 180px;">操作</td>
+
+                </tr>
+                <tr class="nr1" ng-repeat="x in grid.items">
+                    <td>{{x.name}}</td>
+                    <td>{{x.tag}}</td>
+                    <td>{{x.userGroupDetailList|outgoingusername}}</td>
+                    <td>
+                        <button class="btn btn-xs btn-primary" ng-click="updateUserGroup(x)">编辑</button>
+                        <button class="btn btn-xs btn-danger" ng-click="deleteUserGroup(x)">删除</button>
+                    </td>
+                </tr>
+
+            </table>
+
+            <div pagination ng-model="grid.currentPage" total-items="grid.total" items-per-page="grid.pageSize"></div>
+
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
