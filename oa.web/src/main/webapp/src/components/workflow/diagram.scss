@@ -4,7 +4,7 @@
 }
 
 .diagram {
-  width: 1200px;
+  width: 1280px;
   margin: 12px auto;
   .panel {
     margin-bottom: 0;
@@ -40,13 +40,13 @@
 
     .object-property {
       label {
-        width: 180px;
+        width: 250px;
         white-space: nowrap;
         clear: none;
       }
       .toggle {
         width: 90px;
-        margin-left: 180px;
+        margin-left: 250px;
       }
     }
   }
@@ -60,7 +60,7 @@
   }
 
   input, select, textarea {
-    width: 272px;
+    width: 352px;
     padding: 4px;
     height: 22px;
   }
@@ -92,7 +92,7 @@
 #inspector-container {
   margin-top: 8px;
   display: inline-block;
-  width: 420px;
+  width: 500px;
   height: 460px;
   position: relative;
   font-size: 12px;
