@@ -22,7 +22,8 @@ angular.module('workflow', ['ui.router', 'uuid4'])
             width: 640,
             height: 476,
             gridSize: 5,
-            model: graph
+            model: graph,
+            defaultLink: new joint.dia.Link({attrs: {".marker-target": {d: "M 10 0 L 0 5 L 10 10 z"}}})
         });
 
         var stencil = new joint.ui.Stencil({
@@ -106,8 +107,8 @@ angular.module('workflow', ['ui.router', 'uuid4'])
                             } },
                         SuspendDescription: { type: 'text', group: 'base', label: '流程挂起描述', index: 4 },
                         Executer: { type: 'text', group: 'base', label: '取人方法', index: 5 }/*,
-                        HandlerOnFlowNode: { type: 'text', group: 'base', label: '前面流程节点上的执行人', index: 6 },
-                        UserPropertyOnEntity: { type: 'text', group: 'base', label: '实体上的用户属性', index: 7 }*/
+                         HandlerOnFlowNode: { type: 'text', group: 'base', label: '前面流程节点上的执行人', index: 6 },
+                         UserPropertyOnEntity: { type: 'text', group: 'base', label: '实体上的用户属性', index: 7 }*/
                     });
 
                     if (type == 'first') {
@@ -216,7 +217,7 @@ angular.module('workflow', ['ui.router', 'uuid4'])
                     {"id": beginNodeId, "angle": 0, "attrs": {"circle": {"fill": "#5cb85c"}, "text": {"text": "开始"}}, "embeds": "", "nodeType": "begin", "position": {"x": 40, "y": 40}, "size": {"height": 50, "width": 80}, "type": "basic.Circle", "z": 1},
                     {"id": endNodeId, "angle": 0, "attrs": {"circle": {"fill": "#d9534f"}, "text": {"text": "结束"}}, "embeds": "", "nodeType": "end", "position": {"x": 40, "y": 255}, "size": {"height": 50, "width": 80}, "type": "basic.Circle", "z": 2},
                     {"id": firstNodeId, "Config": {"AllowAgent": false, "InstanceReturnMode": false, "ManualSelectHandler": false, "NotifyInstanceCreator": false, "SkipHandler": false, "SuspendInstance": false}, "Executer": "", "FlowNodeTag": "", "FlowNodeType": "first", "HandlerOnFlowNode": "", "SuspendDescription": "", "UserPropertyOnEntity": "", "angle": 0, "attrs": {"rect": {"fill": "#2798EC"}, "text": {"text": "第一个节点"}}, "embeds": "", "nodeType": "first", "position": {"x": 240, "y": 40}, "size": {"height": 50, "width": 80}, "type": "basic.Rect", "z": 3},
-                    {"id": linkId, "attrs": {}, "embeds": "", "source": {"id": beginNodeId}, "target": {"id": firstNodeId}, "type": "link", "z": 4}
+                    {"id": linkId, "attrs": {".marker-target": { d: "M 10 0 L 0 5 L 10 10 z" }}, "embeds": "", "source": {"id": beginNodeId}, "target": {"id": firstNodeId}, "type": "link", "z": 4}
                 ]};
                 graph.fromJSON(defaultDiagram);
             }
