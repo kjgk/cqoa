@@ -55,7 +55,7 @@ public class UserController extends BaseController {
         this.setInputFieldQueryCondition(request, queryInfo, "name");
         this.setStringValueEqualsQueryCondition(request, queryInfo, "role.objectId", "roleId");
 
-        this.setAscOrderBy(queryInfo, "name");
+        this.setAscOrderBy(queryInfo, "orderNo");
 
         RecordsetInfo recordsetInfo = userService.queryUser(queryInfo);
 
@@ -92,6 +92,7 @@ public class UserController extends BaseController {
             item.put("mobile", user.getMobile());
             item.put("employmentDate", DateUtil.getDateFormatString(user.getEmploymentDate(), "yyyy-MM-dd"));
             item.put("status", user.getStatus().getName());
+            item.put("orderNo", user.getOrderNo());
             items.add(item);
         }
 
@@ -129,6 +130,7 @@ public class UserController extends BaseController {
         model.put("idCard", user.getIdCard());
         model.put("mobile", user.getMobile());
         model.put("email", user.getEmail());
+        model.put("orderNo", user.getOrderNo());
         if (user.getOrganization() != null) {
             model.put("organization.objectId", user.getOrganization().getObjectId());
         }

@@ -56,6 +56,8 @@ public class User extends AbstractBaseEntity {
     @JoinColumn(name = "Status")
     private Code status;
 
+    private Integer orderNo;
+
     @OneToMany(targetEntity = UserOrganizationRole.class, mappedBy = "user", fetch = FetchType.LAZY)
     @OrderBy(value = "orderNo")
     @JsonIgnore
@@ -221,5 +223,13 @@ public class User extends AbstractBaseEntity {
     public void setOrganizationRoleList(List<UserOrganizationRole> organizationRoleList) {
 
         this.organizationRoleList = organizationRoleList;
+    }
+
+    public Integer getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
 }

@@ -14,6 +14,7 @@ Ext.define('withub.ext.system.user.UserModel', {
         'mobile',
         'status',
         'accountId',
-        'account'
+        'account',
+        'orderNo'
     ]
 });

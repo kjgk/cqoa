@@ -86,6 +86,17 @@
                                     allowBlank: false
                                 },
                                 {
+                                    fieldLabel: '排序号',
+                                    xtype: 'numberfield',
+                                    name: 'orderNo',
+                                    value: 10000,
+                                    allowDecimals: false,
+                                    minValue: 1,
+                                    maxValue: 99999,
+                                    emptyText: '请输入排序号',
+                                    allowBlank: false
+                                },
+                                {
                                     xtype: 'hidden',
                                     name: 'objectId'
                                 }

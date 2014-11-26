@@ -257,19 +257,19 @@ public class UserServiceImpl extends EntityServiceImpl implements UserService {
     public List searchUser(String keyword) throws Exception {
 
         String hql = "from User where name like ? or pinYin like ?" +
-                " and objectStatus = 1 order by name";
+                " and objectStatus = 1 order by orderNo, name";
         return listByHql(hql, "%" + keyword + "%", keyword + "%");
     }
 
     public List listByRoleTag(String roleTag) throws Exception {
 
-        String hql = "from User where role.roleTag = ? and status.codeTag = ? and objectStatus = 1 order by name";
+        String hql = "from User where role.roleTag = ? and status.codeTag = ? and objectStatus = 1 order by orderNo, name";
         return listByHql(hql, roleTag, UserStatus.Active.name());
     }
 
     public List listByOrganizationId(String organizationId) throws Exception {
 
-        String hql = "from User where organization.objectId = ? and status.codeTag = ? and objectStatus = 1 order by name";
+        String hql = "from User where organization.objectId = ? and status.codeTag = ? and objectStatus = 1 order by orderNo, name";
         return listByHql(hql, organizationId, UserStatus.Active.name());
     }
 

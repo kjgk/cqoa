@@ -20,7 +20,8 @@ Ext.define('withub.ext.system.user.UserList', {
                 {text: '组织机构', minWidth: 200, flex: 1, dataIndex: 'organization'},
                 {text: '角色', width: 160, dataIndex: 'role'},
                 {text: '手机', width: 150, dataIndex: 'mobile'},
-                {text: '状态', width: 50, dataIndex: 'status'}
+                {text: '状态', width: 60, dataIndex: 'status'},
+                {text: '排序号', width: 60, dataIndex: 'orderNo'}
             ],
             tbar: [
                 '组织机构',
