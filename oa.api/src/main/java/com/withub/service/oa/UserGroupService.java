@@ -10,6 +10,8 @@ public interface UserGroupService extends EntityService {
 
     public UserGroup getUserGroup(String objectId) throws Exception;
 
+    public UserGroup getUserGroupByTag(String tag) throws Exception;
+
     public RecordsetInfo<UserGroup> queryUserGroup(QueryInfo queryInfo) throws Exception;
 
     public void deleteUserGroup(String objectId) throws Exception;

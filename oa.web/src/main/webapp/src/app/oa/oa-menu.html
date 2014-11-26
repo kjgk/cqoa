@@ -10,7 +10,6 @@
                     <li><a ui-sref="oa.task.pending">待办事项</a></li>
                     <li><a ui-sref="oa.task.handled">已办事项</a></li>
                     <li><a ui-sref="oa.instance.list">发起流程</a></li>
-                    <li><a ui-sref="oa.userGroup">人员配置</a></li>
                     <li><a href="javascript:;" ng-click="modifyPassword()">修改密码</a></li>
                 </ul>
             </div>
@@ -22,6 +21,7 @@
                 <ul>
                     <li><a ui-sref="oa.instance.all">流程查看</a></li>
                     <li ng-repeat="x in menus"><a href="#{{x.url}}">{{x.text}}</a></li>
+                    <li><a ui-sref="oa.userGroup">人员配置</a></li>
                 </ul>
             </div>
             <div ng-if="PageContext.currentUser.isAdmin" class="l_lbxh">

@@ -7,13 +7,9 @@ import com.withub.web.common.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 
 
 @Controller
@@ -29,7 +25,7 @@ public class UserGroupController extends BaseController {
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setTargetEntity(UserGroup.class);
         setPageInfoQueryCondition(request, queryInfo);
-//        setDescOrderBy(queryInfo, "createTime");
+        setDescOrderBy(queryInfo, "createTime");
 
         putRecordsetInfo(modelMap, userGroupService.queryUserGroup(queryInfo));
     }
@@ -58,6 +54,16 @@ public class UserGroupController extends BaseController {
     public void deleteUserGroup(@PathVariable("objectId") String objectId) throws Exception {
 
         userGroupService.deleteUserGroup(objectId);
+    }
+
+    @RequestMapping(value = "/userGroup/users", method = RequestMethod.GET)
+    public void getUserGroupUsers(@RequestParam("tag") String tag, ModelMap modelMap) throws Exception {
+
+        UserGroup userGroup = userGroupService.getUserGroupByTag(tag);
+
+        if (userGroup != null) {
+            putData(modelMap, userGroup.getUserGroupDetailList());
+        }
     }
 
 }

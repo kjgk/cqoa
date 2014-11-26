@@ -1,20 +1,4 @@
-<div ng-if="multiple">
-    <ui-select multiple ng-model="$parent.$parent.ngModel" theme="bootstrap" style="width: 100%;">
-        <ui-select-match placeholder="{{placeholder}}">{{$item.name}}</ui-select-match>
-        <ui-select-choices refresh-delay="300" refresh="doSearch($select)" repeat="item in items">
-            <div ng-bind-html="item.name|highlight: $select.search"></div>
-            <small ng-bind-html="item.organizationName"></small>
-            <small ng-bind-html="item.roleName"></small>
-        </ui-select-choices>
-    </ui-select>
-</div>
-<div ng-if="!multiple">
-    <ui-select ng-model="$parent.$parent.ngModel" theme="bootstrap" style="width: 100%;">
-        <ui-select-match placeholder="{{placeholder}}">{{$select.selected.name}}</ui-select-match>
-        <ui-select-choices refresh-delay="300" refresh="doSearch($select)" repeat="item in items">
-            <div ng-bind-html="item.name|highlight: $select.search"></div>
-            <small ng-bind-html="item.organizationName"></small>
-            <small ng-bind-html="item.roleName"></small>
-        </ui-select-choices>
-    </ui-select>
-</div>
+<option ng-if="placeholder" value="">{{placeholder}}</option>
+<option ng-if="showAll" value="">全部</option>
+<option ng-if="showNone" value="">无</option>
+<option ng-repeat="x in items" value="{{x.value}}">{{x.label}}</option>

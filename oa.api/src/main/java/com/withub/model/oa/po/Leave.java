@@ -8,6 +8,7 @@ import com.withub.model.system.po.User;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 
 @javax.persistence.Entity
@@ -36,6 +37,10 @@ public class Leave extends AbstractBaseEntity {
     private User proposer;
 
     private Integer duration;
+
+    // 审批人
+    @Transient
+    private User approver;
 
     //================================ 属性方法 ==========================================================
 
@@ -93,5 +98,13 @@ public class Leave extends AbstractBaseEntity {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public User getApprover() {
+        return approver;
+    }
+
+    public void setApprover(User approver) {
+        this.approver = approver;
     }
 }

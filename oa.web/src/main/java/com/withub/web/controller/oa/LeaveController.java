@@ -26,7 +26,7 @@ public class LeaveController extends BaseController {
     private LeaveService leaveService;
 
     @RequestMapping(value = "/leave", method = RequestMethod.GET)
-    public void queryLeave(HttpServletRequest request,Date date, ModelMap modelMap) throws Exception {
+    public void queryLeave(HttpServletRequest request, Date date, ModelMap modelMap) throws Exception {
 
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setTargetEntity(Leave.class);
@@ -37,7 +37,7 @@ public class LeaveController extends BaseController {
         }
         setPageInfoQueryCondition(request, queryInfo);
 
-        setQueryInfoCondition(queryInfo, "creator.objectId", SpringSecurityUtil.getCurrentUser().getObjectId() , ExpressionOperation.Equals);
+        setQueryInfoCondition(queryInfo, "creator.objectId", SpringSecurityUtil.getCurrentUser().getObjectId(), ExpressionOperation.Equals);
 
         setDescOrderBy(queryInfo, "createTime");
 
@@ -54,7 +54,7 @@ public class LeaveController extends BaseController {
     @RequestMapping(value = "/leave", method = RequestMethod.POST)
     public void createLeave(@RequestBody Leave leave) throws Exception {
 
-        leaveService.submitLeave(leave);
+        leaveService.submitLeave(leave, leave.getApprover());
     }
 
     @RequestMapping(value = "/leave", method = RequestMethod.PUT)

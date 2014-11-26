@@ -1,12 +1,11 @@
 package com.withub.service.impl.oa;
 
 import com.withub.common.util.DateUtil;
-import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
-import com.withub.model.oa.po.CarUse;
 import com.withub.model.oa.po.Leave;
 import com.withub.model.system.po.Code;
+import com.withub.model.system.po.User;
 import com.withub.service.EntityServiceImpl;
 import com.withub.service.oa.LeaveService;
 import com.withub.service.system.CodeService;
@@ -43,13 +42,13 @@ public class LeaveServiceImpl extends EntityServiceImpl implements LeaveService 
     }
 
 
-    public void submitLeave(Leave leave) throws Exception {
+    public void submitLeave(Leave leave, User approver) throws Exception {
 
-        if (StringUtil.isEmpty(leave.getObjectId())) {
-            addLeave(leave);
-        } else {
-            updateLeave(leave);
-        }
+        addLeave(leave);
+    }
+
+    public void submitLeave(Leave leave) throws Exception {
+        updateLeave(leave);
     }
 
     @Override

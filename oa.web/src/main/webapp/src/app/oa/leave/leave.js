@@ -85,6 +85,7 @@ angular.module('app.oa')
     .controller('LeaveCreateCtrl', function ($scope, $modalInstance, LeaveService) {
 
         $scope.leave = {
+            approver: {objectId: ''}
         };
         $scope.title = '新增请假申请';
 
