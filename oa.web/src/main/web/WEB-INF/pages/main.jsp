@@ -101,6 +101,7 @@
 <div id="main"></div>
 <div id="header">
     <div style="height: 80px; background:#3892D3; background-repeat: no-repeat;">
+        <h2 style="color: #ffffff; margin: 0; padding: 18px 32px; font-size: 32px; display: inline-block;">重庆市第二中级人民法院办公系统</h2>
         <div id="top">
             <div style="float: left;">
                 <script>
