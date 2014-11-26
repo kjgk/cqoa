@@ -1,16 +1,11 @@
 package com.withub.service.impl.oa;
 
-import com.withub.common.util.DateUtil;
-import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.UserGroup;
 import com.withub.model.oa.po.UserGroupDetail;
-import com.withub.model.system.po.Code;
 import com.withub.service.EntityServiceImpl;
 import com.withub.service.oa.UserGroupService;
-import com.withub.service.system.CodeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
