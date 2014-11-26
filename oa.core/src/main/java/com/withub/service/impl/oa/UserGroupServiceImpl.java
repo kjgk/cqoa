@@ -19,9 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackForClassName = {"Exception", "BaseBusinessException"})
 public class UserGroupServiceImpl extends EntityServiceImpl implements UserGroupService {
 
-    @Autowired
-    private CodeService codeService;
-
     public UserGroup getUserGroup(String objectId) throws Exception {
 
         return get(UserGroup.class, objectId);
