@@ -21,7 +21,6 @@
                 <ul>
                     <li><a ui-sref="oa.instance.all">流程查看</a></li>
                     <li ng-repeat="x in menus"><a href="#{{x.url}}">{{x.text}}</a></li>
-                    <li><a ui-sref="oa.userGroup">人员配置</a></li>
                 </ul>
             </div>
             <div ng-if="PageContext.currentUser.isAdmin" class="l_lbxh">

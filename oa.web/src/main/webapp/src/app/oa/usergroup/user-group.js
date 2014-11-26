@@ -5,7 +5,7 @@ angular.module('app.oa')
     .config(function ($stateProvider) {
         $stateProvider
             .state('oa.userGroup', {
-                url: '/userGroup',
+                url: '/usergroup',
                 templateUrl: 'app/oa/usergroup/user-group-list.html',
                 controller: 'UserGroupCtrl'
             })
