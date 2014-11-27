@@ -78,8 +78,12 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
                 name: userInfo.name,
                 organization: {
                     objectId: userInfo.organizationId,
-                    name: userInfo.organizationName,
-                    type: userInfo.organizationType
+                    name: userInfo.organizationName
+                },
+                role: {
+                    objectId: userInfo.roleId,
+                    name: userInfo.roleName,
+                    tag: userInfo.roleTag
                 },
                 isAdmin: userInfo.isAdmin == 1
             };

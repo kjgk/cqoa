@@ -89,6 +89,13 @@ angular.module('app.oa')
         };
         $scope.title = '新增请假申请';
 
+
+        $scope.groupTag = {
+            'Personnel': 'Manager',
+            'Manager': 'Leader',
+            'Leader': 'Boss'
+        }[PageContext.currentUser.role.tag];
+
         $scope.cancel = function () {
             $modalInstance.dismiss();
         };

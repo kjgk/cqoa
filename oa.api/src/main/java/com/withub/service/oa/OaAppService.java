@@ -1,4 +1,4 @@
-package com.withub.server;
+package com.withub.service.oa;
 
 
 import com.withub.model.entity.query.RecordsetInfo;
@@ -8,7 +8,7 @@ import com.withub.model.system.po.User;
 import java.util.List;
 import java.util.Map;
 
-public interface OAServer {
+public interface OaAppService {
 
     public User login(String username, String password) throws Exception;
 
