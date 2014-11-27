@@ -68,8 +68,8 @@ angular.module('app.oa')
                     params: params
                 });
             },
-            allot: function (carUseInfo) {
-                return Restangular.one('oa/carUse', carUseInfo.carUse.objectId).post('allot', carUseInfo);
+            allot: function (carUse) {
+                return Restangular.one('oa/carUse', carUse.objectId).post('allot', carUse);
             }
         }
     })
@@ -211,17 +211,78 @@ angular.module('app.oa')
 
         $scope.title = '分配车辆';
 
-        $scope.carUserInfo = {
-            carUse: {
-                objectId: objectId
-            },
-            driver: {objectId: ''},
-            car: {objectId: ''}
+        // 待选车辆
+
+        $scope.carSelected = null;
+        $scope.selectCar = function (car) {
+            $scope.carSelected = car;
         };
+        $scope.isCarSelected = function (car) {
+            return car === $scope.carSelected;
+        };
+
+        // 待选司机
+
+        $scope.driverSelected = null;
+        $scope.selectDriver = function (driver) {
+            $scope.driverSelected = driver;
+        };
+        $scope.isDriverSelected = function (driver) {
+            return driver === $scope.driverSelected;
+        };
+
+        // 配车列表
+
+        $scope.carUse = {
+            objectId: objectId,
+            carUseInfoList: []
+        };
+
+        $scope.addCarUseInfo = function () {
+
+            if ($scope.carSelected === null) {
+                alert("待选车辆不能为空！");
+                return;
+            }
+
+            if ($scope.driverSelected === null) {
+                alert("待选司机不能为空！");
+                return;
+            }
+
+            var carUseInfo = {
+                carUse: {
+                    objectId: objectId
+                },
+                car: $scope.carSelected,
+                driver: $scope.driverSelected
+            };
+            $scope.carUse.carUseInfoList.push(carUseInfo);
+
+            $scope.carList.splice($scope.carList.indexOf($scope.carSelected), 1);
+            $scope.carSelected = null;
+            $scope.driverList.splice($scope.driverList.indexOf($scope.driverSelected), 1);
+            $scope.driverSelected = null;
+        };
+
+        $scope.deleteCarUseInfo = function (carUseInfo) {
+
+            $scope.carUse.carUseInfoList.splice($scope.carUse.carUseInfoList.indexOf(carUseInfo), 1);
+            $scope.carList.push(carUseInfo.car);
+            $scope.driverList.push(carUseInfo.driver);
+        };
+
+
+        $scope.log = function () {
+            console.log($scope.carUse);
+        }
+
+        // 其他
 
         CarService.query().then(function (response) {
             $scope.carList = response.data.items;
         });
+
         DriverService.query().then(function (response) {
             $scope.driverList = response.data.items;
         });
@@ -231,10 +292,17 @@ angular.module('app.oa')
         };
 
         $scope.submit = function () {
-            $scope.promise = CarUseService.allot($scope.carUserInfo).then(function () {
+
+            if ($scope.carUse.carUseInfoList.length === 0){
+                alert("配车列表不能为空！");
+                return;
+            }
+
+            $scope.promise = CarUseService.allot($scope.carUse).then(function () {
                 $modalInstance.close();
             });
 
         };
     })
+
 ;

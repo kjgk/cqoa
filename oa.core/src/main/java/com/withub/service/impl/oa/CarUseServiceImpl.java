@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service("carUseService")
 @Transactional(rollbackForClassName = {"Exception", "BaseBusinessException"})
@@ -81,15 +83,19 @@ public class CarUseServiceImpl extends EntityServiceImpl implements CarUseServic
 
 
     @Override
-    public void addCarUseInfo(CarUseInfo carUseInfo) throws Exception {
+    public void addCarUseInfoList(CarUse carUse) throws Exception {
 
-        CarUse carUse = getCarUse(carUseInfo.getCarUse().getObjectId());
-        Code status = codeService.getCodeByTag("CarUseStatus", "Alloted");
-        carUse.setStatus(status);
-        carUse.setCurrentUser(carUseInfo.getCurrentUser());
-        save(carUse);
+        // 将用车状态设置为已分配
+        CarUse old = getCarUse(carUse.getObjectId());
+        old.setCurrentUser(carUse.getCurrentUser());
+        old.setStatus(codeService.getCodeByTag("CarUseStatus", "Alloted"));
+        save(old);
 
-        executeHql("delete from " + CarUseInfo.class.getName() + " a where a.carUse.objectId = ? ", carUseInfo.getCarUse().getObjectId());
-        save(carUseInfo);
+        executeHql("delete from " + CarUseInfo.class.getName() + " a where a.carUse.objectId = ? ", carUse.getObjectId());
+        for (CarUseInfo carUseInfo : carUse.getCarUseInfoList()) {
+            carUseInfo.setCurrentUser(carUse.getCurrentUser());
+            carUseInfo.setCarUse(old);
+            save(carUseInfo);
+        }
     }
 }
