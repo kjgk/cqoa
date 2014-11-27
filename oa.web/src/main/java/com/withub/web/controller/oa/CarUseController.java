@@ -95,10 +95,8 @@ public class CarUseController extends BaseController {
     }
 
     @RequestMapping(value = "/carUse/{objectId}/allot", method = RequestMethod.POST)
-    public void createCarUseInfo(@PathVariable("objectId") String objectId, @RequestBody CarUseInfo carUseInfo) throws Exception {
+    public void createCarUseInfoList(@PathVariable("objectId") String objectId, @RequestBody CarUse carUse) throws Exception {
 
-        carUseInfo.setCarUse(new CarUse());
-        carUseInfo.getCarUse().setObjectId(objectId);
-        carUseService.addCarUseInfo(carUseInfo);
+        carUseService.addCarUseInfoList(carUse);
     }
 }

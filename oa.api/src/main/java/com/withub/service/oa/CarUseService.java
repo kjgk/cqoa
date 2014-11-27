@@ -6,6 +6,8 @@ import com.withub.model.oa.po.CarUse;
 import com.withub.model.oa.po.CarUseInfo;
 import com.withub.service.EntityService;
 
+import java.util.List;
+
 public interface CarUseService extends EntityService {
 
     public CarUse getCarUse(String objectId) throws Exception;
@@ -20,6 +22,6 @@ public interface CarUseService extends EntityService {
 
     public void updateCarUse(CarUse carUse) throws Exception;
 
-    public void addCarUseInfo(CarUseInfo carUseInfo) throws Exception;
+    public void addCarUseInfoList(CarUse carUse) throws Exception;
 
 }
