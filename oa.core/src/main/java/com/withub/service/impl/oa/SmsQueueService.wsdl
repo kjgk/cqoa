@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="SmsQueueWebServiceImpService" targetNamespace="http://server.webservice.nw.sms.zhfwpt.withub.net.cn/" xmlns:ns1="http://server.webservice.nw.sms.zhfwpt.withub.net.cn" xmlns:ns2="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://server.webservice.nw.sms.zhfwpt.withub.net.cn/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:import location="http://149.0.0.146:8088/sms/smspservice/SmsQueueService?wsdl=SmsQueueWebService.wsdl" namespace="http://server.webservice.nw.sms.zhfwpt.withub.net.cn">
+    </wsdl:import>
+  <wsdl:binding name="SmsQueueWebServiceImpServiceSoapBinding" type="ns1:SmsQueueWebService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="messageToQueue">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="messageToQueue">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="messageToQueueResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteFlow">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteFlow">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteFlowResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryRecContentByBusiCode">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryRecContentByBusiCode">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryRecContentByBusiCodeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryByFlow">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryByFlow">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryByFlowResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteRecContent">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteRecContent">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteRecContentResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryRecContentByFlow">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryRecContentByFlow">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryRecContentByFlowResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryByPhone">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryByPhone">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryByPhoneResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryRecContent">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryRecContent">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryRecContentResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createSmsQueue">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="createSmsQueue">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="createSmsQueueResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="previewMessage">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="previewMessage">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="previewMessageResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SmsQueueWebServiceImpService">
+    <wsdl:port binding="tns:SmsQueueWebServiceImpServiceSoapBinding" name="SmsQueueWebServiceImpPort">
+      <soap:address location="http://149.0.0.146:8088/sms/smspservice/SmsQueueService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
