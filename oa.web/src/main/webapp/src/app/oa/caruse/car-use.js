@@ -126,6 +126,7 @@ angular.module('app.oa')
             var modalInstance = $modal.open({
                 templateUrl: 'app/oa/caruse/car-use-allot-form.html',
                 controller: 'CarUseAllotCtrl',
+                size: 'lg',
                 resolve: {
                     objectId: function () {
                         return carUse.objectId;
@@ -241,12 +242,12 @@ angular.module('app.oa')
         $scope.addCarUseInfo = function () {
 
             if ($scope.carSelected === null) {
-                alert("待选车辆不能为空！");
+                Dialog.alert('待选车辆不能为空！')
                 return;
             }
 
             if ($scope.driverSelected === null) {
-                alert("待选司机不能为空！");
+                Dialog.alert('待选司机不能为空！')
                 return;
             }
 
@@ -272,13 +273,6 @@ angular.module('app.oa')
             $scope.driverList.push(carUseInfo.driver);
         };
 
-
-        $scope.log = function () {
-            console.log($scope.carUse);
-        }
-
-        // 其他
-
         CarService.query().then(function (response) {
             $scope.carList = response.data.items;
         });
@@ -294,7 +288,7 @@ angular.module('app.oa')
         $scope.submit = function () {
 
             if ($scope.carUse.carUseInfoList.length === 0){
-                alert("配车列表不能为空！");
+                Dialog.alert("配车列表不能为空！");
                 return;
             }
 

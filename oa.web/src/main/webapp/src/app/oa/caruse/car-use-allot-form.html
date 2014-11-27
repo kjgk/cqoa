@@ -1,35 +1,3 @@
-<!--<form class="form-horizontal" role="form" name="carUseForm" >-->
-<!--<div class="modal-header">-->
-<!--<h4 class="modal-title">{{title}}</h4>-->
-<!--</div>-->
-<!--<div class="modal-body">-->
-<!--<div class="form-group">-->
-<!--<label class="col-sm-2 control-label">司机</label>-->
-
-<!--<div class="col-sm-10">-->
-<!--<select class="form-control" ng-model="carUserInfo.driver.objectId" validator="required">-->
-<!--<option value="">请选择司机</option>-->
-<!--<option ng-repeat="x in driverList" value="{{x.objectId}}">{{x.name}}</option>-->
-<!--</select>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label class="col-sm-2 control-label">车辆</label>-->
-<!--<div class="col-sm-10">-->
-<!--<select class="form-control" ng-model="carUserInfo.car.objectId" validator="required">-->
-<!--<option value="">请选择车辆</option>-->
-<!--<option ng-repeat="x in carList" value="{{x.objectId}}">{{x.name + '#' + x.license}}</option>-->
-<!--</select>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="modal-footer">-->
-<!--<button class="btn btn-primary" validation-submit="carUseForm" ng-click="submit()">确定</button>-->
-<!--<button class="btn btn-warning" ng-click="cancel()">取消</button>-->
-<!--</div>-->
-<!--<div cg-busy="promise"></div>-->
-<!--</form>-->
-
 <div class="modal-header">
     <button type="button" class="close" ng-click="cancel()">×</button>
     <h4 class="modal-title">{{title}}</h4>
@@ -37,63 +5,80 @@
 <div class="modal-body">
     <div class="row">
         <div class="col-xs-6">
-            <div class="panel-heading">待选车辆</div>
-            <table class="table">
-                <tr>
-                    <td>名称</td>
-                    <td>牌照</td>
-                </tr>
-                <tr ng-repeat="car in carList"
-                    ng-class="{active:isCarSelected(car)}"
-                    ng-click="selectCar(car)">
-                    <td>{{ car.name }}</td>
-                    <td>{{ car.license }}</td>
-                </tr>
-            </table>
+            <h4>待选车辆</h4>
+            <div style="height: 240px; max-height: 320px; overflow-y: auto;">
+                <table class="table table-bordered table-condensed">
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>牌照</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="car in carList"
+                        ng-class="{info:isCarSelected(car)}"
+                        ng-click="selectCar(car)">
+                        <td>{{ car.name }}</td>
+                        <td>{{ car.license }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="col-xs-6">
-            <div class="panel-heading">待选司机</div>
-            <table class="table">
-                <tr>
-                    <td>姓名</td>
-                    <td>手机</td>
-                </tr>
-                <tr ng-repeat="driver in driverList"
-                    ng-class="{active:isDriverSelected(driver)}"
-                    ng-click="selectDriver(driver)">
-                    <td>{{ driver.name }}</td>
-                    <td>{{ driver.telephone }}</td>
-                </tr>
-            </table>
+            <h4>待选司机</h4>
+            <div style="height: 240px; max-height: 320px; overflow-y: auto;">
+                <table class="table table-bordered table-condensed">
+                    <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>手机</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="driver in driverList"
+                        ng-class="{info:isDriverSelected(driver)}"
+                        ng-click="selectDriver(driver)">
+                        <td>{{ driver.name }}</td>
+                        <td>{{ driver.telephone }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
     <div class="row">
-        <button class="btn btn-primary btn-sm pull-right" ng-click="addCarUseInfo()"><i class="fa fa-plus fa-fw"></i> 添加
-        </button>
-    </div>
-    <div class="row col-xs-12">
-        <div class="panel-heading">配车列表</div>
-        <table class="table">
-            <tr>
-                <td>车辆</td>
-                <td>牌照</td>
-                <td>司机</td>
-                <td>手机</td>
-                <td>操作</td>
-            </tr>
-            <tr ng-repeat="carUseInfo in carUse.carUseInfoList">
-                <td>{{ carUseInfo.car.name }}</td>
-                <td>{{ carUseInfo.car.license }}</td>
-                <td>{{ carUseInfo.driver.name }}</td>
-                <td>{{ carUseInfo.driver.telephone }}</td>
-                <td>
-                    <button class="btn btn-xs btn-danger"
-                            ng-click="deleteCarUseInfo(carUseInfo)">
-                        删除
-                    </button>
-                </td>
-            </tr>
-        </table>
+        <div class="col-xs-12" style="margin-top: 8px;">
+            <button class="btn btn-primary btn-sm pull-right" ng-click="addCarUseInfo()"><i class="fa fa-plus fa-fw"></i> 添加</button>
+        </div>
+        <div class="col-xs-12">
+            <h4>配车列表</h4>
+            <div style="height: 156px; overflow-y: auto;">
+                <table class="table table-bordered table-condensed">
+                    <thead>
+                    <tr>
+                        <th>车辆</th>
+                        <th>牌照</th>
+                        <th>司机</th>
+                        <th>手机</th>
+                        <th style="width: 72px; text-align: center;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="carUseInfo in carUse.carUseInfoList">
+                        <td>{{ carUseInfo.car.name }}</td>
+                        <td>{{ carUseInfo.car.license }}</td>
+                        <td>{{ carUseInfo.driver.name }}</td>
+                        <td>{{ carUseInfo.driver.telephone }}</td>
+                        <td style="text-align: center;">
+                            <button class="btn btn-xs btn-danger" ng-click="deleteCarUseInfo(carUseInfo)">删除</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" ng-click="submit()">保存</button>
