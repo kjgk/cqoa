@@ -48,7 +48,7 @@ public class MiscellaneousController extends BaseController {
     @RequestMapping(value = "/miscellaneous", method = RequestMethod.POST)
     public void createMiscellaneous(@RequestBody Miscellaneous miscellaneous) throws Exception {
 
-        miscellaneousService.submitMiscellaneous(miscellaneous);
+        miscellaneousService.submitMiscellaneous(miscellaneous, miscellaneous.getApprover());
     }
 
     @RequestMapping(value = "/miscellaneous", method = RequestMethod.PUT)

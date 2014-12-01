@@ -54,7 +54,7 @@ public class TrainingController extends BaseController {
     @RequestMapping(value = "/training", method = RequestMethod.POST)
     public void createTraining(@RequestBody Training training) throws Exception {
 
-        trainingService.submitTraining(training);
+        trainingService.submitTraining(training, training.getApprover());
     }
 
     @RequestMapping(value = "/training", method = RequestMethod.PUT)

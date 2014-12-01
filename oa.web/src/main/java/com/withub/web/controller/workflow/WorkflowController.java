@@ -283,7 +283,7 @@ public class WorkflowController extends BaseController {
         }
 
         if (onlyShowApproveLog) {
-            this.setDescOrderBy(queryInfo, "taskFinishTime");
+            this.setAscOrderBy(queryInfo, "taskFinishTime");
         } else {
             this.setAscOrderBy(queryInfo, "taskTimeMillis");
         }

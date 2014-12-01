@@ -52,6 +52,10 @@ public class CarUse extends AbstractBaseEntity {
     @JoinColumn(name = "proposer")
     private User proposer;
 
+    // 审批人
+    @Transient
+    private User approver;
+
     //================================ 属性方法 ==========================================================
 
 
@@ -141,5 +145,13 @@ public class CarUse extends AbstractBaseEntity {
 
     public void setCarUseUserList(List<CarUseUser> carUseUserList) {
         this.carUseUserList = carUseUserList;
+    }
+
+    public User getApprover() {
+        return approver;
+    }
+
+    public void setApprover(User approver) {
+        this.approver = approver;
     }
 }

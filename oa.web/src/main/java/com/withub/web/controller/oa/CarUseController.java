@@ -78,7 +78,7 @@ public class CarUseController extends BaseController {
     @RequestMapping(value = "/carUse", method = RequestMethod.POST)
     public void createCarUse(@RequestBody CarUse carUse) throws Exception {
 
-        carUseService.submitCarUse(carUse);
+        carUseService.submitCarUse(carUse, carUse.getApprover());
     }
 
     @RequestMapping(value = "/carUse", method = RequestMethod.PUT)

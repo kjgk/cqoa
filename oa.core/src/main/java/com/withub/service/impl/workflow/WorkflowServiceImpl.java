@@ -287,7 +287,7 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
                     taskFlowNodeInfo.setHandlerFetchCount(nextFlowNodeInfo.getNextFlowNode().getHandlerFetchCount());
                     taskFlowNodeInfo.setNextFlowNodeName(nextFlowNodeInfo.getNextFlowNode().getName());
                     taskFlowNodeInfo.setNextFlowNodeType(nextFlowNodeInfo.getNextFlowNode().getFlowNodeType().name());
-                    if (nextFlowNodeInfo.getNextFlowNode().getFlowNodeType() == FlowNodeType.End) {
+                    if (nextFlowNodeInfo.getNextFlowNode().getFlowNodeType() != FlowNodeType.End) {
                         Instance instance = getInstanceByTaskId(taskId);
                         List<User> handlerList = wfRegulationService.parseTaskHandler(instance, nextFlowNodeInfo.getNextFlowNode());
                         taskFlowNodeInfo.setHandlerList(handlerList);

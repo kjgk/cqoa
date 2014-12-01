@@ -1,11 +1,10 @@
 package com.withub.service.impl.oa;
 
-import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
-import com.withub.model.oa.po.Leave;
 import com.withub.model.oa.po.Miscellaneous;
 import com.withub.model.system.po.Code;
+import com.withub.model.system.po.User;
 import com.withub.service.EntityServiceImpl;
 import com.withub.service.oa.MiscellaneousService;
 import com.withub.service.system.CodeService;
@@ -36,16 +35,15 @@ public class MiscellaneousServiceImpl extends EntityServiceImpl implements Misce
         logicDelete(Miscellaneous.class, objectId);
     }
 
-    public void submitMiscellaneous(Miscellaneous miscellaneous) throws Exception {
-
-        if (StringUtil.isEmpty(miscellaneous.getObjectId())) {
-            addMiscellaneous(miscellaneous);
-        } else {
-            updateMiscellaneous(miscellaneous);
-        }
+    public void submitMiscellaneous(Miscellaneous miscellaneous, User approver) throws Exception {
+        addMiscellaneous(miscellaneous);
     }
 
-    @Override
+    public void submitMiscellaneous(Miscellaneous miscellaneous) throws Exception {
+
+        updateMiscellaneous(miscellaneous);
+    }
+
     public void addMiscellaneous(Miscellaneous miscellaneous) throws Exception {
 
         Code status = codeService.getCodeByTag("MiscellaneousStatus", "Create");
@@ -55,15 +53,12 @@ public class MiscellaneousServiceImpl extends EntityServiceImpl implements Misce
         save(miscellaneous);
     }
 
-    @Override
     public void updateMiscellaneous(Miscellaneous miscellaneous) throws Exception {
 
         Miscellaneous temp = get(Miscellaneous.class, miscellaneous.getObjectId());
-
         miscellaneous.setProposer(miscellaneous.getCurrentUser());
         miscellaneous.setOrganization(miscellaneous.getCurrentUser().getOrganization());
         miscellaneous.setStatus(temp.getStatus());
         save(miscellaneous);
     }
-
 }

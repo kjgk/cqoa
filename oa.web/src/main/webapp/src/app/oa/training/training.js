@@ -84,7 +84,9 @@ angular.module('app.oa')
     .controller('TrainingCreateCtrl', function ($scope, $modalInstance, TrainingService) {
 
         $scope.training = {
+            approver: {objectId: ''}
         };
+
         $scope.title = '新增培训申请';
 
         $scope.cancel = function () {

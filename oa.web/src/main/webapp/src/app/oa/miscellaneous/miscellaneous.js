@@ -86,7 +86,9 @@ angular.module('app.oa')
     .controller('MiscellaneousCreateCtrl', function ($scope, $modalInstance, MiscellaneousService) {
 
         $scope.miscellaneous = {
+            approver: {objectId: ''}
         };
+
         $scope.title = '新增综合事项申请';
 
         $scope.cancel = function () {

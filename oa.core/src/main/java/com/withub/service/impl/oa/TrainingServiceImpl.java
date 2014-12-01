@@ -7,6 +7,7 @@ import com.withub.model.oa.po.Training;
 import com.withub.model.oa.po.Training;
 import com.withub.model.oa.po.Training;
 import com.withub.model.system.po.Code;
+import com.withub.model.system.po.User;
 import com.withub.service.EntityServiceImpl;
 import com.withub.service.oa.TrainingService;
 import com.withub.service.system.CodeService;
@@ -37,16 +38,16 @@ public class TrainingServiceImpl extends EntityServiceImpl implements TrainingSe
         logicDelete(Training.class, objectId);
     }
 
-    public void submitTraining(Training training) throws Exception {
+    public void submitTraining(Training training, User approver) throws Exception {
 
-        if (StringUtil.isEmpty(training.getObjectId())) {
-            addTraining(training);
-        } else {
-            updateTraining(training);
-        }
+        addTraining(training);
     }
 
-    @Override
+    public void submitTraining(Training training) throws Exception {
+
+        updateTraining(training);
+    }
+
     public void addTraining(Training training) throws Exception {
 
         Code status = codeService.getCodeByTag("TrainingStatus", "Create");
@@ -56,11 +57,9 @@ public class TrainingServiceImpl extends EntityServiceImpl implements TrainingSe
         save(training);
     }
 
-    @Override
     public void updateTraining(Training training) throws Exception {
 
         Training temp = get(Training.class, training.getObjectId());
-
         training.setProposer(training.getCurrentUser());
         training.setOrganization(training.getCurrentUser().getOrganization());
         training.setStatus(temp.getStatus());

@@ -8,6 +8,7 @@ import com.withub.model.system.po.User;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 
 @javax.persistence.Entity
@@ -30,6 +31,10 @@ public class Miscellaneous extends AbstractBaseEntity {
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "proposer")
     private User proposer;
+
+    // 审批人
+    @Transient
+    private User approver;
 
     //================================ 属性方法 ==========================================================
 
@@ -63,5 +68,13 @@ public class Miscellaneous extends AbstractBaseEntity {
 
     public void setProposer(User proposer) {
         this.proposer = proposer;
+    }
+
+    public User getApprover() {
+        return approver;
+    }
+
+    public void setApprover(User approver) {
+        this.approver = approver;
     }
 }

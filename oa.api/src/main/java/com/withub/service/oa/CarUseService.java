@@ -3,10 +3,8 @@ package com.withub.service.oa;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.CarUse;
-import com.withub.model.oa.po.CarUseInfo;
+import com.withub.model.system.po.User;
 import com.withub.service.EntityService;
-
-import java.util.List;
 
 public interface CarUseService extends EntityService {
 
@@ -15,6 +13,8 @@ public interface CarUseService extends EntityService {
     public RecordsetInfo<CarUse> queryCarUse(QueryInfo queryInfo) throws Exception;
 
     public void deleteCarUse(String objectId) throws Exception;
+
+    public void submitCarUse(CarUse carUse, User approver) throws Exception;
 
     public void submitCarUse(CarUse carUse) throws Exception;
 

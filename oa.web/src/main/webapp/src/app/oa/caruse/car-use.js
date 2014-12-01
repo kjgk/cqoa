@@ -144,7 +144,8 @@ angular.module('app.oa')
 
         $scope.carUse = {
             region: 0,
-            carUseUserList: []
+            carUseUserList: [],
+            approver: {objectId: ''}
         };
         $scope.userList = [];
 

@@ -7,6 +7,7 @@ import com.withub.model.oa.po.CarUse;
 import com.withub.model.oa.po.CarUseInfo;
 import com.withub.model.oa.po.CarUseUser;
 import com.withub.model.system.po.Code;
+import com.withub.model.system.po.User;
 import com.withub.service.EntityServiceImpl;
 import com.withub.service.oa.CarUseService;
 import com.withub.service.system.CodeService;
@@ -39,16 +40,16 @@ public class CarUseServiceImpl extends EntityServiceImpl implements CarUseServic
         logicDelete(CarUse.class, objectId);
     }
 
-    public void submitCarUse(CarUse carUse) throws Exception {
+    public void submitCarUse(CarUse carUse, User approver) throws Exception {
 
-        if (StringUtil.isEmpty(carUse.getObjectId())) {
-            addCarUse(carUse);
-        } else {
-            updateCarUse(carUse);
-        }
+        addCarUse(carUse);
     }
 
-    @Override
+    public void submitCarUse(CarUse carUse) throws Exception {
+
+        updateCarUse(carUse);
+    }
+
     public void addCarUse(CarUse carUse) throws Exception {
 
         Code status = codeService.getCodeByTag("CarUseStatus", "Create");
@@ -63,11 +64,9 @@ public class CarUseServiceImpl extends EntityServiceImpl implements CarUseServic
         }
     }
 
-    @Override
     public void updateCarUse(CarUse carUse) throws Exception {
 
         CarUse temp = get(CarUse.class, carUse.getObjectId());
-
         carUse.setProposer(carUse.getCurrentUser());
         carUse.setOrganization(carUse.getCurrentUser().getOrganization());
         carUse.setStatus(temp.getStatus());
@@ -82,7 +81,6 @@ public class CarUseServiceImpl extends EntityServiceImpl implements CarUseServic
     }
 
 
-    @Override
     public void addCarUseInfoList(CarUse carUse) throws Exception {
 
         // 将用车状态设置为已分配
