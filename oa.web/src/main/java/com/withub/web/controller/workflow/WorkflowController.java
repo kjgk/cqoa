@@ -439,9 +439,12 @@ public class WorkflowController extends BaseController {
     }
 
     @RequestMapping(value = "/task/fetchHander/organizationManager", method = RequestMethod.GET)
-    public void fetchOrganizationManager(ModelMap modelMap) throws Exception {
+    public void fetchOrganizationManager(ModelMap modelMap, String organizationCode) throws Exception {
 
-        List<User> userList = taskHandlerFetchService.fetchOrganizationManager(SpringSecurityUtil.getCurrentUser().getOrganization().getCode());
+        if (StringUtil.isEmpty(organizationCode)) {
+            organizationCode = SpringSecurityUtil.getCurrentUser().getOrganization().getCode();
+        }
+        List<User> userList = taskHandlerFetchService.fetchOrganizationManager(organizationCode);
         putData(modelMap, userList);
     }
 

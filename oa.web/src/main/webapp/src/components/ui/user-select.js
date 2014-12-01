@@ -35,7 +35,8 @@ angular.module('withub.ui')
                     } else if (config == 'OrganizationManager') {   // 部门负责人
                         $http({
                             url: PageContext.path + '/workflow/task/fetchHander/organizationManager',
-                            method: 'GET'
+                            method: 'GET',
+                            params: {organizationCode: attrs.organizationCode}
                         }).then(function (response) {
                             scope.items = [];
                             _.forEach(response.data.data, function (item) {
@@ -44,7 +45,6 @@ angular.module('withub.ui')
                                     label: item.name
                                 });
                             });
-                            console.log(response)
                         });
 
                     } else if (config == 'Leader') {   // 分管领导

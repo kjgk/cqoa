@@ -80,9 +80,7 @@ angular.module('app.oa')
 
         $scope.driver = {
             gender: 1,
-            status: 1,
-            birthday: new Date(),
-            licenseDate: new Date
+            status: 1
         };
         $scope.title = '新增司机';
 
