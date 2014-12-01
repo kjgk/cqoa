@@ -33,10 +33,11 @@
     </div>
 
     <div class="modal-footer" style="text-align: center;">
-        <button ng-if="flowNode.passAction" class="btn btn-primary" ng-click="process('pass')">通过</button>
-        <button ng-if="flowNode.returnAction" class="btn btn-danger" ng-click="process('return')">退回</button>
+        <button ng-if="flowNode.passAction && flowNode.manualSelectHandler==1 && flowNode.nextFlowNodeType!=='End'" class="btn btn-primary" ng-click="process('pass')" title="通过并提交给下一步审批人">通过并提交给下一步审批人</button>
+        <button ng-if="flowNode.passAction && !(flowNode.manualSelectHandler==1 && flowNode.nextFlowNodeType!=='End')" class="btn btn-primary" ng-click="process('pass')" title="同意申请">通过</button>
+        <button ng-if="flowNode.completeAction" class="btn btn-success" ng-click="process('complete')" title="同意申请，不需要下一步审批人审批">完成</button>
+        <button ng-if="flowNode.returnAction" class="btn btn-danger" ng-click="process('return')" title="退回给申请人修改">退回</button>
         <button ng-if="flowNode.rejectAction" class="btn btn-danger" ng-click="process('reject')">否决</button>
-        <button ng-if="flowNode.completeAction" class="btn btn-success" ng-click="process('complete')">完成</button>
         <button ng-if="flowNode.discardAction" class="btn btn-danger" ng-click="process('discard')">弃权</button>
     </div>
     <div cg-busy="promise"></div>

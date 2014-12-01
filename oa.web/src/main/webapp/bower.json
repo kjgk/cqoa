@@ -19,7 +19,6 @@
     "angular-bootstrap": "~0.11.2",
     "AngularJS-Toaster": "~0.4.8",
     "angular-uuid4": "~0.2.0",
-    "angular-ui-select": "~0.8.3",
     "kjgk-angular-busy": "4.1.x",
     "angular-qrcode": "monospaced/angular-qrcode#~5.0.2",
     "angular-file-upload": "~1.1.5",
