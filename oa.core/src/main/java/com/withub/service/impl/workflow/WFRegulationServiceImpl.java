@@ -1,16 +1,13 @@
 package com.withub.service.impl.workflow;
 
 import com.withub.common.util.CollectionUtil;
-import com.withub.common.util.RandomUtil;
 import com.withub.common.util.ReflectionUtil;
 import com.withub.common.util.StringUtil;
 import com.withub.model.entity.AbstractBaseEntity;
 import com.withub.model.exception.BaseBusinessException;
-import com.withub.model.system.po.Organization;
 import com.withub.model.system.po.User;
 import com.withub.model.system.po.UserOrganizationRole;
 import com.withub.model.workflow.WFArguments;
-import com.withub.model.workflow.enumeration.HandlerFetchType;
 import com.withub.model.workflow.enumeration.TaskHandleResult;
 import com.withub.model.workflow.po.*;
 import com.withub.service.EntityServiceImpl;
@@ -64,13 +61,28 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
         AbstractBaseEntity relatedEntity = instanceService.getRelatedEntityInstance(instance);
 
         if (StringUtil.isNotEmpty(flowNode.getHandlerServiceMethod())) {
+            String handlerServiceMethod = flowNode.getHandlerServiceMethod();
             WFArguments wfArguments = new WFArguments();
             wfArguments.setInstance(instance);
             wfArguments.setFlowNode(flowNode);
-            String beanId = StringUtil.substring(flowNode.getHandlerServiceMethod(), 0, flowNode.getHandlerServiceMethod().indexOf("."));
+            String beanId = StringUtil.substring(handlerServiceMethod, 0, handlerServiceMethod.indexOf("."));
+            String method = handlerServiceMethod.substring(handlerServiceMethod.indexOf(".") + 1, handlerServiceMethod.indexOf("("));
+            String[] arguments = handlerServiceMethod.substring(handlerServiceMethod.indexOf("(") + 1, handlerServiceMethod.indexOf(")")).split(",");
             Object object = SpringContextUtil.getInstance().getBean(beanId);
-            String method = flowNode.getHandlerServiceMethod().substring(flowNode.getHandlerServiceMethod().indexOf(".") + 1);
-            Object value = ReflectionUtil.invokeMethod(object, method, new Object[]{wfArguments});
+            Object[] args = new Object[arguments.length];
+
+            for (int i = 0; i < arguments.length; i++) {
+                String argument = arguments[i];
+                argument = StringUtils.trim(argument);
+                if ("${wfArguments}".equals(argument)) {
+                    args[i] = wfArguments;
+                } else if (argument.startsWith("\"")) {
+                    args[i] = argument.substring(1, argument.lastIndexOf("\""));
+                } else {
+                    args[i] = argument;
+                }
+            }
+            Object value = ReflectionUtil.invokeMethod(object, method, args);
             handlerList = (List<User>) value;
         } else if (StringUtil.isNotEmpty(flowNode.getHandlerOnFlowNode())) {
             String hql = "select o from " + Task.class.getName() + " o where o.masterTask.subInstance.instance.objectId=?"
@@ -112,9 +124,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
                     handlerList.add(userOrganizationRole.getUser());
                 }
             }
-        }*/
-
-        else if (StringUtil.isNotEmpty(flowNode.getOrganizationId())) {
+        }*/ else if (StringUtil.isNotEmpty(flowNode.getOrganizationId())) {
             String hql = "select o from " + User.class.getName() + " o" + " where o.organization.objectId=?";
             List userList = listByHql(hql, flowNode.getOrganizationId());
             if (CollectionUtil.isNotEmpty(userList)) {
@@ -122,8 +132,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
                     handlerList.add(user);
                 }
             }
-        }
-        else if (StringUtil.isNotEmpty(flowNode.getRoleId())) {
+        } else if (StringUtil.isNotEmpty(flowNode.getRoleId())) {
             String hql = "select o from " + User.class.getName() + " o" + " where o.role.objectId=?";
             List userList = listByHql(hql, flowNode.getRoleId());
             if (CollectionUtil.isNotEmpty(userList)) {

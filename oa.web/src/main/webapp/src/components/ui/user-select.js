@@ -14,7 +14,8 @@ angular.module('withub.ui')
                     scope.showAll = attrs.showAll !== undefined && attrs.showAll !== false;
                     scope.showNone = attrs.showNone !== undefined && attrs.showNone !== false;
 
-                    if (attrs['userGroupTag']) {
+                    var config = attrs['userSelect'];
+                    if (config == 'UserGroup') {
                         $http({
                             url: PageContext.path + '/oa/userGroup/users',
                             params: {
@@ -30,10 +31,51 @@ angular.module('withub.ui')
                                 });
                             });
                         });
+
+                    } else if (config == 'OrganizationManager') {   // 部门负责人
+                        $http({
+                            url: PageContext.path + '/workflow/task/fetchHander/organizationManager',
+                            method: 'GET'
+                        }).then(function (response) {
+                            scope.items = [];
+                            _.forEach(response.data.data, function (item) {
+                                scope.items.push({
+                                    value: item.objectId,
+                                    label: item.name
+                                });
+                            });
+                            console.log(response)
+                        });
+
+                    } else if (config == 'Leader') {   // 分管领导
+                        $http({
+                            url: PageContext.path + '/workflow/task/fetchHander/leader',
+                            method: 'GET'
+                        }).then(function (response) {
+                            scope.items = [];
+                            _.forEach(response.data.data, function (item) {
+                                scope.items.push({
+                                    value: item.objectId,
+                                    label: item.name
+                                });
+                            });
+                        });
+                    } else if (config == 'Boss') {   // 院长
+                        $http({
+                            url: PageContext.path + '/workflow/task/fetchHander/boss',
+                            method: 'GET'
+                        }).then(function (response) {
+                            scope.items = [];
+                            _.forEach(response.data.data, function (item) {
+                                scope.items.push({
+                                    value: item.objectId,
+                                    label: item.name
+                                });
+                            });
+                        });
                     }
                 }
             }
         }
     })
-
 ;

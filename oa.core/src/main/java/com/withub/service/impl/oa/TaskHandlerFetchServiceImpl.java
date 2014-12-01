@@ -1,6 +1,5 @@
 package com.withub.service.impl.oa;
 
-import com.withub.model.system.po.Organization;
 import com.withub.model.system.po.User;
 import com.withub.model.workflow.WFArguments;
 import com.withub.service.EntityServiceImpl;
@@ -17,14 +16,38 @@ public class TaskHandlerFetchServiceImpl extends EntityServiceImpl implements Ta
 
     public List<User> fetchOrganizationManager(WFArguments wfArguments) throws Exception {
 
-        Organization organization = wfArguments.getInstance().getCreator().getOrganization();
+        return fetchOrganizationManager(wfArguments.getInstance().getCreator().getOrganization().getCode());
+    }
+
+
+    public List<User> fetchOrganizationManager(String organizationCode) throws Exception {
 
         String hql = "select o from " + User.class.getName() + " o where 1=1 and o.objectStatus=1"
-                + " and o.organization.objectId=? and o.role.roleTag=?";
+                + " and o.organization.code=? and o.role.roleTag in (?, ?)" +
+                " order by orderNo";
 
-        List<User> handlerList = (List) listByHql(hql, organization.getObjectId(), "Manager");
-
+        List<User> handlerList = (List) listByHql(hql
+                , organizationCode, "Manager", "DeputyManager");
         return handlerList;
     }
 
+    public List<User> fetchBoss() throws Exception {
+
+        String hql = "select o from " + User.class.getName() + " o where 1=1 and o.objectStatus=1"
+                + " and o.role.roleTag = ?" +
+                " order by orderNo";
+
+        List<User> handlerList = (List) listByHql(hql, "Boss");
+        return handlerList;
+    }
+
+    public List<User> fetchLeader() throws Exception {
+
+        String hql = "select o from " + User.class.getName() + " o where 1=1 and o.objectStatus=1"
+                + " and o.organization.code = ?" +
+                " order by orderNo";
+
+        List<User> handlerList = (List) listByHql(hql, "100000000015000001");
+        return handlerList;
+    }
 }

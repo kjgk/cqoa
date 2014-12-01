@@ -90,10 +90,11 @@ angular.module('app.oa')
         $scope.title = '新增请假申请';
 
 
-        $scope.groupTag = {
-            'Personnel': 'Manager',
+        $scope.userSelectConfig = {
+            'Personnel': 'OrganizationManager',
+            'DeputyManager': 'OrganizationManager',
             'Manager': 'Leader',
-            'Leader': 'Boss'
+            'Leader': 'Leader'
         }[PageContext.currentUser.role.tag];
 
         $scope.cancel = function () {

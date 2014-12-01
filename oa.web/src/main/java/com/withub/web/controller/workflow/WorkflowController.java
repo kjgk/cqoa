@@ -15,7 +15,7 @@ import com.withub.model.workflow.vo.ApproveInfo;
 import com.withub.model.workflow.vo.InstanceTaskLog;
 import com.withub.model.workflow.vo.TaskFlowNodeInfo;
 import com.withub.model.workflow.vo.TaskInfo;
-import com.withub.service.workflow.WFRegulationService;
+import com.withub.service.oa.TaskHandlerFetchService;
 import com.withub.service.workflow.WorkflowService;
 import com.withub.util.SpringSecurityUtil;
 import com.withub.web.common.BaseController;
@@ -40,7 +40,7 @@ public class WorkflowController extends BaseController {
     private WorkflowService workflowService;
 
     @Autowired
-    private WFRegulationService wfRegulationService;
+    private TaskHandlerFetchService taskHandlerFetchService;
 
     //================================= Controller 方法 ==================================================
 
@@ -64,7 +64,7 @@ public class WorkflowController extends BaseController {
             this.setQueryInfoCondition(queryInfo, "taskFinishTime", date, ExpressionOperation.GreaterThanOrEquals);
         }
         this.setPageInfoQueryCondition(request, queryInfo);
-        if(StringUtil.compareValue(statusTag, "Finish")) {
+        if (StringUtil.compareValue(statusTag, "Finish")) {
             this.setDescOrderBy(queryInfo, "taskFinishTime");
         } else {
             this.setDescOrderBy(queryInfo, "taskCreateTime");
@@ -438,4 +438,24 @@ public class WorkflowController extends BaseController {
         modelMap.put("success", true);
     }
 
+    @RequestMapping(value = "/task/fetchHander/organizationManager", method = RequestMethod.GET)
+    public void fetchOrganizationManager(ModelMap modelMap) throws Exception {
+
+        List<User> userList = taskHandlerFetchService.fetchOrganizationManager(SpringSecurityUtil.getCurrentUser().getOrganization().getCode());
+        putData(modelMap, userList);
+    }
+
+    @RequestMapping(value = "/task/fetchHander/leader", method = RequestMethod.GET)
+    public void fetchLeader(ModelMap modelMap) throws Exception {
+
+        List<User> userList = taskHandlerFetchService.fetchLeader();
+        putData(modelMap, userList);
+    }
+
+    @RequestMapping(value = "/task/fetchHander/boss", method = RequestMethod.GET)
+    public void fetchBoss(ModelMap modelMap) throws Exception {
+
+        List<User> userList = taskHandlerFetchService.fetchBoss();
+        putData(modelMap, userList);
+    }
 }
