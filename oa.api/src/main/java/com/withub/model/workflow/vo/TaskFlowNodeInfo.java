@@ -26,6 +26,8 @@ public class TaskFlowNodeInfo implements Serializable {
 
     private String nextFlowNodeName = "";
 
+    private String nextFlowNodeType = "";
+
     private List<User> handlerList;
 
     public String getFlowNodeName() {
@@ -106,5 +108,13 @@ public class TaskFlowNodeInfo implements Serializable {
 
     public void setHandlerList(List<User> handlerList) {
         this.handlerList = handlerList;
+    }
+
+    public String getNextFlowNodeType() {
+        return nextFlowNodeType;
+    }
+
+    public void setNextFlowNodeType(String nextFlowNodeType) {
+        this.nextFlowNodeType = nextFlowNodeType;
     }
 }

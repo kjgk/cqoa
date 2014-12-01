@@ -111,7 +111,8 @@ angular.module('app.oa')
             transportation: {
                 objectId: 'E01E1D5D-55E6-4BC1-9EF0-2D98ABACE8FF'
             },
-            outgoingUserList: []
+            outgoingUserList: [],
+            approver: {objectId: ''}
         };
         $scope.userList = [];
 

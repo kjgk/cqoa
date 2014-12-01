@@ -8,6 +8,7 @@ import com.withub.model.exception.BaseBusinessException;
 import com.withub.model.system.po.User;
 import com.withub.model.system.po.UserOrganizationRole;
 import com.withub.model.workflow.WFArguments;
+import com.withub.model.workflow.enumeration.FlowNodeType;
 import com.withub.model.workflow.enumeration.TaskHandleResult;
 import com.withub.model.workflow.po.*;
 import com.withub.service.EntityServiceImpl;
@@ -23,6 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service("wfRegulationService")
@@ -41,7 +44,11 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
 
     public List<User> parseTaskHandler(Instance instance, FlowNode flowNode) throws Exception {
 
-        List<User> handlerList = new ArrayList<User>();
+        List<User> handlerList = new ArrayList();
+
+        if (flowNode.getFlowNodeType() == FlowNodeType.End) {
+            return handlerList;
+        }
 
         if (instance.getSubInstanceList() != null && instance.getSubInstanceList().size() > 1) {
             SubInstance previousSubInstance = instance.getSubInstanceList().get(instance.getSubInstanceList().size() - 1);
@@ -111,8 +118,16 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
             List userOrganizationRoleList = listByHql(hql, flowNode.getOrganizationId(), flowNode.getRoleId());
             if (CollectionUtil.isNotEmpty(userOrganizationRoleList)) {
                 for (UserOrganizationRole userOrganizationRole : (List<UserOrganizationRole>) userOrganizationRoleList) {
-                    handlerList.add(userOrganizationRole.getUser());
+                    if (userOrganizationRole.getUser().getObjectStatus() == 1) {
+                        handlerList.add(userOrganizationRole.getUser());
+                    }
                 }
+                Collections.sort(handlerList, new Comparator<User>() {
+                    @Override
+                    public int compare(User o1, User o2) {
+                        return o2.getOrderNo() - o1.getOrderNo();
+                    }
+                });
             }
         } /*else if (StringUtil.isNotEmpty(flowNode.getOrganizationProperty()) && StringUtil.isNotEmpty(flowNode.getRoleId())) {
             Organization organization = (Organization) getPropertyValue(relatedEntity, flowNode.getOrganizationProperty());
@@ -125,7 +140,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
                 }
             }
         }*/ else if (StringUtil.isNotEmpty(flowNode.getOrganizationId())) {
-            String hql = "select o from " + User.class.getName() + " o" + " where o.organization.objectId=?";
+            String hql = "select o from " + User.class.getName() + " o" + " where o.organization.objectId=? and o.objectStatus = 1 order by orderNo";
             List userList = listByHql(hql, flowNode.getOrganizationId());
             if (CollectionUtil.isNotEmpty(userList)) {
                 for (User user : (List<User>) userList) {
@@ -133,7 +148,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
                 }
             }
         } else if (StringUtil.isNotEmpty(flowNode.getRoleId())) {
-            String hql = "select o from " + User.class.getName() + " o" + " where o.role.objectId=?";
+            String hql = "select o from " + User.class.getName() + " o" + " where o.role.objectId=? and o.objectStatus = 1 order by orderNo";
             List userList = listByHql(hql, flowNode.getRoleId());
             if (CollectionUtil.isNotEmpty(userList)) {
                 for (User user : (List<User>) userList) {

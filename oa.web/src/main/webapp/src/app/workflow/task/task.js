@@ -143,7 +143,7 @@ angular.module('app.workflow')
         };
 
         $scope.process = function (result) {
-            if (result == 'pass' && $scope.flowNode.manualSelectHandler == 1
+            if (result == 'pass' && $scope.flowNode.manualSelectHandler == 1 && $scope.flowNode.nextFlowNodeType !== 'End'
                 && (_.isEmpty($scope.approveInfo.approvers) || $scope.approveInfo.approvers[0] == null)) {
                 Dialog.alert('请选择审批人！');
                 return;

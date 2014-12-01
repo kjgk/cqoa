@@ -53,6 +53,10 @@ public class Outgoing extends AbstractBaseEntity {
     @OneToMany(targetEntity = OutgoingUser.class, mappedBy = "outgoing", fetch = FetchType.LAZY)
     private List<OutgoingUser> outgoingUserList;
 
+    // 审批人
+    @Transient
+    private User approver;
+
     //================================ 属性方法 ==========================================================
 
     public Date getBeginDate() {
@@ -157,5 +161,13 @@ public class Outgoing extends AbstractBaseEntity {
 
     public void setOutgoingUserList(List<OutgoingUser> outgoingUserList) {
         this.outgoingUserList = outgoingUserList;
+    }
+
+    public User getApprover() {
+        return approver;
+    }
+
+    public void setApprover(User approver) {
+        this.approver = approver;
     }
 }

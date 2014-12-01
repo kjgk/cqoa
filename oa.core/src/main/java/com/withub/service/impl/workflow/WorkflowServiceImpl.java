@@ -263,6 +263,7 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
 
     /**
      * 获取任务节点的审批信息
+     *
      * @param taskId
      * @return
      * @throws Exception
@@ -285,10 +286,13 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
                 if (nextFlowNodeInfo.getNextFlowNode() != null) {
                     taskFlowNodeInfo.setHandlerFetchCount(nextFlowNodeInfo.getNextFlowNode().getHandlerFetchCount());
                     taskFlowNodeInfo.setNextFlowNodeName(nextFlowNodeInfo.getNextFlowNode().getName());
+                    taskFlowNodeInfo.setNextFlowNodeType(nextFlowNodeInfo.getNextFlowNode().getFlowNodeType().name());
+                    if (nextFlowNodeInfo.getNextFlowNode().getFlowNodeType() == FlowNodeType.End) {
+                        Instance instance = getInstanceByTaskId(taskId);
+                        List<User> handlerList = wfRegulationService.parseTaskHandler(instance, nextFlowNodeInfo.getNextFlowNode());
+                        taskFlowNodeInfo.setHandlerList(handlerList);
+                    }
                 }
-                Instance instance = getInstanceByTaskId(taskId);
-                List<User> handlerList = wfRegulationService.parseTaskHandler(instance, nextFlowNodeInfo.getNextFlowNode());
-                taskFlowNodeInfo.setHandlerList(handlerList);
             }
         }
         return taskFlowNodeInfo;

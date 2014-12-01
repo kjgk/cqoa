@@ -1,12 +1,12 @@
 package com.withub.service.impl.oa;
 
 import com.withub.common.util.DateUtil;
-import com.withub.common.util.StringUtil;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.Outgoing;
 import com.withub.model.oa.po.OutgoingUser;
 import com.withub.model.system.po.Code;
+import com.withub.model.system.po.User;
 import com.withub.service.EntityServiceImpl;
 import com.withub.service.oa.OutgoingService;
 import com.withub.service.system.CodeService;
@@ -37,14 +37,14 @@ public class OutgoingServiceImpl extends EntityServiceImpl implements OutgoingSe
         logicDelete(Outgoing.class, objectId);
     }
 
+    public void submitOutgoing(Outgoing outgoing, User approver) throws Exception {
+
+        addOutgoing(outgoing);
+    }
 
     public void submitOutgoing(Outgoing outgoing) throws Exception {
 
-        if (StringUtil.isEmpty(outgoing.getObjectId())) {
-            addOutgoing(outgoing);
-        } else {
-            updateOutgoing(outgoing);
-        }
+        updateOutgoing(outgoing);
     }
 
     @Override

@@ -54,7 +54,7 @@ public class OutgoingController extends BaseController {
     @RequestMapping(value = "/outgoing", method = RequestMethod.POST)
     public void createOutgoing(@RequestBody Outgoing outgoing) throws Exception {
 
-        outgoingService.submitOutgoing(outgoing);
+        outgoingService.submitOutgoing(outgoing, outgoing.getApprover());
     }
 
     @RequestMapping(value = "/outgoing", method = RequestMethod.PUT)
