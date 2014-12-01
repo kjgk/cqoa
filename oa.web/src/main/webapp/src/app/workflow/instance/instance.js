@@ -34,9 +34,9 @@ angular.module('app.workflow')
 
                 console.log(scope.status.codeTag)
                 scope.labelClass = {
-                    Running: 'label-success',
+                    Running: 'label-primary',
                     Stop: 'label-danger',
-                    Finish: 'label-primary'
+                    Finish: 'label-success'
                 }[scope.status.codeTag]
             }
         };

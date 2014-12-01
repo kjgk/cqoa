@@ -63,6 +63,7 @@ public class TrainingServiceImpl extends EntityServiceImpl implements TrainingSe
         training.setProposer(training.getCurrentUser());
         training.setOrganization(training.getCurrentUser().getOrganization());
         training.setStatus(temp.getStatus());
+        training.setTrainingType(temp.getTrainingType());
         save(training);
     }
 }

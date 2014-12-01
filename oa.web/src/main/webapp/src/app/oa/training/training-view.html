@@ -13,49 +13,55 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <label class="col-sm-2 control-label">培训时间</label>
 
-        <div class="form-group">
-            <label class="col-sm-2 control-label">培训时间</label>
-
-            <div class="col-sm-10">
-                <p class="form-control-static">{{training.beginDate|$date}} 至 {{training.endDate|$date}}</p>
-            </div>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{training.beginDate|$date}} 至 {{training.endDate|$date}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">培训地点</label>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">培训类型</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{training.address}}</p>
-            </div>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{{1: '政治部培训', 2: '特殊培训'}[training.trainingType]}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">培训内容</label>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">培训地点</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{training.content}}</p>
-            </div>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{training.address}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">培训对象</label>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">培训内容</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{training.target}}</p>
-            </div>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{training.content}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">参训人数</label>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">培训对象</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{training.peopleCount}}</p>
-            </div>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{training.target}}</p>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">公示情况</label>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">参训人数</label>
 
-            <div class="col-sm-10">
-                <p class="form-control-static">{{training.publicity}}</p>
-            </div>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{training.peopleCount}}</p>
         </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">公示情况</label>
+
+        <div class="col-sm-10">
+            <p class="form-control-static">{{training.publicity}}</p>
+        </div>
+    </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">申请时间</label>
 

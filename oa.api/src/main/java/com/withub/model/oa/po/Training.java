@@ -17,6 +17,13 @@ public class Training extends AbstractBaseEntity {
 
     //================================ 属性声明 ==========================================================
 
+    /**
+     * 培训类型
+     * 1=政治部培训
+     * 2=特殊培训
+     */
+    private Integer trainingType;
+
     private Date beginDate;
 
     private Date endDate;
@@ -135,5 +142,13 @@ public class Training extends AbstractBaseEntity {
 
     public void setApprover(User approver) {
         this.approver = approver;
+    }
+
+    public Integer getTrainingType() {
+        return trainingType;
+    }
+
+    public void setTrainingType(Integer trainingType) {
+        this.trainingType = trainingType;
     }
 }

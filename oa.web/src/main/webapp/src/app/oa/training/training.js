@@ -89,6 +89,15 @@ angular.module('app.oa')
 
         $scope.title = '新增培训申请';
 
+        // 政治部可以选择培训类型
+        if (PageContext.currentUser.organization.code == '100000000010000001') {
+            $scope.showTrainingType = true;
+            $scope.training.trainingType = 1;
+        } else {
+            $scope.showTrainingType = false;
+            $scope.training.trainingType = 2;
+        }
+
         $scope.cancel = function () {
             $modalInstance.dismiss();
         };
@@ -107,6 +116,8 @@ angular.module('app.oa')
         $scope.training = $scope.promise.$object;
 
         $scope.title = '修改培训申请';
+
+        $scope.showTrainingType = false;
 
         $scope.cancel = function () {
             $modalInstance.dismiss();

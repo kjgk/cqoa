@@ -78,7 +78,8 @@ angular.module('app', ['app.oa', 'app.mobile', 'app.workflow'])
                 name: userInfo.name,
                 organization: {
                     objectId: userInfo.organizationId,
-                    name: userInfo.organizationName
+                    name: userInfo.organizationName,
+                    code: userInfo.organizationCode
                 },
                 role: {
                     objectId: userInfo.roleId,

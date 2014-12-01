@@ -20,6 +20,7 @@
                 <tr class="rlm_bga">
                     <td style="width: 72px;">申请人</td>
                     <td>培训时间</td>
+                    <td>培训类型</td>
                     <td>培训地点</td>
                     <td>培训内容</td>
                     <td>培训对象</td>
@@ -32,6 +33,7 @@
                 <tr class="nr1" ng-repeat="x in grid.items">
                     <td>{{x.proposer.name}}</td>
                     <td>{{x.beginDate|$date}}~{{x.endDate|$date}}</td>
+                    <td>{{{1: '政治部培训', 2: '特殊培训'}[x.trainingType]}}</td>
                     <td>{{x.address}}</td>
                     <td>{{x.content}}</td>
                     <td>{{x.target}}</td>
