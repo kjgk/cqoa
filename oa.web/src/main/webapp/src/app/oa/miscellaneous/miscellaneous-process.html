@@ -1,0 +1,59 @@
+<form class="form-horizontal" role="form" name="approveForm">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">×</button>
+        <h4 class="modal-title">{{task.flowTypeName + ' - ' + flowNode.flowNodeName}}</h4>
+    </div>
+    <div class="modal-body">
+        <fieldset>
+            <div ng-include="viewTemplate" ng-init="objectId=task.relatedObjectId"></div>
+        </fieldset>
+        <hr>
+        <fieldset>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">审批意见</label>
+
+                <div class="col-sm-10">
+                    <textarea class="form-control"
+                              name="description" ng-model="approveInfo.opinion"
+                              rows="3"
+                              placeholder="请输入审批意见"></textarea>
+                    <h5><a class="pull-right" href="javascript:;" ng-click="viewInstanceLog({instanceId: task.instanceId})">查看审批记录</a></h5>
+                </div>
+            </div>
+            <div class="form-group" >
+                <label class="col-sm-12 control-label" style="text-align: left; margin-bottom: 8px;">请选择下一个流程节点的审批人</label>
+            </div>
+            <div class="form-group" >
+                <div class="col-sm-4">
+                    <label class="radio-inline c-radio  pull-right">
+                        <input type="radio" ng-model="nextFlowNode" ng-value="1">
+                        <span class="fa fa-circle"></span>有关部门审批</label>
+                </div>
+                <div class="col-sm-6">
+                    <select ng-disabled="nextFlowNode==2" class="form-control" ng-model="approveInfo.approvers[0]" ng-options="x.objectId as x.name for x in handlerList1">
+                        <option value="">请选择审批人</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" >
+                <div class="col-sm-4">
+                    <label class="radio-inline c-radio  pull-right">
+                        <input type="radio" ng-model="nextFlowNode" ng-value="2">
+                        <span class="fa fa-circle"></span>分管领导审批</label>
+                </div>
+                <div class="col-sm-6">
+                    <select ng-disabled="nextFlowNode==1" class="form-control" ng-model="approveInfo.approvers[0]" ng-options="x.objectId as x.name for x in handlerList2">
+                        <option value="">请选择审批人</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+
+    <div class="modal-footer" style="text-align: center;">
+        <button ng-if="flowNode.passAction" class="btn btn-primary" ng-click="process('pass')" title="通过并提交给下一步审批人">通过并提交给下一步审批人</button>
+        <button ng-if="flowNode.completeAction" class="btn btn-success" ng-click="process('complete')" title="同意申请，不需要下一步审批人审批">完成</button>
+        <button ng-if="flowNode.returnAction" class="btn btn-danger" ng-click="process('return')" title="退回给申请人修改">退回</button>
+    </div>
+    <div cg-busy="promise"></div>
+</form>

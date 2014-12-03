@@ -5,6 +5,7 @@ import com.withub.model.workflow.enumeration.TaskHandleResult;
 import com.withub.model.workflow.po.FlowNode;
 import com.withub.model.workflow.po.FlowNodeRoute;
 import com.withub.model.workflow.po.Instance;
+import com.withub.model.workflow.po.Task;
 import com.withub.service.EntityService;
 
 import java.util.List;
@@ -13,5 +14,5 @@ public interface WFRegulationService extends EntityService {
 
     public List<User> parseTaskHandler(Instance instance, FlowNode flowNode) throws Exception;
 
-    public FlowNodeRoute parseFlowNodeRoute(Instance instance, FlowNode flowNode, TaskHandleResult taskHandleResult) throws Exception;
+    public FlowNodeRoute parseFlowNodeRoute(Instance instance, FlowNode flowNode, Task task, TaskHandleResult taskHandleResult) throws Exception;
 }

@@ -126,4 +126,81 @@ angular.module('app.oa')
         $scope.miscellaneous = MiscellaneousService.get($scope.objectId).$object;
     })
 
+
+    .controller('MiscellaneousTaskProcessCtrl', function ($scope, $timeout, $http, $modal, $modalInstance, TaskService, InstanceService, task) {
+
+        $scope.title = '处理';
+
+        $scope.task = task;
+
+        $scope.viewTemplate = 'app/oa/miscellaneous/miscellaneous-view.html';
+
+        $scope.nextFlowNode = 1;
+
+        $http({
+            url: PageContext.path + '/workflow/task/fetchHander/organizationManager',
+            params: {organizationCode: 'all'},
+            method: 'GET'
+        }).then(function (response) {
+            var items = [];
+            _.forEach(response.data.data, function (item) {
+                items.push({
+                    objectId: item.objectId,
+                    name: item.name
+                });
+            });
+            $scope.handlerList1 = items;
+        });
+
+        $http({
+            url: PageContext.path + '/workflow/task/fetchHander/leader',
+            method: 'GET'
+        }).then(function (response) {
+            var items = [];
+            _.forEach(response.data.data, function (item) {
+                items.push({
+                    objectId: item.objectId,
+                    name: item.name
+                });
+            });
+            $scope.handlerList2 = items;
+        });
+
+        $scope.approveInfo = {
+            taskId: task.objectId,
+            opinion: '',
+            approvers: []
+        };
+
+        $scope.promise = TaskService.getTaskFlowNode(task.objectId).then(function (response) {
+            $scope.flowNode = response.data.data;
+        });
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss();
+        };
+
+        $scope.process = function (result) {
+            if (result == 'pass' && (_.isEmpty($scope.approveInfo.approvers) || $scope.approveInfo.approvers[0] == null)) {
+                Dialog.alert('请选择审批人！');
+                return;
+            }
+            if ((result == 'return' || result == 'reject') && _.isEmpty($scope.approveInfo.opinion)) {
+                Dialog.alert('请输入审批意见！');
+                return;
+            }
+            $scope.promise = TaskService.processTask(result, {
+                taskId: $scope.approveInfo.taskId,
+                opinion: $scope.approveInfo.opinion,
+                approvers: $scope.approveInfo.approvers,
+                contextList: [
+                    {contextKey: 'nextFlowNode', contextValue: $scope.nextFlowNode}
+                ]
+            }).then(function () {
+                $modalInstance.close();
+                Toaster.info("审批成功！");
+            });
+        };
+
+    })
 ;

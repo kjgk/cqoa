@@ -46,7 +46,6 @@ angular.module('withub.ui')
                                 });
                             });
                         });
-
                     } else if (config == 'Leader') {   // 分管领导
                         $http({
                             url: PageContext.path + '/workflow/task/fetchHander/leader',

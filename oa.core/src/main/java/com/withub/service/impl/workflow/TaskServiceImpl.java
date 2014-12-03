@@ -96,10 +96,17 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
 //        commit(currentUser, task, taskHandleResult, opinion, nextHandlerList, firstNodeHandlerList);
 //    }
 
-    public void commit(User currentUser, Task task, TaskHandleResult taskHandleResult, String opinion, List<User> nextHandlerList, List<User> firstNodeHandlerList) throws Exception {
+    public void commit(User currentUser, Task task, List<TaskContext> taskContextList, TaskHandleResult taskHandleResult, String opinion
+            , List<User> nextHandlerList, List<User> firstNodeHandlerList) throws Exception {
 
         if (!task.getStatus().getCodeTag().equals(TaskStatus.Running.toString())) {
             return;
+        }
+
+        if (CollectionUtil.isNotEmpty(taskContextList)) {
+            for (TaskContext taskContext : taskContextList) {
+                addTaskContext(task.getObjectId(), taskContext.getContextKey(), taskContext.getContextValue());
+            }
         }
 
         MasterTask masterTask = task.getMasterTask();
@@ -204,10 +211,12 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
             instanceReturn = !(runningTaskList.size() > 0 && currentFlowNode.getInstanceReturnMode() == 1);
         }
 
+        task.setContextList(taskContextList);
+
         FlowNodeRoute flowNodeRoute;
         FlowNode nextFlowNode;
         if (instanceReturn) {
-            flowNodeRoute = wfRegulationService.parseFlowNodeRoute(instance, currentFlowNode, TaskHandleResult.Return);
+            flowNodeRoute = wfRegulationService.parseFlowNodeRoute(instance, currentFlowNode, task, TaskHandleResult.Return);
             nextFlowNode = flowNodeRoute.getToFlowNode();
             instance.setCurrentFlowNode(nextFlowNode);
             update(instance);
@@ -241,7 +250,7 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
         }
 
         // TODO 为投票选择一个合适的任务处理结果  Pass OR Reject
-        flowNodeRoute = wfRegulationService.parseFlowNodeRoute(instance, currentFlowNode, taskHandleResult);
+        flowNodeRoute = wfRegulationService.parseFlowNodeRoute(instance, currentFlowNode, task, taskHandleResult);
         nextFlowNode = flowNodeRoute.getToFlowNode();
         instance.setCurrentFlowNode(nextFlowNode);
         update(instance);
@@ -579,13 +588,13 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
                 // 判断是否自动提交任务
                 // TODO : 应该根据TaskExecuteMode来判断,自动提交前应该实行一个服务调用接口
                 if (flowNodeType == FlowNodeType.Begin) {
-                    commit(currentUser, task, TaskHandleResult.Start, "流程启动", null, firstNodeHandlerList);
+                    commit(currentUser, task, null, TaskHandleResult.Start, "流程启动", null, firstNodeHandlerList);
                 } else if (flowNodeType == FlowNodeType.First) {
-                    commit(currentUser, task, TaskHandleResult.Submit, "提交", null, firstNodeHandlerList);
+                    commit(currentUser, task, null, TaskHandleResult.Submit, "提交", null, firstNodeHandlerList);
                 } else if (flowNodeType == FlowNodeType.End) {
-                    commit(currentUser, task, TaskHandleResult.Complete, "流程结束", null, null);
+                    commit(currentUser, task, null, TaskHandleResult.Complete, "流程结束", null, null);
                 } else if (flowNode.getSuspendInstance() == 1) {
-                    commit(currentUser, task, TaskHandleResult.Suspend, flowNode.getSuspendDescription(), null, null);
+                    commit(currentUser, task, null, TaskHandleResult.Suspend, flowNode.getSuspendDescription(), null, null);
                 }
             }
         }
@@ -639,6 +648,16 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
         }
 
         WorkflowEventPublisher.publishEntityStatusChangeEvent(this, entityInstance);
+    }
+
+    public void addTaskContext(String taskId, String contextKey, String contextValue) throws Exception {
+
+        Task task = get(Task.class, taskId);
+        TaskContext taskContext = new TaskContext();
+        taskContext.setTask(task);
+        taskContext.setContextKey(contextKey);
+        taskContext.setContextValue(contextValue);
+        save(taskContext);
     }
 
     public void finishMasterTask(MasterTask masterTask) throws Exception {

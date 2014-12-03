@@ -3,6 +3,7 @@ package com.withub.service.impl.workflow;
 import com.withub.common.util.CollectionUtil;
 import com.withub.common.util.ReflectionUtil;
 import com.withub.common.util.StringUtil;
+import com.withub.common.util.VelocityUtil;
 import com.withub.model.entity.AbstractBaseEntity;
 import com.withub.model.exception.BaseBusinessException;
 import com.withub.model.system.po.User;
@@ -23,10 +24,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service("wfRegulationService")
 @Transactional(rollbackForClassName = {"Exception", "BaseBusinessException"})
@@ -218,7 +216,7 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
         return handlerList;
     }
 
-    public FlowNodeRoute parseFlowNodeRoute(Instance instance, FlowNode flowNode, TaskHandleResult taskHandleResult) throws Exception {
+    public FlowNodeRoute parseFlowNodeRoute(Instance instance, FlowNode flowNode, Task task, TaskHandleResult taskHandleResult) throws Exception {
 
         List<FlowNodeRoute> flowNodeRouteList = flowNode.getFlowNodeRouteList();
 
@@ -240,23 +238,21 @@ public class WFRegulationServiceImpl extends EntityServiceImpl implements WFRegu
                 throw new BaseBusinessException("", "无法解析分支[" + ramus.getName() + "]上的业务规则表达式!");
             }
 
-            if (expression.contains("${TaskHandleResult}")) {
-                expression = expression.replace("${TaskHandleResult}", "\"" + taskHandleResult.toString() + "\"");
-            }
-            String[] phraseArray = StringUtils.substringsBetween(expression, "{#", "#}");
-            if (CollectionUtil.isNotEmpty(phraseArray)) {
-                for (String pharse : phraseArray) {
-                    String className = instance.getFlowType().getEntity().getClassName();
-                    AbstractBaseEntity entity = (AbstractBaseEntity) getEntityByClassName(className, instance.getRelatedObjectId());
-                    Object objectValue = getPropertyValue(entity, pharse);
-                    String value = "";
-                    if (objectValue != null) {
-                        value = objectValue.toString();
-                    }
-                    expression = expression.replace("{#" + pharse + "#}", value);
+            Map parameter = new HashMap();
+            Map taskContext = new HashMap();
+            if (CollectionUtil.isNotEmpty(task.getContextList())) {
+                for (TaskContext context : task.getContextList()) {
+                    taskContext.put(context.getContextKey(), context.getContextValue());
                 }
             }
-            expression = expression.replace("#", "\"");
+            String className = instance.getFlowType().getEntity().getClassName();
+            AbstractBaseEntity entity = (AbstractBaseEntity) getEntityByClassName(className, instance.getRelatedObjectId());
+            parameter.put("taskContext", taskContext);
+            parameter.put("object", entity);
+            parameter.put("taskHandleResult", taskHandleResult);
+
+            expression = VelocityUtil.getVelocityContent(expression, parameter);
+
             boolean expressionValue;
             try {
                 expressionValue = parser.parseExpression(expression).getValue(Boolean.class);

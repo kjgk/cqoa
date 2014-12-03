@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface TaskHandlerFetchService extends EntityService {
 
+    public List<User> fetchOrganizationManager() throws Exception;
+
     public List<User> fetchOrganizationManager(WFArguments wfArguments) throws Exception;
 
-
     public List<User> fetchOrganizationManager(String userId) throws Exception;
-
 
     public List<User> fetchLeader() throws Exception;
 

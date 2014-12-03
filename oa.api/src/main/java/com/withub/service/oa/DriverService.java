@@ -3,7 +3,6 @@ package com.withub.service.oa;
 import com.withub.model.entity.query.QueryInfo;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.Driver;
-import com.withub.model.oa.po.MeetingRoom;
 import com.withub.service.EntityService;
 
 public interface DriverService extends EntityService {

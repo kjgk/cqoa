@@ -18,9 +18,8 @@ public interface TaskService extends EntityService {
 
     public Task getTaskById(String taskId) throws Exception;
 
-//    public void commit(Task task, TaskHandleResult taskHandleResult, String opinion, List<User> nextHandlerList, List<User> firstNodeHandlerList) throws Exception;
-
-    public void commit(User currentUser, Task task, TaskHandleResult taskHandleResult, String opinion, List<User> nextHandlerList, List<User> firstNodeHandlerList) throws Exception;
+    public void commit(User currentUser, Task task, List<TaskContext> taskContextList, TaskHandleResult taskHandleResult, String opinion
+            , List<User> nextHandlerList, List<User> firstNodeHandlerList) throws Exception;
 
     public void saveInstanceOrganization(Instance instance, FlowNode flowNode, Task task) throws Exception;
 
@@ -37,6 +36,8 @@ public interface TaskService extends EntityService {
 //    public void createTask(SubInstance subInstance, MasterTask previousMasterTask, FlowNode flowNode, List<User> handlerList, List<User> firstNodeHandlerList) throws Exception;
 
     public void createTask(User currentUser, SubInstance subInstance, MasterTask previousMasterTask, FlowNode flowNode, List<User> handlerList, List<User> firstNodeHandlerList) throws Exception;
+
+    public void addTaskContext(String taskId, String contextKey, String contextValue) throws Exception;
 
     public void finishMasterTask(MasterTask masterTask) throws Exception;
 

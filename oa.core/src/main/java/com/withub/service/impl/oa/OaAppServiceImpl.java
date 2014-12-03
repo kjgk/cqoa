@@ -223,7 +223,7 @@ public class OaAppServiceImpl implements OaAppService {
         }
         User currentUser = taskService.get(User.class, currentUserId);
 
-        taskService.commit(currentUser, task, taskHandleResult, opinion, handlerList, null);
+        taskService.commit(currentUser, task, null, taskHandleResult, opinion, handlerList, null);
     }
 
     public String getOrganizationList() throws Exception {

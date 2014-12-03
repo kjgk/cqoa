@@ -362,33 +362,33 @@ public class WorkflowController extends BaseController {
     public void passTask(ModelMap modelMap, @RequestBody ApproveInfo approveInfo) throws Exception {
 
         if (CollectionUtil.isEmpty(approveInfo.getApprovers())) {
-            workflowService.passTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getOpinion());
+            workflowService.passTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getContextList(), approveInfo.getOpinion());
         } else {
             List<User> approverList = new ArrayList();
             for (String approverId : approveInfo.getApprovers()) {
                 User approver = workflowService.get(User.class, approverId);
                 approverList.add(approver);
             }
-            workflowService.passTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getOpinion(), approverList);
+            workflowService.passTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getContextList(), approveInfo.getOpinion(), approverList);
         }
     }
 
     @RequestMapping(value = "/task/reject", method = RequestMethod.POST)
     public void rejectTask(ModelMap modelMap, @RequestBody ApproveInfo approveInfo) throws Exception {
 
-        workflowService.rejectTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getOpinion());
+        workflowService.rejectTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getContextList(), approveInfo.getOpinion());
     }
 
     @RequestMapping(value = "/task/return", method = RequestMethod.POST)
     public void returnTask(ModelMap modelMap, @RequestBody ApproveInfo approveInfo) throws Exception {
 
-        workflowService.returnTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getOpinion());
+        workflowService.returnTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getContextList(), approveInfo.getOpinion());
     }
 
     @RequestMapping(value = "/task/complete", method = RequestMethod.POST)
     public void completeTask(ModelMap modelMap, @RequestBody ApproveInfo approveInfo) throws Exception {
 
-        workflowService.completeTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getOpinion());
+        workflowService.completeTask(SpringSecurityUtil.getCurrentUser(), approveInfo.getTaskId(), approveInfo.getContextList(), approveInfo.getOpinion());
     }
     //
 
@@ -441,10 +441,15 @@ public class WorkflowController extends BaseController {
     @RequestMapping(value = "/task/fetchHander/organizationManager", method = RequestMethod.GET)
     public void fetchOrganizationManager(ModelMap modelMap, String organizationCode) throws Exception {
 
-        if (StringUtil.isEmpty(organizationCode)) {
-            organizationCode = SpringSecurityUtil.getCurrentUser().getOrganization().getCode();
+        List<User> userList;
+        if (StringUtil.compareValue("all", organizationCode)) {
+            userList = taskHandlerFetchService.fetchOrganizationManager();
+        } else {
+            if (StringUtil.isEmpty(organizationCode)) {
+                organizationCode = SpringSecurityUtil.getCurrentUser().getOrganization().getCode();
+            }
+            userList = taskHandlerFetchService.fetchOrganizationManager(organizationCode);
         }
-        List<User> userList = taskHandlerFetchService.fetchOrganizationManager(organizationCode);
         putData(modelMap, userList);
     }
 

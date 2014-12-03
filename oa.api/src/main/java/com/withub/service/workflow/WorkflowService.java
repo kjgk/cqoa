@@ -12,6 +12,7 @@ import com.withub.model.workflow.event.instanceevent.InstanceDeleteEvent;
 import com.withub.model.workflow.po.FlowNode;
 import com.withub.model.workflow.po.Instance;
 import com.withub.model.workflow.po.Task;
+import com.withub.model.workflow.po.TaskContext;
 import com.withub.model.workflow.vo.TaskFlowNodeInfo;
 import com.withub.model.workflow.vo.TaskInfo;
 import com.withub.service.EntityService;
@@ -66,21 +67,19 @@ public interface WorkflowService extends EntityService {
 
     public TaskFlowNodeInfo getTaskFlowNode(String taskId) throws Exception;
 
-    public void commitTask(User currentUser, String taskId, TaskHandleResult result, String opinion) throws Exception;
+    public void commitTask(User currentUser, String taskId, List<TaskContext> taskContextList, TaskHandleResult result, String opinion) throws Exception;
 
-    public void passTask(User currentUser, String taskId, String opinion) throws Exception;
+    public void passTask(User currentUser, String taskId, List<TaskContext> taskContextList, String opinion) throws Exception;
 
-    public void passTask(User currentUser, String taskId, String opinion, User nextHandler) throws Exception;
+    public void passTask(User currentUser, String taskId, List<TaskContext> taskContextList, String opinion, User nextHandler) throws Exception;
 
-    public void passTask(User currentUser, String taskId, String opinion, List<User> nextHandlerList) throws Exception;
+    public void passTask(User currentUser, String taskId, List<TaskContext> taskContextList, String opinion, List<User> nextHandlerList) throws Exception;
 
-    public void addTaskContext(String taskId, String contextKey, String contextValue) throws Exception;
+    public void returnTask(User currentUser, String taskId, List<TaskContext> taskContextList, String opinion) throws Exception;
 
-    public void returnTask(User currentUser, String taskId, String opinion) throws Exception;
+    public void rejectTask(User currentUser, String taskId, List<TaskContext> taskContextList, String opinion) throws Exception;
 
-    public void rejectTask(User currentUser, String taskId, String opinion) throws Exception;
-
-    public void completeTask(User currentUser, String taskId, String opinion) throws Exception;
+    public void completeTask(User currentUser, String taskId, List<TaskContext> taskContextList, String opinion) throws Exception;
 
     public void rollbackTask(User currentUser, String taskId) throws Exception;
 
