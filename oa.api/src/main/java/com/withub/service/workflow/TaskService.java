@@ -9,6 +9,8 @@ import com.withub.model.workflow.enumeration.TaskHandleResult;
 import com.withub.model.workflow.event.instanceevent.InstanceAbortEvent;
 import com.withub.model.workflow.event.instanceevent.InstanceCreateEvent;
 import com.withub.model.workflow.event.instanceevent.InstanceDeleteEvent;
+import com.withub.model.workflow.event.taskevent.ModifyTaskCreateEvent;
+import com.withub.model.workflow.event.taskevent.TaskCreateEvent;
 import com.withub.model.workflow.po.*;
 import com.withub.service.EntityService;
 
@@ -58,4 +60,8 @@ public interface TaskService extends EntityService {
     public void onEntityTimeoutEvent(EntityTimeoutEvent event) throws Exception;
 
     public void onEntityWillTimeoutEvent(EntityTimeoutEvent event) throws Exception;
+
+    public void onModifyTaskCreateEvent(ModifyTaskCreateEvent event) throws Exception;
+
+    public void onTaskCreateEvent(TaskCreateEvent event) throws Exception;
 }

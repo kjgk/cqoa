@@ -1,48 +1,85 @@
 package com.withub.service.impl.oa;
 
 import com.withub.service.oa.SmsQueueService;
-import org.apache.axis2.AxisFault;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.rmi.RemoteException;
 import java.util.Calendar;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service("smsQueueService")
 public class SmsQueueServiceImpl implements SmsQueueService {
 
-    public void messageToQueue() {
-        try {
-            SmsQueueWebServiceImpServiceStub smsQueueStub = new SmsQueueWebServiceImpServiceStub();
+    @Value(value = "${sms.creatorId}")
+    private String creatorId = "";
 
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.HOUR, 1);
+    @Value(value = "${sms.creatorName}")
+    private String creatorName = "";
 
-            SmsQueueWebServiceImpServiceStub.TSmspQueueInfo tSmspQueueInfo = new SmsQueueWebServiceImpServiceStub.TSmspQueueInfo();
-            tSmspQueueInfo.setCreatorId("1470");
-            tSmspQueueInfo.setCreatorName("办公室短信发送人");
-            tSmspQueueInfo.setPhones("13072320098");
-            tSmspQueueInfo.setContent("测试短信");
-            tSmspQueueInfo.setBusinessNo("BS000004");
-            tSmspQueueInfo.setFailDate(calendar);
+    @Value(value = "${sms.businessNo}")
+    private String businessNo = "";
 
+    @Value(value = "${sms.retryCount}")
+    private Integer retryCount;
 
-            SmsQueueWebServiceImpServiceStub.MessageToQueue messageToQueue = new SmsQueueWebServiceImpServiceStub.MessageToQueue();
+    private static final Logger logger = LoggerFactory.getLogger(SmsQueueServiceImpl.class);
 
-            SmsQueueWebServiceImpServiceStub.MessageToQueueE messageToQueueE = new SmsQueueWebServiceImpServiceStub.MessageToQueueE();
+    private ExecutorService threadPool;
 
-            messageToQueue.setArg0(tSmspQueueInfo);
+    public SmsQueueServiceImpl() {
 
-            messageToQueueE.setMessageToQueue(messageToQueue);
-
-            smsQueueStub.messageToQueue(messageToQueueE);
-
-        } catch (AxisFault axisFault) {
-            axisFault.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
+        this.threadPool = Executors.newCachedThreadPool();
     }
 
+    public void messageToQueue(String phones, String content) {
 
+        logger.info("发送短信，手机号：" + phones + "，内容：" + content);
+
+        this.threadPool.submit(new SendMessage(phones, content));
+    }
+
+    class SendMessage implements Callable {
+
+        private String phones;
+
+        private String content;
+
+        SendMessage(String phones, String content) {
+            this.phones = phones;
+            this.content = content;
+        }
+
+        public Integer call() throws Exception {
+
+            for (int i = 0; i < retryCount; i++) {
+                try {
+                    SmsQueueWebServiceImpServiceStub smsQueueStub = new SmsQueueWebServiceImpServiceStub();
+                    SmsQueueWebServiceImpServiceStub.TSmspQueueInfo tSmspQueueInfo = new SmsQueueWebServiceImpServiceStub.TSmspQueueInfo();
+                    Calendar failDate = Calendar.getInstance();
+                    failDate.add(Calendar.HOUR, 1);
+                    tSmspQueueInfo.setCreatorId(creatorId);
+                    tSmspQueueInfo.setCreatorName(creatorName);
+                    tSmspQueueInfo.setBusinessNo(businessNo);
+                    tSmspQueueInfo.setFailDate(failDate);
+                    tSmspQueueInfo.setPhones(phones);
+                    tSmspQueueInfo.setContent(content);
+
+                    SmsQueueWebServiceImpServiceStub.MessageToQueue messageToQueue = new SmsQueueWebServiceImpServiceStub.MessageToQueue();
+                    SmsQueueWebServiceImpServiceStub.MessageToQueueE messageToQueueE = new SmsQueueWebServiceImpServiceStub.MessageToQueueE();
+                    messageToQueue.setArg0(tSmspQueueInfo);
+                    messageToQueueE.setMessageToQueue(messageToQueue);
+                    smsQueueStub.messageToQueue(messageToQueueE);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    continue;
+                }
+                return 1;
+            }
+            return 0;
+        }
+    }
 }

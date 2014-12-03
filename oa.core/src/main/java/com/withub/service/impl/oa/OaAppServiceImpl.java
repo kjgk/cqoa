@@ -255,6 +255,20 @@ public class OaAppServiceImpl implements OaAppService {
         return JSON.toJSON(list).toString();
     }
 
+    public String getManagerList(String organizationId) throws Exception {
+
+        List list = new ArrayList();
+        List<User> userList = userService.listByOrganizationId(organizationId);
+        for (User user : userList) {
+            Map item = new HashMap();
+            item.put("objectId", user.getObjectId());
+            item.put("name", user.getName());
+            list.add(item);
+        }
+
+        return JSON.toJSON(list).toString();
+    }
+
     public String getCodeList(String codeColumnTag) throws Exception {
 
         List list = new ArrayList();

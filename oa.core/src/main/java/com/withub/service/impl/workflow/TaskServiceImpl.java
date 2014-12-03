@@ -18,10 +18,13 @@ import com.withub.model.system.po.User;
 import com.withub.model.workflow.enumeration.*;
 import com.withub.model.workflow.event.WorkflowEventPublisher;
 import com.withub.model.workflow.event.instanceevent.*;
+import com.withub.model.workflow.event.taskevent.ModifyTaskCreateEvent;
+import com.withub.model.workflow.event.taskevent.TaskCreateEvent;
 import com.withub.model.workflow.event.taskevent.TaskEventArgs;
 import com.withub.model.workflow.event.taskevent.TaskEventPublisher;
 import com.withub.model.workflow.po.*;
 import com.withub.service.EntityServiceImpl;
+import com.withub.service.oa.SmsQueueService;
 import com.withub.service.std.AgencyService;
 import com.withub.service.std.WorkCalendarService;
 import com.withub.service.system.CodeService;
@@ -67,6 +70,9 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
 
     @Autowired
     private EntityDao entityDao;
+
+    @Autowired
+    private SmsQueueService smsQueueService;
 
     //=============================== 接口实现 ============================================================
 
@@ -789,85 +795,22 @@ public class TaskServiceImpl extends EntityServiceImpl implements TaskService {
         TaskEventPublisher.publishTaskWillTimeoutEvent(this, args);
     }
 
-    //================================ 属性方法 ===========================================================
+    public void onModifyTaskCreateEvent(ModifyTaskCreateEvent event) throws Exception {
 
-    public FlowTypeService getFlowTypeService() {
-
-        return flowTypeService;
+        Task task = event.getTaskEventArgs().getTask();
+        if (StringUtil.isNotEmpty(task.getHandler().getMobile())) {
+            smsQueueService.messageToQueue
+                    (task.getHandler().getMobile(), "您提交的" + task.getMasterTask().getFlowNode().getFlowType().getName() + "被退回。");
+        }
     }
 
-    public void setFlowTypeService(FlowTypeService flowTypeService) {
+    public void onTaskCreateEvent(TaskCreateEvent event) throws Exception {
 
-        this.flowTypeService = flowTypeService;
+        Task task = event.getTaskEventArgs().getTask();
+        if (StringUtil.isNotEmpty(task.getHandler().getMobile())) {
+            smsQueueService.messageToQueue
+                    (task.getHandler().getMobile(), "您有新的待办事项，请及时处理。");
+        }
     }
 
-    public InstanceService getInstanceService() {
-
-        return instanceService;
-    }
-
-    public void setInstanceService(InstanceService instanceService) {
-
-        this.instanceService = instanceService;
-    }
-
-    public WFRegulationService getWfRegulationService() {
-
-        return wfRegulationService;
-    }
-
-    public void setWfRegulationService(WFRegulationService wfRegulationService) {
-
-        this.wfRegulationService = wfRegulationService;
-    }
-
-    public CodeService getCodeService() {
-
-        return codeService;
-    }
-
-    public void setCodeService(CodeService codeService) {
-
-        this.codeService = codeService;
-    }
-
-    public UserService getUserService() {
-
-        return userService;
-    }
-
-    public void setUserService(UserService userService) {
-
-        this.userService = userService;
-    }
-
-    public AgencyService getAgencyService() {
-
-        return agencyService;
-    }
-
-    public void setAgencyService(AgencyService agencyService) {
-
-        this.agencyService = agencyService;
-    }
-
-    public WorkCalendarService getWorkCalendarService() {
-
-        return workCalendarService;
-    }
-
-    public void setWorkCalendarService(WorkCalendarService workCalendarService) {
-
-        this.workCalendarService = workCalendarService;
-    }
-
-    public EntityDao getEntityDao() {
-
-        return entityDao;
-    }
-
-    public void setEntityDao(EntityDao entityDao) {
-
-        this.entityDao = entityDao;
-    }
 }

@@ -65,6 +65,10 @@
                        value="taskService.onAgencyCreatedEvent"/>
                 <entry key="com.withub.model.std.event.agencyevent.AgencyFinishedEvent"
                        value="taskService.onAgencyFinishedEvent"/>
+                <entry key="com.withub.model.workflow.event.taskevent.TaskCreateEvent"
+                       value="taskService.onTaskCreateEvent"/>
+                <entry key="com.withub.model.workflow.event.taskevent.ModifyTaskCreateEvent"
+                       value="taskService.onModifyTaskCreateEvent"/>
             </map>
         </property>
     </bean>
