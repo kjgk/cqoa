@@ -1,0 +1,16 @@
+<form class="form-horizontal" role="form">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">×</button>
+        <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+        <fieldset>
+            <div ng-include="viewTemplate"></div>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-info" ng-click="viewInstance()">查看流程</button>
+        <button class="btn btn-warning" ng-click="cancel()">关闭</button>
+    </div>
+    <div cg-busy="promise"></div>
+</form>

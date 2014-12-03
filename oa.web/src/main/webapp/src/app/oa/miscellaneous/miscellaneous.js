@@ -37,7 +37,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('MiscellaneousCtrl', function ($scope, $q, $modal, SimpleTable, MiscellaneousService, InstanceService) {
+    .controller('MiscellaneousCtrl', function ($scope, $q, $modal, SimpleTable, MiscellaneousService, OAService) {
 
         $scope.grid = SimpleTable(MiscellaneousService.query);
 
@@ -66,10 +66,9 @@ angular.module('app.oa')
                 Toaster.success("保存成功！");
             });
         };
-        $scope.viewMiscellaneousInstance = function (miscellaneous) {
-            InstanceService.viewInstance({
-                relatedObjectId: miscellaneous.objectId
-            });
+        $scope.viewMiscellaneous = function (miscellaneous) {
+
+            OAService.viewForm('查看综合事项申请', miscellaneous.objectId, 'app/oa/miscellaneous/miscellaneous-view.html')
         };
         $scope.deleteMiscellaneous = function (miscellaneous) {
 
@@ -80,7 +79,6 @@ angular.module('app.oa')
                 });
             });
         };
-
     })
 
     .controller('MiscellaneousCreateCtrl', function ($scope, $modalInstance, MiscellaneousService) {

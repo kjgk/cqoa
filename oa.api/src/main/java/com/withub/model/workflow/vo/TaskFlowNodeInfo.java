@@ -10,6 +10,8 @@ public class TaskFlowNodeInfo implements Serializable {
 
     private String flowNodeName;
 
+    private String flowNodeTag;
+
     private Integer passAction;
 
     private Integer returnAction;
@@ -116,5 +118,13 @@ public class TaskFlowNodeInfo implements Serializable {
 
     public void setNextFlowNodeType(String nextFlowNodeType) {
         this.nextFlowNodeType = nextFlowNodeType;
+    }
+
+    public String getFlowNodeTag() {
+        return flowNodeTag;
+    }
+
+    public void setFlowNodeTag(String flowNodeTag) {
+        this.flowNodeTag = flowNodeTag;
     }
 }

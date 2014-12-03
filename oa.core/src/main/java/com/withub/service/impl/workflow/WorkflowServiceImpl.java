@@ -273,6 +273,7 @@ public class WorkflowServiceImpl extends EntityServiceImpl implements WorkflowSe
         FlowNode flowNode = getFlowNodeByTaskId(taskId);
         TaskFlowNodeInfo taskFlowNodeInfo = new TaskFlowNodeInfo();
         taskFlowNodeInfo.setFlowNodeName(flowNode.getName());
+        taskFlowNodeInfo.setFlowNodeTag(flowNode.getFlowNodeTag());
         taskFlowNodeInfo.setPassAction(flowNode.getPassAction());
         taskFlowNodeInfo.setReturnAction(flowNode.getReturnAction());
         taskFlowNodeInfo.setRejectAction(flowNode.getRejectAction());

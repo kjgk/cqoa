@@ -16,6 +16,7 @@ import com.withub.model.workflow.enumeration.TaskHandleResult;
 import com.withub.model.workflow.po.FlowType;
 import com.withub.model.workflow.po.Instance;
 import com.withub.model.workflow.po.Task;
+import com.withub.model.workflow.po.TaskContext;
 import com.withub.model.workflow.vo.InstanceTaskLog;
 import com.withub.model.workflow.vo.TaskFlowNodeInfo;
 import com.withub.model.workflow.vo.TaskInfo;
@@ -76,20 +77,22 @@ public class OaAppServiceImpl implements OaAppService {
     public User login(String username, String password) throws Exception {
 
         Account account = accountService.getAccountByName(username);
-        String encryptedPassword = Md5Util.getStringMD5(account.getSalt() + password);
-        boolean isValidate = encryptedPassword.equalsIgnoreCase(account.getPassword());
-        isValidate = true;
-        if (isValidate) {
-            User user = new User();
-            user.setName(account.getUser().getName());
-            user.setObjectId(account.getUser().getObjectId());
-            user.setRole(new Role());
-            user.getRole().setName(account.getUser().getRole().getName());
-            user.getRole().setRoleTag(account.getUser().getRole().getRoleTag());
-            user.setOrganization(new Organization());
-            user.getOrganization().setName(account.getUser().getOrganization().getName());
-            user.getOrganization().setCode(account.getUser().getOrganization().getCode());
-            return user;
+        if (account != null) {
+            String encryptedPassword = Md5Util.getStringMD5(account.getSalt() + password);
+            boolean isValidate = encryptedPassword.equalsIgnoreCase(account.getPassword());
+//            isValidate = true;
+            if (isValidate) {
+                User user = new User();
+                user.setName(account.getUser().getName());
+                user.setObjectId(account.getUser().getObjectId());
+                user.setRole(new Role());
+                user.getRole().setName(account.getUser().getRole().getName());
+                user.getRole().setRoleTag(account.getUser().getRole().getRoleTag());
+                user.setOrganization(new Organization());
+                user.getOrganization().setName(account.getUser().getOrganization().getName());
+                user.getOrganization().setCode(account.getUser().getOrganization().getCode());
+                return user;
+            }
         }
         return null;
     }
@@ -210,17 +213,21 @@ public class OaAppServiceImpl implements OaAppService {
     }
 
     public String getInstanceTaskLog(String instanceId) throws Exception {
+
+        List flowNodeTypeList = new ArrayList();
+        flowNodeTypeList.add(FlowNodeType.Finish.toString());
+        flowNodeTypeList.add(FlowNodeType.AndSign.toString());
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setTargetEntity(InstanceTaskLog.class);
         queryInfo.addCondition("instanceId", instanceId, ExpressionOperation.Equals);
-        queryInfo.addCondition("flowNodeType", FlowNodeType.AndSign.toString(), ExpressionOperation.Equals);
+        queryInfo.addCondition("flowNodeType", flowNodeTypeList, ExpressionOperation.In);
         queryInfo.addCondition("taskHandleResult", null, ExpressionOperation.NotEquals);
         queryInfo.setDescOrderBy("taskFinishTime");
         List list = workflowService.list(queryInfo);
         return JSON.toJSON(list).toString();
     }
 
-    public void commitTask(String currentUserId, String taskId, String result, String opinion, List<String> nextHandlerList) throws Exception {
+    public void commitTask(String currentUserId, String taskId, List<TaskContext> taskContextList, String result, String opinion, List<String> nextHandlerList) throws Exception {
 
         Task task = taskService.getTaskById(taskId);
         TaskHandleResult taskHandleResult = TaskHandleResult.valueOf(result);
@@ -232,7 +239,7 @@ public class OaAppServiceImpl implements OaAppService {
         }
         User currentUser = taskService.get(User.class, currentUserId);
 
-        taskService.commit(currentUser, task, null, taskHandleResult, opinion, handlerList, null);
+        taskService.commit(currentUser, task, taskContextList, taskHandleResult, opinion, handlerList, null);
     }
 
     public String getOrganizationList() throws Exception {
@@ -268,6 +275,20 @@ public class OaAppServiceImpl implements OaAppService {
 
         List list = new ArrayList();
         List<User> userList = taskHandlerFetchService.fetchOrganizationManager(userService.getUserById(userId).getOrganization().getCode());
+        for (User user : userList) {
+            Map item = new HashMap();
+            item.put("objectId", user.getObjectId());
+            item.put("name", user.getName());
+            list.add(item);
+        }
+
+        return JSON.toJSON(list).toString();
+    }
+
+    public String getManagerListAll() throws Exception {
+
+        List list = new ArrayList();
+        List<User> userList = taskHandlerFetchService.fetchOrganizationManager();
         for (User user : userList) {
             Map item = new HashMap();
             item.put("objectId", user.getObjectId());
@@ -462,6 +483,8 @@ public class OaAppServiceImpl implements OaAppService {
         result.put("target", training.getTarget());
         result.put("peopleCount", training.getPeopleCount());
         result.put("publicity", training.getPublicity());
+        result.put("trainingType", training.getTrainingType());
+        result.put("createTime", training.getCreateTime().getTime());
         return JSON.toJSON(result).toString();
     }
 }

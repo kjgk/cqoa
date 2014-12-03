@@ -74,7 +74,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('CarUseCtrl', function ($scope, $q, $modal, SimpleTable, CarUseService, InstanceService) {
+    .controller('CarUseCtrl', function ($scope, $q, $modal, SimpleTable, CarUseService, OAService) {
 
         $scope.grid = SimpleTable(CarUseService.query);
 
@@ -103,10 +103,8 @@ angular.module('app.oa')
                 Toaster.success("保存成功！");
             });
         };
-        $scope.viewCarUseInstance = function (carUse) {
-            InstanceService.viewInstance({
-                relatedObjectId: carUse.objectId
-            });
+        $scope.viewCarUse = function (carUse) {
+            OAService.viewForm('查看用车申请', carUse.objectId, 'app/oa/caruse/car-use-view.html')
         };
         $scope.deleteCarUse = function (carUse) {
             Dialog.confirmDelete().then(function () {

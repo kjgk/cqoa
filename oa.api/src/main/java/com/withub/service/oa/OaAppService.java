@@ -4,6 +4,7 @@ package com.withub.service.oa;
 import com.withub.model.entity.query.RecordsetInfo;
 import com.withub.model.oa.po.*;
 import com.withub.model.system.po.User;
+import com.withub.model.workflow.po.TaskContext;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ public interface OaAppService {
 
     public String getInstanceTaskLog(String instanceId) throws Exception;
 
-    public void commitTask(String currentUserId, String taskId, String result, String opinion, List<String> nextHandlerList) throws Exception;
+    public void commitTask(String currentUserId, String taskId, List<TaskContext> taskContextList, String result, String opinion, List<String> nextHandlerList) throws Exception;
 
     public void submitMiscellaneous(Miscellaneous miscellaneous) throws Exception;
 
@@ -49,6 +50,8 @@ public interface OaAppService {
     public String getUserList(String organizationId) throws Exception;
 
     public String getManagerList(String userId) throws Exception;
+
+    public String getManagerListAll() throws Exception;
 
     public String getLeaderList() throws Exception;
 

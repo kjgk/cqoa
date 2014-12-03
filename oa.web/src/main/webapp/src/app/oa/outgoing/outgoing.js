@@ -47,7 +47,7 @@ angular.module('app.oa')
         }
     })
 
-    .controller('OutgoingCtrl', function ($scope, $q, $modal, SimpleTable, OutgoingService, InstanceService) {
+    .controller('OutgoingCtrl', function ($scope, $q, $modal, SimpleTable, OutgoingService, OAService) {
 
         $scope.grid = SimpleTable(OutgoingService.query);
 
@@ -77,20 +77,7 @@ angular.module('app.oa')
             });
         };
         $scope.viewOutgoing = function (outgoing) {
-            $modal.open({
-                templateUrl: 'app/oa/outgoing/outgoing-view.html',
-                controller: 'OutgoingViewCtrl',
-                resolve: {
-                    objectId: function () {
-                        return outgoing.objectId;
-                    }
-                }
-            });
-        };
-        $scope.viewOutgoingInstance = function (outgoing) {
-            InstanceService.viewInstance({
-                relatedObjectId: outgoing.objectId
-            });
+            OAService.viewForm('查看出差申请', outgoing.objectId, 'app/oa/outgoing/outgoing-view.html')
         };
         $scope.deleteOutgoing = function (outgoing) {
 

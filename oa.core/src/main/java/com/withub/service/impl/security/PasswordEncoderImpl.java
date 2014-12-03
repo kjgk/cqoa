@@ -19,7 +19,7 @@ public class PasswordEncoderImpl implements PasswordEncoder {
     public boolean isPasswordValid(String encPassword, String rawPassword, Object salt) {
 
         String encryptedPassword = Md5Util.getStringMD5(salt + rawPassword);
-//        return encryptedPassword.equalsIgnoreCase(encPassword);
-        return 1==1;
+        return encryptedPassword.equalsIgnoreCase(encPassword);
+//        return 1==1;
     }
 }
