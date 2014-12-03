@@ -70,6 +70,9 @@ public class OaAppServiceImpl implements OaAppService {
     @Autowired
     private OrganizationService organizationService;
 
+    @Autowired
+    private TaskHandlerFetchService taskHandlerFetchService;
+
     public User login(String username, String password) throws Exception {
 
         Account account = accountService.getAccountByName(username);
@@ -80,12 +83,18 @@ public class OaAppServiceImpl implements OaAppService {
             User user = new User();
             user.setName(account.getUser().getName());
             user.setObjectId(account.getUser().getObjectId());
+            user.setRole(new Role());
+            user.getRole().setName(account.getUser().getRole().getName());
+            user.getRole().setRoleTag(account.getUser().getRole().getRoleTag());
+            user.setOrganization(new Organization());
+            user.getOrganization().setName(account.getUser().getOrganization().getName());
+            user.getOrganization().setCode(account.getUser().getOrganization().getCode());
             return user;
         }
         return null;
     }
 
-    public RecordsetInfo queryTask(String currentUserId, String flowTypeTag, String taskStatusTag, Integer page, Integer pageSize) throws Exception {
+    public RecordsetInfo listTask(String currentUserId, String flowTypeTag, String taskStatusTag, Integer page, Integer pageSize) throws Exception {
 
         FlowType flowType = (FlowType) taskService.getByPropertyValue(FlowType.class, "flowTypeTag", flowTypeTag);
         QueryInfo queryInfo = new QueryInfo();
@@ -104,25 +113,25 @@ public class OaAppServiceImpl implements OaAppService {
         return recordsetInfo;
     }
 
-    public Map queryInstance(String currentUserId, String flowTypeTag, String complete, Integer page, Integer pageSize) throws Exception {
+    public Map listInstance(String currentUserId, String flowTypeTag, String complete, Integer page, Integer pageSize) throws Exception {
 
-        String sql = " from wf_instance a\n" +
-                "  , (\n" +
-                "      select\n" +
+        String sql = " FROM wf_instance a\n" +
+                "  INNER JOIN (\n" +
+                "      SELECT\n" +
                 "        c.instanceid,\n" +
-                "        max(a.finishtime) finishtime\n" +
-                "      from wf_task a, wf_mastertask b, wf_subinstance c, wf_flowtype d, wf_flownode e\n" +
-                "      where a.mastertaskid = b.objectid and b.subinstanceid = c.objectid \n" +
-                "            and b.flownodeid = e.objectid and d.objectid = e.flowtypeid\n" +
-                "        and a.owner = ?\n" +
-                "        and d.flowtypetag = ?\n" +
-                "        and a.result is not null\n" +
-                "      group by c.instanceid\n" +
-                "    ) b, vw_taskinfo c, sys_user d\n" +
-                "where a.objectid = b.instanceid and .a.objectid = c.instanceid and d.objectid = c.handler\n" +
-                "   and c.taskstatustag = 'Running'";
+                "        MAX(a.finishtime) finishtime\n" +
+                "      FROM wf_task a, wf_mastertask b, wf_subinstance c, wf_flowtype d, wf_flownode e\n" +
+                "      WHERE a.mastertaskid = b.objectid AND b.subinstanceid = c.objectid \n" +
+                "            AND b.flownodeid = e.objectid AND d.objectid = e.flowtypeid\n" +
+                "        AND a.owner = ?\n" +
+                "        AND d.flowtypetag = ?\n" +
+                "        AND a.result IS NOT NULL\n" +
+                "      GROUP BY c.instanceid\n" +
+                "    ) b ON a.objectid = b.instanceid \n" +
+                "    LEFT JOIN vw_taskinfo c ON a.objectid = c.instanceid AND c.taskstatustag = 'Running'\n" +
+                "    LEFT JOIN sys_user d ON d.objectid = c.handler";
         if (StringUtil.isNotEmpty(complete) && !StringUtil.compareValue("0", complete)) {
-            sql += " and a.result = '69F248C7-30CC-4723-A100-3DECD577FCDD'";
+            sql += " where a.result = '69F248C7-30CC-4723-A100-3DECD577FCDD'";
         }
 
         List list = workflowService.listBySql("select a.objectid instanceId, a.name instanceName" +
@@ -255,10 +264,24 @@ public class OaAppServiceImpl implements OaAppService {
         return JSON.toJSON(list).toString();
     }
 
-    public String getManagerList(String organizationId) throws Exception {
+    public String getManagerList(String userId) throws Exception {
 
         List list = new ArrayList();
-        List<User> userList = userService.listByOrganizationId(organizationId);
+        List<User> userList = taskHandlerFetchService.fetchOrganizationManager(userService.getUserById(userId).getOrganization().getCode());
+        for (User user : userList) {
+            Map item = new HashMap();
+            item.put("objectId", user.getObjectId());
+            item.put("name", user.getName());
+            list.add(item);
+        }
+
+        return JSON.toJSON(list).toString();
+    }
+
+    public String getLeaderList() throws Exception {
+
+        List list = new ArrayList();
+        List<User> userList = taskHandlerFetchService.fetchLeader();
         for (User user : userList) {
             Map item = new HashMap();
             item.put("objectId", user.getObjectId());
@@ -288,7 +311,11 @@ public class OaAppServiceImpl implements OaAppService {
 
         miscellaneous.setCurrentUser(userService.get(User.class, miscellaneous.getCurrentUser().getObjectId()));
 
-        miscellaneousService.submitMiscellaneous(miscellaneous);
+        if (StringUtil.isEmpty(miscellaneous.getObjectId())) {
+            miscellaneousService.submitMiscellaneous(miscellaneous, miscellaneous.getApprover());
+        } else {
+            miscellaneousService.submitMiscellaneous(miscellaneous);
+        }
     }
 
     @Override
@@ -296,16 +323,23 @@ public class OaAppServiceImpl implements OaAppService {
 
         carUse.setCurrentUser(userService.get(User.class, carUse.getCurrentUser().getObjectId()));
 
-        carUseService.submitCarUse(carUse);
+        if (StringUtil.isEmpty(carUse.getObjectId())) {
+            carUseService.submitCarUse(carUse, carUse.getApprover());
+        } else {
+            carUseService.submitCarUse(carUse);
+        }
     }
 
     @Override
     public void submitLeave(Leave leave) throws Exception {
 
-
         leave.setCurrentUser(userService.get(User.class, leave.getCurrentUser().getObjectId()));
 
-        leaveService.submitLeave(leave);
+        if (StringUtil.isEmpty(leave.getObjectId())) {
+            leaveService.submitLeave(leave, leave.getApprover());
+        } else {
+            leaveService.submitLeave(leave);
+        }
     }
 
     @Override
@@ -313,7 +347,11 @@ public class OaAppServiceImpl implements OaAppService {
 
         outgoing.setCurrentUser(userService.get(User.class, outgoing.getCurrentUser().getObjectId()));
 
-        outgoingService.submitOutgoing(outgoing);
+        if (StringUtil.isEmpty(outgoing.getObjectId())) {
+            outgoingService.submitOutgoing(outgoing, outgoing.getApprover());
+        } else {
+            outgoingService.submitOutgoing(outgoing);
+        }
     }
 
     @Override
@@ -321,7 +359,11 @@ public class OaAppServiceImpl implements OaAppService {
 
         training.setCurrentUser(userService.get(User.class, training.getCurrentUser().getObjectId()));
 
-        trainingService.submitTraining(training);
+        if (StringUtil.isEmpty(training.getObjectId())) {
+            trainingService.submitTraining(training, training.getApprover());
+        } else {
+            trainingService.submitTraining(training);
+        }
     }
 
     @Override

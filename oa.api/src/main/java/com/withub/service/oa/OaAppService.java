@@ -12,9 +12,9 @@ public interface OaAppService {
 
     public User login(String username, String password) throws Exception;
 
-    public RecordsetInfo queryTask(String currentUserId, String flowTypeTag, String taskStatusTag, Integer page, Integer pageSize) throws Exception;
+    public RecordsetInfo listTask(String currentUserId, String flowTypeTag, String taskStatusTag, Integer page, Integer pageSize) throws Exception;
 
-    public Map queryInstance(String currentUserId, String flowTypeTag, String complete, Integer page, Integer pageSize) throws Exception;
+    public Map listInstance(String currentUserId, String flowTypeTag, String complete, Integer page, Integer pageSize) throws Exception;
 
     public String getTaskFlowNodeInfo(String currentUserId, String taskId) throws Exception;
 
@@ -47,6 +47,10 @@ public interface OaAppService {
     public String getOrganizationList() throws Exception;
 
     public String getUserList(String organizationId) throws Exception;
+
+    public String getManagerList(String userId) throws Exception;
+
+    public String getLeaderList() throws Exception;
 
     public String getCodeList(String codeColumnTag) throws Exception;
 

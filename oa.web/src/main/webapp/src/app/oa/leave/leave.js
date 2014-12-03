@@ -94,7 +94,8 @@ angular.module('app.oa')
             'Personnel': 'OrganizationManager',
             'DeputyManager': 'OrganizationManager',
             'Manager': 'Leader',
-            'Leader': 'Leader'
+            'Leader': 'Leader',
+            'Boss': 'Leader'
         }[PageContext.currentUser.role.tag];
 
         $scope.cancel = function () {
